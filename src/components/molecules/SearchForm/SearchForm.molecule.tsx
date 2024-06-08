@@ -1,15 +1,20 @@
 "use client";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { Icons } from "@/icons";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
   search: string;
 };
 
 export const SearchForm = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, setFocus, handleSubmit } = useForm<Inputs>();
+
+  useEffect(() => {
+    setFocus("search");
+  }, [setFocus]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const query = data.search;
