@@ -12,7 +12,7 @@ export const GlobalFrame = ({ children }: { children: React.ReactNode }) => {
             <div className="flex flex-none items-end relative top-0 h-full px-8">
               <Avatar />
             </div>
-            <div className="flex-1 relative top-0 z-10 w-full h-full">
+            <div className="flex-1 relative top-0 z-10 w-full h-full p-8 pl-0">
               {children}
             </div>
           </div>
