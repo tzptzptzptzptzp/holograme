@@ -4,9 +4,7 @@ import { GlobalFrame } from "@/components/templates/GlobalFrame.template";
 export default function Home() {
   return (
     <GlobalFrame>
-      <main className="flex flex-col items-center justify-center w-full h-full">
-        <SearchForm />
-      </main>
+      <SearchForm />
     </GlobalFrame>
   );
 }
