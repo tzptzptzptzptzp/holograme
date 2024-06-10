@@ -1,7 +1,7 @@
-import { Avatar } from "../atoms/Avatar/Avatar.atom";
-import { Background } from "../atoms/Background/Background.atom";
-import { FrameShadow } from "../atoms/FrameShadow/FrameShadow.atom";
-import { Navigation } from "../organisms/Navigation. organism";
+import { Avatar } from "../../atoms/Avatar/Avatar.atom";
+import { Background } from "../../atoms/Background/Background.atom";
+import { FrameShadow } from "../../atoms/FrameShadow/FrameShadow.atom";
+import { Navigation } from "../../organisms/Navigation. organism";
 
 export const GlobalFrame = ({ children }: { children: React.ReactNode }) => {
   return (
