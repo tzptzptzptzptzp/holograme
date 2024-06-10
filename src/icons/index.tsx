@@ -3,6 +3,7 @@ import { Chat } from "./Chat/Chat.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
 import { Config } from "./Config/Config.icon";
 import { Home } from "./Home/Home.icon";
+import { NewTab } from "./NewTab/NewTab.icon";
 import { Search } from "./Search/Search.icon";
 
 export const Icons = {
@@ -11,5 +12,6 @@ export const Icons = {
   ClipBoard,
   Config,
   Home,
+  NewTab,
   Search,
 };
