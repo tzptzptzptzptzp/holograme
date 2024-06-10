@@ -1,15 +1,18 @@
 "use client";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { Icons } from "@/icons";
+import { SearchTypeState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
   search: string;
 };
 
 export const SearchForm = () => {
+  const searchType = useRecoilValue(SearchTypeState);
   const { register, setFocus, handleSubmit } = useForm<Inputs>();
 
   useEffect(() => {
@@ -21,7 +24,11 @@ export const SearchForm = () => {
     const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
       query
     )}`;
-    window.location.href = googleSearchUrl;
+    if (searchType === "newTab") {
+      window.open(googleSearchUrl, "_blank");
+    } else {
+      window.location.href = googleSearchUrl;
+    }
   };
   return (
     <form
@@ -30,7 +37,9 @@ export const SearchForm = () => {
     >
       <Input
         className="flex-1 w-full"
-        placeholder="Google で 検索"
+        placeholder={`Google で 検索 ${
+          searchType === "newTab" ? "- 新規タブで開く" : ""
+        }`}
         {...register("search")}
       />
       <Button className="w-fit" type="submit">

@@ -4,3 +4,5 @@ export type SelectedContentStateType =
   | "clipboard"
   | "history"
   | "setting";
+
+export type SearchTypeStateType = "newTab" | "currentTab";

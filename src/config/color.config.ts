@@ -1,6 +1,8 @@
 export const colorConfig = {
   text: "#333",
   background: "#FFF",
-  primary: "#FF7C7C",
+  primary: "#FCA5A5",
   secondary: "#7CB8FF",
+  disableText: "#BBB",
+  disableBackground: "#EEE",
 };
