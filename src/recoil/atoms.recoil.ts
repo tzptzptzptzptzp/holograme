@@ -1,7 +1,12 @@
 import { atom } from "recoil";
-import { SelectedContentStateType } from "./types.recoil";
+import { SearchTypeStateType, SelectedContentStateType } from "./types.recoil";
 
 export const SelectedContentState = atom<SelectedContentStateType>({
   key: "SelectedContent",
   default: "home",
+});
+
+export const SearchTypeState = atom<SearchTypeStateType>({
+  key: "SearchType",
+  default: "currentTab",
 });
