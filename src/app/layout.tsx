@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { RecoilRoot } from "recoil";
+import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
+import { Provider } from "@/components/templates/Provider/Provider.template";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <RecoilRoot>
+    <Provider>
       <html lang="ja">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <GlobalFrame>{children}</GlobalFrame>
+        </body>
       </html>
-    </RecoilRoot>
+    </Provider>
   );
 }
