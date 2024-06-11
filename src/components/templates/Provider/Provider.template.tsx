@@ -1,6 +1,7 @@
 "use client";
 import { RecoilRoot } from "recoil";
 import { useInitialize } from "@/hooks/useInitialize.hook";
+import { useWatch } from "@/hooks/useWatch.hook";
 
 export const Provider = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,5 +13,6 @@ export const Provider = ({ children }: { children: React.ReactNode }) => {
 
 const ProviderInner = ({ children }: { children: React.ReactNode }) => {
   useInitialize();
+  useWatch();
   return children;
 };
