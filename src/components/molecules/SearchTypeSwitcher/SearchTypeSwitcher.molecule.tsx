@@ -4,9 +4,19 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
 import { SearchTypeState } from "@/recoil/atoms.recoil";
+import { useEffect, useState } from "react";
 
 export const SearchTypeSwitcher = () => {
+  const [iconColor, setIconColor] = useState(colorConfig.disableText);
+  const [buttonBgOpacity, setButtonBgOpacity] = useState("bg-opacity-50");
   const [searchType, setSearchType] = useRecoilState(SearchTypeState);
+
+  useEffect(() => {
+    setIconColor(
+      searchType === "newTab" ? colorConfig.primary : colorConfig.disableText
+    );
+    setButtonBgOpacity(searchType !== "newTab" ? "bg-opacity-50" : "");
+  }, [searchType]);
 
   const handleClick = () => {
     setSearchType((prev) => (prev === "newTab" ? "currentTab" : "newTab"));
@@ -16,17 +26,13 @@ export const SearchTypeSwitcher = () => {
       <Button
         className={clsx(
           "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white duration-150",
-          searchType !== "newTab" && "bg-opacity-50"
+          buttonBgOpacity
         )}
         onClick={handleClick}
       >
         <Icons.NewTab
           className="stroke-[2.5px] duration-150"
-          color={
-            searchType === "newTab"
-              ? colorConfig.primary
-              : colorConfig.disableText
-          }
+          color={iconColor}
           width={20}
           height={20}
         />
