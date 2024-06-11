@@ -2,9 +2,21 @@ import clsx from "clsx";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
+import { ClipboardMockData } from "@/mock/Clipboard.mock";
 
 export const ClipboardPasteButton = () => {
-  const handleClick = async () => {};
+  const handleClick = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const req = {
+        text,
+        date: Number(new Date()),
+      };
+      ClipboardMockData.push(req);
+    } catch (err) {
+      console.error("Failed to read clipboard contents: ", err);
+    }
+  };
   return (
     <div className="u-shadow flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
       <Button
