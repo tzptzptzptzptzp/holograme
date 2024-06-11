@@ -1,3 +1,4 @@
+import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
 import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecule";
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
@@ -8,6 +9,7 @@ export const HomeContents = () => {
       <SearchForm />
       <SearchTypeSwitcher />
       <ClipboardPasteButton />
+      <ClipboardCopyButton />
     </div>
   );
 };
