@@ -3,6 +3,10 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
 import { ClipboardMockData } from "@/mock/Clipboard.mock";
+import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
+
+const TEXT_LENGTH_LIMIT = 15;
 
 export const ClipboardPasteButton = () => {
   const handleClick = async () => {
@@ -13,7 +17,15 @@ export const ClipboardPasteButton = () => {
         date: Number(new Date()),
       };
       ClipboardMockData.push(req);
+      toast(
+        `${textsConfig.TOAST.CLIPBOARD_PASTE} - ${
+          text.length >= TEXT_LENGTH_LIMIT
+            ? `${text.slice(0, TEXT_LENGTH_LIMIT)}...`
+            : text
+        }`
+      );
     } catch (err) {
+      toast.error(textsConfig.TOAST.CLIPBOARD_PASTE_ERROR);
       console.error("Failed to read clipboard contents: ", err);
     }
   };

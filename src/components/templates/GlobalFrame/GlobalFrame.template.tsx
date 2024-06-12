@@ -1,3 +1,4 @@
+import { Bounce, ToastContainer } from "react-toastify";
 import { Avatar } from "../../atoms/Avatar/Avatar.atom";
 import { Background } from "../../atoms/Background/Background.atom";
 import { FrameShadow } from "../../atoms/FrameShadow/FrameShadow.atom";
@@ -18,6 +19,20 @@ export const GlobalFrame = ({ children }: { children: React.ReactNode }) => {
           <Navigation />
         </div>
         <FrameShadow />
+        <ToastContainer
+          className="u-shadow w-fit"
+          position="top-left"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="light"
+          transition={Bounce}
+        />
       </div>
     </div>
   );
