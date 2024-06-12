@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
 import { Provider } from "@/components/templates/Provider/Provider.template";
+
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
