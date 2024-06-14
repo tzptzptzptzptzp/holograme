@@ -2,8 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --app-primary: #fca5a5;
+  --app-secondary: #7cb8ff;
+  --app-text: #333;
+  --app-bg: #f9f4e8;
+  --app-border: #ebe6dc;
+  --app-text-light: #888;
+  --app-bg-dark: #e3dccb;
+}
+
 body {
   overflow: hidden;
+}
+
+/*---------- USER ----------*/
+.u-centering {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.u-centering-x {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.u-centering-y {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .u-shadow {
@@ -11,6 +38,7 @@ body {
     drop-shadow(2px 0px 5px rgba(0, 0, 0, 0.1));
 }
 
+/*---------- LIBRARY ----------*/
 .Toastify__toast-container {
   position: absolute;
 }
