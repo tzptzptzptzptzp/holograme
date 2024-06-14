@@ -16,7 +16,7 @@ export const ClipboardCopyButton = () => {
         const textToCopy = lastItem.text;
         await navigator.clipboard.writeText(textToCopy).then(() => {
           toast(
-            `${textsConfig.TOAST.CLIPBOARD_SAVE} - ${
+            `${textsConfig.TOAST.CLIPBOARD_SAVE.SUCCESS} - ${
               textToCopy.length >= TEXT_LENGTH_LIMIT
                 ? `${textToCopy.slice(0, TEXT_LENGTH_LIMIT)}...`
                 : textToCopy
@@ -24,10 +24,10 @@ export const ClipboardCopyButton = () => {
           );
         });
       } else {
-        toast.error(textsConfig.TOAST.CLIPBOARD_SAVE_ERROR);
+        toast.error(textsConfig.TOAST.CLIPBOARD_SAVE.ERROR);
       }
     } catch (err) {
-      toast.error(textsConfig.TOAST.CLIPBOARD_SAVE_ERROR);
+      toast.error(textsConfig.TOAST.CLIPBOARD_SAVE.ERROR);
       console.error("Failed to write to clipboard: ", err);
     }
   };

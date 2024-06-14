@@ -18,14 +18,14 @@ export const ClipboardPasteButton = () => {
       };
       ClipboardMockData.push(req);
       toast(
-        `${textsConfig.TOAST.CLIPBOARD_PASTE} - ${
+        `${textsConfig.TOAST.CLIPBOARD_PASTE.SUCCESS} - ${
           text.length >= TEXT_LENGTH_LIMIT
             ? `${text.slice(0, TEXT_LENGTH_LIMIT)}...`
             : text
         }`
       );
     } catch (err) {
-      toast.error(textsConfig.TOAST.CLIPBOARD_PASTE_ERROR);
+      toast.error(textsConfig.TOAST.CLIPBOARD_PASTE.ERROR);
       console.error("Failed to read clipboard contents: ", err);
     }
   };
