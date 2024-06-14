@@ -1,8 +1,13 @@
 "use client";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { CircleContainer } from "@/components/molecules/CircleContainer/CircleContainer.molecule";
 import { useSignIn } from "@/hooks/useSignIn.util";
+import { Icons } from "@/icons";
+import { colorConfig } from "@/config/color.config";
+import { useSignUp } from "@/hooks/useSignUp.util";
+import { textsConfig } from "@/config/texts.config";
 
 type Inputs = {
   email: string;
@@ -14,66 +19,101 @@ const InputClassName =
 const ErrorClassName = "mt-1 px-1 text-red-400 text-[12px] font-bold";
 
 export default function Auth() {
+  const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
+
+  const { signUp, isEmailSent, isLoading: signUpIsLoading } = useSignUp();
+  const { signIn, isLoading: signInIsLoading } = useSignIn();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const { signIn, isLoading } = useSignIn();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    signIn({
-      email: data.email,
-      password: data.password,
-    });
-    console.log(data);
+    if (mode === "signUp") {
+      signUp({
+        email: data.email,
+        password: data.password,
+      });
+    } else if (mode === "signIn") {
+      signIn({
+        email: data.email,
+        password: data.password,
+      });
+    }
+  };
+
+  const toggleMode = () => {
+    setMode((prev) => (prev === "signIn" ? "signUp" : "signIn"));
   };
   return (
     <div className="flex items-center justify-center">
       <CircleContainer>
-        <form
-          className="flex flex-col gap-4 relative"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="flex flex-col">
+        {!isEmailSent ? (
+          <form
+            className="flex flex-col gap-4 relative"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {process.env.NODE_ENV === "development" && (
+              <div className="u-centering-x absolute -bottom-24">
+                <Button
+                  className="p-1 border-2 border-primary rounded-full"
+                  onClick={toggleMode}
+                >
+                  <Icons.ArrowPath
+                    className="stroke-2"
+                    color={colorConfig.primary}
+                  />
+                </Button>
+              </div>
+            )}
             <div className="flex flex-col">
-              <p className="px-1 text-[12px]">メールアドレス</p>
+              <div className="flex flex-col">
+                <p className="px-1 text-[12px]">メールアドレス</p>
+                <input
+                  className={InputClassName}
+                  disabled={signUpIsLoading || signInIsLoading}
+                  {...register("email", { required: true })}
+                  placeholder="tzp@holograme.app"
+                  type="email"
+                />
+              </div>
+              {errors.email && (
+                <p className={ErrorClassName}>メールアドレスは必須です</p>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <p className="px-1 text-[12px]">パスワード</p>
               <input
                 className={InputClassName}
-                disabled={isLoading}
-                {...register("email", { required: true })}
-                placeholder="tzp@holograme.app"
-                type="email"
+                disabled={signUpIsLoading || signInIsLoading}
+                {...register("password", { required: true })}
+                placeholder="password1234$"
+                type="password"
               />
+              {errors.password && (
+                <p className={ErrorClassName}>パスワードは必須です</p>
+              )}
             </div>
-            {errors.email && (
-              <p className={ErrorClassName}>メールアドレスは必須です</p>
-            )}
+            <div className="u-centering-x absolute -bottom-12">
+              <Button
+                className="mx-auto"
+                disabled={signUpIsLoading || signInIsLoading}
+                type="submit"
+                variant={
+                  signUpIsLoading || signInIsLoading ? "disable" : "primary"
+                }
+              >
+                {mode === "signIn" ? "ログイン" : "新規登録"}
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <div>
+            <p>{textsConfig.AUTH.EMAIL_SENT}</p>
           </div>
-          <div className="flex flex-col">
-            <p className="px-1 text-[12px]">パスワード</p>
-            <input
-              className={InputClassName}
-              disabled={isLoading}
-              {...register("password", { required: true })}
-              placeholder="password1234$"
-              type="password"
-            />
-            {errors.password && (
-              <p className={ErrorClassName}>パスワードは必須です</p>
-            )}
-          </div>
-          <div className="u-centering-x absolute -bottom-12">
-            <Button
-              className="mx-auto"
-              disabled={isLoading}
-              type="submit"
-              variant={isLoading ? "disable" : "primary"}
-            >
-              ログイン
-            </Button>
-          </div>
-        </form>
+        )}
       </CircleContainer>
     </div>
   );
