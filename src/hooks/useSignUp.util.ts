@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
 import supabase from "@/libs/SupabaseClient.lib";
 
 export const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
 
   const signUp = async ({
     email,
@@ -18,14 +21,15 @@ export const useSignUp = () => {
         password,
       });
       if (error) throw error;
-      alert("SignUp successful!");
+      toast(textsConfig.TOAST.SIGN_UP.SUCCESS);
+      setIsEmailSent(true);
     } catch (error) {
-      alert(error);
+      toast.error(textsConfig.TOAST.SIGN_UP.ERROR);
     } finally {
       setIsLoading(false);
     }
     return isLoading;
   };
 
-  return { signUp, isLoading };
+  return { signUp, isEmailSent, isLoading };
 };

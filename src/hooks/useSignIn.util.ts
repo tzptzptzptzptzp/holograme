@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
 import supabase from "@/libs/SupabaseClient.lib";
 
 export const useSignIn = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const signIn = async ({
@@ -18,9 +22,10 @@ export const useSignIn = () => {
         password,
       });
       if (error) throw error;
-      alert("SignIn successful!");
+      toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
+      router.push("/");
     } catch (error) {
-      alert(error);
+      toast.error(textsConfig.TOAST.SIGN_IN.ERROR);
     } finally {
       setIsLoading(false);
     }
