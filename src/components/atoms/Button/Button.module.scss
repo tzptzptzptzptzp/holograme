@@ -1,0 +1,32 @@
+.button:not(.none) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 20px 7px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.1));
+  transition: 0.3s;
+
+  &:hover {
+    filter: none;
+  }
+
+  &.primary {
+    background-color: var(--app-primary);
+    color: white;
+  }
+
+  &.secondary {
+    background-color: var(--app-secondary);
+    color: white;
+  }
+
+  &.disable {
+    background-color: #bbb;
+    color: #ffffff80;
+  }
+}
