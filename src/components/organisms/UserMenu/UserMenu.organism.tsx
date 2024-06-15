@@ -1,4 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { useSignOut } from "@/hooks/useSignOut.util";
 import clsx from "clsx";
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
 };
 
 export const UserMenu = ({ isHovered }: Props) => {
+  const { signOut } = useSignOut();
   return (
     <div
       className={clsx(
@@ -17,7 +19,7 @@ export const UserMenu = ({ isHovered }: Props) => {
     >
       <ul className="min-w-[200px] px-3 py-2 rounded-lg bg-white shadow-sm">
         <li>
-          <Button>ログアウト</Button>
+          <Button onClick={signOut}>ログアウト</Button>
         </li>
       </ul>
     </div>
