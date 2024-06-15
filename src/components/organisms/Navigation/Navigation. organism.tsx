@@ -1,11 +1,11 @@
 "use client";
 import { useSetRecoilState } from "recoil";
 import { Icons } from "@/icons";
-import { Button } from "../atoms/Button/Button.atom";
+import { Button } from "../../atoms/Button/Button.atom";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
 import Image from "next/image";
-import { UserMenu } from "./UserMenu/UserMenu.organism";
+import { UserMenu } from "../UserMenu/UserMenu.organism";
 import { useState } from "react";
 
 const IconSize = 32;

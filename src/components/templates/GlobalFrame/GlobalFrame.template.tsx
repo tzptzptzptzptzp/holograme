@@ -2,7 +2,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 import { Avatar } from "../../atoms/Avatar/Avatar.atom";
 import { Background } from "../../atoms/Background/Background.atom";
 import { FrameShadow } from "../../atoms/FrameShadow/FrameShadow.atom";
-import { Navigation } from "../../organisms/Navigation. organism";
+import { Navigation } from "../../organisms/Navigation/Navigation. organism";
 
 type Props = { children: React.ReactNode; contents?: boolean };
 
