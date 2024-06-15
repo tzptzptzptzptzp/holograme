@@ -4,10 +4,15 @@ import { Icons } from "@/icons";
 import { Button } from "../atoms/Button/Button.atom";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
+import Image from "next/image";
+import { UserMenu } from "./UserMenu/UserMenu.organism";
+import { useState } from "react";
 
 const IconSize = 32;
+const UserIconSize = 39;
 
 export const Navigation = () => {
+  const [isHovered, setIsHovered] = useState(false);
   const setSelectedContent = useSetRecoilState(SelectedContentState);
 
   const handleClick = (selectedContent: SelectedContentStateType) => {
@@ -47,6 +52,21 @@ export const Navigation = () => {
           </Button>
         </li>
       </ul>
+      <div
+        className="u-centering-x absolute bottom-4"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <Button>
+          <Image
+            alt="美少女ちゃんアイコン"
+            src="/icon.png"
+            width={UserIconSize}
+            height={UserIconSize}
+          />
+        </Button>
+        <UserMenu isHovered={isHovered} />
+      </div>
     </nav>
   );
 };
