@@ -1,33 +1,36 @@
 import clsx from "clsx";
+import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
-import { Icons } from "@/icons";
-import { ClipboardMockData } from "@/mock/Clipboard.mock";
-import { toast } from "react-toastify";
 import { textsConfig } from "@/config/texts.config";
+import { usePostClipboard } from "@/hooks/api/usePostClipboard.hook";
+import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { Icons } from "@/icons";
 
 const TEXT_LENGTH_LIMIT = 15;
 
 export const ClipboardPasteButton = () => {
+  const { refetch } = useGetClipboard();
+  const mutate = usePostClipboard();
+
   const handleClick = async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-      const req = {
-        text,
-        date: Number(new Date()),
-      };
-      ClipboardMockData.push(req);
-      toast(
-        `${textsConfig.TOAST.CLIPBOARD_PASTE.SUCCESS} - ${
-          text.length >= TEXT_LENGTH_LIMIT
-            ? `${text.slice(0, TEXT_LENGTH_LIMIT)}...`
-            : text
-        }`
-      );
-    } catch (err) {
-      toast.error(textsConfig.TOAST.CLIPBOARD_PASTE.ERROR);
-      console.error("Failed to read clipboard contents: ", err);
-    }
+    const text = await navigator.clipboard.readText();
+    mutate(text, {
+      onSuccess: () => {
+        toast(
+          `${textsConfig.TOAST.CLIPBOARD_PASTE.SUCCESS} - ${
+            text.length >= TEXT_LENGTH_LIMIT
+              ? `${text.slice(0, TEXT_LENGTH_LIMIT)}...`
+              : text
+          }`
+        );
+        refetch();
+      },
+      onError: (err) => {
+        toast.error(textsConfig.TOAST.CLIPBOARD_PASTE.ERROR);
+        console.error("Failed to read clipboard contents: ", err);
+      },
+    });
   };
   return (
     <div className="u-shadow flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
