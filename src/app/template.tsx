@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
 import { useSession } from "@/hooks/useSession.util";
@@ -15,6 +16,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setSession(session);
+    if (session) {
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${session.access_token}`;
+    }
   }, [session, setSession]);
 
   useEffect(() => {
