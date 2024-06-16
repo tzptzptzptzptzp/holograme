@@ -2,18 +2,20 @@ import clsx from "clsx";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
-import { Icons } from "@/icons";
-import { ClipboardMockData } from "@/mock/Clipboard.mock";
 import { textsConfig } from "@/config/texts.config";
+import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { Icons } from "@/icons";
 
 const TEXT_LENGTH_LIMIT = 15;
 
 export const ClipboardCopyButton = () => {
+  const { data } = useGetClipboard();
+
   const handleClick = async () => {
     try {
-      if (ClipboardMockData.length > 0) {
-        const lastItem = ClipboardMockData[ClipboardMockData.length - 1];
-        const textToCopy = lastItem.text;
+      if (data.length > 0) {
+        const lastItem = data[0];
+        const textToCopy = lastItem.content;
         await navigator.clipboard.writeText(textToCopy).then(() => {
           toast(
             `${textsConfig.TOAST.CLIPBOARD_SAVE.SUCCESS} - ${
