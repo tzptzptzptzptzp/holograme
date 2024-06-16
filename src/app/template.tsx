@@ -19,12 +19,18 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (authStatus !== "loading" && authStatus === "unauthenticated") {
-      router.push("/auth");
+      process.env.NODE_ENV === "production" && router.push("/auth");
     }
   }, [authStatus, router]);
 
   return (
-    <GlobalFrame contents={authStatus === "authenticated" && path === "/"}>
+    <GlobalFrame
+      contents={
+        (authStatus === "authenticated" ||
+          process.env.NODE_ENV === "development") &&
+        path === "/"
+      }
+    >
       {authStatus !== "loading" && children}
     </GlobalFrame>
   );
