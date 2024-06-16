@@ -1,4 +1,4 @@
-import supabase from "../../../libs/SupabaseClient.lib";
+import supabase from "../../libs/SupabaseClient.lib";
 
 export async function getUserIdFromToken(token: string) {
   const { data, error } = await supabase.auth.getUser(token);
