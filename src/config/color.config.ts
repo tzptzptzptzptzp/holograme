@@ -5,4 +5,6 @@ export const colorConfig = {
   secondary: "#7CB8FF",
   disableText: "#BBB",
   disableBackground: "#EEE",
+  success: "#5da1ff",
+  error: "#ff5d5d",
 };
