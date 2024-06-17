@@ -13,11 +13,11 @@ export const GlobalFrame = ({ children, contents = true }: Props) => {
         <Background />
         <div className="flex z-10 w-full h-full">
           {contents && (
-            <div className="flex flex-none items-end relative top-0 h-full px-8">
+            <div className="flex flex-none items-end relative top-0 h-full pl-8">
               <Avatar />
             </div>
           )}
-          <main className="flex flex-col items-center justify-center flex-1 relative top-0 w-full h-full p-8 pl-0">
+          <main className="u-shadow-sm flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-8">
             {children}
           </main>
           {contents && <Navigation />}

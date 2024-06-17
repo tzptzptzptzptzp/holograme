@@ -16,6 +16,15 @@ body {
   overflow: hidden;
 }
 
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 /*---------- USER ----------*/
 .u-centering {
   top: 50%;
@@ -36,6 +45,16 @@ body {
 .u-shadow {
   filter: drop-shadow(0px 3px 12px rgba(0, 0, 0, 0.5))
     drop-shadow(2px 0px 5px rgba(0, 0, 0, 0.1));
+}
+
+.u-shadow-avatar {
+  filter: drop-shadow(0px 3px 12px rgba(0, 0, 0, 0.5))
+    drop-shadow(2px 0px 5px rgba(0, 0, 0, 0.3));
+}
+
+.u-shadow-sm {
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.3))
+    drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
 }
 
 /*---------- LIBRARY ----------*/
