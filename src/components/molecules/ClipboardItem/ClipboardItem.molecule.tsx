@@ -67,7 +67,9 @@ export const ClipboardItem = ({
           />
         </div>
       )}
-      <p className="truncate">{isShow ? content : getMaskedText(content)}</p>
+      <p className="text-gray truncate">
+        {isShow ? content : getMaskedText(content)}
+      </p>
       <div className="flex items-center gap-3">
         {showIcon && (
           <Button onClick={handleShow}>

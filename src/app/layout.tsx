@@ -5,6 +5,7 @@ import { textsConfig } from "@/config/texts.config";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import clsx from "clsx";
 
 const font = M_PLUS_Rounded_1c({ weight: ["500", "700"], subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <Provider>
       <html lang="ja">
-        <body className={font.className}>{children}</body>
+        <body className={clsx(font.className, "text-text")}>{children}</body>
       </html>
     </Provider>
   );
