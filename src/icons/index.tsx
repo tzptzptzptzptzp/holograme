@@ -4,6 +4,8 @@ import { Chat } from "./Chat/Chat.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
 import { Config } from "./Config/Config.icon";
 import { Copy } from "./Copy/Copy.icon";
+import { Eye } from "./Eye/Eye.icon";
+import { EyeSlash } from "./EyeSlash/EyeSlash.icon";
 import { Home } from "./Home/Home.icon";
 import { NewTab } from "./NewTab/NewTab.icon";
 import { Paste } from "./Paste/Paste.icon";
@@ -17,6 +19,8 @@ export const Icons = {
   ClipBoard,
   Config,
   Copy,
+  Eye,
+  EyeSlash,
   Home,
   NewTab,
   Paste,
