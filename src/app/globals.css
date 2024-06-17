@@ -16,6 +16,15 @@ body {
   overflow: hidden;
 }
 
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
 /*---------- USER ----------*/
 .u-centering {
   top: 50%;
