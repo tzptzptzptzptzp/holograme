@@ -17,7 +17,7 @@ export const GlobalFrame = ({ children, contents = true }: Props) => {
               <Avatar />
             </div>
           )}
-          <main className="u-shadow-sm flex flex-col items-center justify-center flex-1 relative top-0 w-full h-full pr-8">
+          <main className="u-shadow-sm flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-8">
             {children}
           </main>
           {contents && <Navigation />}
