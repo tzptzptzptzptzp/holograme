@@ -58,16 +58,14 @@ export const ClipboardItem = ({
       onClick={handleClick}
     >
       {icon && (
-        <div>
-          <Icons.ClipBoard
-            className="stroke-2"
-            color={colorConfig.primary}
-            width={IconSize}
-            height={IconSize}
-          />
-        </div>
+        <Icons.ClipBoard
+          className="stroke-2"
+          color={colorConfig.primary}
+          width={IconSize}
+          height={IconSize}
+        />
       )}
-      <p className="text-gray truncate">
+      <p className="w-full text-gray truncate">
         {isShow ? content : getMaskedText(content)}
       </p>
       <div className="flex items-center gap-3">
