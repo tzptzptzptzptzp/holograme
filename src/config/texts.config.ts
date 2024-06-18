@@ -13,6 +13,10 @@ export const textsConfig = {
       SUCCESS: "🦄 美少女ちゃんから受け取りました！",
       ERROR: "取得に失敗しました…",
     },
+    CLIPBOARD_DELETE: {
+      SUCCESS: "🦄 思い出を削除しました！",
+      ERROR: "削除に失敗しました…",
+    },
     SIGN_IN: {
       SUCCESS: "🦄 ログインしました！",
       ERROR: "ログインに失敗しました…",
