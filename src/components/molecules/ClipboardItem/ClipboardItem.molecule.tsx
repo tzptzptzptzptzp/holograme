@@ -6,6 +6,8 @@ import { textsConfig } from "@/config/texts.config";
 import { Icons } from "@/icons";
 import { getMaskedText } from "@/utils/getMaskedText.util";
 import { getTrimmedText } from "@/utils/GetTrimmedText.util";
+import { useDeleteClipboard } from "@/hooks/api/useDeleteClipboard.hook";
+import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 
 const IconSize = 22;
 const TEXT_LENGTH_LIMIT = 15;
@@ -29,8 +31,27 @@ export const ClipboardItem = ({
 }: Props) => {
   const [isShow, setIsShow] = useState(false);
 
+  const { refetch } = useGetClipboard();
+
+  const mutate = useDeleteClipboard();
+
   const handleShow = () => {
     setIsShow((prev) => !prev);
+  };
+
+  const handleDelete = () => {
+    mutate(id, {
+      onSuccess: () => {
+        toast(
+          `${textsConfig.TOAST.CLIPBOARD_DELETE.SUCCESS} - ${
+            content.length >= TEXT_LENGTH_LIMIT
+              ? getTrimmedText(content, TEXT_LENGTH_LIMIT)
+              : content
+          }`
+        );
+        refetch();
+      },
+    });
   };
 
   const handleClick = async (
@@ -58,16 +79,14 @@ export const ClipboardItem = ({
       onClick={handleClick}
     >
       {icon && (
-        <div>
-          <Icons.ClipBoard
-            className="stroke-2"
-            color={colorConfig.primary}
-            width={IconSize}
-            height={IconSize}
-          />
-        </div>
+        <Icons.ClipBoard
+          className="stroke-2"
+          color={colorConfig.primary}
+          width={IconSize}
+          height={IconSize}
+        />
       )}
-      <p className="text-gray truncate">
+      <p className="w-full text-gray truncate">
         {isShow ? content : getMaskedText(content)}
       </p>
       <div className="flex items-center gap-3">
@@ -96,7 +115,7 @@ export const ClipboardItem = ({
           />
         )}
         {deleteIcon && (
-          <Button>
+          <Button onClick={handleDelete}>
             <Icons.Trash
               color={colorConfig.error}
               width={IconSize}

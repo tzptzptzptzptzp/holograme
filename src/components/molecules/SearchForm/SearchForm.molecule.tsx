@@ -33,6 +33,11 @@ export const SearchForm = () => {
     const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
       query
     )}`;
+    const searchHistory = JSON.parse(
+      localStorage.getItem("searchHistory") || "[]"
+    );
+    searchHistory.unshift(query);
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     if (searchType === "newTab") {
       window.open(googleSearchUrl, "_blank");
     } else {
