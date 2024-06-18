@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { HistoryItem } from "@/components/molecules/HistoryItem/HistoryItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { textsConfig } from "@/config/texts.config";
@@ -32,10 +33,10 @@ export const HistoryContents = () => {
   return (
     <ContentWrapper>
       <div className="flex gap-3">
-        <div className="flex items-center gap-[6px] w-full pl-4 pr-3 py-2 rounded-full bg-primary">
+        <ContentHead>
           <Icons.ArchiveBox color="white" />
-          <p className="text-white text-[20px] font-bold">Search History</p>
-        </div>
+          <p>Search History</p>
+        </ContentHead>
       </div>
       <ul className="flex flex-col gap-3">
         {searchHistory.map((content: string, i: number) => (
