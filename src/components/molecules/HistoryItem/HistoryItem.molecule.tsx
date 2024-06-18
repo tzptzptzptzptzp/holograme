@@ -10,6 +10,7 @@ type Props = {
   icon?: boolean;
   showIcon?: boolean;
   newTabIcon?: boolean;
+  onDelete?: () => void;
 };
 
 export const HistoryItem = ({
@@ -17,12 +18,11 @@ export const HistoryItem = ({
   icon = true,
   newTabIcon = true,
   deleteIcon = true,
+  onDelete,
 }: Props) => {
   const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
     content
   )}`;
-
-  const handleDelete = () => {};
 
   const OpenIsCurrentTab = async (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
@@ -59,7 +59,7 @@ export const HistoryItem = ({
           </Button>
         )}
         {deleteIcon && (
-          <Button onClick={handleDelete}>
+          <Button onClick={onDelete}>
             <Icons.Trash
               color={colorConfig.error}
               width={IconSize}
