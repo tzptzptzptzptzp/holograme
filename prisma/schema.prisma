@@ -15,9 +15,30 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model ChatRoom {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  name        String
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
+
+  messages  ChatMessage[]
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  roomId    Int
+  content   String
+  role      String
+  date      DateTime @default(now())
+
+  room      ChatRoom @relation(fields: [roomId], references: [id])
+}
+
 model Clipboard {
   id        Int      @id @default(autoincrement())
   userId    String
-  content     String
-  date     DateTime @default(now())
+  content   String
+  date      DateTime @default(now())
 }
