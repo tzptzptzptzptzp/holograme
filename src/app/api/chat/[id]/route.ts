@@ -62,7 +62,7 @@ export async function GET(
     const userId = await getUserIdFromToken(token);
 
     const data = await prisma.chatRoom.findUnique({
-      where: { id: id },
+      where: { id: id, userId: userId },
       include: {
         messages: true,
       },
