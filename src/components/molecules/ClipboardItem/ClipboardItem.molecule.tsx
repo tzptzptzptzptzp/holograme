@@ -87,7 +87,11 @@ export const ClipboardItem = ({
         />
       )}
       <p className="w-full text-gray truncate">
-        {isShow ? content : getMaskedText(content)}
+        {content === ""
+          ? "まだ何も受け取っていません…"
+          : isShow
+          ? content
+          : getMaskedText(content)}
       </p>
       <div className="flex items-center gap-3">
         {showIcon && (

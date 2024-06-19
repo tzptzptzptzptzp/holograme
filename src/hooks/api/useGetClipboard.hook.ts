@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { Clipboard } from "@prisma/client";
 
 const getClipboard = async () => {
   if (!axios.defaults.headers.common["Authorization"]) return null;
-  return await axios.get("/api/clipboard");
+  return await axios.get<Clipboard[]>("/api/clipboard");
 };
 
 export const useGetClipboard = () => {
