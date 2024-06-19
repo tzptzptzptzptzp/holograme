@@ -9,7 +9,7 @@ import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 export const HomeContents = () => {
   const { data, isLoading } = useGetClipboard();
 
-  if (isLoading) return <Loader />;
+  if (isLoading || !data) return <Loader />;
 
   return (
     <div className="flex flex-col gap-3 w-full">
@@ -20,8 +20,8 @@ export const HomeContents = () => {
         <ClipboardCopyButton />
       </div>
       <ClipboardItem
-        content={data[0].content}
-        id={data[0].id}
+        content={data.length ? data[0].content : ""}
+        id={data.length ? data[0].id : 0}
         icon
         copyIcon={false}
         deleteIcon={false}
