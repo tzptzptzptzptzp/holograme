@@ -67,23 +67,20 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const item = await prisma.clipboard.findUnique({
-      where: { id: id },
+    const data = await prisma.clipboard.delete({
+      where: { id: id, userId: userId },
+      select: {
+        id: true,
+        userId: true,
+      },
     });
 
-    if (!item || item.userId !== userId) {
+    if (!data || data.userId !== userId) {
       return NextResponse.json(
         { error: "Item not found or unauthorized" },
         { status: 404 }
       );
     }
-
-    const data = await prisma.clipboard.delete({
-      where: { id: id },
-      select: {
-        id: true,
-      },
-    });
 
     return NextResponse.json(data);
   } catch (error) {

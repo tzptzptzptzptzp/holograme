@@ -11,6 +11,7 @@ export const textsConfig = {
     },
     CLIPBOARD_SAVE: {
       SUCCESS: "🦄 美少女ちゃんから受け取りました！",
+      NO_ITEM: "👾 美少女ちゃんは何も持っていないようだ…",
       ERROR: "取得に失敗しました…",
     },
     CLIPBOARD_DELETE: {

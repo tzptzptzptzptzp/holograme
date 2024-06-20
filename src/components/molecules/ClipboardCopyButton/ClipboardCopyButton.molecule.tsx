@@ -12,6 +12,10 @@ export const ClipboardCopyButton = () => {
   const { data } = useGetClipboard();
 
   const handleClick = async () => {
+    if (!data || !data.length) {
+      toast(textsConfig.TOAST.CLIPBOARD_SAVE.NO_ITEM);
+      return;
+    }
     try {
       if (data.length > 0) {
         const lastItem = data[0];
