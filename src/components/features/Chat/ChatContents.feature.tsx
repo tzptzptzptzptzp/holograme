@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
+import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.molecule";
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
@@ -32,7 +33,7 @@ export const ChatContents = () => {
   }));
 
   return (
-    <ContentWrapper>
+    <ContentWrapper className="gap-0">
       <div className="flex gap-3">
         <ContentHead>
           <Icons.Chat color="white" />
@@ -41,6 +42,7 @@ export const ChatContents = () => {
         </ContentHead>
       </div>
       <ChatRoom roomId={currentChatRoomId} />
+      <MessageForm roomId={currentChatRoomId} />
     </ContentWrapper>
   );
 };
