@@ -1,3 +1,4 @@
+import { AirPlane } from "./AirPlane/AirPlane.icon";
 import { ArchiveBox } from "./ArchiveBox/ArchiveBox.icon";
 import { ArrowPath } from "./ArrowPath/ArrowPath.icon";
 import { Chat } from "./Chat/Chat.icon";
@@ -13,6 +14,7 @@ import { Search } from "./Search/Search.icon";
 import { Trash } from "./Trash/Trash.icon";
 
 export const Icons = {
+  AirPlane,
   ArchiveBox,
   ArrowPath,
   Chat,
