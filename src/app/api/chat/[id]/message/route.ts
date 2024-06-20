@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { generateGPTResponse } from "@/app/apiHelpers/generateGPTResponse.helper";
 import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
 import { prisma } from "@/libs/Prisma.lib";
 
@@ -27,7 +28,9 @@ export async function POST(
       );
     }
 
-    const data = await prisma.chatMessage.create({
+    const gptResponsePromise = generateGPTResponse(content);
+
+    const userMessage = await prisma.chatMessage.create({
       data: {
         content,
         role: "user",
@@ -37,20 +40,31 @@ export async function POST(
     });
 
     await prisma.chatRoom.update({
-      where: { id: id, userId: userId },
+      where: { id: id },
       data: {
         updatedDate: new Date(),
       },
     });
 
-    if (!data || data.userId !== userId) {
+    const gptResponse = await gptResponsePromise;
+
+    if (gptResponse === null) {
       return NextResponse.json(
-        { error: "Item not found or unauthorized" },
-        { status: 404 }
+        { error: "Failed to generate GPT response" },
+        { status: 500 }
       );
     }
 
-    return NextResponse.json(data);
+    const gptMessage = await prisma.chatMessage.create({
+      data: {
+        content: gptResponse,
+        role: "assistant",
+        roomId: id,
+        userId: userId,
+      },
+    });
+
+    return NextResponse.json({ userMessage, gptMessage });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
