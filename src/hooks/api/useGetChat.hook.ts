@@ -1,17 +1,17 @@
 import axios from "axios";
-import { Clipboard } from "@prisma/client";
+import { ChatRoom } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/config/queryKeys.config";
 
-const getClipboard = async () => {
+const getChat = async () => {
   if (!axios.defaults.headers.common["Authorization"]) return null;
-  return await axios.get<Clipboard[]>("/api/clipboard");
+  return await axios.get<ChatRoom[]>("/api/chat");
 };
 
-export const useGetClipboard = () => {
+export const useGetChat = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: [queryKeysConfig.GET_CLIPBOARD],
-    queryFn: getClipboard,
+    queryKey: [queryKeysConfig.GET_CHAT],
+    queryFn: getChat,
   });
   return { data: data?.data, isLoading, isError, refetch };
 };
