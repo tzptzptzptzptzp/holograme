@@ -64,7 +64,11 @@ export async function GET(
     const data = await prisma.chatRoom.findUnique({
       where: { id: id, userId: userId },
       include: {
-        messages: true,
+        messages: {
+          orderBy: {
+            date: "desc",
+          },
+        },
       },
     });
 
