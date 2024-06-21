@@ -28,7 +28,14 @@ export async function POST(
       );
     }
 
-    const gptResponsePromise = generateGPTResponse(content);
+    const gptResponse = await generateGPTResponse(content);
+
+    if (gptResponse === null) {
+      return NextResponse.json(
+        { error: "Failed to generate GPT response" },
+        { status: 500 }
+      );
+    }
 
     const userMessage = await prisma.chatMessage.create({
       data: {
@@ -39,28 +46,19 @@ export async function POST(
       },
     });
 
-    await prisma.chatRoom.update({
-      where: { id: id },
-      data: {
-        updatedDate: new Date(),
-      },
-    });
-
-    const gptResponse = await gptResponsePromise;
-
-    if (gptResponse === null) {
-      return NextResponse.json(
-        { error: "Failed to generate GPT response" },
-        { status: 500 }
-      );
-    }
-
     const gptMessage = await prisma.chatMessage.create({
       data: {
         content: gptResponse,
         role: "assistant",
         roomId: id,
         userId: userId,
+      },
+    });
+
+    await prisma.chatRoom.update({
+      where: { id: id },
+      data: {
+        updatedDate: new Date(),
       },
     });
 
