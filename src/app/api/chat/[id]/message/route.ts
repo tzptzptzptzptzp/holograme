@@ -15,7 +15,7 @@ export async function POST(
     }
     const userId = await getUserIdFromToken(token);
 
-    const { content } = await req.json();
+    const { content, prompt } = await req.json();
 
     const roomItem = await prisma.chatRoom.findUnique({
       where: { id: id },
@@ -28,7 +28,7 @@ export async function POST(
       );
     }
 
-    const gptResponse = await generateGPTResponse(content);
+    const gptResponse = await generateGPTResponse(prompt);
 
     if (gptResponse === null) {
       return NextResponse.json(

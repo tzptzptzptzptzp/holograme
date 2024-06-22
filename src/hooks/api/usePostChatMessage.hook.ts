@@ -4,12 +4,15 @@ import { useMutation } from "@tanstack/react-query";
 const postChatMessage = async ({
   content,
   id,
+  prompt,
 }: {
   content: string;
   id: number;
+  prompt: string;
 }) => {
   return await axios.post(`/api/chat/${id}/message`, {
     content,
+    prompt,
   });
 };
 
