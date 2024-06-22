@@ -1,3 +1,5 @@
+import { ChatMessage } from "@prisma/client";
+
 export type SelectedContentStateType =
   | "home"
   | "chat"
@@ -6,3 +8,12 @@ export type SelectedContentStateType =
   | "setting";
 
 export type SearchTypeStateType = "newTab" | "currentTab";
+
+type Messages = Omit<ChatMessage, "role"> & {
+  role: "user" | "assistant";
+};
+
+export type ChatMessageStateType = {
+  isThinking: boolean;
+  messages: Messages[];
+};
