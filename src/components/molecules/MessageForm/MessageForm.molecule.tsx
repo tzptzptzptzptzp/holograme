@@ -10,6 +10,7 @@ import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
+import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
 
 type Inputs = {
   message: string;
@@ -56,10 +57,11 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         isLoading ? "bg-disableBackground" : "bg-white"
       )}
     >
-      <Input
+      <Textarea
         className="flex-1 w-full"
         disabled={isLoading}
         placeholder={"🎉 聞きたいことを入力してね！何を聞く？"}
+        rows={1}
         {...register("message")}
       />
       <Button className="w-fit" type="submit">
