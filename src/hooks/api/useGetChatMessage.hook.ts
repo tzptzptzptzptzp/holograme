@@ -7,11 +7,12 @@ type CustomChatMessage = Omit<ChatMessage, "role"> & {
   role: "user" | "assistant";
 };
 
-type GetChatMessageResponse = {
+export type GetChatMessageResponse = {
   messages: CustomChatMessage[];
 } & ChatRoom;
 
 const getChatMessage = async (id: number) => {
+  if (id === 0) return null;
   if (!axios.defaults.headers.common["Authorization"]) return null;
   return await axios.get<GetChatMessageResponse>(`/api/chat/${id}`);
 };
