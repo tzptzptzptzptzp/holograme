@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import styles from "./ChatBalloon.module.scss";
+import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 
 type Props = {
   message: string;
@@ -11,7 +12,7 @@ export const ChatBalloon = ({ message, role }: Props) => {
     <div className={clsx(styles.balloon, styles[role])}>
       <div className={clsx(styles.inner, styles[role])}>
         <div className={clsx(message === "考え中" && styles.thinking)}>
-          {message}
+          <CustomReactMarkdown markdown={message} />
         </div>
       </div>
     </div>
