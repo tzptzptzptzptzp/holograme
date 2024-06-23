@@ -38,7 +38,12 @@ export const ChatContents = () => {
         <ContentHead>
           <Icons.Chat color="white" />
           <p>Chat Room</p>
-          <Select id="chat" onChange={handleChange} options={chatRoomOptions} />
+          <Select
+            className="ml-auto mr-2 bg-transparent text-[16px]"
+            id="chat"
+            onChange={handleChange}
+            options={chatRoomOptions}
+          />
         </ContentHead>
       </div>
       <ChatRoom roomId={currentChatRoomId} />

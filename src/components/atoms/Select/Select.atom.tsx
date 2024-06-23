@@ -16,10 +16,7 @@ type Props = {
 export const Select = ({ className, id, onChange, options, value }: Props) => {
   return (
     <select
-      className={clsx(
-        "ml-auto mr-2 bg-transparent text-[16px] focus-visible:outline-none",
-        className
-      )}
+      className={clsx("focus-visible:outline-none", className)}
       id={id}
       name={id}
       onChange={onChange}
