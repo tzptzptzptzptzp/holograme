@@ -51,6 +51,9 @@ export const ChatContents = () => {
             <Button>
               <Icons.PlusCircle color="white" />
             </Button>
+            <Button>
+              <Icons.Config color="white" />
+            </Button>
           </div>
         </ContentHead>
       </div>
