@@ -11,6 +11,7 @@ type TextareaProps = {
   onBlur?: () => void;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onInput?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -21,6 +22,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onBlur,
       onChange,
       onInput,
+      onKeyDown,
       placeholder,
       rows = 3,
       cols,
@@ -41,6 +43,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         onBlur={onBlur}
         onChange={onChange}
         onInput={onInput}
+        onKeyDown={onKeyDown}
         ref={ref}
         {...props}
       />
