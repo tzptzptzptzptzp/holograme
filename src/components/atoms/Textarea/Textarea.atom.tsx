@@ -1,13 +1,17 @@
-import { forwardRef } from "react";
+import { forwardRef, ChangeEvent } from "react";
 import clsx from "clsx";
 
 type TextareaProps = {
   className?: string;
   disabled?: boolean;
   placeholder?: string;
-  resize?: boolean;
   rows?: number;
   cols?: number;
+  value?: string;
+  onBlur?: () => void;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onInput?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
@@ -15,9 +19,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     {
       className,
       disabled = false,
+      onBlur,
+      onChange,
+      onInput,
+      onKeyDown,
       placeholder,
-      resize = false,
-      rows = 1,
+      rows = 3,
       cols,
       ...props
     },
@@ -26,14 +33,17 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         className={clsx(
-          "w-full py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText",
-          className,
-          resize ? "resize" : "resize-none"
+          "w-full max-h-80 py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText resize-none",
+          className
         )}
         disabled={disabled}
         placeholder={placeholder}
         rows={rows}
         cols={cols}
+        onBlur={onBlur}
+        onChange={onChange}
+        onInput={onInput}
+        onKeyDown={onKeyDown}
         ref={ref}
         {...props}
       />
