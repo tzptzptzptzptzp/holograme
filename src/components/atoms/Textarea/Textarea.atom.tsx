@@ -31,7 +31,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <textarea
         className={clsx(
-          "w-full py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText resize-none",
+          "w-full max-h-80 py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText resize-none",
           className
         )}
         disabled={disabled}
