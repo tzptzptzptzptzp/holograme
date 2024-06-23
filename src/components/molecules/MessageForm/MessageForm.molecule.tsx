@@ -63,6 +63,9 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     if ((e.key === "Enter" && e.metaKey) || (e.key === "Enter" && e.ctrlKey)) {
       e.preventDefault();
       handleSubmit(onSubmit)();
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
     }
   };
   return (
