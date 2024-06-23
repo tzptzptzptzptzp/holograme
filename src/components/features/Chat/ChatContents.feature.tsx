@@ -7,6 +7,7 @@ import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { Icons } from "@/icons";
+import { Button } from "@/components/atoms/Button/Button.atom";
 
 export const ChatContents = () => {
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
@@ -35,10 +36,25 @@ export const ChatContents = () => {
   return (
     <ContentWrapper className="gap-0">
       <div className="flex gap-3">
-        <ContentHead>
-          <Icons.Chat color="white" />
-          <p>Chat Room</p>
-          <Select id="chat" onChange={handleChange} options={chatRoomOptions} />
+        <ContentHead className="justify-between">
+          <div className="flex items-center gap-[6px]">
+            <Icons.Chat color="white" />
+            <p>Chat Room</p>
+          </div>
+          <div className="flex items-center gap-[6px]">
+            <Select
+              className="ml-auto mr-2 bg-transparent text-[16px]"
+              id="chat"
+              onChange={handleChange}
+              options={chatRoomOptions}
+            />
+            <Button>
+              <Icons.PlusCircle color="white" />
+            </Button>
+            <Button>
+              <Icons.Config color="white" />
+            </Button>
+          </div>
         </ContentHead>
       </div>
       <ChatRoom roomId={currentChatRoomId} />

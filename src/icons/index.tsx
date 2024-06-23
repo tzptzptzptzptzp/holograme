@@ -10,6 +10,7 @@ import { EyeSlash } from "./EyeSlash/EyeSlash.icon";
 import { Home } from "./Home/Home.icon";
 import { NewTab } from "./NewTab/NewTab.icon";
 import { Paste } from "./Paste/Paste.icon";
+import { PlusCircle } from "./PlusCircle/PlusCircle.icon";
 import { Search } from "./Search/Search.icon";
 import { Trash } from "./Trash/Trash.icon";
 
@@ -26,6 +27,7 @@ export const Icons = {
   Home,
   NewTab,
   Paste,
+  PlusCircle,
   Search,
   Trash,
 };
