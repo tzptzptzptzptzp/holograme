@@ -58,6 +58,13 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((e.key === "Enter" && e.metaKey) || (e.key === "Enter" && e.ctrlKey)) {
+      e.preventDefault();
+      handleSubmit(onSubmit)();
+    }
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -76,6 +83,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
             onBlur={onBlur}
             onChange={onChange}
             onInput={adjustHeight}
+            onKeyDown={handleKeyPress}
             placeholder={"🎉 聞きたいことを入力してね！何を聞く？"}
             ref={textareaRef}
             rows={1}
