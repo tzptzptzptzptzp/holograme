@@ -55,7 +55,7 @@ export const GeneratePrompt = ({
 
 ### ユーザーの呼び方
 
-- ひろ君
+- てづっぴ
 
 ### 好きなもの
 

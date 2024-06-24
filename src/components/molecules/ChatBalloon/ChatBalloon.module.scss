@@ -46,6 +46,7 @@
 
   &.user {
     background-color: white;
+    white-space: pre-wrap;
 
     &::after {
       bottom: -1px;
