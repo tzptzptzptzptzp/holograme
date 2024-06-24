@@ -22,10 +22,6 @@ export const ChatContents = () => {
     if (data) setCurrentChatRoomId(data[0].id ?? 0);
   }, [data, setCurrentChatRoomId]);
 
-  useEffect(() => {
-    console.log(currentChatRoomId);
-  }, [currentChatRoomId]);
-
   if (isLoading || !data) return <Loader />;
 
   const chatRoomOptions = data.map((chatRoom) => ({
