@@ -12,15 +12,17 @@ export type GetChatMessageResponse = {
 } & ChatRoom;
 
 const getChatMessage = async (id: number) => {
-  if (id === 0) return null;
-  if (!axios.defaults.headers.common["Authorization"]) return null;
-  return await axios.get<GetChatMessageResponse>(`/api/chat/${id}`);
+  if (!axios.defaults.headers.common["Authorization"]) {
+    throw new Error("Authorization token is missing");
+  }
+  const res = await axios.get<GetChatMessageResponse>(`/api/chat/${id}`);
+  return res.data;
 };
 
 export const useGetChatMessage = (id: number) => {
-  const { data, isLoading, isError, refetch } = useQuery({
+  return useQuery({
     queryKey: [queryKeysConfig.GET_CHAT_MESSAGE, id],
     queryFn: () => getChatMessage(id),
+    enabled: !!axios.defaults.headers.common["Authorization"] && id !== 0,
   });
-  return { data: data?.data, isLoading, isError, refetch };
 };

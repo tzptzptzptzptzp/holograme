@@ -1,14 +1,8 @@
 import dynamic from "next/dynamic";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
+import { HomeContents } from "@/components/features/Home/HomeContents.feature";
 
-const HomeContents = dynamic(
-  () =>
-    import("@/components/features/Home/HomeContents.feature").then(
-      (mod) => mod.HomeContents
-    ),
-  { loading: () => <Loader /> }
-);
 const ChatContents = dynamic(
   () =>
     import("@/components/features/Chat/ChatContents.feature").then(

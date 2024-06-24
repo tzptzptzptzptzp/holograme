@@ -16,7 +16,10 @@ type Props = {
 export const Select = ({ className, id, onChange, options, value }: Props) => {
   return (
     <select
-      className={clsx("focus-visible:outline-none", className)}
+      className={clsx(
+        "w-full max-w-fit truncate focus-visible:outline-none",
+        className
+      )}
       id={id}
       name={id}
       onChange={onChange}

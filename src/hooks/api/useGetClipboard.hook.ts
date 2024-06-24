@@ -4,14 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/config/queryKeys.config";
 
 const getClipboard = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) return null;
-  return await axios.get<Clipboard[]>("/api/clipboard");
+  if (!axios.defaults.headers.common["Authorization"]) {
+    throw new Error("Authorization token is missing");
+  }
+  const res = await axios.get<Clipboard[]>("/api/clipboard");
+  return res.data;
 };
 
 export const useGetClipboard = () => {
-  const { data, isLoading, isError, refetch } = useQuery({
+  return useQuery({
     queryKey: [queryKeysConfig.GET_CLIPBOARD],
     queryFn: getClipboard,
+    enabled: !!axios.defaults.headers.common["Authorization"],
   });
-  return { data: data?.data, isLoading, isError, refetch };
 };

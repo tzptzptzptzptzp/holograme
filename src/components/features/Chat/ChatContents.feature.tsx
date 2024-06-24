@@ -22,10 +22,6 @@ export const ChatContents = () => {
     if (data) setCurrentChatRoomId(data[0].id ?? 0);
   }, [data, setCurrentChatRoomId]);
 
-  useEffect(() => {
-    console.log(currentChatRoomId);
-  }, [currentChatRoomId]);
-
   if (isLoading || !data) return <Loader />;
 
   const chatRoomOptions = data.map((chatRoom) => ({
@@ -37,21 +33,23 @@ export const ChatContents = () => {
     <ContentWrapper className="gap-0">
       <div className="flex gap-3">
         <ContentHead className="justify-between">
-          <div className="flex items-center gap-[6px]">
+          <div className="flex items-center gap-[6px] flex-none">
             <Icons.Chat color="white" />
             <p>Chat Room</p>
           </div>
-          <div className="flex items-center gap-[6px]">
-            <Select
-              className="ml-auto mr-2 bg-transparent text-[16px]"
-              id="chat"
-              onChange={handleChange}
-              options={chatRoomOptions}
-            />
-            <Button>
+          <div className="flex items-center gap-1.5 w-full">
+            <div className="flex justify-end flex-1">
+              <Select
+                className="flex-grow pr-2 bg-transparent text-right"
+                id="chat"
+                onChange={handleChange}
+                options={chatRoomOptions}
+              />
+            </div>
+            <Button className="flex-shrink-0">
               <Icons.PlusCircle color="white" />
             </Button>
-            <Button>
+            <Button className="flex-shrink-0">
               <Icons.Config color="white" />
             </Button>
           </div>
