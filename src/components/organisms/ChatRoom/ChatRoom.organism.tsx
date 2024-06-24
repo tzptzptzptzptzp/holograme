@@ -33,7 +33,7 @@ export const ChatRoom = ({ roomId }: Props) => {
     );
 
   return (
-    <div className="flex flex-col-reverse gap-3 z-0 overflow-y-scroll h-full max-h-full mt-3 pb-3">
+    <div className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 pb-3">
       {state.messages.map((message) => (
         <ChatBalloon
           key={message.id}
