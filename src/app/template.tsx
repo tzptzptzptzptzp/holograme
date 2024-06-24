@@ -37,6 +37,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
           process.env.NODE_ENV === "development") &&
         path === "/"
       }
+      shadow={path === "/"}
     >
       {authStatus !== "loading" && children}
     </GlobalFrame>

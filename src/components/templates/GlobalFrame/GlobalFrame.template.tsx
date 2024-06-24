@@ -1,12 +1,21 @@
+import clsx from "clsx";
 import { Bounce, ToastContainer } from "react-toastify";
 import { Avatar } from "../../atoms/Avatar/Avatar.atom";
 import { Background } from "../../atoms/Background/Background.atom";
 import { FrameShadow } from "../../atoms/FrameShadow/FrameShadow.atom";
 import { Navigation } from "../../organisms/Navigation/Navigation. organism";
 
-type Props = { children: React.ReactNode; contents?: boolean };
+type Props = {
+  children: React.ReactNode;
+  contents?: boolean;
+  shadow?: boolean;
+};
 
-export const GlobalFrame = ({ children, contents = true }: Props) => {
+export const GlobalFrame = ({
+  children,
+  contents = true,
+  shadow = true,
+}: Props) => {
   return (
     <div className="flex items-center justify-center relative z-0 w-screen h-screen p-12">
       <div className="relative overflow-hidden w-full h-full rounded-3xl">
@@ -17,7 +26,12 @@ export const GlobalFrame = ({ children, contents = true }: Props) => {
               <Avatar />
             </div>
           )}
-          <main className="u-shadow-sm flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-8">
+          <main
+            className={clsx(
+              "flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-8",
+              shadow && "u-shadow-sm"
+            )}
+          >
             {children}
           </main>
           {contents && <Navigation />}
