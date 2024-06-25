@@ -1,3 +1,4 @@
+import { ModalContentType } from "@/types";
 import { ChatMessage } from "@prisma/client";
 
 export type SelectedContentStateType =
@@ -16,4 +17,9 @@ type Messages = Omit<ChatMessage, "role"> & {
 export type ChatMessageStateType = {
   isThinking: boolean;
   messages: Messages[];
+};
+
+export type ModalStateType = {
+  content: ModalContentType;
+  isOpen: boolean;
 };
