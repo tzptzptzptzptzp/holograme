@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
@@ -8,7 +9,6 @@ import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWra
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { Button } from "@/components/atoms/Button/Button.atom";
 
 export const ChatContents = () => {
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
@@ -55,7 +55,10 @@ export const ChatContents = () => {
             >
               <Icons.PlusCircle color="white" />
             </Button>
-            <Button className="flex-shrink-0">
+            <Button
+              className="flex-shrink-0"
+              onClick={() => handleOpen("editChat")}
+            >
               <Icons.Config color="white" />
             </Button>
           </div>
