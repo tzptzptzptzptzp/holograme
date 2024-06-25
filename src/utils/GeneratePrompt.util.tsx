@@ -9,10 +9,10 @@ export const GeneratePrompt = ({
   message,
   chatMessage,
 }: GeneratePromptType): string => {
-  const previousAnswer = chatMessage?.messages[0].content ?? "";
-  const previousQuestion = chatMessage?.messages[1].content ?? "";
-  const penultimateAnswer = chatMessage?.messages[2].content ?? "";
-  const penultimateQuestion = chatMessage?.messages[3].content ?? "";
+  const previousAnswer = chatMessage?.messages[0]?.content ?? "";
+  const previousQuestion = chatMessage?.messages[1]?.content ?? "";
+  const penultimateAnswer = chatMessage?.messages[2]?.content ?? "";
+  const penultimateQuestion = chatMessage?.messages[3]?.content ?? "";
   const prompt = `
 # 設定項目
 
