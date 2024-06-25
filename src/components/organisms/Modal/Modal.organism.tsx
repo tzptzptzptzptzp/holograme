@@ -18,7 +18,7 @@ export const Modal = () => {
         className="absolute z-0 w-full h-full bg-black bg-opacity-30 cursor-pointer"
         onClick={handleClose}
       ></div>
-      <div className="u-shadow-sm flex items-center justify-center z-10 overflow-x-hidden overflow-y-scroll min-w-72 min-h-72 max-h-[80%] p-8 rounded-3xl bg-white">
+      <div className="u-shadow-sm flex items-center justify-center z-10 overflow-x-hidden overflow-y-scroll min-w-72 max-h-[80%] p-8 rounded-3xl bg-white">
         {ModalContentsSwitcher(content)}
       </div>
     </div>
