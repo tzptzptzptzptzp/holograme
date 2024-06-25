@@ -16,6 +16,8 @@ type Messages = Omit<ChatMessage, "role"> & {
 
 export type ChatMessageStateType = {
   isThinking: boolean;
+  roomId: number;
+  name: string;
   messages: Messages[];
 };
 
