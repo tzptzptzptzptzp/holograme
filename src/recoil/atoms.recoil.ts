@@ -2,6 +2,7 @@ import { atom } from "recoil";
 import { Session } from "@supabase/supabase-js";
 import {
   ChatMessageStateType,
+  ModalStateType,
   SearchTypeStateType,
   SelectedContentStateType,
 } from "./types.recoil";
@@ -40,5 +41,13 @@ export const ChatMessageState = atom<ChatMessageStateType>({
         date: new Date(),
       },
     ],
+  },
+});
+
+export const ModalState = atom<ModalStateType>({
+  key: "Modal",
+  default: {
+    content: "",
+    isOpen: false,
   },
 });
