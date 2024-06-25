@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import { Bounce, ToastContainer } from "react-toastify";
-import { Avatar } from "../../atoms/Avatar/Avatar.atom";
-import { Background } from "../../atoms/Background/Background.atom";
-import { FrameShadow } from "../../atoms/FrameShadow/FrameShadow.atom";
-import { Navigation } from "../../organisms/Navigation/Navigation. organism";
+import { Avatar } from "@/components/atoms/Avatar/Avatar.atom";
+import { Background } from "@/components/atoms/Background/Background.atom";
+import { FrameShadow } from "@/components/atoms/FrameShadow/FrameShadow.atom";
+import { Modal } from "@/components/organisms/Modal/Modal.organism";
+import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 
 type Props = {
   children: React.ReactNode;
@@ -51,6 +52,7 @@ export const GlobalFrame = ({
           theme="light"
           transition={Bounce}
         />
+        <Modal />
       </div>
     </div>
   );
