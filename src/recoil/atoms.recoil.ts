@@ -31,6 +31,8 @@ export const ChatMessageState = atom<ChatMessageStateType>({
   key: "ChatMessage",
   default: {
     isThinking: false,
+    roomId: 0,
+    name: "",
     messages: [
       {
         id: 0,

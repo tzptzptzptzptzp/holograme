@@ -8,6 +8,9 @@ export const textsConfig = {
     CHAT_CREATE: {
       SUCCESS: "🦄 チャットルームを作成しました！",
     },
+    CHAT_UPDATE: {
+      SUCCESS: "🦄 ルーム名を変更しました！",
+    },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",
       ERROR: "保存に失敗しました…",

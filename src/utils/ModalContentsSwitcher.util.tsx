@@ -10,9 +10,19 @@ const CreateChatContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const EditChatContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Chat/EditChatModal/EditChatModal.feature"
+    ).then((mod) => mod.EditChatModal),
+  { loading: () => <Loader /> }
+);
+
 export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
   switch (selectedContent) {
     case "createChat":
       return <CreateChatContent />;
+    case "editChat":
+      return <EditChatContent />;
   }
 };

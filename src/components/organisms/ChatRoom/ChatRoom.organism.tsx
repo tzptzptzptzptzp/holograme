@@ -19,6 +19,8 @@ export const ChatRoom = ({ roomId }: Props) => {
     if (isLoading || !data) return;
     setState({
       isThinking: false,
+      roomId: data.id,
+      name: data.name,
       messages: data.messages.map((message) => ({
         ...message,
       })),
