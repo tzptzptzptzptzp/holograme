@@ -6,6 +6,7 @@ import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.mole
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { Button } from "@/components/atoms/Button/Button.atom";
 
@@ -13,6 +14,8 @@ export const ChatContents = () => {
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
 
   const { data, isLoading } = useGetChat();
+
+  const { handleOpen } = useModal();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentChatRoomId(Number(e.target.value));
@@ -46,7 +49,10 @@ export const ChatContents = () => {
                 options={chatRoomOptions}
               />
             </div>
-            <Button className="flex-shrink-0">
+            <Button
+              className="flex-shrink-0"
+              onClick={() => handleOpen("createChat")}
+            >
               <Icons.PlusCircle color="white" />
             </Button>
             <Button className="flex-shrink-0">
