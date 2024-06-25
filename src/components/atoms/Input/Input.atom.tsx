@@ -4,13 +4,25 @@ import clsx from "clsx";
 type Props = {
   className?: string;
   disabled?: boolean;
+  id?: string;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: "text" | "password" | "email";
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(
   (
-    { className, disabled = false, placeholder, type = "text", ...props },
+    {
+      className,
+      disabled = false,
+      id,
+      onBlur,
+      onChange,
+      placeholder,
+      type = "text",
+      ...props
+    },
     ref
   ) => {
     return (
@@ -20,6 +32,9 @@ const Input = forwardRef<HTMLInputElement, Props>(
           className
         )}
         disabled={disabled}
+        id={id}
+        onBlur={onBlur}
+        onChange={onChange}
         placeholder={placeholder}
         type={type}
         ref={ref}

@@ -7,7 +7,7 @@ type Props = {
   disabled?: boolean;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "disable" | "none";
+  variant?: "primary" | "secondary" | "cancel" | "disable" | "none";
 };
 
 export const Button = ({
