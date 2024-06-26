@@ -16,13 +16,13 @@ datasource db {
 }
 
 model ChatRoom {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   userId      String
   name        String
-  createdDate DateTime @default(now()) 
-  updatedDate DateTime @updatedAt
+  createdDate DateTime     @default(now()) 
+  updatedDate DateTime     @updatedAt
 
-  messages  ChatMessage[]
+  messages    ChatMessage[]
 }
 
 model ChatMessage {
@@ -33,7 +33,7 @@ model ChatMessage {
   role      String
   date      DateTime @default(now())
 
-  room      ChatRoom @relation(fields: [roomId], references: [id])
+  room      ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }
 
 model Clipboard {
