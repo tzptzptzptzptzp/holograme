@@ -9,6 +9,13 @@ const CreateChatContent = dynamic(
     ).then((mod) => mod.CreateChatModal),
   { loading: () => <Loader /> }
 );
+const DeleteChatContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Chat/DeleteChatModal/DeleteChatModal.feature"
+    ).then((mod) => mod.DeleteChatModal),
+  { loading: () => <Loader /> }
+);
 
 const EditChatContent = dynamic(
   () =>
@@ -22,6 +29,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
   switch (selectedContent) {
     case "createChat":
       return <CreateChatContent />;
+    case "deleteChat":
+      return <DeleteChatContent />;
     case "editChat":
       return <EditChatContent />;
   }

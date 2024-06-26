@@ -8,6 +8,9 @@ export const textsConfig = {
     CHAT_CREATE: {
       SUCCESS: "🦄 チャットルームを作成しました！",
     },
+    CHAT_DELETE: {
+      SUCCESS: "🦄 チャットルームを削除しました！",
+    },
     CHAT_UPDATE: {
       SUCCESS: "🦄 ルーム名を変更しました！",
     },
