@@ -6,7 +6,7 @@ export const CustomReactMarkdown = ({ markdown }: { markdown: string }) => {
     <ReactMarkdown
       components={{
         code: CodeBlock,
-        p: ({ children }) => <div>{children}</div>,
+        p: ({ children }) => <div className="leading-[1.8]">{children}</div>,
       }}
     >
       {markdown}

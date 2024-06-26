@@ -19,7 +19,7 @@
   max-width: 92%;
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
-  line-height: 1.625;
+  line-height: 1.5;
 
   &::after {
     content: "";
@@ -46,7 +46,7 @@
 
   &.user {
     background-color: white;
-    white-space: pre-wrap;
+    white-space: break-spaces;
 
     &::after {
       bottom: -1px;
