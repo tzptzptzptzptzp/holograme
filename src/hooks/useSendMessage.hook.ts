@@ -34,6 +34,8 @@ export const useSendMessage = () => {
 
     setState({
       isThinking: true,
+      name: state.name,
+      roomId: state.roomId,
       messages: newMessages,
     });
   };
