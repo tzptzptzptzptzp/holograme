@@ -43,7 +43,7 @@ export const ChatContents = () => {
           <div className="flex items-center gap-1.5 w-full">
             <div className="flex justify-end flex-1">
               <Select
-                className="flex-grow pr-2 bg-transparent text-right"
+                className="flex-grow pr-2 bg-transparent text-[16px] text-right"
                 id="chat"
                 onChange={handleChange}
                 options={chatRoomOptions}
