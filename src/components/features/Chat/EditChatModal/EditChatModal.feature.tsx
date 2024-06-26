@@ -1,17 +1,17 @@
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useRecoilValue } from "recoil";
+import { Button } from "@/components/atoms/Button/Button.atom";
+import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
-import { usePostChat } from "@/hooks/api/usePostChat.hook";
+import { usePutChat } from "@/hooks/api/usePutChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
-import { useEffect } from "react";
-import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
-import { useRecoilValue } from "recoil";
 import { ChatMessageState } from "@/recoil/atoms.recoil";
-import { usePutChat } from "@/hooks/api/usePutChat.hook";
 
 type Inputs = {
   chatRoomName: string;
@@ -30,7 +30,7 @@ export const EditChatModal = () => {
     setValue,
   } = useForm<Inputs>();
 
-  const { handleClose } = useModal();
+  const { handleClose, handleOpen } = useModal();
 
   useEffect(() => {
     setValue("chatRoomName", chatRoom.name);
@@ -51,6 +51,7 @@ export const EditChatModal = () => {
 
   return (
     <ModalInner
+      buttonText="更新"
       form
       onSubmit={handleSubmit(onSubmit)}
       title="チャットルーム編集"
@@ -63,6 +64,11 @@ export const EditChatModal = () => {
           required: GetRequiredMessage("ルーム名"),
         })}
       />
+      <div className="flex justify-center">
+        <Button onClick={() => handleOpen("deleteChat")}>
+          <ErrorMessage>このルームを削除する</ErrorMessage>
+        </Button>
+      </div>
     </ModalInner>
   );
 };
