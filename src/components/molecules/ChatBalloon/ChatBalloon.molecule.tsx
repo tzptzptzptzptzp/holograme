@@ -11,7 +11,12 @@ export const ChatBalloon = ({ message, role }: Props) => {
   return (
     <div className={clsx(styles.balloon, styles[role])}>
       <div className={clsx(styles.inner, styles[role])}>
-        <div className={clsx(message === "考え中" && styles.thinking)}>
+        <div
+          className={clsx(
+            "flex flex-col gap-4",
+            message === "考え中" && styles.thinking
+          )}
+        >
           <CustomReactMarkdown markdown={message} />
         </div>
       </div>

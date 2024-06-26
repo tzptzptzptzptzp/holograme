@@ -24,6 +24,13 @@ const HistoryContents = dynamic(
     ),
   { loading: () => <Loader /> }
 );
+const MemoContents = dynamic(
+  () =>
+    import("@/components/features/Memo/MemoContents.feature").then(
+      (mod) => mod.MemoContents
+    ),
+  { loading: () => <Loader /> }
+);
 const SettingContents = dynamic(
   () =>
     import("@/components/features/Setting/SettingContents.feature").then(
@@ -40,6 +47,8 @@ export const ContentsSwitcher = (selectedContent: SelectedContentStateType) => {
       return <ClipboardContents />;
     case "history":
       return <HistoryContents />;
+    case "memo":
+      return <MemoContents />;
     case "setting":
       return <SettingContents />;
     default:
