@@ -9,7 +9,7 @@ const postChat = async ({
   name: string;
   description: string;
   defaultMessage: string;
-}) => {
+}): Promise<{ data: { id: number } }> => {
   return await axios.post("/api/chat", {
     name,
     description,

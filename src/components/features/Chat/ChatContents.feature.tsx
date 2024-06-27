@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
@@ -9,9 +10,13 @@ import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWra
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
+import { ChatMessageState } from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
+  const isFirstLoad = useRef(true);
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
+
+  const chatRoom = useRecoilValue(ChatMessageState);
 
   const { data, isLoading } = useGetChat();
 
@@ -22,8 +27,15 @@ export const ChatContents = () => {
   };
 
   useEffect(() => {
-    if (data) setCurrentChatRoomId(data[0].id ?? 0);
+    if (isFirstLoad.current && data) {
+      setCurrentChatRoomId(data[0].id ?? 0);
+      isFirstLoad.current = false;
+    }
   }, [data, setCurrentChatRoomId]);
+
+  useEffect(() => {
+    setCurrentChatRoomId(chatRoom.roomId);
+  }, [chatRoom, setCurrentChatRoomId]);
 
   if (isLoading || !data) return <Loader />;
 
@@ -47,6 +59,7 @@ export const ChatContents = () => {
                 id="chat"
                 onChange={handleChange}
                 options={chatRoomOptions}
+                value={currentChatRoomId}
               />
             </div>
             <Button

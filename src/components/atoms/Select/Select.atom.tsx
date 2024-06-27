@@ -10,7 +10,7 @@ type Props = {
   id: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
-  value?: string;
+  value?: string | number;
 };
 
 export const Select = ({ className, id, onChange, options, value }: Props) => {

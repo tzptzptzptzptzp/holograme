@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
 import { colorConfig } from "@/config/color.config";
@@ -9,6 +10,7 @@ import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
+import { ChatMessageState } from "@/recoil/atoms.recoil";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
 type Inputs = {
@@ -19,17 +21,20 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const chat = useRecoilValue(ChatMessageState);
+
   const { sendMessage } = useSendMessage();
 
   const { mutate } = usePostChatMessage();
-  const { data: chatMessage, refetch } = useGetChatMessage(roomId);
+  const { refetch } = useGetChatMessage(roomId);
 
   const { control, handleSubmit, reset, setFocus, setValue } =
     useForm<Inputs>();
 
   useEffect(() => {
     setFocus("message");
-  }, [setFocus]);
+    setValue("message", chat.defaultMessage);
+  }, [chat, setFocus, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setIsLoading(true);
@@ -37,14 +42,15 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     sendMessage(message);
     const prompt = GeneratePrompt({
       message,
-      chatMessage,
+      description: chat.description,
+      chatMessage: chat.messages,
     });
     mutate(
       { content: message, id: roomId, prompt },
       {
         onSuccess: () => {
           reset();
-          setValue("message", "");
+          setValue("message", chat.defaultMessage);
           refetch();
           setIsLoading(false);
         },

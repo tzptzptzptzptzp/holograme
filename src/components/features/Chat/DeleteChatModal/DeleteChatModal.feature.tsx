@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
@@ -9,6 +10,8 @@ import { useModal } from "@/hooks/useModal.hook";
 import { ChatMessageState } from "@/recoil/atoms.recoil";
 
 export const DeleteChatModal = () => {
+  const [apiPending, setApiPending] = useState(false);
+
   const mutate = useDeleteChat();
   const { refetch } = useGetChat();
 
@@ -18,11 +21,13 @@ export const DeleteChatModal = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setApiPending(true);
     mutate(
       { id: chatRoom.roomId },
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_DELETE.SUCCESS);
+          setApiPending(false);
           refetch();
           handleClose();
         },
@@ -32,6 +37,7 @@ export const DeleteChatModal = () => {
 
   return (
     <ModalInner
+      buttonDisabled={apiPending}
       buttonText="削除"
       form
       onSubmit={(e) => onSubmit(e)}

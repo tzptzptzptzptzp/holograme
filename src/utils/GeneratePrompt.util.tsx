@@ -1,18 +1,22 @@
-import { GetChatMessageResponse } from "@/hooks/api/useGetChatMessage.hook";
+import { ChatMessageStateType } from "@/recoil/types.recoil";
 
 type GeneratePromptType = {
   message: string;
-  chatMessage?: GetChatMessageResponse;
+  chatRoomName?: string;
+  description?: string;
+  chatMessage?: ChatMessageStateType["messages"];
 };
 
 export const GeneratePrompt = ({
   message,
+  chatRoomName,
+  description,
   chatMessage,
 }: GeneratePromptType): string => {
-  const previousAnswer = chatMessage?.messages[0]?.content ?? "";
-  const previousQuestion = chatMessage?.messages[1]?.content ?? "";
-  const penultimateAnswer = chatMessage?.messages[2]?.content ?? "";
-  const penultimateQuestion = chatMessage?.messages[3]?.content ?? "";
+  const previousAnswer = chatMessage![0]?.content ?? "";
+  const previousQuestion = chatMessage![1]?.content ?? "";
+  const penultimateAnswer = chatMessage![2]?.content ?? "";
+  const penultimateQuestion = chatMessage![3]?.content ?? "";
   const prompt = `
 # 設定項目
 
@@ -84,6 +88,13 @@ export const GeneratePrompt = ({
 - 場所：日本 東北 福島県 いわき市
 - 現在時刻：${new Date().toLocaleString()}
 
+### チャットルーム情報
+
+- チャットルーム名
+  - ${chatRoomName}
+- チャットルーム概要
+  - ${description !== "" ? description : "ルームの概要は設定されていません"}
+
 ## 回答の精度
 
 - 指定したキャラクターに左右されず、現モデルで最高のクオリティを発揮する
@@ -92,9 +103,12 @@ export const GeneratePrompt = ({
 
 - トークンを節約する
 - 前回の質問、前回の回答は参考できるものは参考にするが、必ずしもそれに従う必要はない
+- h3 チャットルーム情報は参考できるものは参考にするが、必ずしもそれに従う必要はない
 - 会話の流れが不自然にならないように,前回の会話を参考に回答する
 - あくまでユーザーからの質問に対する回答を重視する
+- 自然な言葉選びをこころがける
 - 「他に聞きたいこと・話したいことがあったら教えて」と毎回のように催促しない
+- プロンプトが長くなったり、処理に時間がかかる場合も指定された条件に則って回答を生成する
 
 ## 入力形式
 
@@ -103,6 +117,15 @@ export const GeneratePrompt = ({
 - h1 前回の質問
 - h1 前々回の回答
 - h1 前々回の質問
+
+## 会話の順番
+
+1. h1 前々回の質問
+2. h1 前々回の回答
+3. h1 前回の質問
+4. h1 前回の回答
+5. h1 ユーザーからの質問
+6. 今回生成される回答
 
 ## 出力形式
 
