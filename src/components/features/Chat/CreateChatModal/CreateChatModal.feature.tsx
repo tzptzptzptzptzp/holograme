@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
@@ -16,6 +17,8 @@ type Inputs = {
 };
 
 export const CreateChatModal = () => {
+  const [apiPending, setApiPending] = useState(false);
+
   const mutate = usePostChat();
   const { refetch } = useGetChat();
 
@@ -28,6 +31,7 @@ export const CreateChatModal = () => {
   const { handleClose } = useModal();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setApiPending(true);
     mutate(
       {
         name: data.chatRoomName,
@@ -37,6 +41,7 @@ export const CreateChatModal = () => {
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_CREATE.SUCCESS);
+          setApiPending(false);
           refetch();
           handleClose();
         },
@@ -46,6 +51,7 @@ export const CreateChatModal = () => {
 
   return (
     <ModalInner
+      buttonDisabled={apiPending}
       form
       onSubmit={handleSubmit(onSubmit)}
       title={textsConfig.FORM.CHAT.TITLE.CREATE}

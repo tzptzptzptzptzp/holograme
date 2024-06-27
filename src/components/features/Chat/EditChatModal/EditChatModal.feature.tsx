@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
@@ -21,6 +21,8 @@ type Inputs = {
 };
 
 export const EditChatModal = () => {
+  const [apiPending, setApiPending] = useState(false);
+
   const mutate = usePutChat();
   const { refetch } = useGetChat();
 
@@ -42,6 +44,7 @@ export const EditChatModal = () => {
   }, [chatRoom, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setApiPending(true);
     mutate(
       {
         id: chatRoom.roomId,
@@ -52,6 +55,7 @@ export const EditChatModal = () => {
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_UPDATE.SUCCESS);
+          setApiPending(false);
           refetch();
           handleClose();
         },
@@ -61,6 +65,7 @@ export const EditChatModal = () => {
 
   return (
     <ModalInner
+      buttonDisabled={apiPending}
       buttonText="更新"
       form
       onSubmit={handleSubmit(onSubmit)}
