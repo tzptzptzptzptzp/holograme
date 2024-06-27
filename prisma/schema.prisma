@@ -16,11 +16,13 @@ datasource db {
 }
 
 model ChatRoom {
-  id          Int          @id @default(autoincrement())
-  userId      String
-  name        String
-  createdDate DateTime     @default(now()) 
-  updatedDate DateTime     @updatedAt
+  id             Int      @id @default(autoincrement())
+  userId         String
+  name           String
+  description    String
+  defaultMessage String
+  createdDate    DateTime @default(now()) 
+  updatedDate    DateTime @updatedAt
 
   messages    ChatMessage[]
 }
