@@ -4,10 +4,12 @@ import { useModal } from "@/hooks/useModal.hook";
 const className = "flex flex-col gap-4";
 
 const Form = ({
+  buttonDisabled = false,
   buttonText,
   children,
   onSubmit,
 }: {
+  buttonDisabled?: boolean;
   buttonText: string;
   children: React.ReactNode;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -15,7 +17,7 @@ const Form = ({
   return (
     <form className={className} onSubmit={onSubmit}>
       {children}
-      <Buttons buttonText={buttonText} />
+      <Buttons disabled={buttonDisabled} buttonText={buttonText} />
     </form>
   );
 };
@@ -24,7 +26,13 @@ const Div = ({ children }: { children: React.ReactNode }) => {
   return <div className={className}>{children}</div>;
 };
 
-const Buttons = ({ buttonText }: { buttonText: string }) => {
+const Buttons = ({
+  disabled = false,
+  buttonText,
+}: {
+  disabled?: boolean;
+  buttonText: string;
+}) => {
   const { handleClose } = useModal();
   return (
     <div className="flex justify-center gap-8">
@@ -36,7 +44,12 @@ const Buttons = ({ buttonText }: { buttonText: string }) => {
       >
         閉じる
       </Button>
-      <Button className="!w-1/3" type="submit" variant="primary">
+      <Button
+        className="!w-1/3"
+        disabled={disabled}
+        type="submit"
+        variant={disabled ? "disable" : "primary"}
+      >
         {buttonText}
       </Button>
     </div>
@@ -44,6 +57,7 @@ const Buttons = ({ buttonText }: { buttonText: string }) => {
 };
 
 type Props = {
+  buttonDisabled?: boolean;
   buttonText?: string;
   children: React.ReactNode;
   form?: boolean;
@@ -52,6 +66,7 @@ type Props = {
 };
 
 export const ModalInner = ({
+  buttonDisabled = false,
   buttonText = "作成",
   children,
   form = false,
@@ -62,7 +77,11 @@ export const ModalInner = ({
     <div className="flex flex-col gap-2">
       <p className="text-[20px] text-center">{title}</p>
       {form ? (
-        <Form buttonText={buttonText} onSubmit={onSubmit}>
+        <Form
+          buttonDisabled={buttonDisabled}
+          buttonText={buttonText}
+          onSubmit={onSubmit}
+        >
           {children}
         </Form>
       ) : (
