@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
+import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
@@ -15,6 +16,8 @@ import { ChatMessageState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
   chatRoomName: string;
+  description: string;
+  defaultMessage: string;
 };
 
 export const EditChatModal = () => {
@@ -34,11 +37,18 @@ export const EditChatModal = () => {
 
   useEffect(() => {
     setValue("chatRoomName", chatRoom.name);
+    setValue("description", chatRoom.description);
+    setValue("defaultMessage", chatRoom.defaultMessage);
   }, [chatRoom, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     mutate(
-      { id: chatRoom.roomId, name: data.chatRoomName },
+      {
+        id: chatRoom.roomId,
+        name: data.chatRoomName,
+        description: data.description,
+        defaultMessage: data.defaultMessage,
+      },
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_UPDATE.SUCCESS);
@@ -54,19 +64,33 @@ export const EditChatModal = () => {
       buttonText="更新"
       form
       onSubmit={handleSubmit(onSubmit)}
-      title="チャットルーム編集"
+      title={textsConfig.FORM.CHAT.TITLE.EDIT}
     >
       <FormInput
-        label="チャットルーム名"
+        label={textsConfig.FORM.CHAT.NAME}
         errorMessage={errors.chatRoomName?.message}
-        placeholder="チャットルーム名を入力"
+        placeholder={`${textsConfig.FORM.CHAT.NAME}を入力`}
         {...register("chatRoomName", {
-          required: GetRequiredMessage("ルーム名"),
+          required: GetRequiredMessage(textsConfig.FORM.CHAT.NAME),
         })}
+      />
+      <FormTextarea
+        label={textsConfig.FORM.CHAT.DESCRIPTION}
+        errorMessage={errors.description?.message}
+        placeholder={`${textsConfig.FORM.CHAT.DESCRIPTION}を入力`}
+        rows={2}
+        {...register("description")}
+      />
+      <FormTextarea
+        label={textsConfig.FORM.CHAT.DEFAULT_MESSAGE}
+        errorMessage={errors.defaultMessage?.message}
+        placeholder={`${textsConfig.FORM.CHAT.DEFAULT_MESSAGE}を入力`}
+        rows={2}
+        {...register("defaultMessage")}
       />
       <div className="flex justify-center">
         <Button onClick={() => handleOpen("deleteChat")}>
-          <ErrorMessage>このルームを削除する</ErrorMessage>
+          <ErrorMessage>{textsConfig.FORM.CHAT.DELETE.BUTTON}</ErrorMessage>
         </Button>
       </div>
     </ModalInner>
