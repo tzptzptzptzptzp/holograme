@@ -19,6 +19,8 @@ export type ChatMessageStateType = {
   isThinking: boolean;
   roomId: number;
   name: string;
+  description: string;
+  defaultMessage: string;
   messages: Messages[];
 };
 
