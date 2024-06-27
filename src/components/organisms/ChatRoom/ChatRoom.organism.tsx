@@ -21,6 +21,8 @@ export const ChatRoom = ({ roomId }: Props) => {
       isThinking: false,
       roomId: data.id,
       name: data.name,
+      description: data.description,
+      defaultMessage: data.defaultMessage,
       messages: data.messages.map((message) => ({
         ...message,
       })),
