@@ -33,7 +33,8 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
 
   useEffect(() => {
     setFocus("message");
-  }, [setFocus]);
+    setValue("message", chat.defaultMessage);
+  }, [chat, setFocus, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setIsLoading(true);
@@ -49,7 +50,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       {
         onSuccess: () => {
           reset();
-          setValue("message", "");
+          setValue("message", chat.defaultMessage);
           refetch();
           setIsLoading(false);
         },
