@@ -48,7 +48,7 @@ export const CreateChatModal = () => {
     <ModalInner
       form
       onSubmit={handleSubmit(onSubmit)}
-      title={textsConfig.FORM.CHAT.TITLE}
+      title={textsConfig.FORM.CHAT.TITLE.CREATE}
     >
       <FormInput
         label={textsConfig.FORM.CHAT.NAME}

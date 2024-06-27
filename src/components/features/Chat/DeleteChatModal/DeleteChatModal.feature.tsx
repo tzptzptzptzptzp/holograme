@@ -35,11 +35,13 @@ export const DeleteChatModal = () => {
       buttonText="削除"
       form
       onSubmit={(e) => onSubmit(e)}
-      title="チャットルーム削除"
+      title={textsConfig.FORM.CHAT.TITLE.DELETE}
     >
       <div className="flex flex-col items-center justify-center min-w-[250px]">
-        <ErrorMessage>{chatRoom.name}を削除するよ</ErrorMessage>
-        <ErrorMessage>本当に大丈夫？</ErrorMessage>
+        <ErrorMessage>
+          {chatRoom.name + textsConfig.FORM.CHAT.DELETE.ALERT[0]}
+        </ErrorMessage>
+        <ErrorMessage>{textsConfig.FORM.CHAT.DELETE.ALERT[1]}</ErrorMessage>
       </div>
     </ModalInner>
   );

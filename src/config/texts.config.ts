@@ -6,10 +6,18 @@ export const textsConfig = {
   },
   FORM: {
     CHAT: {
-      TITLE: "チャットルーム作成",
       NAME: "チャットルーム名",
       DESCRIPTION: "チャットルーム概要",
       DEFAULT_MESSAGE: "デフォルトメッセージ",
+      TITLE: {
+        CREATE: "チャットルーム作成",
+        DELETE: "チャットルーム削除",
+        EDIT: "チャットルーム編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "このルームを削除する",
+      },
     },
   },
   TOAST: {
