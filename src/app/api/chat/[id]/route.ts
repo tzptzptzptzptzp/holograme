@@ -25,17 +25,21 @@ export async function PUT(
       );
     }
 
-    const { name } = await req.json();
+    const { name, description, defaultMessage } = await req.json();
 
     const data = await prisma.chatRoom.update({
       where: { id: id },
       data: {
         name: name,
+        description: description,
+        defaultMessage: defaultMessage,
         updatedDate: new Date(),
       },
       select: {
         id: true,
         name: true,
+        description: true,
+        defaultMessage: true,
         updatedDate: true,
       },
     });

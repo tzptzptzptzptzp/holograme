@@ -9,11 +9,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const { name } = await req.json();
+    const { name, description, defaultMessage } = await req.json();
 
     const data = await prisma.chatRoom.create({
       data: {
         name: name,
+        description: description,
+        defaultMessage: defaultMessage,
         userId: userId,
       },
     });
