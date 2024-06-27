@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
+import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
@@ -10,6 +11,8 @@ import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
   chatRoomName: string;
+  description: string;
+  defaultMessage: string;
 };
 
 export const CreateChatModal = () => {
@@ -26,7 +29,11 @@ export const CreateChatModal = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     mutate(
-      { name: data.chatRoomName },
+      {
+        name: data.chatRoomName,
+        description: data.description,
+        defaultMessage: data.defaultMessage,
+      },
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_CREATE.SUCCESS);
@@ -41,15 +48,29 @@ export const CreateChatModal = () => {
     <ModalInner
       form
       onSubmit={handleSubmit(onSubmit)}
-      title="チャットルーム作成"
+      title={textsConfig.FORM.CHAT.TITLE.CREATE}
     >
       <FormInput
-        label="チャットルーム名"
+        label={textsConfig.FORM.CHAT.NAME}
         errorMessage={errors.chatRoomName?.message}
-        placeholder="チャットルーム名を入力"
+        placeholder={`${textsConfig.FORM.CHAT.NAME}を入力`}
         {...register("chatRoomName", {
-          required: GetRequiredMessage("ルーム名"),
+          required: GetRequiredMessage(textsConfig.FORM.CHAT.NAME),
         })}
+      />
+      <FormTextarea
+        label={textsConfig.FORM.CHAT.DESCRIPTION}
+        errorMessage={errors.description?.message}
+        placeholder={`${textsConfig.FORM.CHAT.DESCRIPTION}を入力`}
+        rows={2}
+        {...register("description")}
+      />
+      <FormTextarea
+        label={textsConfig.FORM.CHAT.DEFAULT_MESSAGE}
+        errorMessage={errors.defaultMessage?.message}
+        placeholder={`${textsConfig.FORM.CHAT.DEFAULT_MESSAGE}を入力`}
+        rows={2}
+        {...register("defaultMessage")}
       />
     </ModalInner>
   );

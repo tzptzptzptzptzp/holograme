@@ -4,6 +4,22 @@ export const textsConfig = {
     DESCRIPTION:
       "This web application serves as a next-generation homepage where your avatar supports you within a virtual space. It not only functions as a starting point for browsing but also offers a variety of features such as chat (powered by GPT), text sharing, task management, and note-taking. This innovative platform aims to enhance and streamline your digital life.",
   },
+  FORM: {
+    CHAT: {
+      NAME: "チャットルーム名",
+      DESCRIPTION: "チャットルーム概要",
+      DEFAULT_MESSAGE: "デフォルトメッセージ",
+      TITLE: {
+        CREATE: "チャットルーム作成",
+        DELETE: "チャットルーム削除",
+        EDIT: "チャットルーム編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "このルームを削除する",
+      },
+    },
+  },
   TOAST: {
     CHAT_CREATE: {
       SUCCESS: "🦄 チャットルームを作成しました！",
