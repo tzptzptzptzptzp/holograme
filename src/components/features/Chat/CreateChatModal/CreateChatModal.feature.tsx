@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChat } from "@/hooks/api/usePostChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
+import { ChatMessageState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -19,8 +22,11 @@ type Inputs = {
 export const CreateChatModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
+  const [chatRoom, setChatRoom] = useRecoilState(ChatMessageState);
+
   const mutate = usePostChat();
-  const { refetch } = useGetChat();
+  const { refetch: chatRefetch } = useGetChat();
+  const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom.roomId);
 
   const {
     register,
@@ -39,10 +45,15 @@ export const CreateChatModal = () => {
         defaultMessage: data.defaultMessage,
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           toast(textsConfig.TOAST.CHAT_CREATE.SUCCESS);
           setApiPending(false);
-          refetch();
+          setChatRoom({
+            ...chatRoom,
+            roomId: data.data.id,
+          });
+          chatRefetch();
+          chatMessageRefetch();
           handleClose();
         },
       }
