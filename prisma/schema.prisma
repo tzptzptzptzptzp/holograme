@@ -44,3 +44,11 @@ model Clipboard {
   content   String
   date      DateTime @default(now())
 }
+
+model Memo {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  title     String
+  content   String
+  date      DateTime @default(now())
+}
