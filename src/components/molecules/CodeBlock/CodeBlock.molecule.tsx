@@ -2,6 +2,10 @@ import { ReactNode } from "react";
 import clsx from "clsx";
 import Highlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import { srcery } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { toast } from "react-toastify";
+import { Button } from "@/components/atoms/Button/Button.atom";
+import { textsConfig } from "@/config/texts.config";
+import { Icons } from "@/icons";
 
 type Props = {
   className?: string;
@@ -11,10 +15,23 @@ type Props = {
 export const CodeBlock = ({ className, children }: Props) => {
   const match = /language-(\w+)/.exec(className || "");
   const lang = match && match[1] ? match[1] : "";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(String(children));
+    toast(textsConfig.TOAST.CLIPBOARD_SAVE.SUCCESS);
+  };
   return match ? (
-    <Highlighter style={srcery} language={lang}>
-      {String(children).replace(/\n$/, "")}
-    </Highlighter>
+    <>
+      <div className="flex justify-between px-2 py-[2px] rounded-t-md bg-white text-text">
+        <p>{lang}</p>
+        <Button onClick={handleCopy}>
+          <Icons.Copy width={20} height={20} />
+        </Button>
+      </div>
+      <Highlighter style={srcery} language={lang}>
+        {String(children).replace(/\n$/, "")}
+      </Highlighter>
+    </>
   ) : (
     <code
       className={clsx(
