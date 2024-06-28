@@ -25,6 +25,10 @@ body {
   display: none;
 }
 
+pre {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
 /*---------- USER ----------*/
 .u-centering {
   top: 50%;
