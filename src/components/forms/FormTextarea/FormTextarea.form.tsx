@@ -44,12 +44,14 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
     return (
       <div className="flex flex-col">
         <div className="flex flex-col">
-          <label
-            className={clsx("px-1 text-[12px]", labelClassName)}
-            htmlFor={id}
-          >
-            {label}
-          </label>
+          {label && (
+            <label
+              className={clsx("px-1 text-[12px]", labelClassName)}
+              htmlFor={id}
+            >
+              {label}
+            </label>
+          )}
           <Textarea
             className={clsx(
               "min-w-[250px] border-b-2 border-text bg-white bg-opacity-50",
