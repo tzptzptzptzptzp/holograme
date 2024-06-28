@@ -41,7 +41,7 @@ export async function GET(req: Request) {
         userId: userId,
       },
       orderBy: {
-        date: "desc",
+        updatedDate: "desc",
       },
     });
 
