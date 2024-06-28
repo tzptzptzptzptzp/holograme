@@ -1,14 +1,19 @@
+import { forwardRef } from "react";
+import clsx from "clsx";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage.form";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
-import { forwardRef } from "react";
 
 type Props = {
   disabled?: boolean;
   errorMessage?: string;
+  inputClassName?: string;
   label?: string;
+  labelClassName?: string;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: "text" | "password" | "email";
 };
@@ -18,9 +23,13 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
     {
       disabled = false,
       errorMessage,
+      inputClassName,
       label,
+      labelClassName,
       onBlur,
       onChange,
+      onInput,
+      onKeyDown,
       placeholder,
       type = "text",
       ...props
@@ -31,15 +40,25 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
     return (
       <div className="flex flex-col">
         <div className="flex flex-col">
-          <label className="px-1 text-[12px]" htmlFor={id}>
-            {label}
-          </label>
+          {label && (
+            <label
+              className={clsx("px-1 text-[12px]", labelClassName)}
+              htmlFor={id}
+            >
+              {label}
+            </label>
+          )}
           <Input
-            className="min-w-[250px] border-b-2 border-text bg-white bg-opacity-50"
+            className={clsx(
+              "min-w-[390px] border-b-2 border-text bg-white bg-opacity-50",
+              inputClassName
+            )}
             disabled={disabled}
             id={id}
             onBlur={onBlur}
             onChange={onChange}
+            onInput={onInput}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
             type={type}
