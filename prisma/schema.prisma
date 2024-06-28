@@ -46,9 +46,10 @@ model Clipboard {
 }
 
 model Memo {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  title     String
-  content   String
-  date      DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  userId      String
+  title       String
+  content     String
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
 }
