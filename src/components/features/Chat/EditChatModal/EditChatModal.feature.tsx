@@ -83,14 +83,12 @@ export const EditChatModal = () => {
         label={textsConfig.FORM.CHAT.DESCRIPTION}
         errorMessage={errors.description?.message}
         placeholder={`${textsConfig.FORM.CHAT.DESCRIPTION}を入力`}
-        rows={2}
         {...register("description")}
       />
       <FormTextarea
         label={textsConfig.FORM.CHAT.DEFAULT_MESSAGE}
         errorMessage={errors.defaultMessage?.message}
         placeholder={`${textsConfig.FORM.CHAT.DEFAULT_MESSAGE}を入力`}
-        rows={2}
         {...register("defaultMessage")}
       />
       <div className="flex justify-center">
