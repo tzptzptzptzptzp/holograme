@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { FormInput } from "@/components/forms/FormInput/FormInput.form";
+import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
@@ -10,7 +13,11 @@ import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { Icons } from "@/icons";
 
 const IconSize = 22;
-const TEXT_LENGTH_LIMIT = 15;
+
+type Inputs = {
+  content: string;
+  title: string;
+};
 
 type Props = {
   content: string;
@@ -39,9 +46,12 @@ export const MemoItem = ({
 
   const mutate = useDeleteClipboard();
 
-  const handleShow = () => {
-    setIsShow((prev) => !prev);
-  };
+  const { register, setValue, watch } = useForm<Inputs>();
+
+  useEffect(() => {
+    setValue("content", content);
+    setValue("title", title);
+  }, [content, title, setValue]);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -51,7 +61,21 @@ export const MemoItem = ({
         contentRef.current.style.height = "0px";
       }
     }
-  }, [isShow]);
+  }, [isEditing, isShow]);
+
+  const handleCancel = () => {
+    setValue("content", content);
+    setValue("title", title);
+    setIsEditing(false);
+    setIsShow(false);
+  };
+
+  const handleClick = async (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => {
+    if (isShow) return;
+    setIsShow(true);
+  };
 
   const handleDelete = () => {
     mutate(id, {
@@ -62,11 +86,18 @@ export const MemoItem = ({
     });
   };
 
-  const handleClick = async (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
-    if (isShow) return;
-    setIsShow(true);
+  const handleEdit = () => {
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleShow = () => {
+    setIsShow((prev) => !prev);
+    setIsEditing(false);
+  };
+
+  const handleSubmit = async () => {
+    const { title, content } = watch();
+    console.log(title, content);
   };
   return (
     <li
@@ -85,7 +116,16 @@ export const MemoItem = ({
             height={IconSize}
           />
         )}
-        <p className="w-full text-gray truncate">{title}</p>
+        {isEditing ? (
+          <FormInput
+            inputClassName="border-none"
+            value={watch("title")}
+            wrapperClassName=""
+            {...register("title")}
+          />
+        ) : (
+          <p className="w-full text-gray truncate">{title}</p>
+        )}
         <div className="flex items-center gap-3">
           {showIcon && (
             <Button onClick={handleShow}>
@@ -105,11 +145,13 @@ export const MemoItem = ({
             </Button>
           )}
           {editIcon && (
-            <Icons.Pencil
-              color={colorConfig.success}
-              width={IconSize}
-              height={IconSize}
-            />
+            <Button onClick={handleEdit}>
+              <Icons.Pencil
+                color={colorConfig.success}
+                width={IconSize}
+                height={IconSize}
+              />
+            </Button>
           )}
           {deleteIcon && (
             <Button onClick={handleDelete}>
@@ -123,7 +165,37 @@ export const MemoItem = ({
         </div>
       </div>
       <div className="overflow-hidden duration-150" ref={contentRef}>
-        <CustomReactMarkdown className="pt-2" markdown={content} />
+        {isEditing ? (
+          <>
+            <FormTextarea
+              textareaClassName="pt-[4px] border-none"
+              value={watch("content")}
+              wrapperClassName="pt-[6px]"
+              {...register("content")}
+            />
+            <div className="flex justify-end gap-4 w-2/3 mr-0 ml-auto pt-2">
+              <Button
+                className="!w-1/3"
+                onClick={handleCancel}
+                type="reset"
+                variant="cancel"
+              >
+                キャンセル
+              </Button>
+              <Button
+                className="!w-1/3"
+                // disabled={disabled}
+                onClick={handleSubmit}
+                type="submit"
+                variant={false ? "disable" : "primary"}
+              >
+                更新
+              </Button>
+            </div>
+          </>
+        ) : (
+          <CustomReactMarkdown className="pt-2" markdown={content} />
+        )}
       </div>
     </li>
   );
