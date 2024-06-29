@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { Icons } from "@/icons";
-import { GetMaskedText } from "@/utils/Rename.util";
+import { GetMaskedText } from "@/utils/GetMaskedText.util";
 import { getTrimmedText } from "@/utils/GetTrimmedText.util";
 import { useDeleteClipboard } from "@/hooks/api/useDeleteClipboard.hook";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
