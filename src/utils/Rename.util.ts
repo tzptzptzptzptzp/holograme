@@ -1,4 +1,4 @@
-export const getMaskedText = (text: string, limit: number = 5): string => {
+export const GetMaskedText = (text: string, limit: number = 5): string => {
   if (text.length <= limit) return text;
 
   const maskedPortion = "*".repeat(text.length - limit);
