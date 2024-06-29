@@ -16,6 +16,7 @@ type Props = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: "text" | "password" | "email";
+  value?: string;
 };
 
 const FormInput = forwardRef<HTMLInputElement, Props>(
@@ -32,13 +33,14 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
       onKeyDown,
       placeholder,
       type = "text",
+      value,
       ...props
     },
     ref
   ) => {
     const id = GenerateRandomID();
     return (
-      <div className="flex flex-col">
+      <div className={clsx("flex flex-col")}>
         <div className="flex flex-col">
           {label && (
             <label
@@ -62,6 +64,7 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
             placeholder={placeholder}
             ref={ref}
             type={type}
+            value={value}
             {...props}
           />
         </div>
