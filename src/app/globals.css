@@ -16,6 +16,11 @@ body {
   overflow: hidden;
 }
 
+::selection {
+  background-color: var(--app-primary);
+  color: white;
+}
+
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;

@@ -11,6 +11,7 @@ type Props = {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: "text" | "password" | "email";
+  value?: string;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(
@@ -23,6 +24,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
       onChange,
       placeholder,
       type = "text",
+      value,
       ...props
     },
     ref
@@ -38,8 +40,9 @@ const Input = forwardRef<HTMLInputElement, Props>(
         onBlur={onBlur}
         onChange={onChange}
         placeholder={placeholder}
-        type={type}
         ref={ref}
+        type={type}
+        value={value}
         {...props}
       />
     );

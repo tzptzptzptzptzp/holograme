@@ -18,6 +18,7 @@ type Props = {
   rows?: number;
   textareaClassName?: string;
   value?: string;
+  wrapperClassName?: string;
 };
 
 const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
@@ -36,13 +37,14 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
       rows = 3,
       textareaClassName,
       value,
+      wrapperClassName,
       ...props
     },
     ref
   ) => {
     const id = GenerateRandomID();
     return (
-      <div className="flex flex-col">
+      <div className={clsx("flex flex-col", wrapperClassName)}>
         <div className="flex flex-col">
           {label && (
             <label
