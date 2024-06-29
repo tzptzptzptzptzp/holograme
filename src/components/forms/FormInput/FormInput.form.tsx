@@ -17,6 +17,7 @@ type Props = {
   placeholder?: string;
   type?: "text" | "password" | "email";
   value?: string;
+  wrapperClassName?: string;
 };
 
 const FormInput = forwardRef<HTMLInputElement, Props>(
@@ -34,13 +35,14 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
       placeholder,
       type = "text",
       value,
+      wrapperClassName,
       ...props
     },
     ref
   ) => {
     const id = GenerateRandomID();
     return (
-      <div className={clsx("flex flex-col")}>
+      <div className={clsx("flex flex-col", wrapperClassName)}>
         <div className="flex flex-col">
           {label && (
             <label
