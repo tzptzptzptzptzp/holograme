@@ -8,7 +8,7 @@ const putMemoArchive = async ({
   archive: boolean;
   id: number;
 }) => {
-  return await axios.post(`/api/memo${id}/archive`, {
+  return await axios.put(`/api/memo/${id}/archive`, {
     archive,
   });
 };
