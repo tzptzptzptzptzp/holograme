@@ -7,11 +7,13 @@
   border-radius: 999px;
   font-size: 14px;
   font-weight: bold;
+  text-align: center;
   line-height: 1;
   filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.1));
   transition: 0.3s;
 
   &:hover {
+    letter-spacing: 2px;
     filter: none;
   }
 
@@ -34,5 +36,14 @@
     background-color: #bbb;
     color: #ffffff80;
     pointer-events: none;
+  }
+}
+
+.button.none {
+  transition-duration: 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
   }
 }
