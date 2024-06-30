@@ -8,8 +8,8 @@ import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form"
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
-import { useDeleteClipboard } from "@/hooks/api/useDeleteClipboard.hook";
-import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useDeleteMemo } from "@/hooks/api/useDeleteMemo.hook";
+import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { Icons } from "@/icons";
 
 const IconSize = 22;
@@ -42,9 +42,9 @@ export const MemoItem = ({
   const [isShow, setIsShow] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const { refetch } = useGetClipboard();
+  const { refetch } = useGetMemo();
 
-  const mutate = useDeleteClipboard();
+  const mutate = useDeleteMemo();
 
   const { register, setValue, watch } = useForm<Inputs>();
 
@@ -73,17 +73,25 @@ export const MemoItem = ({
   const handleClick = async (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
+    if (
+      e.target instanceof HTMLButtonElement &&
+      e.target.id === "delete-button"
+    )
+      return;
     if (isShow) return;
     setIsShow(true);
   };
 
   const handleDelete = () => {
-    mutate(id, {
-      onSuccess: () => {
-        toast(`${textsConfig.TOAST.CLIPBOARD_DELETE.SUCCESS} - ${title}`);
-        refetch();
-      },
-    });
+    mutate(
+      { id },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.MEMO_DELETE.SUCCESS);
+          refetch();
+        },
+      }
+    );
   };
 
   const handleEdit = () => {
@@ -107,7 +115,7 @@ export const MemoItem = ({
       )}
       onClick={handleClick}
     >
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex items-center justify-between gap-2">
         {icon && (
           <Icons.ClipBoard
             className="stroke-2"
@@ -118,9 +126,10 @@ export const MemoItem = ({
         )}
         {isEditing ? (
           <FormInput
-            inputClassName="border-none"
+            inputClassName="min-w-0 border-none"
+            placeholder="タイトル"
             value={watch("title")}
-            wrapperClassName=""
+            wrapperClassName="w-full"
             {...register("title")}
           />
         ) : (
@@ -145,7 +154,7 @@ export const MemoItem = ({
             </Button>
           )}
           {editIcon && (
-            <Button onClick={handleEdit}>
+            <Button onClick={isEditing ? handleCancel : handleEdit}>
               <Icons.Pencil
                 color={colorConfig.success}
                 width={IconSize}
@@ -154,8 +163,9 @@ export const MemoItem = ({
             </Button>
           )}
           {deleteIcon && (
-            <Button onClick={handleDelete}>
+            <Button id="delete-button" onClick={handleDelete}>
               <Icons.Trash
+                className="pointer-events-none"
                 color={colorConfig.error}
                 width={IconSize}
                 height={IconSize}
@@ -169,6 +179,7 @@ export const MemoItem = ({
           <>
             <FormTextarea
               textareaClassName="pt-[4px] border-none"
+              placeholder="内容"
               value={watch("content")}
               wrapperClassName="pt-[6px]"
               {...register("content")}
@@ -194,7 +205,7 @@ export const MemoItem = ({
             </div>
           </>
         ) : (
-          <CustomReactMarkdown className="pt-2" markdown={content} />
+          content && <CustomReactMarkdown className="pt-2" markdown={content} />
         )}
       </div>
     </li>
