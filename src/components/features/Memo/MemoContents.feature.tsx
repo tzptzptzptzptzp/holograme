@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { MemoItem } from "@/components/molecules/MemoItem/MemoItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
@@ -12,7 +13,7 @@ import { Icons } from "@/icons";
 export const MemoContents = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const { data, refetch } = useGetMemo();
+  const { data, isLoading, refetch } = useGetMemo();
 
   const mutate = usePostMemo();
 
@@ -54,16 +55,20 @@ export const MemoContents = () => {
           </div>
         </ContentHead>
       </div>
-      <ul className="flex flex-col gap-3">
-        {data?.map((item) => (
-          <MemoItem
-            key={item.id}
-            content={item.content}
-            title={item.title}
-            id={item.id}
-          />
-        ))}
-      </ul>
+      {isLoading && !data ? (
+        <Loader />
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {data?.map((item) => (
+            <MemoItem
+              key={item.id}
+              content={item.content}
+              title={item.title}
+              id={item.id}
+            />
+          ))}
+        </ul>
+      )}
     </ContentWrapper>
   );
 };
