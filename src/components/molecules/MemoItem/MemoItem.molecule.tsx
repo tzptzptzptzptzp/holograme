@@ -9,6 +9,7 @@ import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useDeleteMemo } from "@/hooks/api/useDeleteMemo.hook";
+import { usePutMemo } from "@/hooks/api/usePutMemo.hook";
 import { usePutMemoArchive } from "@/hooks/api/usePutMemoArchive.hook";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { Icons } from "@/icons";
@@ -48,6 +49,7 @@ export const MemoItem = ({
 
   const { refetch } = useGetMemo();
 
+  const memoMutate = usePutMemo();
   const archiveMutate = usePutMemoArchive();
   const deleteMutate = useDeleteMemo();
 
@@ -66,7 +68,7 @@ export const MemoItem = ({
         contentRef.current.style.height = "0px";
       }
     }
-  }, [isEditing, isShow]);
+  }, [isShow]);
 
   const handleArchive = () => {
     setApiPending(true);
@@ -134,7 +136,30 @@ export const MemoItem = ({
 
   const handleSubmit = async () => {
     const { title, content } = watch();
-    console.log(title, content);
+    memoMutate(
+      {
+        content,
+        title,
+        id,
+      },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.MEMO_UPDATE.SUCCESS);
+          refetch();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.MEMO_UPDATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
+          setIsEditing(false);
+          if (contentRef.current) {
+            contentRef.current.style.height = "0px";
+            contentRef.current.style.height = `auto`;
+          }
+        },
+      }
+    );
   };
   return (
     <li
@@ -246,10 +271,10 @@ export const MemoItem = ({
               </Button>
               <Button
                 className="!w-1/3"
-                // disabled={disabled}
+                disabled={apiPending}
                 onClick={handleSubmit}
                 type="submit"
-                variant={false ? "disable" : "primary"}
+                variant={apiPending ? "disable" : "primary"}
               >
                 更新
               </Button>

@@ -63,6 +63,10 @@ export const textsConfig = {
       SUCCESS: "🦄 記憶を喪失しました！",
       ERROR: "削除に失敗しました…",
     },
+    MEMO_UPDATE: {
+      SUCCESS: "🦄 メモを更新しました！",
+      ERROR: "更新に失敗しました…",
+    },
     SIGN_IN: {
       SUCCESS: "🦄 ログインしました！",
       ERROR: "ログインに失敗しました…",
