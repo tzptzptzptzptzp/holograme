@@ -203,7 +203,7 @@ export const MemoItem = ({
             </div>
           </>
         ) : (
-          <CustomReactMarkdown className="pt-2" markdown={content} />
+          content && <CustomReactMarkdown className="pt-2" markdown={content} />
         )}
       </div>
     </li>
