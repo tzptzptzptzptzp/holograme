@@ -50,6 +50,7 @@ model Memo {
   userId      String
   title       String
   content     String
+  archived    Boolean  @default(false)
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
 }

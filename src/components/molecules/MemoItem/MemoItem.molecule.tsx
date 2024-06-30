@@ -9,6 +9,8 @@ import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useDeleteMemo } from "@/hooks/api/useDeleteMemo.hook";
+import { usePutMemo } from "@/hooks/api/usePutMemo.hook";
+import { usePutMemoArchive } from "@/hooks/api/usePutMemoArchive.hook";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { Icons } from "@/icons";
 
@@ -23,6 +25,7 @@ type Props = {
   content: string;
   title: string;
   id: number;
+  archived: boolean;
   icon?: boolean;
   editIcon?: boolean;
   showIcon?: boolean;
@@ -33,18 +36,22 @@ export const MemoItem = ({
   content,
   title,
   id,
+  archived,
   icon = false,
   editIcon = true,
   showIcon = true,
   deleteIcon = true,
 }: Props) => {
+  const [apiPending, setApiPending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { refetch } = useGetMemo();
 
-  const mutate = useDeleteMemo();
+  const memoMutate = usePutMemo();
+  const archiveMutate = usePutMemoArchive();
+  const deleteMutate = useDeleteMemo();
 
   const { register, setValue, watch } = useForm<Inputs>();
 
@@ -61,7 +68,30 @@ export const MemoItem = ({
         contentRef.current.style.height = "0px";
       }
     }
-  }, [isEditing, isShow]);
+  }, [isShow]);
+
+  const handleArchive = () => {
+    setApiPending(true);
+    archiveMutate(
+      { archive: !archived, id },
+      {
+        onSuccess: (data) => {
+          if (data.data.archived) {
+            toast(textsConfig.TOAST.MEMO_ARCHIVE.SUCCESS);
+          } else {
+            toast(textsConfig.TOAST.MEMO_UNARCHIVE.SUCCESS);
+          }
+          refetch();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.MEMO_CREATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
+        },
+      }
+    );
+  };
 
   const handleCancel = () => {
     setValue("content", content);
@@ -75,15 +105,16 @@ export const MemoItem = ({
   ) => {
     if (
       e.target instanceof HTMLButtonElement &&
-      e.target.id === "delete-button"
-    )
+      (e.target.id === "delete-button" || e.target.id === "unarchive-button")
+    ) {
       return;
+    }
     if (isShow) return;
     setIsShow(true);
   };
 
   const handleDelete = () => {
-    mutate(
+    deleteMutate(
       { id },
       {
         onSuccess: () => {
@@ -105,7 +136,30 @@ export const MemoItem = ({
 
   const handleSubmit = async () => {
     const { title, content } = watch();
-    console.log(title, content);
+    memoMutate(
+      {
+        content,
+        title,
+        id,
+      },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.MEMO_UPDATE.SUCCESS);
+          refetch();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.MEMO_UPDATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
+          setIsEditing(false);
+          if (contentRef.current) {
+            contentRef.current.style.height = "0px";
+            contentRef.current.style.height = `auto`;
+          }
+        },
+      }
+    );
   };
   return (
     <li
@@ -153,7 +207,7 @@ export const MemoItem = ({
               )}
             </Button>
           )}
-          {editIcon && (
+          {editIcon && !archived ? (
             <Button onClick={isEditing ? handleCancel : handleEdit}>
               <Icons.Pencil
                 color={colorConfig.success}
@@ -161,8 +215,30 @@ export const MemoItem = ({
                 height={IconSize}
               />
             </Button>
+          ) : (
+            <Button id="unarchive-button" onClick={handleArchive}>
+              <Icons.ArrowUturnLeft
+                className="pointer-events-none"
+                color={colorConfig.success}
+                width={IconSize}
+                height={IconSize}
+              />
+            </Button>
           )}
-          {deleteIcon && (
+          {deleteIcon && !archived ? (
+            <Button
+              id="delete-button"
+              disabled={apiPending}
+              onClick={handleArchive}
+            >
+              <Icons.ArchiveBox
+                className="pointer-events-none"
+                color={colorConfig.error}
+                width={IconSize}
+                height={IconSize}
+              />
+            </Button>
+          ) : (
             <Button id="delete-button" onClick={handleDelete}>
               <Icons.Trash
                 className="pointer-events-none"
@@ -195,10 +271,10 @@ export const MemoItem = ({
               </Button>
               <Button
                 className="!w-1/3"
-                // disabled={disabled}
+                disabled={apiPending}
                 onClick={handleSubmit}
                 type="submit"
-                variant={false ? "disable" : "primary"}
+                variant={apiPending ? "disable" : "primary"}
               >
                 更新
               </Button>

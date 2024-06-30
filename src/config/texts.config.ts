@@ -47,6 +47,14 @@ export const textsConfig = {
       SUCCESS: "🦄 記憶を喪失しました！",
       ERROR: "削除に失敗しました…",
     },
+    MEMO_ARCHIVE: {
+      SUCCESS: "🦄 メモをアーカイブしました！",
+      ERROR: "アーカイブに失敗しました…",
+    },
+    MEMO_UNARCHIVE: {
+      SUCCESS: "🦄 メモのアーカイブを解除しました！",
+      ERROR: "アーカイブの解除に失敗しました…",
+    },
     MEMO_CREATE: {
       SUCCESS: "🦄 新しいメモを作成しました！",
       ERROR: "作成に失敗しました…",
@@ -54,6 +62,10 @@ export const textsConfig = {
     MEMO_DELETE: {
       SUCCESS: "🦄 記憶を喪失しました！",
       ERROR: "削除に失敗しました…",
+    },
+    MEMO_UPDATE: {
+      SUCCESS: "🦄 メモを更新しました！",
+      ERROR: "更新に失敗しました…",
     },
     SIGN_IN: {
       SUCCESS: "🦄 ログインしました！",

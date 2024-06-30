@@ -10,7 +10,7 @@ export const Loader = ({ centering = true, no = 1 }: Props) => {
   if (centering)
     return (
       <div className="flex items-center justify-center w-full h-full">
-        <div className={styles[loaderClass]}></div>;
+        <div className={styles[loaderClass]}></div>
       </div>
     );
   return <div className={styles[loaderClass]}></div>;

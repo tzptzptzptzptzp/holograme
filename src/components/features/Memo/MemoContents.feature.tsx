@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import clsx from "clsx";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
@@ -10,12 +11,34 @@ import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { usePostMemo } from "@/hooks/api/usePostMemo.hook";
 import { Icons } from "@/icons";
 
+type MemoType = {
+  id: number;
+  userId: string;
+  title: string;
+  content: string;
+  archived: boolean;
+  createdDate: Date;
+  updatedDate: Date;
+};
+
 export const MemoContents = () => {
+  const [isArchive, setIsArchive] = useState(false);
   const [apiPending, setApiPending] = useState(false);
+  const [memo, setMemo] = useState<MemoType[] | []>([]);
 
   const { data, isLoading, refetch } = useGetMemo();
 
   const mutate = usePostMemo();
+
+  useEffect(() => {
+    if (data) {
+      setMemo(data?.filter((item) => item.archived === isArchive));
+    }
+  }, [data, isArchive, setMemo]);
+
+  const handleArchive = () => {
+    setIsArchive((prev) => !prev);
+  };
 
   const handleCreate = () => {
     setApiPending(true);
@@ -46,6 +69,16 @@ export const MemoContents = () => {
           </div>
           <div className="flex items-center gap-1.5">
             <Button
+              className={clsx(
+                "flex-shrink-0",
+                isArchive ? "opacity-100" : "opacity-50"
+              )}
+              disabled={apiPending}
+              onClick={handleArchive}
+            >
+              <Icons.ArchiveBox color="white" />
+            </Button>
+            <Button
               className="flex-shrink-0"
               disabled={apiPending}
               onClick={handleCreate}
@@ -59,12 +92,13 @@ export const MemoContents = () => {
         <Loader />
       ) : (
         <ul className="flex flex-col gap-3">
-          {data?.map((item) => (
+          {memo?.map((item) => (
             <MemoItem
               key={item.id}
               content={item.content}
               title={item.title}
               id={item.id}
+              archived={item.archived}
             />
           ))}
         </ul>
