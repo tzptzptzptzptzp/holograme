@@ -1,6 +1,7 @@
 import { AirPlane } from "./AirPlane/AirPlane.icon";
 import { ArchiveBox } from "./ArchiveBox/ArchiveBox.icon";
 import { ArrowPath } from "./ArrowPath/ArrowPath.icon";
+import { ArrowUturnLeft } from "./ArrowUturnLeft/ArrowUturnLeft.icon";
 import { Chat } from "./Chat/Chat.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
 import { Config } from "./Config/Config.icon";
@@ -20,6 +21,7 @@ export const Icons = {
   AirPlane,
   ArchiveBox,
   ArrowPath,
+  ArrowUturnLeft,
   Chat,
   ClipBoard,
   Config,
