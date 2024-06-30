@@ -153,7 +153,7 @@ export const MemoItem = ({
             </Button>
           )}
           {editIcon && (
-            <Button onClick={handleEdit}>
+            <Button onClick={isEditing ? handleCancel : handleEdit}>
               <Icons.Pencil
                 color={colorConfig.success}
                 width={IconSize}
