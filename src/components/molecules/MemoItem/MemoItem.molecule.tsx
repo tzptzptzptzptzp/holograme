@@ -115,7 +115,7 @@ export const MemoItem = ({
       )}
       onClick={handleClick}
     >
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex items-center justify-between gap-2">
         {icon && (
           <Icons.ClipBoard
             className="stroke-2"
@@ -126,9 +126,10 @@ export const MemoItem = ({
         )}
         {isEditing ? (
           <FormInput
-            inputClassName="border-none"
+            inputClassName="min-w-0 border-none"
+            placeholder="タイトル"
             value={watch("title")}
-            wrapperClassName=""
+            wrapperClassName="w-full"
             {...register("title")}
           />
         ) : (
@@ -178,6 +179,7 @@ export const MemoItem = ({
           <>
             <FormTextarea
               textareaClassName="pt-[4px] border-none"
+              placeholder="内容"
               value={watch("content")}
               wrapperClassName="pt-[6px]"
               {...register("content")}
