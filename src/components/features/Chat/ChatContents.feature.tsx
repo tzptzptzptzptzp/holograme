@@ -37,12 +37,11 @@ export const ChatContents = () => {
     setCurrentChatRoomId(chatRoom.roomId);
   }, [chatRoom, setCurrentChatRoomId]);
 
-  if (isLoading || !data) return <Loader />;
-
-  const chatRoomOptions = data.map((chatRoom) => ({
-    id: chatRoom.id,
-    name: chatRoom.name,
-  }));
+  const chatRoomOptions =
+    data?.map((chatRoom) => ({
+      id: chatRoom.id,
+      name: chatRoom.name,
+    })) ?? [];
 
   return (
     <ContentWrapper className="gap-0">
@@ -77,8 +76,12 @@ export const ChatContents = () => {
           </div>
         </ContentHead>
       </div>
-      <ChatRoom roomId={currentChatRoomId} />
-      <MessageForm roomId={currentChatRoomId} />
+      {isLoading && !data ? (
+        <Loader />
+      ) : (
+        <ChatRoom roomId={currentChatRoomId} />
+      )}
+      <MessageForm roomId={currentChatRoomId ?? 0} />
     </ContentWrapper>
   );
 };

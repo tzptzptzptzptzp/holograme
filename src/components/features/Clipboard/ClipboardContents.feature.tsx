@@ -11,8 +11,6 @@ import { Clipboard } from "@prisma/client";
 export const ClipboardContents = () => {
   const { data, isLoading } = useGetClipboard();
 
-  if (isLoading || !data) return <Loader />;
-
   return (
     <ContentWrapper>
       <div className="flex gap-3">
@@ -23,21 +21,23 @@ export const ClipboardContents = () => {
         <ClipboardPasteButton />
         <ClipboardCopyButton />
       </div>
-      <ul className="flex flex-col gap-3">
-        {data.length ? (
-          data.map((item: Clipboard) => (
+      {isLoading && !data ? (
+        <Loader />
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {data?.map((item: Clipboard) => (
             <ClipboardItem key={item.id} content={item.content} id={item.id} />
-          ))
-        ) : (
-          <ClipboardItem
-            content=""
-            id={0}
-            showIcon={false}
-            copyIcon={false}
-            deleteIcon={false}
-          />
-        )}
-      </ul>
+          )) ?? (
+            <ClipboardItem
+              content=""
+              id={0}
+              showIcon={false}
+              copyIcon={false}
+              deleteIcon={false}
+            />
+          )}
+        </ul>
+      )}
     </ContentWrapper>
   );
 };
