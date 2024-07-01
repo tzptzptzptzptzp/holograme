@@ -70,11 +70,14 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         onError: () => {
           toast.error(textsConfig.TOAST.CHAT_MESSAGE.ERROR);
         },
-        onSettled: () => {
+        onSettled: async () => {
           reset();
           setValue("message", chat.defaultMessage);
           refetch();
           setIsLoading(false);
+          await setTimeout(() => {
+            textareaRef.current?.focus();
+          }, 250);
         },
       }
     );
