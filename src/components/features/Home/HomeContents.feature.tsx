@@ -29,13 +29,24 @@ export const HomeContents = () => {
         <ClipboardPasteButton />
         <ClipboardCopyButton />
       </div>
-      <ClipboardItem
-        content={latest.content}
-        id={latest.id}
-        icon
-        copyIcon={false}
-        deleteIcon={false}
-      />
+      {isLoading && !data ? (
+        <ClipboardItem
+          content=""
+          id={0}
+          icon
+          showIcon={false}
+          copyIcon={false}
+          deleteIcon={false}
+        />
+      ) : (
+        <ClipboardItem
+          content={latest.content}
+          id={latest.id}
+          icon
+          copyIcon={false}
+          deleteIcon={false}
+        />
+      )}
     </div>
   );
 };

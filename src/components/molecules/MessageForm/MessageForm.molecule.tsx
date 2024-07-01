@@ -12,6 +12,8 @@ import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
 import { ChatMessageState } from "@/recoil/atoms.recoil";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
+import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
 
 type Inputs = {
   message: string;
@@ -36,28 +38,6 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     setValue("message", chat.defaultMessage);
   }, [chat, setFocus, setValue]);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    setIsLoading(true);
-    const { message } = data;
-    sendMessage(message);
-    const prompt = GeneratePrompt({
-      message,
-      description: chat.description,
-      chatMessage: chat.messages,
-    });
-    mutate(
-      { content: message, id: roomId, prompt },
-      {
-        onSuccess: () => {
-          reset();
-          setValue("message", chat.defaultMessage);
-          refetch();
-          setIsLoading(false);
-        },
-      }
-    );
-  };
-
   const adjustHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -73,6 +53,34 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         textareaRef.current.style.height = "auto";
       }
     }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setIsLoading(true);
+    const { message } = data;
+    sendMessage(message);
+    const prompt = GeneratePrompt({
+      message,
+      description: chat.description,
+      chatMessage: chat.messages,
+    });
+    mutate(
+      { content: message, id: roomId, prompt },
+      {
+        onError: () => {
+          toast.error(textsConfig.TOAST.CHAT_MESSAGE.ERROR);
+        },
+        onSettled: async () => {
+          reset();
+          setValue("message", chat.defaultMessage);
+          refetch();
+          setIsLoading(false);
+          await setTimeout(() => {
+            textareaRef.current?.focus();
+          }, 250);
+        },
+      }
+    );
   };
   return (
     <form
