@@ -30,6 +30,9 @@ export const textsConfig = {
     CHAT_UPDATE: {
       SUCCESS: "🦄 ルーム名を変更しました！",
     },
+    CHAT_MESSAGE: {
+      ERROR: "応答がありません…",
+    },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",
       ERROR: "保存に失敗しました…",
