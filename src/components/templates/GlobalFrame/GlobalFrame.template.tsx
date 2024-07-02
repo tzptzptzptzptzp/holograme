@@ -23,13 +23,13 @@ export const GlobalFrame = ({
         <Background />
         <div className="flex z-10 w-full h-full">
           {contents && (
-            <div className="flex flex-none items-end relative top-0 h-full pl-8">
+            <div className="flex flex-none items-end relative top-0 h-full pl-4">
               <Avatar />
             </div>
           )}
           <main
             className={clsx(
-              "flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-8",
+              "flex flex-col items-center justify-center flex-1 relative top-0 overflow-y-scroll w-full h-full pr-10 pl-4",
               shadow && "u-shadow-sm"
             )}
           >
