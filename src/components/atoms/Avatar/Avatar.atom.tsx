@@ -3,17 +3,24 @@ import Image from "next/image";
 import clsx from "clsx";
 import { GetRandomInt } from "@/utils/GetRandomInt.util";
 
-const ANIMATION_INDEX_LIMIT = 12;
+const ANIMATION_INDEX_LIMIT = 32;
+const ANIMATION_DURATION_LIMIT = 6;
 
 export const Avatar = () => {
   const [animationIndex, setAnimationIndex] = useState("");
+  const [animationDurationIndex, setAnimationDurationIndex] = useState("");
 
   useEffect(() => {
-    const randomIndex = `animate-avatar-${GetRandomInt(
+    const randomAnimationIndex = `animate-avatar-${GetRandomInt(
       1,
       ANIMATION_INDEX_LIMIT
     )}`;
-    setAnimationIndex(randomIndex);
+    const randomDurationIndex = `animate-duration-${GetRandomInt(
+      1,
+      ANIMATION_DURATION_LIMIT
+    )}`;
+    setAnimationIndex(randomAnimationIndex);
+    setAnimationDurationIndex(randomDurationIndex);
   }, []);
   return (
     <Image
@@ -21,7 +28,8 @@ export const Avatar = () => {
       className={clsx(
         "u-shadow-avatar h-[82vh] w-auto select-none pointer-events-none",
         "avatar",
-        animationIndex
+        animationIndex,
+        animationDurationIndex
       )}
       src="/bisyojo_chan.png"
       width={800}

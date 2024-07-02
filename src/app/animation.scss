@@ -1,54 +1,191 @@
 .avatar {
   transform-origin: bottom;
-  animation-duration: 5s;
   animation-iteration-count: infinite;
+  transition-duration: 2s;
+  animation-delay: 2s;
+
+  &.animate-duration-1 {
+    animation-duration: 1s;
+  }
+
+  &.animate-duration-2 {
+    animation-duration: 2s;
+  }
+
+  &.animate-duration-3 {
+    animation-duration: 3s;
+  }
+
+  &.animate-duration-4 {
+    animation-duration: 4s;
+  }
+
+  &.animate-duration-5 {
+    animation-duration: 5s;
+  }
+
+  &.animate-duration-6 {
+    animation-duration: 6s;
+  }
 
   &.animate-avatar-1 {
+    transform: translateY(5px);
     animation-name: animate-avatar-1;
   }
 
   &.animate-avatar-2 {
+    transform: translateY(5px);
     animation-name: animate-avatar-2;
   }
 
   &.animate-avatar-3 {
+    transform: translateY(5px);
     animation-name: animate-avatar-3;
   }
 
   &.animate-avatar-4 {
+    transform: translateY(5px) rotate(1deg);
     animation-name: animate-avatar-4;
   }
 
   &.animate-avatar-5 {
+    transform: translateY(5px) rotate(-1deg);
     animation-name: animate-avatar-5;
   }
 
   &.animate-avatar-6 {
+    transform: translateY(5px) rotate(-1deg);
     animation-name: animate-avatar-6;
   }
 
   &.animate-avatar-7 {
+    transform: translateY(5px) rotate(1deg);
     animation-name: animate-avatar-7;
   }
 
   &.animate-avatar-8 {
+    transform: translateX(-5px);
     animation-name: animate-avatar-8;
   }
 
   &.animate-avatar-9 {
+    transform: translate(-5px, 5px) rotate(-1deg);
     animation-name: animate-avatar-9;
   }
 
   &.animate-avatar-10 {
+    transform: translate(-5px, 5px) rotate(2deg);
     animation-name: animate-avatar-10;
   }
 
   &.animate-avatar-11 {
+    transform: translate(-5px, 5px) rotate(1deg);
     animation-name: animate-avatar-11;
   }
 
   &.animate-avatar-12 {
+    transform: translate(-10px, 5px) rotate(1deg);
     animation-name: animate-avatar-12;
+  }
+
+  &.animate-avatar-13 {
+    transform: translate(-5px, 5px) rotate(1deg);
+    animation-name: animate-avatar-13;
+  }
+
+  &.animate-avatar-14 {
+    transform: translate(-5px, 5px) rotate(-1deg);
+    animation-name: animate-avatar-14;
+  }
+
+  &.animate-avatar-15 {
+    transform: scaleY(1);
+    animation-name: animate-avatar-15;
+  }
+
+  &.animate-avatar-16 {
+    transform: scaleX(1);
+    animation-name: animate-avatar-16;
+  }
+
+  &.animate-avatar-17 {
+    transform: translateY(5px) skewY(0deg);
+    animation-name: animate-avatar-17;
+  }
+
+  &.animate-avatar-18 {
+    transform: translateY(5px) skewY(0deg);
+    animation-name: animate-avatar-18;
+  }
+
+  &.animate-avatar-19 {
+    transform: translate(0, 5px) skewY(0deg);
+    animation-name: animate-avatar-19;
+  }
+
+  &.animate-avatar-20 {
+    transform: translate(0, 5px) skewY(0deg);
+    animation-name: animate-avatar-20;
+  }
+
+  &.animate-avatar-21 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-21;
+  }
+
+  &.animate-avatar-22 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-22;
+  }
+
+  &.animate-avatar-23 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-23;
+  }
+
+  &.animate-avatar-24 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-24;
+  }
+
+  &.animate-avatar-25 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-25;
+  }
+
+  &.animate-avatar-26 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-26;
+  }
+
+  &.animate-avatar-27 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-27;
+  }
+
+  &.animate-avatar-28 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-28;
+  }
+
+  &.animate-avatar-29 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-29;
+  }
+
+  &.animate-avatar-30 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-30;
+  }
+
+  &.animate-avatar-31 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-31;
+  }
+
+  &.animate-avatar-32 {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+    animation-name: animate-avatar-32;
   }
 }
 
@@ -135,20 +272,20 @@
 @keyframes animate-avatar-9 {
   0%,
   100% {
-    transform: translate(-5px, 5px) rotate(-2deg);
+    transform: translate(-5px, 5px) rotate(-1deg);
   }
   50% {
-    transform: translate(5px, 5px) rotate(2deg);
+    transform: translate(5px, 5px) rotate(1deg);
   }
 }
 
 @keyframes animate-avatar-10 {
   0%,
   100% {
-    transform: translate(-5px, 5px) rotate(2deg);
+    transform: translate(-5px, 5px) rotate(1deg);
   }
   50% {
-    transform: translate(5px, 5px) rotate(-2deg);
+    transform: translate(5px, 5px) rotate(-1deg);
   }
 }
 
@@ -169,5 +306,205 @@
   }
   50% {
     transform: translate(10px, 10px) rotate(-1deg);
+  }
+}
+
+@keyframes animate-avatar-13 {
+  0%,
+  100% {
+    transform: translate(-5px, 5px) rotate(1deg);
+  }
+  50% {
+    transform: translate(5px, 10px) rotate(-2deg);
+  }
+}
+
+@keyframes animate-avatar-14 {
+  0%,
+  100% {
+    transform: translate(-5px, 5px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(5px, 10px) rotate(2deg);
+  }
+}
+
+@keyframes animate-avatar-15 {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.01);
+  }
+}
+
+@keyframes animate-avatar-16 {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.01);
+  }
+}
+
+@keyframes animate-avatar-17 {
+  0%,
+  100% {
+    transform: translateY(5px) skewY(0deg);
+  }
+  50% {
+    transform: translateY(5px) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-18 {
+  0%,
+  100% {
+    transform: translateY(5px) skewY(0deg);
+  }
+  50% {
+    transform: translateY(5px) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-19 {
+  0%,
+  100% {
+    transform: translate(0, 5px) skewY(0deg);
+  }
+  50% {
+    transform: translate(5px, 5px) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-20 {
+  0%,
+  100% {
+    transform: translate(0, 5px) skewY(0deg);
+  }
+  50% {
+    transform: translate(-5px, 5px) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-21 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 10px) scaleY(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-22 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 10px) scaleY(1.01) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-23 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 10px) scaleY(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-24 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 10px) scaleY(1.01) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-25 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 15px) scaleY(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-26 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 15px) scaleY(1.01) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-27 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 15px) scaleY(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-28 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 15px) scaleY(1.01) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-29 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 15px) scaleX(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-30 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 15px) scaleX(1.01) skewY(-1deg);
+  }
+}
+
+@keyframes animate-avatar-31 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(10px, 15px) scaleX(1.01) skewY(1deg);
+  }
+}
+
+@keyframes animate-avatar-32 {
+  0%,
+  100% {
+    transform: translate(0, 5px) scaleY(1) skewY(0deg);
+  }
+  50% {
+    transform: translate(-10px, 15px) scaleX(1.01) skewY(-1deg);
   }
 }
