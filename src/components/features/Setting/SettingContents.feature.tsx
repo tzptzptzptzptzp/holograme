@@ -10,7 +10,11 @@ type Inputs = {
 };
 
 export const SettingContents = () => {
-  const { register } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit = (data: Inputs) => {
+    console.log(data);
+  };
   return (
     <ContentWrapper>
       <div className="flex gap-3">
@@ -19,7 +23,10 @@ export const SettingContents = () => {
           <p>Setting</p>
         </ContentHead>
       </div>
-      <form className="flex flex-col gap-4 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0">
+      <form
+        className="flex flex-col gap-4 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <FormInput
           inputClassName="border-none"
           label="ニックネーム"
