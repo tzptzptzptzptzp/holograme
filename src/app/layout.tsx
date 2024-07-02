@@ -4,7 +4,7 @@ import { Provider } from "@/components/templates/Provider/Provider.template";
 import { textsConfig } from "@/config/texts.config";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import "./globals.scss";
 import clsx from "clsx";
 
 const font = M_PLUS_Rounded_1c({ weight: ["500", "700"], subsets: ["latin"] });
