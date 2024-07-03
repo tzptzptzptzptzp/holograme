@@ -13,6 +13,13 @@ export type SelectedContentStateType =
 
 export type SearchTypeStateType = "newTab" | "currentTab";
 
+export type ChatRoomStateType = {
+  id: number;
+  name: string;
+  description: string;
+  defaultMessage: string;
+};
+
 export type FavoriteChatRoomIdStateType = number;
 
 export type ChatRoomOptionStateType = {
