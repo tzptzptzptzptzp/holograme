@@ -33,7 +33,9 @@ export const CustomReactMarkdown = ({
           <ol className="flex flex-col gap-4">{children}</ol>
         ),
         li: ({ children }) => <li className="pl-2">{children}</li>,
-        p: ({ children }) => <div>{children}</div>,
+        p: ({ children }) => (
+          <div className="max-w-full break-words">{children}</div>
+        ),
       }}
     >
       {markdown}

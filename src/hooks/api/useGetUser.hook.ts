@@ -2,7 +2,7 @@ import axios from "axios";
 import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/config/queryKeys.config";
-import { GetMinutesToMilliseconds } from "@/utils/getMinutesToMilliseconds.util";
+import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 
 const getUser = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
