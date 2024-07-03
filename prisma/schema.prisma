@@ -15,6 +15,14 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model User {
+  id          String   @id
+  nickname    String
+  email       String
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
+}
+
 model ChatRoom {
   id             Int      @id @default(autoincrement())
   userId         String

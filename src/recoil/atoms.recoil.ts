@@ -5,11 +5,17 @@ import {
   ModalStateType,
   SearchTypeStateType,
   SelectedContentStateType,
+  UserStateType,
 } from "./types.recoil";
 
 export const InitializeState = atom<boolean>({
   key: "Initialize",
   default: false,
+});
+
+export const UserState = atom<UserStateType | null>({
+  key: "User",
+  default: null,
 });
 
 export const SessionState = atom<Session | null>({

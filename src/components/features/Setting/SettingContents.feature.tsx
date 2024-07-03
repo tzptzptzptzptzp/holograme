@@ -1,16 +1,37 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { Icons } from "@/icons";
+import { UserState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
+  email: string;
   nickname: string;
 };
 
 export const SettingContents = () => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const user = useRecoilValue(UserState);
+
+  const { register, handleSubmit, setValue } = useForm<Inputs>();
+
+  useEffect(() => {
+    if (user) {
+      console.log("throw");
+      setValue("email", user.email);
+      setValue("nickname", user.nickname);
+    }
+  }, [user, setValue]);
+
+  const handleReset = () => {
+    if (user) {
+      setValue("email", user.email);
+      setValue("nickname", user.nickname);
+    }
+  };
 
   const onSubmit = (data: Inputs) => {
     console.log(data);
@@ -33,13 +54,15 @@ export const SettingContents = () => {
           placeholder="ニックネームを入力してください"
           {...register("nickname", { required: true })}
         />
+        <FormInput
+          disabled
+          inputClassName="border-none"
+          label="メールアドレス"
+          placeholder="メールアドレスを入力してください"
+          {...register("email", { required: true })}
+        />
         <div className="flex justify-end gap-4 w-2/3 mr-0 ml-auto">
-          <Button
-            className="!w-1/3"
-            onClick={() => {}}
-            type="reset"
-            variant="cancel"
-          >
+          <Button className="!w-1/3" onClick={handleReset} variant="cancel">
             リセット
           </Button>
           <Button
@@ -51,7 +74,7 @@ export const SettingContents = () => {
           >
             更新
           </Button>
-        </div>{" "}
+        </div>
       </form>
     </ContentWrapper>
   );
