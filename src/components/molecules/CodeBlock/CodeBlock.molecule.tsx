@@ -35,7 +35,7 @@ export const CodeBlock = ({ className, children }: Props) => {
   ) : (
     <code
       className={clsx(
-        "inline-block w-full mx-[3px] px-1 py-[2px] border border-white rounded bg-white bg-opacity-80 text-text text-[15px] leading-[1.5] whitespace-pre-wrap",
+        "inline-block max-w-full mx-[3px] px-1 py-[2px] border border-white rounded bg-white bg-opacity-80 text-text text-[15px] leading-[1.5] whitespace-pre-wrap",
         className
       )}
       style={{ transform: "translateY(-1.5px)" }}
