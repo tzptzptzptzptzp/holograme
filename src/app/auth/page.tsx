@@ -1,13 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { CircleContainer } from "@/components/molecules/CircleContainer/CircleContainer.molecule";
-import { useSignIn } from "@/hooks/useSignIn.util";
-import { Icons } from "@/icons";
 import { colorConfig } from "@/config/color.config";
-import { useSignUp } from "@/hooks/useSignUp.util";
 import { textsConfig } from "@/config/texts.config";
+import { usePostUser } from "@/hooks/api/usePostUser.hook";
+import { useSignIn } from "@/hooks/useSignIn.util";
+import { useSignUp } from "@/hooks/useSignUp.util";
+import { Icons } from "@/icons";
 
 type Inputs = {
   email: string;
@@ -21,14 +22,24 @@ const ErrorClassName = "mt-1 px-1 text-red-400 text-[12px] font-bold";
 export default function Auth() {
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
 
-  const { signUp, isEmailSent, isLoading: signUpIsLoading } = useSignUp();
+  const { user, signUp, isEmailSent, isLoading: signUpIsLoading } = useSignUp();
   const { signIn, isLoading: signInIsLoading } = useSignIn();
+
+  const mutate = usePostUser();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  useEffect(() => {
+    if (user) {
+      const id = user.id;
+      const email = user.email ?? "";
+      mutate({ id, email });
+    }
+  }, [mutate, user]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (mode === "signUp") {
