@@ -1,26 +1,29 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useGetUser } from "./api/useGetUser.hook";
 import { useGetChat } from "./api/useGetChat.hook";
 import {
   ChatRoomOptionsState,
+  ChatRoomState,
   FavoriteChatRoomIdState,
   UserState,
 } from "@/recoil/atoms.recoil";
 
 export const useSetData = () => {
   const setUser = useSetRecoilState(UserState);
-  const setFavoriteChatRoomId = useSetRecoilState(FavoriteChatRoomIdState);
+  const setChatRoom = useSetRecoilState(ChatRoomState);
   const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
+  const [chatRoomId, setChatRoomId] = useRecoilState(FavoriteChatRoomIdState);
 
   const { data: userData } = useGetUser();
   const { data: chatData } = useGetChat();
 
-  const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
-
-  if (favoriteChatRoom) {
-    setFavoriteChatRoomId(Number(favoriteChatRoom));
-  }
+  useEffect(() => {
+    const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
+    if (favoriteChatRoom) {
+      setChatRoomId(Number(favoriteChatRoom));
+    }
+  }, [setChatRoomId]);
 
   useEffect(() => {
     if (userData) {
@@ -30,6 +33,24 @@ export const useSetData = () => {
 
   useEffect(() => {
     if (chatData) {
+      if (chatRoomId) {
+        const chatRoom = chatData.find(
+          (chatRoom) => chatRoom.id === Number(chatRoomId)
+        );
+        setChatRoom({
+          id: chatRoom!.id,
+          name: chatRoom!.name,
+          description: chatRoom!.description,
+          defaultMessage: chatRoom!.defaultMessage,
+        });
+      } else {
+        setChatRoom({
+          id: chatData[0].id,
+          name: chatData[0].name,
+          description: chatData[0].description,
+          defaultMessage: chatData[0].defaultMessage,
+        });
+      }
       setChatRoomOptions(
         chatData.map((chatRoom) => ({
           id: chatRoom.id,
@@ -37,5 +58,5 @@ export const useSetData = () => {
         }))
       );
     }
-  }, [chatData, favoriteChatRoom, setChatRoomOptions]);
+  }, [chatData, chatRoomId, setChatRoom, setChatRoomOptions]);
 };
