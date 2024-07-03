@@ -8,8 +8,6 @@ export const Heart = ({
   height = 24,
   solid = false,
 }: IconType) => {
-  console.log(solid);
-
   return (
     <svg
       className={className}
