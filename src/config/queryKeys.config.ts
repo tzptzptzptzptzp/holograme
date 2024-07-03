@@ -3,4 +3,5 @@ export const queryKeysConfig = {
   GET_CHAT_MESSAGE: "GET_CHAT_MESSAGE",
   GET_CLIPBOARD: "GET_CLIPBOARD",
   GET_MEMO: "GET_MEMO",
+  GET_USER: "GET_USER",
 };
