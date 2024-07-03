@@ -2,6 +2,9 @@ import { atom } from "recoil";
 import { Session } from "@supabase/supabase-js";
 import {
   ChatMessageStateType,
+  ChatRoomOptionStateType,
+  ChatRoomStateType,
+  FavoriteChatRoomIdStateType,
   ModalStateType,
   SearchTypeStateType,
   SelectedContentStateType,
@@ -31,6 +34,23 @@ export const SelectedContentState = atom<SelectedContentStateType>({
 export const SearchTypeState = atom<SearchTypeStateType>({
   key: "SearchType",
   default: "currentTab",
+});
+
+export const ChatRoomState = atom<ChatRoomStateType | null>({
+  key: "ChatRoom",
+  default: null,
+});
+
+export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
+  {
+    key: "FavoriteChatRoomId",
+    default: null,
+  }
+);
+
+export const ChatRoomOptionsState = atom<ChatRoomOptionStateType[]>({
+  key: "ChatRoomOptions",
+  default: [],
 });
 
 export const ChatMessageState = atom<ChatMessageStateType>({
