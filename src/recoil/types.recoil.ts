@@ -1,5 +1,7 @@
 import { ModalContentType } from "@/types";
-import { ChatMessage } from "@prisma/client";
+import { ChatMessage, User } from "@prisma/client";
+
+export type UserStateType = User;
 
 export type SelectedContentStateType =
   | "home"
