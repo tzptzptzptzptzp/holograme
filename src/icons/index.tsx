@@ -8,6 +8,7 @@ import { Config } from "./Config/Config.icon";
 import { Copy } from "./Copy/Copy.icon";
 import { Eye } from "./Eye/Eye.icon";
 import { EyeSlash } from "./EyeSlash/EyeSlash.icon";
+import { Heart } from "./Heart/Heart.icon";
 import { Home } from "./Home/Home.icon";
 import { NewTab } from "./NewTab/NewTab.icon";
 import { Paste } from "./Paste/Paste.icon";
@@ -28,6 +29,7 @@ export const Icons = {
   Copy,
   Eye,
   EyeSlash,
+  Heart,
   Home,
   NewTab,
   Paste,
