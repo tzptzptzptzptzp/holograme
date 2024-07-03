@@ -1,12 +1,12 @@
-import { ChatRoomOptionState, UserState } from "@/recoil/atoms.recoil";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { useGetUser } from "./api/useGetUser.hook";
 import { useGetChat } from "./api/useGetChat.hook";
+import { ChatRoomOptionsState, UserState } from "@/recoil/atoms.recoil";
 
 export const useSetData = () => {
   const setUser = useSetRecoilState(UserState);
-  const setChatRoomOption = useSetRecoilState(ChatRoomOptionState);
+  const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
 
   const { data: userData } = useGetUser();
   const { data: chatData } = useGetChat();
@@ -19,12 +19,12 @@ export const useSetData = () => {
 
   useEffect(() => {
     if (chatData) {
-      setChatRoomOption(
+      setChatRoomOptions(
         chatData.map((chatRoom) => ({
           id: chatRoom.id,
           name: chatRoom.name,
         }))
       );
     }
-  }, [chatData, setChatRoomOption]);
+  }, [chatData, setChatRoomOptions]);
 };

@@ -13,7 +13,7 @@ export type SelectedContentStateType =
 
 export type SearchTypeStateType = "newTab" | "currentTab";
 
-export type ChatRoomOption = {
+export type ChatRoomOptionStateType = {
   id: number;
   name: string;
 };
