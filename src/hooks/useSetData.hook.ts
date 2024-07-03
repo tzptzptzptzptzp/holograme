@@ -2,14 +2,25 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { useGetUser } from "./api/useGetUser.hook";
 import { useGetChat } from "./api/useGetChat.hook";
-import { ChatRoomOptionsState, UserState } from "@/recoil/atoms.recoil";
+import {
+  ChatRoomOptionsState,
+  FavoriteChatRoomIdState,
+  UserState,
+} from "@/recoil/atoms.recoil";
 
 export const useSetData = () => {
   const setUser = useSetRecoilState(UserState);
+  const setFavoriteChatRoomId = useSetRecoilState(FavoriteChatRoomIdState);
   const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
 
   const { data: userData } = useGetUser();
   const { data: chatData } = useGetChat();
+
+  const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
+
+  if (favoriteChatRoom) {
+    setFavoriteChatRoomId(Number(favoriteChatRoom));
+  }
 
   useEffect(() => {
     if (userData) {
@@ -26,5 +37,5 @@ export const useSetData = () => {
         }))
       );
     }
-  }, [chatData, setChatRoomOptions]);
+  }, [chatData, favoriteChatRoom, setChatRoomOptions]);
 };
