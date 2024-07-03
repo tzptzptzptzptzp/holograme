@@ -13,6 +13,11 @@ export type SelectedContentStateType =
 
 export type SearchTypeStateType = "newTab" | "currentTab";
 
+export type ChatRoomOption = {
+  id: number;
+  name: string;
+};
+
 type Messages = Omit<ChatMessage, "role"> & {
   role: "user" | "assistant";
 };
