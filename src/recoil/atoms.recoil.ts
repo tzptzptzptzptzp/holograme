@@ -36,6 +36,11 @@ export const SearchTypeState = atom<SearchTypeStateType>({
   default: "currentTab",
 });
 
+export const ChatRoomState = atom<ChatRoomStateType | null>({
+  key: "ChatRoom",
+  default: null,
+});
+
 export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
   {
     key: "FavoriteChatRoomId",
