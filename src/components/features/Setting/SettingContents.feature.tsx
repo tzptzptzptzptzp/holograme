@@ -26,7 +26,12 @@ export const SettingContents = () => {
     }
   }, [user, setValue]);
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    if (user) {
+      setValue("email", user.email);
+      setValue("nickname", user.nickname);
+    }
+  };
 
   const onSubmit = (data: Inputs) => {
     console.log(data);
