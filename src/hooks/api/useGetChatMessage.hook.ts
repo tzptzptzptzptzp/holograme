@@ -12,7 +12,7 @@ export type GetChatMessageResponse = {
 } & ChatRoom;
 
 const getChatMessage = async (id: number) => {
-  if (!axios.defaults.headers.common["Authorization"]) {
+  if (!axios.defaults.headers.common["Authorization"] || id === 0) {
     throw new Error("Authorization token is missing");
   }
   const res = await axios.get<GetChatMessageResponse>(`/api/chat/${id}`);

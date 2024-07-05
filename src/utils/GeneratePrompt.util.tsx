@@ -1,6 +1,7 @@
-import { ChatMessageStateType } from "@/recoil/types.recoil";
+import { ChatMessageStateType, UserStateType } from "@/recoil/types.recoil";
 
 type GeneratePromptType = {
+  user: UserStateType;
   message: string;
   chatRoomName?: string;
   description?: string;
@@ -8,6 +9,7 @@ type GeneratePromptType = {
 };
 
 export const GeneratePrompt = ({
+  user,
   message,
   chatRoomName,
   description,
@@ -59,7 +61,7 @@ export const GeneratePrompt = ({
 
 ### ユーザーの呼び方
 
-- てづっぴ
+- ${user?.nickname}
 
 ### 好きなもの
 
@@ -89,7 +91,7 @@ export const GeneratePrompt = ({
 
 ### その他情報
 
-- 場所：日本 東北 福島県 いわき市
+- 場所：日本 ${user?.location}
 - 現在時刻：${new Date().toLocaleString()}
 
 ### チャットルーム情報

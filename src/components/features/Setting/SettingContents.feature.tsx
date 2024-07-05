@@ -1,39 +1,69 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { set, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { textsConfig } from "@/config/texts.config";
+import { useGetUser } from "@/hooks/api/useGetUser.hook";
+import { usePutUser } from "@/hooks/api/usePutUser.hook";
 import { Icons } from "@/icons";
 import { UserState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
   email: string;
+  location: string;
   nickname: string;
+  username: string;
 };
 
 export const SettingContents = () => {
+  const [apiPending, setApiPending] = useState(false);
+
   const user = useRecoilValue(UserState);
 
   const { register, handleSubmit, setValue } = useForm<Inputs>();
 
+  const { refetch } = useGetUser();
+
+  const mutate = usePutUser();
+
   useEffect(() => {
     if (user) {
       setValue("email", user.email);
+      setValue("location", user.location);
       setValue("nickname", user.nickname);
+      setValue("username", user.username);
     }
   }, [user, setValue]);
 
   const handleReset = () => {
     if (user) {
       setValue("email", user.email);
+      setValue("location", user.location);
       setValue("nickname", user.nickname);
+      setValue("username", user.username);
     }
   };
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
+    setApiPending(true);
+    mutate(
+      {
+        location: data.location,
+        nickname: data.nickname,
+        username: data.username,
+      },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.USER_UPDATE.SUCCESS);
+          setApiPending(false);
+          refetch();
+        },
+      }
+    );
   };
   return (
     <ContentWrapper>
@@ -49,9 +79,21 @@ export const SettingContents = () => {
       >
         <FormInput
           inputClassName="border-none"
-          label="ニックネーム"
-          placeholder="ニックネームを入力してください"
+          label="ユーザー名"
+          placeholder="ユーザー名を入力してください"
+          {...register("username", { required: true })}
+        />
+        <FormInput
+          inputClassName="border-none"
+          label="呼ばれたい名前・ニックネーム"
+          placeholder="呼ばれ方を入力してください"
           {...register("nickname", { required: true })}
+        />
+        <FormInput
+          inputClassName="border-none"
+          label="居住地（天気を聞いた時などに使用されます）"
+          placeholder="居住地を入力してください"
+          {...register("location", { required: true })}
         />
         <FormInput
           disabled

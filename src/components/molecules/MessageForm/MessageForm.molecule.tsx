@@ -12,7 +12,11 @@ import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
-import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
+import {
+  ChatMessagesState,
+  ChatRoomState,
+  UserState,
+} from "@/recoil/atoms.recoil";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
 type Inputs = {
@@ -23,6 +27,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [apiPending, setApiPending] = useState(false);
 
+  const user = useRecoilValue(UserState);
   const chatRoom = useRecoilValue(ChatRoomState);
   const chatMessages = useRecoilValue(ChatMessagesState);
 
@@ -58,11 +63,12 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (!chatRoom) return;
+    if (!user || !chatRoom) return;
     setApiPending(true);
     const { message } = data;
     sendMessage(message);
     const prompt = GeneratePrompt({
+      user,
       message,
       description: chatRoom.description,
       chatMessage: chatMessages,
