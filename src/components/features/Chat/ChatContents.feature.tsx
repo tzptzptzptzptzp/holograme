@@ -31,7 +31,7 @@ export const ChatContents = () => {
   const { data } = useGetChat();
 
   useEffect(() => {
-    if (isFirstLoad.current && chatRoom && favoriteChatRoomId) {
+    if (isFirstLoad.current && chatRoom) {
       setCurrentChatRoomId(favoriteChatRoomId ?? chatRoom.id);
       isFirstLoad.current = false;
     }
