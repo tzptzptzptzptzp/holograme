@@ -91,7 +91,7 @@ export const GeneratePrompt = ({
 
 ### その他情報
 
-- 場所：日本 東北 福島県 いわき市
+- 場所：日本 ${user?.location}
 - 現在時刻：${new Date().toLocaleString()}
 
 ### チャットルーム情報
