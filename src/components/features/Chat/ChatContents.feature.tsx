@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
@@ -10,25 +10,25 @@ import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWra
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import {
-  ChatMessagesState,
   ChatRoomOptionsState,
   ChatRoomState,
   FavoriteChatRoomIdState,
 } from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
+  const isFirstLoad = useRef(true);
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
 
-  const chatRoom = useRecoilValue(ChatRoomState);
-  const chatMessage = useRecoilValue(ChatMessagesState);
+  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
   const chatRoomOptions = useRecoilValue(ChatRoomOptionsState);
   const favoriteChatRoomId = useRecoilValue(FavoriteChatRoomIdState);
 
   const { handleOpen } = useModal();
 
   useEffect(() => {
-    if (chatRoom && favoriteChatRoomId) {
+    if (isFirstLoad.current && chatRoom && favoriteChatRoomId) {
       setCurrentChatRoomId(favoriteChatRoomId ?? chatRoom.id);
+      isFirstLoad.current = false;
     }
   }, [chatRoom, favoriteChatRoomId, setCurrentChatRoomId]);
 
