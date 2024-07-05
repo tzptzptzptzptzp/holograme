@@ -20,7 +20,6 @@ export const SettingContents = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("throw");
       setValue("email", user.email);
       setValue("nickname", user.nickname);
     }
