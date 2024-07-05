@@ -5,7 +5,6 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
 import { useSession } from "@/hooks/useSession.util";
-import { useSetData } from "@/hooks/useSetData.hook";
 import { SessionState } from "@/recoil/atoms.recoil";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -15,8 +14,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const setSession = useSetRecoilState(SessionState);
 
   const { authStatus, session } = useSession();
-
-  useSetData();
 
   useEffect(() => {
     setSession(session);
