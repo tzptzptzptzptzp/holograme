@@ -9,8 +9,10 @@ export async function POST(req: Request) {
     const data = await prisma.user.create({
       data: {
         id,
+        username: "",
         nickname: "",
         email,
+        location: "",
       },
     });
 
@@ -31,14 +33,16 @@ export async function PUT(req: Request) {
     }
     const userId = await getUserIdFromToken(token);
 
-    const { nickname } = await req.json();
+    const { username, nickname, location } = await req.json();
 
     const data = await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
+        username,
         nickname,
+        location,
       },
     });
 
