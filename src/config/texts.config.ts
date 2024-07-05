@@ -82,6 +82,10 @@ export const textsConfig = {
       SUCCESS: "🦄 確認メールを送信しました！",
       ERROR: "登録に失敗しました…",
     },
+    USER_UPDATE: {
+      SUCCESS: "🦄 ユーザー情報を更新しました！",
+      ERROR: "更新に失敗しました…",
+    },
   },
   AUTH: {
     EMAIL_SENT: "確認メールを送信しました",

@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { textsConfig } from "@/config/texts.config";
+import { useGetUser } from "@/hooks/api/useGetUser.hook";
+import { usePutUser } from "@/hooks/api/usePutUser.hook";
 import { Icons } from "@/icons";
 import { UserState } from "@/recoil/atoms.recoil";
 
@@ -14,9 +18,15 @@ type Inputs = {
 };
 
 export const SettingContents = () => {
+  const [apiPending, setApiPending] = useState(false);
+
   const user = useRecoilValue(UserState);
 
   const { register, handleSubmit, setValue } = useForm<Inputs>();
+
+  const { refetch } = useGetUser();
+
+  const mutate = usePutUser();
 
   useEffect(() => {
     if (user) {
@@ -33,7 +43,19 @@ export const SettingContents = () => {
   };
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
+    setApiPending(true);
+    mutate(
+      {
+        nickname: data.nickname,
+      },
+      {
+        onSuccess: ({ data }) => {
+          toast(textsConfig.TOAST.USER_UPDATE.SUCCESS);
+          setApiPending(false);
+          refetch();
+        },
+      }
+    );
   };
   return (
     <ContentWrapper>
