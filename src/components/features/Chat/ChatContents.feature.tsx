@@ -21,8 +21,10 @@ export const ChatContents = () => {
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
 
   const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
+  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
+    FavoriteChatRoomIdState
+  );
   const chatRoomOptions = useRecoilValue(ChatRoomOptionsState);
-  const favoriteChatRoomId = useRecoilValue(FavoriteChatRoomIdState);
 
   const { handleOpen } = useModal();
 
@@ -50,7 +52,13 @@ export const ChatContents = () => {
   };
 
   const handleFavorite = () => {
-    localStorage.setItem("favoriteChatRoom", currentChatRoomId.toString());
+    if (currentChatRoomId === favoriteChatRoomId) {
+      setFavoriteChatRoomId(null);
+      localStorage.removeItem("favoriteChatRoom");
+    } else {
+      localStorage.setItem("favoriteChatRoom", currentChatRoomId.toString());
+      setFavoriteChatRoomId(currentChatRoomId);
+    }
   };
   return (
     <ContentWrapper className="gap-0">

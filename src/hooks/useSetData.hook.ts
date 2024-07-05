@@ -13,7 +13,9 @@ export const useSetData = () => {
   const setUser = useSetRecoilState(UserState);
   const setChatRoom = useSetRecoilState(ChatRoomState);
   const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
-  const [chatRoomId, setChatRoomId] = useRecoilState(FavoriteChatRoomIdState);
+  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
+    FavoriteChatRoomIdState
+  );
 
   const { data: userData } = useGetUser();
   const { data: chatData } = useGetChat();
@@ -21,9 +23,9 @@ export const useSetData = () => {
   useEffect(() => {
     const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
     if (favoriteChatRoom) {
-      setChatRoomId(Number(favoriteChatRoom));
+      setFavoriteChatRoomId(Number(favoriteChatRoom));
     }
-  }, [setChatRoomId]);
+  }, [setFavoriteChatRoomId]);
 
   useEffect(() => {
     if (userData) {
@@ -33,9 +35,9 @@ export const useSetData = () => {
 
   useEffect(() => {
     if (chatData) {
-      if (chatRoomId) {
+      if (favoriteChatRoomId) {
         const chatRoom = chatData.find(
-          (chatRoom) => chatRoom.id === Number(chatRoomId)
+          (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
         );
         setChatRoom({
           id: chatRoom!.id,
@@ -58,5 +60,5 @@ export const useSetData = () => {
         }))
       );
     }
-  }, [chatData, chatRoomId, setChatRoom, setChatRoomOptions]);
+  }, [chatData, favoriteChatRoomId, setChatRoom, setChatRoomOptions]);
 };
