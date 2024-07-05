@@ -10,7 +10,7 @@ import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChat } from "@/hooks/api/usePostChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatMessageState } from "@/recoil/atoms.recoil";
+import { ChatRoomState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -22,11 +22,11 @@ type Inputs = {
 export const CreateChatModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const [chatRoom, setChatRoom] = useRecoilState(ChatMessageState);
+  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
 
   const mutate = usePostChat();
   const { refetch: chatRefetch } = useGetChat();
-  const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom.roomId);
+  const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom?.id || 0);
 
   const {
     register,
@@ -45,12 +45,14 @@ export const CreateChatModal = () => {
         defaultMessage: data.defaultMessage,
       },
       {
-        onSuccess: (data) => {
+        onSuccess: ({ data }) => {
           toast(textsConfig.TOAST.CHAT_CREATE.SUCCESS);
           setApiPending(false);
           setChatRoom({
-            ...chatRoom,
-            roomId: data.data.id,
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            defaultMessage: data.defaultMessage,
           });
           chatRefetch();
           chatMessageRefetch();

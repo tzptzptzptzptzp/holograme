@@ -8,32 +8,35 @@ import { useDeleteChat } from "@/hooks/api/useDeleteChat.hook";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatMessageState } from "@/recoil/atoms.recoil";
+import { ChatRoomState } from "@/recoil/atoms.recoil";
 
 export const DeleteChatModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const [chatRoom, setChatRoom] = useRecoilState(ChatMessageState);
+  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
 
   const mutate = useDeleteChat();
   const { refetch: chatRefetch } = useGetChat();
-  const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom.roomId);
+  const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom?.id || 0);
 
   const { handleClose } = useModal();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!chatRoom) return;
     setApiPending(true);
     mutate(
-      { id: chatRoom.roomId },
+      { id: chatRoom.id },
       {
         onSuccess: async () => {
           toast(textsConfig.TOAST.CHAT_DELETE.SUCCESS);
           setApiPending(false);
-          const data = await chatRefetch();
+          const { data } = await chatRefetch();
           await setChatRoom({
-            ...chatRoom,
-            roomId: data.data ? data.data[0].id : 0,
+            id: data?.[0]?.id || 0,
+            name: data?.[0]?.name || "",
+            description: data?.[0]?.description || "",
+            defaultMessage: data?.[0]?.defaultMessage || "",
           });
           await chatMessageRefetch();
           handleClose();
@@ -52,7 +55,7 @@ export const DeleteChatModal = () => {
     >
       <div className="flex flex-col items-center justify-center min-w-[250px]">
         <ErrorMessage>
-          {chatRoom.name + textsConfig.FORM.CHAT.DELETE.ALERT[0]}
+          {chatRoom?.name + textsConfig.FORM.CHAT.DELETE.ALERT[0]}
         </ErrorMessage>
         <ErrorMessage>{textsConfig.FORM.CHAT.DELETE.ALERT[1]}</ErrorMessage>
       </div>

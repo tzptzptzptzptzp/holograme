@@ -1,8 +1,8 @@
-import { ChatMessageState } from "@/recoil/atoms.recoil";
 import { useRecoilState } from "recoil";
+import { ChatMessagesState } from "@/recoil/atoms.recoil";
 
 export const useSendMessage = () => {
-  const [state, setState] = useRecoilState(ChatMessageState);
+  const [chatMessages, setChatMessages] = useRecoilState(ChatMessagesState);
 
   const generateMessage = (message: string) => {
     const userMessage = {
@@ -30,16 +30,9 @@ export const useSendMessage = () => {
 
   const sendMessage = (message: string) => {
     const { userMessage, assistantMessage } = generateMessage(message);
-    const newMessages = [assistantMessage, userMessage, ...state.messages];
+    const newMessages = [assistantMessage, userMessage, ...chatMessages];
 
-    setState({
-      isThinking: true,
-      name: state.name,
-      description: state.description,
-      defaultMessage: state.defaultMessage,
-      roomId: state.roomId,
-      messages: newMessages,
-    });
+    setChatMessages(newMessages);
   };
 
   return {

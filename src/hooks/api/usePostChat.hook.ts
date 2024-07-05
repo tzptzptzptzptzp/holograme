@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ChatRoom } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 
 const postChat = async ({
@@ -9,7 +10,7 @@ const postChat = async ({
   name: string;
   description: string;
   defaultMessage: string;
-}): Promise<{ data: { id: number } }> => {
+}): Promise<{ data: ChatRoom }> => {
   return await axios.post("/api/chat", {
     name,
     description,

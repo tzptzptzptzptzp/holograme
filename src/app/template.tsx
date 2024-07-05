@@ -4,8 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
+import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useGetUser } from "@/hooks/api/useGetUser.hook";
 import { useSession } from "@/hooks/useSession.util";
-import { useSetData } from "@/hooks/useSetData.hook";
 import { SessionState } from "@/recoil/atoms.recoil";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -16,7 +17,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   const { authStatus, session } = useSession();
 
-  useSetData();
+  const { refetch: chatRefetch } = useGetChat();
+  const { refetch: userRefetch } = useGetUser();
 
   useEffect(() => {
     setSession(session);
@@ -25,8 +27,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${session.access_token}`;
+      chatRefetch();
+      userRefetch();
     }
-  }, [session, setSession]);
+  }, [chatRefetch, session, setSession, userRefetch]);
 
   useEffect(() => {
     if (authStatus !== "loading" && authStatus === "unauthenticated") {

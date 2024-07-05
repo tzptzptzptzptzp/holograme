@@ -27,17 +27,8 @@ export type ChatRoomOptionStateType = {
   name: string;
 };
 
-type Messages = Omit<ChatMessage, "role"> & {
+export type ChatMessageStateType = Omit<ChatMessage, "role"> & {
   role: "user" | "assistant";
-};
-
-export type ChatMessageStateType = {
-  isThinking: boolean;
-  roomId: number;
-  name: string;
-  description: string;
-  defaultMessage: string;
-  messages: Messages[];
 };
 
 export type ModalStateType = {

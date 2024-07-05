@@ -53,25 +53,9 @@ export const ChatRoomOptionsState = atom<ChatRoomOptionStateType[]>({
   default: [],
 });
 
-export const ChatMessageState = atom<ChatMessageStateType>({
-  key: "ChatMessage",
-  default: {
-    isThinking: false,
-    roomId: 0,
-    name: "",
-    description: "",
-    defaultMessage: "",
-    messages: [
-      {
-        id: 0,
-        userId: "",
-        roomId: 0,
-        content: "",
-        role: "user",
-        date: new Date(),
-      },
-    ],
-  },
+export const ChatMessagesState = atom<ChatMessageStateType[]>({
+  key: "ChatMessages",
+  default: [],
 });
 
 export const ModalState = atom<ModalStateType>({
