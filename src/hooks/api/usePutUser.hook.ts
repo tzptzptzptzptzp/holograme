@@ -1,9 +1,19 @@
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 
-const putUser = async ({ nickname }: { nickname: string }) => {
+const putUser = async ({
+  username,
+  nickname,
+  location,
+}: {
+  username: string;
+  nickname: string;
+  location: string;
+}) => {
   return await axios.put(`/api/user`, {
+    username,
     nickname,
+    location,
   });
 };
 
