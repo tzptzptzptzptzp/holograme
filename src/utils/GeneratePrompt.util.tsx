@@ -4,7 +4,7 @@ type GeneratePromptType = {
   message: string;
   chatRoomName?: string;
   description?: string;
-  chatMessage?: ChatMessageStateType["messages"];
+  chatMessage?: ChatMessageStateType[];
 };
 
 export const GeneratePrompt = ({

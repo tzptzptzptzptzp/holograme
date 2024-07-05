@@ -11,8 +11,8 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { usePutChat } from "@/hooks/api/usePutChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
+import { ChatRoomState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
-import { ChatMessageState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
   chatRoomName: string;
@@ -26,7 +26,7 @@ export const EditChatModal = () => {
   const mutate = usePutChat();
   const { refetch } = useGetChat();
 
-  const chatRoom = useRecoilValue(ChatMessageState);
+  const chatRoom = useRecoilValue(ChatRoomState);
 
   const {
     formState: { errors },
@@ -38,16 +38,17 @@ export const EditChatModal = () => {
   const { handleClose, handleOpen } = useModal();
 
   useEffect(() => {
-    setValue("chatRoomName", chatRoom.name);
-    setValue("description", chatRoom.description);
-    setValue("defaultMessage", chatRoom.defaultMessage);
+    setValue("chatRoomName", chatRoom?.name || "");
+    setValue("description", chatRoom?.description || "");
+    setValue("defaultMessage", chatRoom?.defaultMessage || "");
   }, [chatRoom, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (!chatRoom) return;
     setApiPending(true);
     mutate(
       {
-        id: chatRoom.roomId,
+        id: chatRoom.id,
         name: data.chatRoomName,
         description: data.description,
         defaultMessage: data.defaultMessage,

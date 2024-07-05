@@ -7,42 +7,38 @@ import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.mole
 import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.molecule";
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
-import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { ChatMessageState } from "@/recoil/atoms.recoil";
+import {
+  ChatMessagesState,
+  ChatRoomOptionsState,
+  ChatRoomState,
+  FavoriteChatRoomIdState,
+} from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
-  const isFirstLoad = useRef(true);
   const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
 
-  const chatRoom = useRecoilValue(ChatMessageState);
-
-  const { data, isLoading } = useGetChat();
+  const chatRoom = useRecoilValue(ChatRoomState);
+  const chatMessage = useRecoilValue(ChatMessagesState);
+  const chatRoomOptions = useRecoilValue(ChatRoomOptionsState);
+  const favoriteChatRoomId = useRecoilValue(FavoriteChatRoomIdState);
 
   const { handleOpen } = useModal();
+
+  useEffect(() => {
+    if (chatRoom && favoriteChatRoomId) {
+      setCurrentChatRoomId(favoriteChatRoomId ?? chatRoom.id);
+    }
+  }, [chatRoom, favoriteChatRoomId, setCurrentChatRoomId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentChatRoomId(Number(e.target.value));
   };
 
-  useEffect(() => {
-    if (isFirstLoad.current && data) {
-      setCurrentChatRoomId(data[0].id ?? 0);
-      isFirstLoad.current = false;
-    }
-  }, [data, setCurrentChatRoomId]);
-
-  useEffect(() => {
-    setCurrentChatRoomId(chatRoom.roomId);
-  }, [chatRoom, setCurrentChatRoomId]);
-
-  const chatRoomOptions =
-    data?.map((chatRoom) => ({
-      id: chatRoom.id,
-      name: chatRoom.name,
-    })) ?? [];
-
+  const handleFavorite = () => {
+    localStorage.setItem("favoriteChatRoom", currentChatRoomId.toString());
+  };
   return (
     <ContentWrapper className="gap-0">
       <div className="flex gap-3">
@@ -61,6 +57,12 @@ export const ChatContents = () => {
                 value={currentChatRoomId}
               />
             </div>
+            <Button className="flex-shrink-0" onClick={handleFavorite}>
+              <Icons.Heart
+                color="white"
+                solid={currentChatRoomId === favoriteChatRoomId}
+              />
+            </Button>
             <Button
               className="flex-shrink-0"
               onClick={() => handleOpen("createChat")}
@@ -76,12 +78,8 @@ export const ChatContents = () => {
           </div>
         </ContentHead>
       </div>
-      {isLoading && !data ? (
-        <Loader />
-      ) : (
-        <ChatRoom roomId={currentChatRoomId} />
-      )}
-      <MessageForm roomId={currentChatRoomId ?? 0} />
+      {!chatRoom ? <Loader /> : <ChatRoom roomId={chatRoom!.id ?? 0} />}
+      <MessageForm roomId={chatRoom ? chatRoom!.id : 0} />
     </ContentWrapper>
   );
 };

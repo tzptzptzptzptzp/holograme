@@ -2,18 +2,18 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
 import { colorConfig } from "@/config/color.config";
+import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
-import { ChatMessageState } from "@/recoil/atoms.recoil";
+import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
-import { toast } from "react-toastify";
-import { textsConfig } from "@/config/texts.config";
 
 type Inputs = {
   message: string;
@@ -21,9 +21,10 @@ type Inputs = {
 
 export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [apiPending, setApiPending] = useState(false);
 
-  const chat = useRecoilValue(ChatMessageState);
+  const chatRoom = useRecoilValue(ChatRoomState);
+  const chatMessages = useRecoilValue(ChatMessagesState);
 
   const { sendMessage } = useSendMessage();
 
@@ -35,8 +36,9 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
 
   useEffect(() => {
     setFocus("message");
-    setValue("message", chat.defaultMessage);
-  }, [chat, setFocus, setValue]);
+    textareaRef.current?.focus();
+    setValue("message", chatRoom?.defaultMessage || "");
+  }, [chatRoom, setFocus, setValue]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {
@@ -56,13 +58,14 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    setIsLoading(true);
+    if (!chatRoom) return;
+    setApiPending(true);
     const { message } = data;
     sendMessage(message);
     const prompt = GeneratePrompt({
       message,
-      description: chat.description,
-      chatMessage: chat.messages,
+      description: chatRoom.description,
+      chatMessage: chatMessages,
     });
     mutate(
       { content: message, id: roomId, prompt },
@@ -72,9 +75,9 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         },
         onSettled: async () => {
           reset();
-          setValue("message", chat.defaultMessage);
+          setValue("message", chatRoom.defaultMessage);
           refetch();
-          setIsLoading(false);
+          setApiPending(false);
           await setTimeout(() => {
             textareaRef.current?.focus();
           }, 250);
@@ -87,7 +90,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
         "flex gap-[6px] w-full pl-4 pr-3 py-2 rounded-3xl",
-        isLoading ? "bg-disableBackground" : "bg-white"
+        apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
       <Controller
@@ -96,7 +99,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         render={({ field: { onBlur, onChange, value } }) => (
           <Textarea
             className="flex-1 w-full bg-transparent"
-            disabled={isLoading}
+            disabled={apiPending}
             onBlur={onBlur}
             onChange={onChange}
             onInput={adjustHeight}
@@ -110,7 +113,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       />
       <Button className="w-fit" type="submit">
         <Icons.AirPlane
-          color={isLoading ? colorConfig.disableText : colorConfig.text}
+          color={apiPending ? colorConfig.disableText : colorConfig.text}
         />
       </Button>
     </form>
