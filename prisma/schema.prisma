@@ -17,8 +17,10 @@ datasource db {
 
 model User {
   id          String   @id
+  username    String
   nickname    String
   email       String
+  location    String
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
 }
