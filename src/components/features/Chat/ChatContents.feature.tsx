@@ -7,6 +7,7 @@ import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.mole
 import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.molecule";
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import {
@@ -25,6 +26,8 @@ export const ChatContents = () => {
 
   const { handleOpen } = useModal();
 
+  const { data } = useGetChat();
+
   useEffect(() => {
     if (isFirstLoad.current && chatRoom && favoriteChatRoomId) {
       setCurrentChatRoomId(favoriteChatRoomId ?? chatRoom.id);
@@ -33,7 +36,17 @@ export const ChatContents = () => {
   }, [chatRoom, favoriteChatRoomId, setCurrentChatRoomId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!data) return;
     setCurrentChatRoomId(Number(e.target.value));
+    const chatRoom = data.find(
+      (chatRoom) => chatRoom.id === Number(e.target.value)
+    );
+    setChatRoom({
+      id: Number(e.target.value),
+      name: chatRoom!.name,
+      description: chatRoom!.description,
+      defaultMessage: chatRoom!.defaultMessage,
+    });
   };
 
   const handleFavorite = () => {
