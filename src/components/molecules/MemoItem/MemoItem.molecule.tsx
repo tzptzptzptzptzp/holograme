@@ -62,13 +62,13 @@ export const MemoItem = ({
 
   useEffect(() => {
     if (contentRef.current) {
-      if (isShow) {
+      if (isEditing || isShow) {
         contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
       } else {
         contentRef.current.style.height = "0px";
       }
     }
-  }, [isShow]);
+  }, [isEditing, isShow]);
 
   const handleArchive = () => {
     setApiPending(true);
