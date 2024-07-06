@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
