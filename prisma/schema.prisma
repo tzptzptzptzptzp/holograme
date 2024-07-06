@@ -28,7 +28,7 @@ model Favorite {
   id          Int      @id @default(autoincrement())
   userId      String
   url         String
-  order       Int?
+  order       Int
   createdDate DateTime @default(now()) 
 }
 
