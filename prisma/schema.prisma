@@ -8,7 +8,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
@@ -23,6 +22,13 @@ model User {
   location    String
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
+}
+
+model Favorite {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  url         String
+  createdDate DateTime @default(now()) 
 }
 
 model ChatRoom {
