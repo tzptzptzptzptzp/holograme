@@ -16,6 +16,7 @@ import { Pencil } from "./Pencil/Pencil.icon";
 import { PencilSquare } from "./PencilSquare/PencilSquare.icon";
 import { PlusCircle } from "./PlusCircle/PlusCircle.icon";
 import { Search } from "./Search/Search.icon";
+import { Star } from "./Star/Star.icon";
 import { Trash } from "./Trash/Trash.icon";
 
 export const Icons = {
@@ -37,5 +38,6 @@ export const Icons = {
   PencilSquare,
   PlusCircle,
   Search,
+  Star,
   Trash,
 };
