@@ -9,11 +9,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const { url } = await req.json();
+    const { url, order } = await req.json();
+
+    const doubleOrderItem = await prisma.favorite.findFirst({
+      where: {
+        userId,
+        order,
+      },
+    });
+
+    if (doubleOrderItem) {
+      return NextResponse.json(
+        { error: "Order already exists" },
+        { status: 400 }
+      );
+    }
 
     const data = await prisma.favorite.create({
       data: {
         url,
+        order,
         userId,
       },
     });
