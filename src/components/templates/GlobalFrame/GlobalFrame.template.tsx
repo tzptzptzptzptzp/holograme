@@ -5,6 +5,7 @@ import { Background } from "@/components/atoms/Background/Background.atom";
 import { FrameShadow } from "@/components/atoms/FrameShadow/FrameShadow.atom";
 import { Modal } from "@/components/organisms/Modal/Modal.organism";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
+import { useDevice } from "@/hooks/useDevice.hook";
 
 type Props = {
   children: React.ReactNode;
@@ -17,12 +18,13 @@ export const GlobalFrame = ({
   contents = true,
   shadow = true,
 }: Props) => {
+  const { type } = useDevice();
   return (
     <div className="flex items-center justify-center relative z-0 w-screen h-screen p-12">
       <div className="relative overflow-hidden w-full h-full rounded-3xl">
         <Background />
         <div className="flex z-10 w-full h-full">
-          {contents && (
+          {contents && type !== "SP" && (
             <div className="flex flex-none items-end relative top-0 h-full pl-4">
               <Avatar />
             </div>
