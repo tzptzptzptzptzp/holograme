@@ -7,6 +7,7 @@ import { UserMenu } from "@/components/organisms/UserMenu/UserMenu.organism";
 import { useDevice } from "@/hooks/useDevice.hook";
 
 const UserIconSize = 39;
+const UserIconSizeSP = 30;
 
 export const Navigation = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -26,8 +27,8 @@ export const Navigation = () => {
             <Image
               alt="美少女ちゃんアイコン"
               src="/icon.png"
-              width={32}
-              height={32}
+              width={UserIconSizeSP}
+              height={UserIconSizeSP}
             />
           </Button>
         )}
