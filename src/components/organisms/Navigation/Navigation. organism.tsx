@@ -11,8 +11,8 @@ export const Navigation = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <nav className="u-shadow relative z-30 h-full w-20 bg-red-300">
-      <ul className="flex flex-col gap-8 items-center justify-center h-full">
+    <nav className="u-shadow relative z-30 w-20 s:w-full h-full s:h-auto s:p-2 bg-red-300">
+      <ul className="flex flex-col s:flex-row gap-8 s:gap-4 items-center justify-center h-full">
         <NavigationItem name="home" />
         <NavigationItem name="chat" />
         <NavigationItem name="clipboard" />
