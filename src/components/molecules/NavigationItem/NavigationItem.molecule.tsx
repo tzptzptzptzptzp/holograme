@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { useDevice } from "@/hooks/useDevice.hook";
 import { Icons } from "@/icons";
 import { IconType } from "@/icons/icon.type";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
-
-const IconSize = 32;
 
 type Props = {
   name: SelectedContentStateType;
@@ -26,6 +25,9 @@ export const NavigationItem = ({ name }: Props) => {
     useRecoilState(SelectedContentState);
 
   const IconComponent = IconComponents[name] || Icons.Home;
+
+  const { type } = useDevice();
+  const IconSize = type !== "SP" ? 32 : 28;
 
   const handleClick = (selectedContent: SelectedContentStateType) => {
     setSelectedContent(selectedContent);
