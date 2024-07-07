@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        s: { max: "767px" },
+        m: { min: "768px", max: "1023px" },
+        l: { min: "1024px" },
+      },
       colors: {
         text: "#333",
         background: "#FFF",
