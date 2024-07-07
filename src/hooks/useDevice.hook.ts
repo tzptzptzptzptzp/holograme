@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-const getDeviceType = (userAgent: string) => {
+type DeviceType = "PC" | "Tablet" | "SP";
+
+const getDeviceType = (userAgent: string): DeviceType => {
   if (/Tablet|iPad/i.test(userAgent)) {
     return "Tablet";
   } else if (/Mobi|Android/i.test(userAgent)) {
