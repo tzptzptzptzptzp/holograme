@@ -27,7 +27,7 @@ export const NavigationItem = ({ name }: Props) => {
   const IconComponent = IconComponents[name] || Icons.Home;
 
   const { type } = useDevice();
-  const IconSize = type !== "SP" ? 32 : 28;
+  const IconSize = type !== "SP" ? 32 : 30;
 
   const handleClick = (selectedContent: SelectedContentStateType) => {
     setSelectedContent(selectedContent);

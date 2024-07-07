@@ -13,25 +13,26 @@ const getDeviceType = (userAgent: string): DeviceType => {
 
 export const useDevice = () => {
   const [device, setDevice] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    type: getDeviceType(navigator.userAgent),
+    width: 0,
+    height: 0,
+    type: "",
   });
 
-  const handleResize = () => {
-    setDevice({
-      width: window.innerWidth,
-      height: window.innerHeight,
-      type: getDeviceType(navigator.userAgent),
-    });
-  };
-
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        setDevice({
+          width: window.innerWidth,
+          height: window.innerHeight,
+          type: getDeviceType(navigator.userAgent),
+        });
+      };
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      handleResize();
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   return device;

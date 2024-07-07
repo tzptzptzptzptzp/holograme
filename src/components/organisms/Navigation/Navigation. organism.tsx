@@ -6,13 +6,12 @@ import { NavigationItem } from "@/components/molecules/NavigationItem/Navigation
 import { UserMenu } from "@/components/organisms/UserMenu/UserMenu.organism";
 import { useDevice } from "@/hooks/useDevice.hook";
 
-const UserIconSize = 39;
-const UserIconSizeSP = 30;
-
 export const Navigation = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { type } = useDevice();
+
+  const UserIconSize = type !== "SP" ? 39 : 30;
   return (
     <nav className="u-shadow relative z-30 w-20 s:w-full h-full s:h-auto s:p-2 bg-red-300">
       <ul className="flex flex-col s:flex-row gap-8 s:gap-4 items-center justify-center h-full">
@@ -23,19 +22,21 @@ export const Navigation = () => {
         <NavigationItem name="history" />
         <NavigationItem name="setting" />
         {type === "SP" && (
-          <Button>
-            <Image
-              alt="美少女ちゃんアイコン"
-              src="/icon.png"
-              width={UserIconSizeSP}
-              height={UserIconSizeSP}
-            />
-          </Button>
+          <li>
+            <Button>
+              <Image
+                alt="美少女ちゃんアイコン"
+                src="/icon.png"
+                width={UserIconSize}
+                height={UserIconSize}
+              />
+            </Button>
+          </li>
         )}
       </ul>
       {type !== "SP" && (
         <div
-          className="u-centering-x absolute bottom-4"
+          className="u-centering-x s:hidden absolute bottom-4"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >

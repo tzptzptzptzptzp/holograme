@@ -22,7 +22,7 @@ export const ChatRoom = ({ roomId }: Props) => {
   if (isLoading || !data || !chatMessages) return <Loader />;
 
   return (
-    <div className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 pb-3">
+    <div className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 s:mt-2 pb-3 s:pb-2">
       {chatMessages.map((message) => (
         <ChatBalloon
           key={message.id}
