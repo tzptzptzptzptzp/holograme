@@ -20,10 +20,10 @@ export const GlobalFrame = ({
 }: Props) => {
   const { type } = useDevice();
   return (
-    <div className="flex items-center justify-center relative z-0 w-screen h-screen p-12">
+    <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-svh p-12 s:p-2">
       <div className="relative overflow-hidden w-full h-full rounded-3xl">
         <Background />
-        <div className="flex z-10 w-full h-full">
+        <div className="flex s:flex-col z-10 w-full h-full">
           {contents && type !== "SP" && (
             <div className="flex flex-none items-end relative top-0 h-full pl-4">
               <Avatar />
