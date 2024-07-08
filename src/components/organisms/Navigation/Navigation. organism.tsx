@@ -26,7 +26,7 @@ export const Navigation = () => {
             <Button>
               <Image
                 alt="美少女ちゃんアイコン"
-                src="/icon.png"
+                src="/icons/circle.png"
                 width={UserIconSize}
                 height={UserIconSize}
               />
@@ -43,7 +43,7 @@ export const Navigation = () => {
           <Button>
             <Image
               alt="美少女ちゃんアイコン"
-              src="/icon.png"
+              src="/icons/circle.png"
               width={UserIconSize}
               height={UserIconSize}
             />
