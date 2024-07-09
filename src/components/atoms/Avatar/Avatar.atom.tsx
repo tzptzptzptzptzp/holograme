@@ -26,7 +26,7 @@ export const Avatar = () => {
     <Image
       alt="Avatar"
       className={clsx(
-        "u-shadow-avatar h-[82vh] w-auto select-none pointer-events-none",
+        "u-shadow-avatar h-[82vh] s:h-auto w-auto select-none pointer-events-none",
         "avatar",
         animationIndex,
         animationDurationIndex
