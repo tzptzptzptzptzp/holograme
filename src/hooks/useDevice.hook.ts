@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type DeviceType = "PC" | "Tablet" | "SP";
+type DeviceType = "PC" | "Tablet" | "SP" | "";
 
 const getDeviceType = (userAgent: string): DeviceType => {
   if (/Tablet|iPad/i.test(userAgent)) {
@@ -12,7 +12,11 @@ const getDeviceType = (userAgent: string): DeviceType => {
 };
 
 export const useDevice = () => {
-  const [device, setDevice] = useState({
+  const [device, setDevice] = useState<{
+    width: number;
+    height: number;
+    type: DeviceType;
+  }>({
     width: 0,
     height: 0,
     type: "",
