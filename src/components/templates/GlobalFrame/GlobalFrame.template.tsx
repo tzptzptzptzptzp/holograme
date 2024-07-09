@@ -21,7 +21,7 @@ export const GlobalFrame = ({
   const { type } = useDevice();
   return (
     <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-svh p-12 s:p-2">
-      <div className="relative overflow-hidden w-full h-full rounded-3xl">
+      <div className="relative z-0 overflow-hidden w-full h-full rounded-3xl isolate">
         <Background />
         <div className="flex s:flex-col z-10 w-full h-full">
           {contents && type === "PC" && (
