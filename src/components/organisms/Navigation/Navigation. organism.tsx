@@ -13,7 +13,10 @@ export const Navigation = () => {
 
   const UserIconSize = type !== "SP" ? 39 : 30;
   return (
-    <nav className="u-shadow relative z-30 w-20 s:w-full h-full s:h-auto s:p-2 bg-primary">
+    <nav
+      className="u-shadow relative z-30 w-20 s:w-full h-full s:h-auto s:p-2 bg-primary"
+      style={{ transform: "translateZ(0px)" }}
+    >
       <ul className="flex flex-col s:flex-row gap-8 s:gap-4 items-center justify-center h-full">
         <NavigationItem name="home" />
         <NavigationItem name="chat" />
