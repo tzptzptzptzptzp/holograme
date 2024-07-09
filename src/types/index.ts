@@ -1,1 +1,6 @@
-export type ModalContentType = "" | "createChat" | "deleteChat" | "editChat";
+export type ModalContentType =
+  | ""
+  | "createChat"
+  | "deleteChat"
+  | "deleteChatMessages"
+  | "editChat";
