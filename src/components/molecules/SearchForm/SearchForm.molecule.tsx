@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
+import { useDevice } from "@/hooks/useDevice.hook";
 import { Icons } from "@/icons";
 import { SearchTypeState } from "@/recoil/atoms.recoil";
 
@@ -16,9 +17,13 @@ export const SearchForm = () => {
   const searchType = useRecoilValue(SearchTypeState);
   const { register, setFocus, handleSubmit } = useForm<Inputs>();
 
+  const { type } = useDevice();
+
   useEffect(() => {
-    setFocus("search");
-  }, [setFocus]);
+    if (type === "PC" || type === "Tablet") {
+      setFocus("search");
+    }
+  }, [setFocus, type]);
 
   useEffect(() => {
     if (searchType === "newTab") {
