@@ -17,7 +17,7 @@ export const Select = ({ className, id, onChange, options, value }: Props) => {
   return (
     <select
       className={clsx(
-        "w-full max-w-fit truncate focus-visible:outline-none",
+        "w-full max-w-fit text-right truncate focus-visible:outline-none",
         className
       )}
       id={id}

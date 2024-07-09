@@ -1,11 +1,13 @@
 import clsx from "clsx";
 import { Bounce, ToastContainer } from "react-toastify";
+import { useRecoilValue } from "recoil";
 import { Avatar } from "@/components/atoms/Avatar/Avatar.atom";
 import { Background } from "@/components/atoms/Background/Background.atom";
 import { FrameShadow } from "@/components/atoms/FrameShadow/FrameShadow.atom";
 import { Modal } from "@/components/organisms/Modal/Modal.organism";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { SelectedContentState } from "@/recoil/atoms.recoil";
 
 type Props = {
   children: React.ReactNode;
@@ -18,6 +20,8 @@ export const GlobalFrame = ({
   contents = true,
   shadow = true,
 }: Props) => {
+  const currentContent = useRecoilValue(SelectedContentState);
+
   const { type } = useDevice();
   return (
     <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-svh p-12 s:p-2">
@@ -37,6 +41,14 @@ export const GlobalFrame = ({
           >
             {children}
           </main>
+          {contents && type === "SP" && currentContent === "home" && (
+            <div
+              className="flex flex-none items-end relative top-0 h-auto pl-4 s:p-2"
+              style={{ transform: "translateY(5px)" }}
+            >
+              <Avatar />
+            </div>
+          )}
           {contents && <Navigation />}
         </div>
         <FrameShadow />

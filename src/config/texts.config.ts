@@ -19,6 +19,16 @@ export const textsConfig = {
         BUTTON: "このルームを削除する",
       },
     },
+    CHAT_MESSAGE: {
+      NAME: "チャットメッセージ",
+      TITLE: {
+        DELETE: "チャットメッセージ削除",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "ルーム内の全てのメッセージを削除する",
+      },
+    },
   },
   TOAST: {
     CHAT_CREATE: {
@@ -32,6 +42,9 @@ export const textsConfig = {
     },
     CHAT_MESSAGE: {
       ERROR: "応答がありません…",
+    },
+    CHAT_MESSAGE_DELETE: {
+      SUCCESS: "🦄 全てのチャットを削除しました！",
     },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",

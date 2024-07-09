@@ -9,11 +9,20 @@ const CreateChatContent = dynamic(
     ).then((mod) => mod.CreateChatModal),
   { loading: () => <Loader /> }
 );
+
 const DeleteChatContent = dynamic(
   () =>
     import(
       "@/components/features/Chat/DeleteChatModal/DeleteChatModal.feature"
     ).then((mod) => mod.DeleteChatModal),
+  { loading: () => <Loader /> }
+);
+
+const DeleteChatMessagesContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Chat/DeleteChatMessagesModal/DeleteChatMessagesModal.feature"
+    ).then((mod) => mod.DeleteChatMessagesModal),
   { loading: () => <Loader /> }
 );
 
@@ -31,6 +40,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <CreateChatContent />;
     case "deleteChat":
       return <DeleteChatContent />;
+    case "deleteChatMessages":
+      return <DeleteChatMessagesContent />;
     case "editChat":
       return <EditChatContent />;
   }

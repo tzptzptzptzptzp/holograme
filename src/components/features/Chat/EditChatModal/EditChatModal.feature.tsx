@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
-import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePutChat } from "@/hooks/api/usePutChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatRoomState } from "@/recoil/atoms.recoil";
+import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -23,10 +23,11 @@ type Inputs = {
 export const EditChatModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const mutate = usePutChat();
-  const { refetch } = useGetChat();
+  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
+  const chatMessages = useRecoilValue(ChatMessagesState);
 
-  const chatRoom = useRecoilValue(ChatRoomState);
+  const mutate = usePutChat();
+  const { refetch } = useGetChatMessage(chatRoom?.id || 0);
 
   const {
     formState: { errors },
@@ -54,11 +55,17 @@ export const EditChatModal = () => {
         defaultMessage: data.defaultMessage,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          handleClose();
           toast(textsConfig.TOAST.CHAT_UPDATE.SUCCESS);
           setApiPending(false);
-          refetch();
-          handleClose();
+          const { data } = await refetch();
+          await setChatRoom({
+            id: chatRoom.id,
+            name: data?.name || "",
+            description: data?.description || "",
+            defaultMessage: data?.defaultMessage || "",
+          });
         },
       }
     );
@@ -92,7 +99,14 @@ export const EditChatModal = () => {
         placeholder={`${textsConfig.FORM.CHAT.DEFAULT_MESSAGE}を入力`}
         {...register("defaultMessage")}
       />
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center justify-center gap-2">
+        {chatMessages.length > 0 && (
+          <div>
+            <Button onClick={() => handleOpen("deleteChatMessages")}>
+              {textsConfig.FORM.CHAT_MESSAGE.DELETE.BUTTON}
+            </Button>
+          </div>
+        )}
         <Button onClick={() => handleOpen("deleteChat")}>
           <ErrorMessage>{textsConfig.FORM.CHAT.DELETE.BUTTON}</ErrorMessage>
         </Button>
