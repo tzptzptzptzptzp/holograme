@@ -18,6 +18,7 @@ import {
   UserState,
 } from "@/recoil/atoms.recoil";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
+import { useDevice } from "@/hooks/useDevice.hook";
 
 type Inputs = {
   message: string;
@@ -31,6 +32,8 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const chatRoom = useRecoilValue(ChatRoomState);
   const chatMessages = useRecoilValue(ChatMessagesState);
 
+  const { type } = useDevice();
+
   const { sendMessage } = useSendMessage();
 
   const { mutate } = usePostChatMessage();
@@ -40,10 +43,12 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     useForm<Inputs>();
 
   useEffect(() => {
-    setFocus("message");
-    textareaRef.current?.focus();
+    if (type === "PC" || type === "Tablet") {
+      setFocus("message");
+      textareaRef.current?.focus();
+    }
     setValue("message", chatRoom?.defaultMessage || "");
-  }, [chatRoom, setFocus, setValue]);
+  }, [chatRoom, setFocus, setValue, type]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {
@@ -85,7 +90,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           refetch();
           setApiPending(false);
           await setTimeout(() => {
-            textareaRef.current?.focus();
+            if (type === "PC" || type === "Tablet") {
+              setFocus("message");
+              textareaRef.current?.focus();
+            }
           }, 250);
         },
       }
