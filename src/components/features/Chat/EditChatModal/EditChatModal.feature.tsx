@@ -11,7 +11,7 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { usePutChat } from "@/hooks/api/usePutChat.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatRoomState } from "@/recoil/atoms.recoil";
+import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -27,6 +27,7 @@ export const EditChatModal = () => {
   const { refetch } = useGetChat();
 
   const chatRoom = useRecoilValue(ChatRoomState);
+  const chatMessages = useRecoilValue(ChatMessagesState);
 
   const {
     formState: { errors },
@@ -55,10 +56,10 @@ export const EditChatModal = () => {
       },
       {
         onSuccess: () => {
+          handleClose();
           toast(textsConfig.TOAST.CHAT_UPDATE.SUCCESS);
           setApiPending(false);
           refetch();
-          handleClose();
         },
       }
     );
@@ -92,7 +93,14 @@ export const EditChatModal = () => {
         placeholder={`${textsConfig.FORM.CHAT.DEFAULT_MESSAGE}を入力`}
         {...register("defaultMessage")}
       />
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center justify-center gap-2">
+        {chatMessages.length > 0 && (
+          <div>
+            <Button onClick={() => handleOpen("deleteChatMessages")}>
+              {textsConfig.FORM.CHAT_MESSAGE.DELETE.BUTTON}
+            </Button>
+          </div>
+        )}
         <Button onClick={() => handleOpen("deleteChat")}>
           <ErrorMessage>{textsConfig.FORM.CHAT.DELETE.BUTTON}</ErrorMessage>
         </Button>
