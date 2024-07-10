@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
@@ -18,9 +17,6 @@ import {
 } from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
-  const isFirstLoad = useRef(true);
-  const [currentChatRoomId, setCurrentChatRoomId] = useState<number>(0);
-
   const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
     FavoriteChatRoomIdState
@@ -32,16 +28,8 @@ export const ChatContents = () => {
 
   const { data } = useGetChat();
 
-  useEffect(() => {
-    if (isFirstLoad.current && chatRoom) {
-      setCurrentChatRoomId(favoriteChatRoomId ?? chatRoom.id);
-      isFirstLoad.current = false;
-    }
-  }, [chatRoom, favoriteChatRoomId, setCurrentChatRoomId]);
-
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!data) return;
-    setCurrentChatRoomId(Number(e.target.value));
     const chatRoom = data.find(
       (chatRoom) => chatRoom.id === Number(e.target.value)
     );
@@ -54,12 +42,15 @@ export const ChatContents = () => {
   };
 
   const handleFavorite = () => {
-    if (currentChatRoomId === favoriteChatRoomId) {
+    if (chatRoom?.id === favoriteChatRoomId) {
       setFavoriteChatRoomId(null);
       localStorage.removeItem("favoriteChatRoom");
     } else {
-      localStorage.setItem("favoriteChatRoom", currentChatRoomId.toString());
-      setFavoriteChatRoomId(currentChatRoomId);
+      localStorage.setItem(
+        "favoriteChatRoom",
+        chatRoom ? chatRoom?.id.toString() : "0"
+      );
+      setFavoriteChatRoomId(chatRoom?.id ?? 0);
     }
   };
   return (
@@ -77,13 +68,13 @@ export const ChatContents = () => {
                 id="chat"
                 onChange={handleChange}
                 options={chatRoomOptions}
-                value={currentChatRoomId}
+                value={chatRoom?.id ?? 0}
               />
             </div>
             <Button className="flex-shrink-0" onClick={handleFavorite}>
               <Icons.Heart
                 color="white"
-                solid={currentChatRoomId === favoriteChatRoomId}
+                solid={chatRoom?.id === favoriteChatRoomId}
               />
             </Button>
             <Button
