@@ -14,8 +14,10 @@
   --app-bg-dark: #e3dccb;
 }
 
+html,
 body {
   overflow: hidden;
+  height: 100svh;
 }
 
 ::selection {
