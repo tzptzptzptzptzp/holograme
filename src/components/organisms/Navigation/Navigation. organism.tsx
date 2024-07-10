@@ -39,7 +39,7 @@ export const Navigation = () => {
       </ul>
       {type !== "SP" && (
         <div
-          className="u-centering-x s:hidden absolute bottom-4"
+          className="u-centering-x s:hidden absolute bottom-4 leading-[0]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
