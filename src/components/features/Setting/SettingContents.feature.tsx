@@ -102,12 +102,16 @@ export const SettingContents = () => {
           placeholder="メールアドレスを入力してください"
           {...register("email", { required: true })}
         />
-        <div className="flex justify-end gap-4 w-2/3 mr-0 ml-auto">
-          <Button className="!w-1/3" onClick={handleReset} variant="cancel">
+        <div className="flex justify-end s:justify-between gap-4 w-2/3 s:w-full mr-0 ml-auto">
+          <Button
+            className="!w-1/3 s:!w-1/2"
+            onClick={handleReset}
+            variant="cancel"
+          >
             リセット
           </Button>
           <Button
-            className="!w-1/3"
+            className="!w-1/3 s:!w-1/2"
             disabled={apiPending}
             type="submit"
             variant={apiPending ? "disable" : "primary"}
