@@ -108,10 +108,9 @@ export const SettingContents = () => {
           </Button>
           <Button
             className="!w-1/3"
-            // disabled={apiPending}
+            disabled={apiPending}
             type="submit"
-            // variant={apiPending ? "disable" : "primary"}
-            variant="primary"
+            variant={apiPending ? "disable" : "primary"}
           >
             更新
           </Button>
