@@ -74,7 +74,7 @@ export const ModalInner = ({
   onSubmit,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       <p className="text-[20px] text-center">{title}</p>
       {form ? (
         <Form
