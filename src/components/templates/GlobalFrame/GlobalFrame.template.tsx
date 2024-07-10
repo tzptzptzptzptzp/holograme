@@ -42,10 +42,7 @@ export const GlobalFrame = ({
             {children}
           </main>
           {contents && type === "SP" && currentContent === "home" && (
-            <div
-              className="flex flex-none items-end relative top-0 h-auto pl-4 s:p-2"
-              style={{ transform: "translateY(5px)" }}
-            >
+            <div className="flex flex-none items-end justify-center relative top-0 h-auto max-h-[62svh] pl-4 s:px-2">
               <Avatar />
             </div>
           )}
