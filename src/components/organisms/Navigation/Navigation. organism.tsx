@@ -12,6 +12,10 @@ export const Navigation = () => {
   const { type } = useDevice();
 
   const UserIconSize = type !== "SP" ? 39 : 30;
+
+  const handleClick = () => {
+    setIsHovered((prev) => !prev);
+  };
   return (
     <nav
       className="u-shadow relative z-30 w-20 s:w-full h-full s:h-auto s:p-2 bg-primary"
@@ -25,8 +29,8 @@ export const Navigation = () => {
         <NavigationItem name="history" />
         <NavigationItem name="setting" />
         {type === "SP" && (
-          <li>
-            <Button>
+          <li className="relative">
+            <Button onClick={handleClick}>
               <Image
                 alt="美少女ちゃんアイコン"
                 src="/icons/circle.png"
@@ -34,6 +38,7 @@ export const Navigation = () => {
                 height={UserIconSize}
               />
             </Button>
+            <UserMenu isHovered={isHovered} />
           </li>
         )}
       </ul>

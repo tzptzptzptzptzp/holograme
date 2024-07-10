@@ -11,9 +11,9 @@ export const UserMenu = ({ isHovered }: Props) => {
   return (
     <div
       className={clsx(
-        "absolute right-full pr-10 duration-300",
+        "absolute right-full s:-right-4 pr-10 s:pr-0 duration-300",
         isHovered
-          ? "u-centering-y opacity-1 pointer-events-auto"
+          ? "u-centering-y s:-top-[2.35rem] opacity-1 pointer-events-auto"
           : "top-full opacity-0 pointer-events-none"
       )}
     >
