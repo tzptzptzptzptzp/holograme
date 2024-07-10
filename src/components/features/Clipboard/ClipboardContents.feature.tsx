@@ -5,10 +5,13 @@ import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButto
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useDevice } from "@/hooks/useDevice.hook";
 import { Icons } from "@/icons";
 import { Clipboard } from "@prisma/client";
 
 export const ClipboardContents = () => {
+  const { type } = useDevice();
+
   const { data, isLoading } = useGetClipboard();
 
   return (
@@ -16,7 +19,9 @@ export const ClipboardContents = () => {
       <div className="flex gap-3">
         <ContentHead>
           <Icons.ClipBoard color="white" />
-          <p className="text-white text-[20px] font-bold">Clipboard History</p>
+          <p className="text-white text-[20px] font-bold">
+            {type !== "SP" ? "Clipboard History" : "Clipboard"}
+          </p>
         </ContentHead>
         <ClipboardPasteButton />
         <ClipboardCopyButton />

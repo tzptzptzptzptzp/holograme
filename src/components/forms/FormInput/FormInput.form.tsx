@@ -54,7 +54,7 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
           )}
           <Input
             className={clsx(
-              "min-w-[390px] border-b-2 border-text bg-white bg-opacity-50",
+              "min-w-[390px] s:min-w-0 border-b-2 border-text bg-white bg-opacity-50",
               inputClassName
             )}
             disabled={disabled}
