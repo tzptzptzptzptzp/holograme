@@ -8,6 +8,7 @@ import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.mole
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useDevice } from "@/hooks/useDevice.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import {
@@ -26,6 +27,7 @@ export const ChatContents = () => {
   );
   const chatRoomOptions = useRecoilValue(ChatRoomOptionsState);
 
+  const { type } = useDevice();
   const { handleOpen } = useModal();
 
   const { data } = useGetChat();
@@ -66,7 +68,7 @@ export const ChatContents = () => {
         <ContentHead className="justify-between">
           <div className="flex items-center gap-[6px] flex-none">
             <Icons.Chat color="white" />
-            <p>Chat Room</p>
+            <p>{type !== "SP" ? "Chat Room" : "Chat"}</p>
           </div>
           <div className="flex items-center gap-1.5 w-full">
             <div className="flex justify-end flex-1">
