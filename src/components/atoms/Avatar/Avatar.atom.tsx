@@ -23,17 +23,21 @@ export const Avatar = () => {
     setAnimationDurationIndex(randomDurationIndex);
   }, []);
   return (
-    <Image
-      alt="Avatar"
+    <div
       className={clsx(
-        "u-shadow-avatar w-auto h-[82vh] s:h-auto s:max-h-full select-none pointer-events-none",
+        "u-shadow-avatar flex items-end relative w-full h-full s:h-full select-none pointer-events-none",
         "avatar",
         animationIndex,
         animationDurationIndex
       )}
-      src="/bisyojo_chan.png"
-      width={800}
-      height={800}
-    />
+    >
+      <Image
+        alt="Avatar"
+        className="u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full"
+        src="/bisyojo_chan.png"
+        width={800}
+        height={800}
+      />
+    </div>
   );
 };

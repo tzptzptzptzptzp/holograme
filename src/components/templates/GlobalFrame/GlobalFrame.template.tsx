@@ -29,20 +29,20 @@ export const GlobalFrame = ({
         <Background />
         <div className="flex s:flex-col z-10 w-full h-full">
           {contents && type === "PC" && (
-            <div className="flex s:hidden flex-none items-end relative top-0 h-full pl-4">
+            <div className="flex s:hidden items-end relative top-0 w-[40%] h-full pl-4">
               <Avatar />
             </div>
           )}
           <main
             className={clsx(
-              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 overflow-y-scroll w-full h-full pr-10 pl-4 s:p-4",
+              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:overflow-x-hidden overflow-y-scroll w-[60%] s:w-full h-full pr-10 pl-4 s:p-4",
               shadow && "u-shadow-sm"
             )}
           >
             {children}
           </main>
           {contents && type === "SP" && currentContent === "home" && (
-            <div className="flex flex-none items-end justify-center relative top-0 h-auto max-h-[62svh] pl-4 s:px-2">
+            <div className="flex flex-none items-end justify-center relative top-0 h-full max-h-[62svh] pl-4 s:px-2">
               <Avatar />
             </div>
           )}
