@@ -90,11 +90,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           refetch();
           setApiPending(false);
           await setTimeout(() => {
-            if (type === "PC" || type === "Tablet") {
-              setFocus("message");
-              textareaRef.current?.focus();
-            }
-          }, 250);
+            setFocus("message");
+            textareaRef.current?.focus();
+            adjustHeight();
+          }, 50);
         },
       }
     );
