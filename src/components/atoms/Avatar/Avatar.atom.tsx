@@ -25,7 +25,7 @@ export const Avatar = () => {
   return (
     <div
       className={clsx(
-        "u-shadow-avatar flex items-end relative w-full h-full select-none pointer-events-none",
+        "u-shadow-avatar flex items-end relative w-full h-full s:h-full select-none pointer-events-none",
         "avatar",
         animationIndex,
         animationDurationIndex
