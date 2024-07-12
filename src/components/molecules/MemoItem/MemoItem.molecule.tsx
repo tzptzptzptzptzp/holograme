@@ -260,9 +260,9 @@ export const MemoItem = ({
               wrapperClassName="pt-[6px]"
               {...register("content")}
             />
-            <div className="flex justify-end gap-4 w-2/3 mr-0 ml-auto pt-2">
+            <div className="flex justify-end gap-4 w-2/3 s:w-full mr-0 ml-auto pt-2">
               <Button
-                className="!w-1/3"
+                className="!w-1/3 s:!w-1/2"
                 onClick={handleCancel}
                 type="reset"
                 variant="cancel"
@@ -270,7 +270,7 @@ export const MemoItem = ({
                 キャンセル
               </Button>
               <Button
-                className="!w-1/3"
+                className="!w-1/3 s:!w-1/2"
                 disabled={apiPending}
                 onClick={handleSubmit}
                 type="submit"
