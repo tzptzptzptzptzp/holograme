@@ -281,7 +281,12 @@ export const MemoItem = ({
             </div>
           </>
         ) : (
-          content && <CustomReactMarkdown className="pt-2" markdown={content} />
+          content && (
+            <CustomReactMarkdown
+              className="pt-2 whitespace-pre-wrap"
+              markdown={content}
+            />
+          )
         )}
       </div>
     </li>
