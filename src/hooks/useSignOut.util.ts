@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { textsConfig } from "@/config/texts.config";
-import supabase from "@/libs/SupabaseClient.lib";
+import { createClient } from "@/libs/supabase/client.lib";
 
 export const useSignOut = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  const supabase = createClient();
 
   const signOut = async (): Promise<boolean> => {
     try {

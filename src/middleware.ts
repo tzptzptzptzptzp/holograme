@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import supabase from "./libs/SupabaseClient.lib";
 
 export async function middleware(req: NextRequest) {
   // const token = req.cookies.get("supabase-auth-token")?.value;

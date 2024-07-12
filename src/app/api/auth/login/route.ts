@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../../libs/SupabaseClient.lib";
+import { createClient } from "@/libs/supabase/server.lib";
 
 export async function POST(req: Request) {
+  const supabase = createClient();
+
   try {
     const { email, password } = await req.json();
     const { data, error } = await supabase.auth.signInWithPassword({
