@@ -18,6 +18,7 @@ import { PlusCircle } from "./PlusCircle/PlusCircle.icon";
 import { Search } from "./Search/Search.icon";
 import { Star } from "./Star/Star.icon";
 import { Trash } from "./Trash/Trash.icon";
+import { XMark } from "./XMark/XMark.icon";
 
 export const Icons = {
   AirPlane,
@@ -40,4 +41,5 @@ export const Icons = {
   Search,
   Star,
   Trash,
+  XMark,
 };

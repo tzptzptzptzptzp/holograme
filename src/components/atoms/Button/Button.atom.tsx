@@ -5,6 +5,7 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
+  hover?: boolean;
   id?: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
@@ -15,6 +16,7 @@ export const Button = ({
   children,
   className,
   disabled = false,
+  hover = true,
   id,
   onClick,
   type = "button",
@@ -22,7 +24,12 @@ export const Button = ({
 }: Props) => {
   return (
     <button
-      className={clsx(styles.button, styles[variant], className)}
+      className={clsx(
+        styles.button,
+        styles[variant],
+        hover && styles.hover,
+        className
+      )}
       disabled={disabled}
       id={id}
       onClick={onClick}

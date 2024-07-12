@@ -39,7 +39,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const { mutate } = usePostChatMessage();
   const { refetch } = useGetChatMessage(roomId);
 
-  const { control, handleSubmit, reset, setFocus, setValue } =
+  const { control, handleSubmit, reset, setFocus, setValue, watch } =
     useForm<Inputs>();
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (!user || !chatRoom) return;
+    if (!user || !chatRoom || apiPending || !watch("message").length) return;
     setApiPending(true);
     const { message } = data;
     sendMessage(message);
@@ -124,7 +124,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           />
         )}
       />
-      <Button className="w-fit" type="submit">
+      <Button className="w-fit" disabled={apiPending} type="submit">
         <Icons.AirPlane
           color={apiPending ? colorConfig.disableText : colorConfig.text}
         />
