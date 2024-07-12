@@ -12,7 +12,6 @@ export const useSession = () => {
   useEffect(() => {
     const handleSession = async (event: string, session: Session | null) => {
       if (session) {
-        document.cookie = `supabase-auth-token=${session.access_token}; path=/`;
         setAuthStatus("authenticated");
         setSession(session);
         axios.defaults.headers.post["Content-Type"] = "application/json";
