@@ -39,7 +39,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const { mutate } = usePostChatMessage();
   const { refetch } = useGetChatMessage(roomId);
 
-  const { control, handleSubmit, reset, setFocus, setValue } =
+  const { control, handleSubmit, reset, setFocus, setValue, watch } =
     useForm<Inputs>();
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (!user || !chatRoom || apiPending) return;
+    if (!user || !chatRoom || apiPending || !watch("message").length) return;
     setApiPending(true);
     const { message } = data;
     sendMessage(message);
