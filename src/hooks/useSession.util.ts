@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Session } from "@supabase/supabase-js";
-import supabase from "@/libs/SupabaseClient.lib";
 import axios from "axios";
+import { Session } from "@supabase/supabase-js";
+import { createClient } from "@/libs/supabase/client.lib";
 
 type AuthStatus = "authenticated" | "unauthenticated" | "loading";
 
@@ -9,10 +9,11 @@ export const useSession = () => {
   const [authStatus, setAuthStatus] = useState<AuthStatus>("loading");
   const [session, setSession] = useState<Session | null>(null);
 
+  const supabase = createClient();
+
   useEffect(() => {
     const handleSession = async (event: string, session: Session | null) => {
       if (session) {
-        document.cookie = `supabase-auth-token=${session.access_token}; path=/`;
         setAuthStatus("authenticated");
         setSession(session);
         axios.defaults.headers.post["Content-Type"] = "application/json";

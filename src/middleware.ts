@@ -1,24 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import supabase from "./libs/SupabaseClient.lib";
+import { NextRequest } from "next/server";
+import { updateSession } from "./libs/supabase/middleware.lib";
 
-export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("supabase-auth-token")?.value;
-
-  if (!token && !req.nextUrl.pathname.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/auth", req.url));
-  }
-
-  const { data: session } = await supabase.auth.getSession();
-
-  if (token && req.nextUrl.pathname.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  if (!session && req.nextUrl.pathname !== "/auth") {
-    return NextResponse.redirect(new URL("/auth", req.url));
-  }
-
-  return NextResponse.next();
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
 }
 
 export const config = {

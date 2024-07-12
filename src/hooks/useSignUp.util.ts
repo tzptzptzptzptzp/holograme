@@ -2,12 +2,14 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { User } from "@supabase/supabase-js";
 import { textsConfig } from "@/config/texts.config";
-import supabase from "@/libs/SupabaseClient.lib";
+import { createClient } from "@/libs/supabase/client.lib";
 
 export const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+
+  const supabase = createClient();
 
   const signUp = async ({
     email,

@@ -11,7 +11,6 @@ export const UserMenu = ({ isHovered }: Props) => {
 
   const handleSignOut = async () => {
     await signOut();
-    document.cookie = `supabase-auth-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
   };
   return (
     <div
