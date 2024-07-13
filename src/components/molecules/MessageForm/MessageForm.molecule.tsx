@@ -71,6 +71,8 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     if (!user || !chatRoom || apiPending || !watch("message").length) return;
     setApiPending(true);
     const { message } = data;
+    reset();
+    setValue("message", chatRoom.defaultMessage);
     sendMessage(message);
     const prompt = GeneratePrompt({
       user,
@@ -85,8 +87,6 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           toast.error(textsConfig.TOAST.CHAT_MESSAGE.ERROR);
         },
         onSettled: async () => {
-          reset();
-          setValue("message", chatRoom.defaultMessage);
           refetch();
           setApiPending(false);
           await setTimeout(() => {
