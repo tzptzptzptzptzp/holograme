@@ -4,9 +4,10 @@ import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.h
 
 type Props = {
   isOpen: boolean;
+  setStandardPhrase: (content: string) => void;
 };
 
-export const StandardPhraseList = ({ isOpen }: Props) => {
+export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
   const { data } = useGetChatStandardPhrase();
 
   return (
@@ -24,6 +25,7 @@ export const StandardPhraseList = ({ isOpen }: Props) => {
             key={i}
             title={item.title}
             content={item.content}
+            setStandardPhrase={setStandardPhrase}
           />
         ))}
       </ul>

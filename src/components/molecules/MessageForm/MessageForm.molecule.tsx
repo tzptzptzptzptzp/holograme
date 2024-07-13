@@ -104,6 +104,14 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       }
     );
   };
+
+  const setStandardPhrase = (content: string) => {
+    setValue("message", content);
+    setIsStandardPhraseOpen(false);
+    setFocus("message");
+    textareaRef.current?.focus();
+    adjustHeight();
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -112,7 +120,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
-      <StandardPhraseList isOpen={isStandardPhraseOpen} />
+      <StandardPhraseList
+        isOpen={isStandardPhraseOpen}
+        setStandardPhrase={setStandardPhrase}
+      />
       <Controller
         control={control}
         name="message"
