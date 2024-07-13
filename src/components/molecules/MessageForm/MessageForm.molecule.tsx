@@ -69,6 +69,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     }
   };
 
+  const handleStandardPhraseClose = () => {
+    setIsStandardPhraseOpen(false);
+  };
+
   const handleToggleStandardPhrase = () => {
     setIsStandardPhraseOpen((prev) => !prev);
   };
@@ -104,15 +108,35 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       }
     );
   };
+
+  const setStandardPhrase = (content: string) => {
+    setValue("message", content);
+    setIsStandardPhraseOpen(false);
+    setFocus("message");
+    textareaRef.current?.focus();
+    adjustHeight();
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        "flex gap-[6px] relative w-full pl-4 pr-3 py-2 rounded-3xl",
+        "flex gap-[6px] relative z-0 w-full pl-4 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
-      <StandardPhraseList isOpen={isStandardPhraseOpen} />
+      <div
+        className={clsx(
+          "fixed top-0 right-0 bottom-0 left-0 -z-10 w-full h-full",
+          isStandardPhraseOpen
+            ? "pointer-events-auto"
+            : "pointer-events-none opacity-0"
+        )}
+        onClick={handleStandardPhraseClose}
+      ></div>
+      <StandardPhraseList
+        isOpen={isStandardPhraseOpen}
+        setStandardPhrase={setStandardPhrase}
+      />
       <Controller
         control={control}
         name="message"
