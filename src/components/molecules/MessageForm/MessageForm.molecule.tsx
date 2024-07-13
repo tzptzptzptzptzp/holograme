@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
+import { StandardPhraseList } from "@/components/organisms/StandardPhraseList/StandardPhraseList.organism";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
@@ -27,6 +28,7 @@ type Inputs = {
 export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [apiPending, setApiPending] = useState(false);
+  const [isStandardPhraseOpen, setIsStandardPhraseOpen] = useState(false);
 
   const user = useRecoilValue(UserState);
   const chatRoom = useRecoilValue(ChatRoomState);
@@ -67,6 +69,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     }
   };
 
+  const handleToggleStandardPhrase = () => {
+    setIsStandardPhraseOpen((prev) => !prev);
+  };
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!user || !chatRoom || apiPending || !watch("message").length) return;
     setApiPending(true);
@@ -102,10 +108,11 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        "flex gap-[6px] w-full pl-4 pr-3 py-2 rounded-3xl",
+        "flex gap-[6px] relative w-full pl-4 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
+      <StandardPhraseList isOpen={isStandardPhraseOpen} />
       <Controller
         control={control}
         name="message"
@@ -124,11 +131,16 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           />
         )}
       />
-      <Button className="w-fit" disabled={apiPending} type="submit">
-        <Icons.AirPlane
-          color={apiPending ? colorConfig.disableText : colorConfig.text}
-        />
-      </Button>
+      <div className="flex gap-2">
+        <Button onClick={handleToggleStandardPhrase}>
+          <Icons.Book color={colorConfig.text} />
+        </Button>
+        <Button className="w-fit" disabled={apiPending} type="submit">
+          <Icons.AirPlane
+            color={apiPending ? colorConfig.disableText : colorConfig.text}
+          />
+        </Button>
+      </div>
     </form>
   );
 };
