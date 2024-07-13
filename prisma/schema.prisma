@@ -55,6 +55,15 @@ model ChatMessage {
   room      ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
 }
 
+model StandardPhrase {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  title       String
+  content     String
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
+}
+
 model Clipboard {
   id        Int      @id @default(autoincrement())
   userId    String
