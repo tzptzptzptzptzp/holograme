@@ -1,11 +1,14 @@
 import clsx from "clsx";
 import { StandardPhraseItem } from "@/components/molecules/StandardPhraseItem/StandardPhraseItem.molecule";
+import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 
 type Props = {
   isOpen: boolean;
 };
 
 export const StandardPhraseList = ({ isOpen }: Props) => {
+  const { data } = useGetChatStandardPhrase();
+
   return (
     <div
       className={clsx(
@@ -16,8 +19,13 @@ export const StandardPhraseList = ({ isOpen }: Props) => {
       )}
     >
       <ul className="flex flex-col gap-2 min-h-[44px] px-4 py-2 rounded-3xl bg-white">
-        <StandardPhraseItem />
-        <StandardPhraseItem />
+        {data?.map((item, i) => (
+          <StandardPhraseItem
+            key={i}
+            title={item.title}
+            content={item.content}
+          />
+        ))}
       </ul>
     </div>
   );
