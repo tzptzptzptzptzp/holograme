@@ -69,6 +69,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     }
   };
 
+  const handleStandardPhraseClose = () => {
+    setIsStandardPhraseOpen(false);
+  };
+
   const handleToggleStandardPhrase = () => {
     setIsStandardPhraseOpen((prev) => !prev);
   };
@@ -116,10 +120,19 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        "flex gap-[6px] relative w-full pl-4 pr-3 py-2 rounded-3xl",
+        "flex gap-[6px] relative z-0 w-full pl-4 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
+      <div
+        className={clsx(
+          "fixed top-0 right-0 bottom-0 left-0 -z-10 w-full h-full",
+          isStandardPhraseOpen
+            ? "pointer-events-auto"
+            : "pointer-events-none opacity-0"
+        )}
+        onClick={handleStandardPhraseClose}
+      ></div>
       <StandardPhraseList
         isOpen={isStandardPhraseOpen}
         setStandardPhrase={setStandardPhrase}
