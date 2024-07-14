@@ -156,8 +156,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         )}
       />
       <div className="flex gap-2">
-        <Button onClick={handleToggleStandardPhrase}>
-          <Icons.Book color={colorConfig.text} />
+        <Button disabled={apiPending} onClick={handleToggleStandardPhrase}>
+          <Icons.Book
+            color={apiPending ? colorConfig.disableText : colorConfig.text}
+          />
         </Button>
         <Button className="w-fit" disabled={apiPending} type="submit">
           <Icons.AirPlane

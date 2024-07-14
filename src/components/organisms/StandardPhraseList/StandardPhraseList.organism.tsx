@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import { StandardPhraseItem } from "@/components/molecules/StandardPhraseItem/StandardPhraseItem.molecule";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
+import { Button } from "@/components/atoms/Button/Button.atom";
+import { Icons } from "@/icons";
 
 type Props = {
   isOpen: boolean;
@@ -20,6 +22,15 @@ export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
       )}
     >
       <ul className="flex flex-col gap-2 min-h-[44px] px-4 py-2 rounded-3xl bg-white">
+        <li className="flex items-center justify-between gap-2 w-full">
+          <p className="flex items-center justify-between gap-1 font-bold truncate">
+            <Icons.Book width={22} height={22} />
+            テンプレート
+          </p>
+          <Button className="w-6 min-w-6">
+            <Icons.PlusCircle className="stroke-2" width={22} height={22} />
+          </Button>
+        </li>
         {data?.map((item, i) => (
           <StandardPhraseItem
             key={i}
