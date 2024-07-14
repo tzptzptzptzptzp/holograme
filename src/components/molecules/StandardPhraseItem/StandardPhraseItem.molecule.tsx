@@ -19,8 +19,10 @@ export const StandardPhraseItem = ({
         hover={false}
         onClick={() => setStandardPhrase(content)}
       >
-        <p className="min-w-fit font-bold">{title}</p>
-        <p className="text-gray text-[14px] leading-tight truncate">
+        <p className="max-w-full min-w-fit s:min-w-0 font-bold truncate">
+          {title}
+        </p>
+        <p className="s:hidden text-gray text-[14px] leading-tight truncate">
           {content}
         </p>
       </Button>
