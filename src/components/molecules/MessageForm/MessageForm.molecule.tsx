@@ -114,7 +114,9 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     setIsStandardPhraseOpen(false);
     setFocus("message");
     textareaRef.current?.focus();
-    adjustHeight();
+    setTimeout(() => {
+      adjustHeight();
+    }, 50);
   };
   return (
     <form
