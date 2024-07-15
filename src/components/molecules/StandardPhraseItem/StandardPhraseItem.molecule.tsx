@@ -1,17 +1,36 @@
+import { useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
+import { EditChatStandardPhraseState } from "@/recoil/atoms.recoil";
 
 type Props = {
+  id: number;
   title: string;
   content: string;
   setStandardPhrase: (content: string) => void;
 };
 
 export const StandardPhraseItem = ({
+  id,
   title,
   content,
   setStandardPhrase,
 }: Props) => {
+  const setEditChatStandardPhrase = useSetRecoilState(
+    EditChatStandardPhraseState
+  );
+
+  const { handleOpen } = useModal();
+
+  const handleClick = () => {
+    handleOpen("editChatStandardPhrase");
+    setEditChatStandardPhrase({
+      id,
+      title,
+      content,
+    });
+  };
   return (
     <li className="flex gap-2 w-full items-center">
       <Button
@@ -26,7 +45,7 @@ export const StandardPhraseItem = ({
           {content}
         </p>
       </Button>
-      <Button className="w-6 min-w-6">
+      <Button className="w-6 min-w-6" onClick={handleClick}>
         <Icons.Pencil className="stroke-2" width={22} height={22} />
       </Button>
     </li>

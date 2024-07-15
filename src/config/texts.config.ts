@@ -34,6 +34,7 @@ export const textsConfig = {
       CONTENT: "内容",
       TITLE: {
         CREATE: "定型文作成",
+        EDIT: "定型文編集",
       },
     },
   },
@@ -55,6 +56,9 @@ export const textsConfig = {
     },
     CHAT_STANDARD_PHRASE_CREATE: {
       SUCCESS: "🦄 定型文を作成しました！",
+    },
+    CHAT_STANDARD_PHRASE_UPDATE: {
+      SUCCESS: "🦄 定型文を更新しました！",
     },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",

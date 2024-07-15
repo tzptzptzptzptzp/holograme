@@ -39,6 +39,7 @@ export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
         {data?.map((item, i) => (
           <StandardPhraseItem
             key={i}
+            id={item.id}
             title={item.title}
             content={item.content}
             setStandardPhrase={setStandardPhrase}
