@@ -30,7 +30,6 @@ export const CreateChatStandardPhraseModal = () => {
   const { handleClose } = useModal();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
     if (apiPending) return;
     setApiPending(true);
     mutate(
