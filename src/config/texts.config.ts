@@ -34,7 +34,12 @@ export const textsConfig = {
       CONTENT: "内容",
       TITLE: {
         CREATE: "定型文作成",
+        DELETE: "定型文削除",
         EDIT: "定型文編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "この定型文を削除する",
       },
     },
   },
@@ -57,6 +62,10 @@ export const textsConfig = {
     CHAT_STANDARD_PHRASE_CREATE: {
       SUCCESS: "🦄 定型文を作成しました！",
       ERROR: "作成に失敗しました…",
+    },
+    CHAT_STANDARD_PHRASE_DELETE: {
+      SUCCESS: "🦄 定型文を削除しました！",
+      ERROR: "削除に失敗しました…",
     },
     CHAT_STANDARD_PHRASE_UPDATE: {
       SUCCESS: "🦄 定型文を更新しました！",
