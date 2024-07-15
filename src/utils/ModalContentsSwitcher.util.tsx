@@ -50,6 +50,14 @@ const EditChatStandardPhraseModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const DeleteChatStandardPhraseModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Chat/DeleteChatStandardPhraseModal/DeleteChatStandardPhraseModal.feature"
+    ).then((mod) => mod.DeleteChatStandardPhraseModal),
+  { loading: () => <Loader /> }
+);
+
 export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
   switch (selectedContent) {
     case "createChat":
@@ -64,5 +72,7 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <CreateChatStandardPhraseContent />;
     case "editChatStandardPhrase":
       return <EditChatStandardPhraseModalContent />;
+    case "deleteChatStandardPhrase":
+      return <DeleteChatStandardPhraseModalContent />;
   }
 };

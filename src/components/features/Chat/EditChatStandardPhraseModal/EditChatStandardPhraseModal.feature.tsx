@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
+import { Button } from "@/components/atoms/Button/Button.atom";
+import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
@@ -32,7 +34,7 @@ export const EditChatStandardPhraseModal = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { handleClose } = useModal();
+  const { handleClose, handleOpen } = useModal();
 
   useEffect(() => {
     setValue("title", editChatStandardPhrase.title);
@@ -92,6 +94,11 @@ export const EditChatStandardPhraseModal = () => {
           ),
         })}
       />
+      <Button onClick={() => handleOpen("deleteChatStandardPhrase")}>
+        <ErrorMessage>
+          {textsConfig.FORM.CHAT_STANDARD_PHRASE.DELETE.BUTTON}
+        </ErrorMessage>
+      </Button>
     </ModalInner>
   );
 };
