@@ -31,6 +31,7 @@ export const CreateChatStandardPhraseModal = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    if (apiPending) return;
     setApiPending(true);
     mutate(
       {
@@ -40,9 +41,14 @@ export const CreateChatStandardPhraseModal = () => {
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_STANDARD_PHRASE_CREATE.SUCCESS);
-          setApiPending(false);
           refetch();
           handleClose();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.CHAT_STANDARD_PHRASE_CREATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
         },
       }
     );

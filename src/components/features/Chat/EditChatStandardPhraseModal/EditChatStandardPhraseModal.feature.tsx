@@ -40,6 +40,7 @@ export const EditChatStandardPhraseModal = () => {
   }, [editChatStandardPhrase, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (apiPending) return;
     setApiPending(true);
     mutate(
       {
@@ -50,9 +51,14 @@ export const EditChatStandardPhraseModal = () => {
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.CHAT_STANDARD_PHRASE_UPDATE.SUCCESS);
-          setApiPending(false);
           refetch();
           handleClose();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.CHAT_STANDARD_PHRASE_UPDATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
         },
       }
     );

@@ -56,9 +56,11 @@ export const textsConfig = {
     },
     CHAT_STANDARD_PHRASE_CREATE: {
       SUCCESS: "🦄 定型文を作成しました！",
+      ERROR: "作成に失敗しました…",
     },
     CHAT_STANDARD_PHRASE_UPDATE: {
       SUCCESS: "🦄 定型文を更新しました！",
+      ERROR: "更新に失敗しました…",
     },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",
