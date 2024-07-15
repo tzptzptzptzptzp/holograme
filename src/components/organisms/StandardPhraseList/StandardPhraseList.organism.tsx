@@ -3,6 +3,7 @@ import { StandardPhraseItem } from "@/components/molecules/StandardPhraseItem/St
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Icons } from "@/icons";
+import { useModal } from "@/hooks/useModal.hook";
 
 type Props = {
   isOpen: boolean;
@@ -10,8 +11,9 @@ type Props = {
 };
 
 export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
-  const { data } = useGetChatStandardPhrase();
+  const { handleOpen } = useModal();
 
+  const { data } = useGetChatStandardPhrase();
   return (
     <div
       className={clsx(
@@ -27,7 +29,10 @@ export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
             <Icons.Book width={22} height={22} />
             テンプレート
           </p>
-          <Button className="w-6 min-w-6">
+          <Button
+            className="w-6 min-w-6"
+            onClick={() => handleOpen("createChatStandardPhrase")}
+          >
             <Icons.PlusCircle className="stroke-2" width={22} height={22} />
           </Button>
         </li>
