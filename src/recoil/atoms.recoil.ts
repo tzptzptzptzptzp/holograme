@@ -4,6 +4,7 @@ import {
   ChatMessageStateType,
   ChatRoomOptionStateType,
   ChatRoomStateType,
+  EditChatStandardPhraseStateType,
   FavoriteChatRoomIdStateType,
   ModalStateType,
   SearchTypeStateType,
@@ -57,6 +58,16 @@ export const ChatMessagesState = atom<ChatMessageStateType[]>({
   key: "ChatMessages",
   default: [],
 });
+
+export const EditChatStandardPhraseState =
+  atom<EditChatStandardPhraseStateType>({
+    key: "EditChatStandardPhrase",
+    default: {
+      id: 0,
+      title: "",
+      content: "",
+    },
+  });
 
 export const ModalState = atom<ModalStateType>({
   key: "Modal",

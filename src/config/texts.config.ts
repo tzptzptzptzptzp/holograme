@@ -29,6 +29,19 @@ export const textsConfig = {
         BUTTON: "ルーム内の全てのメッセージを削除する",
       },
     },
+    CHAT_STANDARD_PHRASE: {
+      NAME: "定型文名",
+      CONTENT: "内容",
+      TITLE: {
+        CREATE: "定型文作成",
+        DELETE: "定型文削除",
+        EDIT: "定型文編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "この定型文を削除する",
+      },
+    },
   },
   TOAST: {
     CHAT_CREATE: {
@@ -45,6 +58,18 @@ export const textsConfig = {
     },
     CHAT_MESSAGE_DELETE: {
       SUCCESS: "🦄 全てのチャットを削除しました！",
+    },
+    CHAT_STANDARD_PHRASE_CREATE: {
+      SUCCESS: "🦄 定型文を作成しました！",
+      ERROR: "作成に失敗しました…",
+    },
+    CHAT_STANDARD_PHRASE_DELETE: {
+      SUCCESS: "🦄 定型文を削除しました！",
+      ERROR: "削除に失敗しました…",
+    },
+    CHAT_STANDARD_PHRASE_UPDATE: {
+      SUCCESS: "🦄 定型文を更新しました！",
+      ERROR: "更新に失敗しました…",
     },
     CLIPBOARD_PASTE: {
       SUCCESS: "🦄 美少女ちゃんに渡しました！",

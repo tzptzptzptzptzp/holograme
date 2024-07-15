@@ -3,4 +3,7 @@ export type ModalContentType =
   | "createChat"
   | "deleteChat"
   | "deleteChatMessages"
-  | "editChat";
+  | "editChat"
+  | "createChatStandardPhrase"
+  | "editChatStandardPhrase"
+  | "deleteChatStandardPhrase";
