@@ -31,6 +31,12 @@ export type ChatMessageStateType = Omit<ChatMessage, "role"> & {
   role: "user" | "assistant";
 };
 
+export type EditChatStandardPhraseStateType = {
+  id: number;
+  title: string;
+  content: string;
+};
+
 export type ModalStateType = {
   content: ModalContentType;
   isOpen: boolean;
