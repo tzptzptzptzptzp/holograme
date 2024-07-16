@@ -2,7 +2,11 @@
 
 import withPWA from "next-pwa";
 
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["www.google.com"],
+  },
+};
 
 export default withPWA({
   dest: "public",

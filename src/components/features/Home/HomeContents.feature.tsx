@@ -1,11 +1,14 @@
-import { Loader } from "@/components/atoms/Loader/Loader.atom";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
+import { FavoriteButton } from "@/components/molecules/FavoriteButton/FavoriteButton.molecule";
 import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecule";
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
-import { useEffect, useState } from "react";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { SearchTypeState } from "@/recoil/atoms.recoil";
 
 export const HomeContents = () => {
   const [latest, setLatest] = useState({
@@ -13,14 +16,25 @@ export const HomeContents = () => {
     content: "",
   });
 
-  const { data, isLoading } = useGetClipboard();
+  const searchType = useRecoilValue(SearchTypeState);
+
+  const { data: clipboardData } = useGetClipboard();
+  const { data: favoriteData } = useGetFavorite();
 
   useEffect(() => {
     setLatest({
-      id: data?.[0].id || 0,
-      content: data?.[0].content || "",
+      id: clipboardData?.[0].id || 0,
+      content: clipboardData?.[0].content || "",
     });
-  }, [data]);
+  }, [clipboardData]);
+
+  const handleClickFavorite = (url: string) => {
+    if (searchType === "newTab") {
+      window.open(url, "_blank");
+    } else {
+      window.location.href = url;
+    }
+  };
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="flex gap-3 w-full">
@@ -29,7 +43,15 @@ export const HomeContents = () => {
         <ClipboardPasteButton />
         <ClipboardCopyButton />
       </div>
-      {isLoading && !data ? (
+      {clipboardData ? (
+        <ClipboardItem
+          content={latest.content}
+          id={latest.id}
+          icon
+          copyIcon={false}
+          deleteIcon={false}
+        />
+      ) : (
         <ClipboardItem
           content=""
           id={0}
@@ -38,15 +60,16 @@ export const HomeContents = () => {
           copyIcon={false}
           deleteIcon={false}
         />
-      ) : (
-        <ClipboardItem
-          content={latest.content}
-          id={latest.id}
-          icon
-          copyIcon={false}
-          deleteIcon={false}
-        />
       )}
+      <ul className="flex gap-2">
+        {favoriteData?.map((favorite, i) => (
+          <FavoriteButton
+            key={i}
+            onClick={handleClickFavorite}
+            url={favorite.url}
+          />
+        ))}
+      </ul>
     </div>
   );
 };
