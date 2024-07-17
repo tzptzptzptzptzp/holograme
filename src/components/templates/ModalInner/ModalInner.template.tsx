@@ -7,17 +7,21 @@ const Form = ({
   buttonDisabled = false,
   buttonText,
   children,
+  enableButton = true,
   onSubmit,
 }: {
   buttonDisabled?: boolean;
   buttonText: string;
   children: React.ReactNode;
+  enableButton?: boolean;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   return (
     <form className={className} onSubmit={onSubmit}>
       {children}
-      <Buttons disabled={buttonDisabled} buttonText={buttonText} />
+      {enableButton && (
+        <Buttons disabled={buttonDisabled} buttonText={buttonText} />
+      )}
     </form>
   );
 };
@@ -60,8 +64,9 @@ type Props = {
   buttonDisabled?: boolean;
   buttonText?: string;
   children: React.ReactNode;
+  enableButton?: boolean;
   form?: boolean;
-  title: string;
+  title?: string;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
@@ -69,6 +74,7 @@ export const ModalInner = ({
   buttonDisabled = false,
   buttonText = "作成",
   children,
+  enableButton = true,
   form = false,
   title,
   onSubmit,
@@ -80,6 +86,7 @@ export const ModalInner = ({
         <Form
           buttonDisabled={buttonDisabled}
           buttonText={buttonText}
+          enableButton={enableButton}
           onSubmit={onSubmit}
         >
           {children}

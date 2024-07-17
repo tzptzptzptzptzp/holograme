@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { SearchTypeState } from "@/recoil/atoms.recoil";
 
@@ -15,9 +16,10 @@ type Inputs = {
 export const SearchForm = () => {
   const [placeholder, setPlaceholder] = useState("Google で 検索");
   const searchType = useRecoilValue(SearchTypeState);
-  const { register, setFocus, handleSubmit } = useForm<Inputs>();
+  const { register, setFocus, handleSubmit, watch } = useForm<Inputs>();
 
   const { type } = useDevice();
+  const { handleOpen } = useModal();
 
   useEffect(() => {
     if (type === "PC" || type === "Tablet") {
@@ -32,6 +34,11 @@ export const SearchForm = () => {
       setPlaceholder("Google で 検索");
     }
   }, [searchType]);
+
+  const handleCreateFavoriteOpen = () => {
+    // if (!watch("search").startsWith("http")) return; // 開発中はオフにしておく
+    handleOpen("createFavorite");
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const query = data.search;
@@ -59,9 +66,14 @@ export const SearchForm = () => {
         placeholder={placeholder}
         {...register("search")}
       />
-      <Button className="w-fit" type="submit">
-        <Icons.Search />
-      </Button>
+      <div className="flex gap-1">
+        <Button className="w-fit" type="submit">
+          <Icons.Search />
+        </Button>
+        <Button className="w-fit" onClick={handleCreateFavoriteOpen}>
+          <Icons.Star className="-translate-y-[1px]" />
+        </Button>
+      </div>
     </form>
   );
 };

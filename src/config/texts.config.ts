@@ -42,6 +42,19 @@ export const textsConfig = {
         BUTTON: "この定型文を削除する",
       },
     },
+    FAVORITE: {
+      NAME: "お気に入り名",
+      URL: "URL",
+      TITLE: {
+        CREATE: "お気に入り作成",
+        DELETE: "お気に入り削除",
+        EDIT: "お気に入り編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "このルームを削除する",
+      },
+    },
   },
   TOAST: {
     CHAT_CREATE: {
