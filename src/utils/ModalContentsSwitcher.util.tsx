@@ -58,6 +58,14 @@ const DeleteChatStandardPhraseModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const CreateFavoriteModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Home/CreateFavoriteModal/CreateFavoriteModal.feature"
+    ).then((mod) => mod.CreateFavoriteModal),
+  { loading: () => <Loader /> }
+);
+
 export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
   switch (selectedContent) {
     case "createChat":
@@ -74,5 +82,7 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <EditChatStandardPhraseModalContent />;
     case "deleteChatStandardPhrase":
       return <DeleteChatStandardPhraseModalContent />;
+    case "createFavorite":
+      return <CreateFavoriteModalContent />;
   }
 };

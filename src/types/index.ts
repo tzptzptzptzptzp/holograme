@@ -6,4 +6,5 @@ export type ModalContentType =
   | "editChat"
   | "createChatStandardPhrase"
   | "editChatStandardPhrase"
-  | "deleteChatStandardPhrase";
+  | "deleteChatStandardPhrase"
+  | "createFavorite";
