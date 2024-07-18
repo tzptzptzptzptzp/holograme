@@ -18,7 +18,7 @@ export const Navigation = () => {
   };
   return (
     <nav
-      className="u-shadow flex-auto relative z-30 w-20 max-w-20 min-w-20 s:w-full s:max-w-full h-full s:h-auto s:p-2 bg-primary"
+      className="u-shadow flex-auto absolute top-0 s:top-auto right-0 bottom-0 s:left-0 z-30 w-20 max-w-20 min-w-20 s:w-full s:max-w-full h-full s:h-auto s:p-2 bg-primary"
       style={{ transform: "translateZ(0px)" }}
     >
       <ul className="flex flex-col s:flex-row gap-8 s:gap-4 items-center justify-center h-full">

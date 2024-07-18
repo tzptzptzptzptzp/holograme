@@ -27,15 +27,15 @@ export const GlobalFrame = ({
     <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-svh p-12 s:p-2">
       <div className="relative z-0 overflow-hidden w-full h-full rounded-3xl isolate">
         <Background />
-        <div className="flex s:flex-col z-10 w-full h-full">
+        <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0">
           {contents && type === "PC" && (
-            <div className="flex s:hidden items-end relative top-0 w-[45%] h-full pl-4">
+            <div className="flex s:hidden items-end relative top-0 w-[50%] h-full pl-4">
               <Avatar />
             </div>
           )}
           <main
             className={clsx(
-              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:overflow-x-hidden overflow-y-scroll w-[55%] s:w-full h-full pr-10 pl-4 s:p-4",
+              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:overflow-x-hidden w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4",
               shadow && "u-shadow-sm"
             )}
           >
