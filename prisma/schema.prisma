@@ -71,6 +71,7 @@ model Clipboard {
 model Favorite {
   id           Int      @id @default(autoincrement())
   userId       String
+  title        String
   url          String
   emojiId      String
   emojiNative  String
