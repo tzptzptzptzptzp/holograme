@@ -20,6 +20,7 @@ type Inputs = {
 export const CreateFavoriteModal = () => {
   const isFirstRender = useRef(true);
   const [apiPending, setApiPending] = useState(false);
+  const [urlError, setUrlError] = useState("");
 
   const [createFavorite, setCreateFavorite] =
     useRecoilState(CreateFavoriteState);
@@ -32,7 +33,7 @@ export const CreateFavoriteModal = () => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const { handleClose, handleOpen } = useModal();
+  const { handleClose, handleOpen: onOpen } = useModal();
 
   const { refetch } = useGetFavorite();
 
@@ -50,15 +51,23 @@ export const CreateFavoriteModal = () => {
   }, [createFavorite, setValue]);
 
   useEffect(() => {
+    if (!url) return;
+    url.startsWith("http")
+      ? setUrlError("")
+      : setUrlError("👾 URLはhttpから始まる必要があるよ");
+  }, [url]);
+
+  const handleOpen = () => {
     setCreateFavorite((prev) => ({
       ...prev,
       title: title,
       url: url,
     }));
-  }, [title, url, setCreateFavorite]);
+    onOpen("emojiSelect");
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    if (apiPending) return;
+    if (apiPending || !data.url.startsWith("http")) return;
     setApiPending(true);
     mutate(
       {
@@ -108,15 +117,15 @@ export const CreateFavoriteModal = () => {
           })}
         />
         <Button
-          className="absolute right-2 text-[22px]"
-          onClick={() => handleOpen("emojiSelect")}
+          className="absolute top-4 right-2 text-[22px]"
+          onClick={handleOpen}
         >
           {createFavorite.emojiNative}
         </Button>
       </div>
       <FormInput
         label={textsConfig.FORM.FAVORITE.URL}
-        errorMessage={errors.url?.message}
+        errorMessage={errors.url?.message || urlError}
         placeholder={`${textsConfig.FORM.FAVORITE.URL}を入力`}
         {...register("url", {
           required: GetRequiredMessage(textsConfig.FORM.FAVORITE.URL),
