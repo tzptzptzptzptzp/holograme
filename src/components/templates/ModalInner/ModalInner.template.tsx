@@ -81,7 +81,7 @@ export const ModalInner = ({
 }: Props) => {
   return (
     <div className="flex flex-col gap-2 w-full">
-      <p className="text-[20px] text-center">{title}</p>
+      {title && <p className="text-[20px] text-center">{title}</p>}
       {form ? (
         <Form
           buttonDisabled={buttonDisabled}
