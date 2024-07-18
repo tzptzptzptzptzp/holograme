@@ -4,6 +4,7 @@ import {
   ChatMessageStateType,
   ChatRoomOptionStateType,
   ChatRoomStateType,
+  CreateFavoriteStateType,
   EditChatStandardPhraseStateType,
   FavoriteChatRoomIdStateType,
   ModalStateType,
@@ -68,6 +69,17 @@ export const EditChatStandardPhraseState =
       content: "",
     },
   });
+
+export const CreateFavoriteState = atom<CreateFavoriteStateType>({
+  key: "CreateFavorite",
+  default: {
+    title: "",
+    url: "",
+    emojiId: "star",
+    emojiNative: "⭐",
+    emojiUnified: "2b50",
+  },
+});
 
 export const ModalState = atom<ModalStateType>({
   key: "Modal",

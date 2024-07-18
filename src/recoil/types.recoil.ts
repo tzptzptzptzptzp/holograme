@@ -1,5 +1,5 @@
 import { ModalContentType } from "@/types";
-import { ChatMessage, User } from "@prisma/client";
+import { ChatMessage, Favorite, User } from "@prisma/client";
 
 export type UserStateType = User;
 
@@ -36,6 +36,11 @@ export type EditChatStandardPhraseStateType = {
   title: string;
   content: string;
 };
+
+export type CreateFavoriteStateType = Omit<
+  Favorite,
+  "id" | "userId" | "order" | "createdDate" | "updatedDate"
+>;
 
 export type ModalStateType = {
   content: ModalContentType;

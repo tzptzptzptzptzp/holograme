@@ -97,6 +97,10 @@ export const textsConfig = {
       SUCCESS: "🦄 思い出を削除しました！",
       ERROR: "削除に失敗しました…",
     },
+    FAVORITE_CREATE: {
+      SUCCESS: "🦄 お気に入りを作成しました！",
+      ERROR: "作成に失敗しました…",
+    },
     HISTORY_DELETE: {
       SUCCESS: "🦄 記憶を喪失しました！",
       ERROR: "削除に失敗しました…",
