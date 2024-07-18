@@ -20,16 +20,9 @@ model User {
   nickname    String
   email       String
   location    String
+
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
-}
-
-model Favorite {
-  id          Int      @id @default(autoincrement())
-  userId      String
-  url         String
-  order       Int
-  createdDate DateTime @default(now()) 
 }
 
 model ChatRoom {
@@ -38,6 +31,7 @@ model ChatRoom {
   name           String
   description    String
   defaultMessage String
+
   createdDate    DateTime @default(now()) 
   updatedDate    DateTime @updatedAt
 
@@ -50,6 +44,7 @@ model ChatMessage {
   roomId    Int
   content   String
   role      String
+
   date      DateTime @default(now())
 
   room      ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
@@ -60,6 +55,7 @@ model ChatStandardPhrase {
   userId      String
   title       String
   content     String
+
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
 }
@@ -68,7 +64,21 @@ model Clipboard {
   id        Int      @id @default(autoincrement())
   userId    String
   content   String
+
   date      DateTime @default(now())
+}
+
+model Favorite {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  url          String
+  emojiId      String
+  emojiNative  String
+  emojiUnified String
+  order        Int
+
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
 }
 
 model Memo {
@@ -77,6 +87,7 @@ model Memo {
   title       String
   content     String
   archived    Boolean  @default(false)
+
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
 }
