@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -8,15 +7,12 @@ import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecul
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
 
 export const HomeContents = () => {
   const [latest, setLatest] = useState({
     id: 0,
     content: "",
   });
-
-  const searchType = useRecoilValue(SearchTypeState);
 
   const { data: clipboardData } = useGetClipboard();
   const { data: favoriteData } = useGetFavorite();
@@ -28,13 +24,6 @@ export const HomeContents = () => {
     });
   }, [clipboardData]);
 
-  const handleClickFavorite = (url: string) => {
-    if (searchType === "newTab") {
-      window.open(url, "_blank");
-    } else {
-      window.location.href = url;
-    }
-  };
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="flex gap-3 w-full">
@@ -66,7 +55,6 @@ export const HomeContents = () => {
           <FavoriteButton
             key={i}
             emoji={favorite.emojiNative}
-            onClick={handleClickFavorite}
             title={favorite.title}
             url={favorite.url}
           />
