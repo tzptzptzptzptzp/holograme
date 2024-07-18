@@ -65,7 +65,9 @@ export const HomeContents = () => {
         {favoriteData?.map((favorite, i) => (
           <FavoriteButton
             key={i}
+            emoji={favorite.emojiNative}
             onClick={handleClickFavorite}
+            title={favorite.title}
             url={favorite.url}
           />
         ))}
