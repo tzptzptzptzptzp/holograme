@@ -9,27 +9,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const { url, order } = await req.json();
+    const { title, url, emojiId, emojiNative, emojiUnified } = await req.json();
 
-    const doubleOrderItem = await prisma.favorite.findFirst({
+    const items = await prisma.favorite.findMany({
       where: {
         userId,
-        order,
       },
     });
 
-    if (doubleOrderItem) {
-      return NextResponse.json(
-        { error: "Order already exists" },
-        { status: 400 }
-      );
-    }
-
     const data = await prisma.favorite.create({
       data: {
-        url,
-        order,
         userId,
+        title,
+        url,
+        order: items.length + 1,
+        emojiId,
+        emojiNative,
+        emojiUnified,
       },
     });
 
