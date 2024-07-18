@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
+import { CreateFavoriteState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -14,22 +18,78 @@ type Inputs = {
 };
 
 export const CreateFavoriteModal = () => {
+  const isFirstRender = useRef(true);
   const [apiPending, setApiPending] = useState(false);
 
-  // const mutate = usePost();
+  const [createFavorite, setCreateFavorite] =
+    useRecoilState(CreateFavoriteState);
 
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
   const { handleClose, handleOpen } = useModal();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    setApiPending(true);
-  };
+  const { refetch } = useGetFavorite();
 
+  const mutate = usePostFavorite();
+
+  const title = watch("title");
+  const url = watch("url");
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      setValue("title", createFavorite.title);
+      setValue("url", createFavorite.url);
+      isFirstRender.current = false;
+    }
+  }, [createFavorite, setValue]);
+
+  useEffect(() => {
+    setCreateFavorite((prev) => ({
+      ...prev,
+      title: title,
+      url: url,
+    }));
+  }, [title, url, setCreateFavorite]);
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (apiPending) return;
+    setApiPending(true);
+    mutate(
+      {
+        title: data.title,
+        url: data.url,
+        emojiId: createFavorite.emojiId,
+        emojiNative: createFavorite.emojiNative,
+        emojiUnified: createFavorite.emojiUnified,
+      },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.FAVORITE_CREATE.SUCCESS);
+          refetch();
+          handleClose();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.FAVORITE_CREATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
+          setCreateFavorite({
+            title: "",
+            url: "",
+            emojiId: "star",
+            emojiNative: "⭐",
+            emojiUnified: "2b50",
+          });
+        },
+      }
+    );
+  };
   return (
     <ModalInner
       buttonDisabled={apiPending}
@@ -51,7 +111,7 @@ export const CreateFavoriteModal = () => {
           className="absolute right-2 text-[22px]"
           onClick={() => handleOpen("emojiSelect")}
         >
-          🦄
+          {createFavorite.emojiNative}
         </Button>
       </div>
       <FormInput
