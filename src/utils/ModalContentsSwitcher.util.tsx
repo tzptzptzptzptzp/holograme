@@ -74,6 +74,14 @@ const EditFavoriteModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const DeleteFavoriteModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Home/DeleteFavoriteModal/DeleteFavoriteModal.feature"
+    ).then((mod) => mod.DeleteFavoriteModal),
+  { loading: () => <Loader /> }
+);
+
 const EmojiSelectModalContent = dynamic(
   () =>
     import(
@@ -102,6 +110,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <CreateFavoriteModalContent />;
     case "editFavorite":
       return <EditFavoriteModalContent />;
+    case "deleteFavorite":
+      return <DeleteFavoriteModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
   }

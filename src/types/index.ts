@@ -9,4 +9,5 @@ export type ModalContentType =
   | "deleteChatStandardPhrase"
   | "createFavorite"
   | "editFavorite"
+  | "deleteFavorite"
   | "emojiSelect";
