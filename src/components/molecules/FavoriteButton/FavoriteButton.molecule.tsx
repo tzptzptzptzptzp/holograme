@@ -1,29 +1,45 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
+import { EditFavoriteState, SearchTypeState } from "@/recoil/atoms.recoil";
+import { useModal } from "@/hooks/useModal.hook";
 
 type Props = {
-  emoji: string;
-  title: string;
-  url: string;
+  favorite: {
+    id: number;
+    url: string;
+    title: string;
+    emojiId: string;
+    emojiNative: string;
+    emojiUnified: string;
+  };
 };
 
-export const FavoriteButton = ({ emoji, title, url }: Props) => {
+export const FavoriteButton = ({ favorite }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const searchType = useRecoilValue(SearchTypeState);
+  const setEditFavorite = useSetRecoilState(EditFavoriteState);
+
+  const { handleOpen } = useModal();
 
   const handleClick = () => {
     if (searchType === "newTab") {
-      window.open(url, "_blank");
+      window.open(favorite.url, "_blank");
     } else {
-      window.location.href = url;
+      window.location.href = favorite.url;
     }
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setEditFavorite(favorite);
+    handleOpen("editFavorite");
   };
   return (
     <li
       className="flex items-center relative w-[45px] h-[45px] p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60"
+      onContextMenu={handleContextMenu}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -31,11 +47,13 @@ export const FavoriteButton = ({ emoji, title, url }: Props) => {
         className="flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-100 hover:bg-opacity-50 duration-150"
         onClick={handleClick}
       >
-        <p className="text-[22px] text-center leading-none">{emoji}</p>
+        <p className="text-[22px] text-center leading-none">
+          {favorite.emojiNative}
+        </p>
       </Button>
       {isHovered && (
         <div className="u-centering-x absolute -top-8 px-3 py-1 rounded-3xl bg-secondary text-white text-[12px] text-center whitespace-nowrap pointer-events-none select-none">
-          <p>{title}</p>
+          <p>{favorite.title}</p>
         </div>
       )}
     </li>

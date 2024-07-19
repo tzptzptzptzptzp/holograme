@@ -52,12 +52,7 @@ export const HomeContents = () => {
       )}
       <ul className="flex gap-2">
         {favoriteData?.map((favorite, i) => (
-          <FavoriteButton
-            key={i}
-            emoji={favorite.emojiNative}
-            title={favorite.title}
-            url={favorite.url}
-          />
+          <FavoriteButton key={i} favorite={favorite} />
         ))}
       </ul>
     </div>
