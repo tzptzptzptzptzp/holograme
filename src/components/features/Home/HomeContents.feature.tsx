@@ -50,7 +50,7 @@ export const HomeContents = () => {
           deleteIcon={false}
         />
       )}
-      <ul className="flex gap-2">
+      <ul className="flex gap-2 s:overflow-x-scroll">
         {favoriteData?.map((favorite, i) => (
           <FavoriteButton key={i} favorite={favorite} />
         ))}
