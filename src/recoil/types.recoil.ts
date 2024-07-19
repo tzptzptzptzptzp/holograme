@@ -44,7 +44,10 @@ export type CreateFavoriteStateType = Omit<
   "id" | "userId" | "order" | "createdDate" | "updatedDate"
 >;
 
-export type EditFavoriteStateType = CreateFavoriteStateType;
+export type EditFavoriteStateType = Omit<
+  Favorite,
+  "userId" | "order" | "createdDate" | "updatedDate"
+>;
 
 export type ModalStateType = {
   content: ModalContentType;

@@ -91,6 +91,7 @@ export const CreateFavoriteState = atom<CreateFavoriteStateType>({
 export const EditFavoriteState = atom<EditFavoriteStateType>({
   key: "EditFavorite",
   default: {
+    id: 0,
     title: "",
     url: "",
     emojiId: "star",
