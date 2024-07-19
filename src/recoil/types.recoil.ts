@@ -37,6 +37,8 @@ export type EditChatStandardPhraseStateType = {
   content: string;
 };
 
+export type FavoriteModeStateType = "create" | "edit";
+
 export type CreateFavoriteStateType = Omit<
   Favorite,
   "id" | "userId" | "order" | "createdDate" | "updatedDate"
