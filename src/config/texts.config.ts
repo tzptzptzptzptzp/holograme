@@ -52,7 +52,7 @@ export const textsConfig = {
       },
       DELETE: {
         ALERT: ["を削除するよ", "本当に大丈夫？"],
-        BUTTON: "このルームを削除する",
+        BUTTON: "このお気に入りを削除する",
       },
     },
   },
@@ -100,6 +100,10 @@ export const textsConfig = {
     FAVORITE_CREATE: {
       SUCCESS: "🦄 お気に入りを作成しました！",
       ERROR: "作成に失敗しました…",
+    },
+    FAVORITE_DELETE: {
+      SUCCESS: "🦄 お気に入りを削除しました！",
+      ERROR: "削除に失敗しました…",
     },
     FAVORITE_UPDATE: {
       SUCCESS: "🦄 お気に入りを更新しました！",

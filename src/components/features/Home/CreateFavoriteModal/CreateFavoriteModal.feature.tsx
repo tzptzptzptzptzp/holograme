@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
@@ -9,7 +9,7 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { CreateFavoriteState } from "@/recoil/atoms.recoil";
+import { CreateFavoriteState, FavoriteModeState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -24,6 +24,7 @@ export const CreateFavoriteModal = () => {
 
   const [createFavorite, setCreateFavorite] =
     useRecoilState(CreateFavoriteState);
+  const setFavoriteMode = useSetRecoilState(FavoriteModeState);
 
   const {
     register,
@@ -58,6 +59,7 @@ export const CreateFavoriteModal = () => {
   }, [url]);
 
   const handleOpen = () => {
+    setFavoriteMode("create");
     setCreateFavorite((prev) => ({
       ...prev,
       title: title,

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
@@ -83,13 +84,6 @@ export const EditFavoriteModal = () => {
         onSuccess: () => {
           toast(textsConfig.TOAST.FAVORITE_UPDATE.SUCCESS);
           refetch();
-          handleClose();
-        },
-        onError: () => {
-          toast.error(textsConfig.TOAST.FAVORITE_UPDATE.ERROR);
-        },
-        onSettled: () => {
-          setApiPending(false);
           setEditFavorite({
             id: 0,
             title: "",
@@ -98,6 +92,13 @@ export const EditFavoriteModal = () => {
             emojiNative: "⭐",
             emojiUnified: "2b50",
           });
+          handleClose();
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.FAVORITE_UPDATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
         },
       }
     );
@@ -135,6 +136,9 @@ export const EditFavoriteModal = () => {
           required: GetRequiredMessage(textsConfig.FORM.FAVORITE.URL),
         })}
       />
+      <Button onClick={() => onOpen("deleteFavorite")}>
+        <ErrorMessage>{textsConfig.FORM.FAVORITE.DELETE.BUTTON}</ErrorMessage>
+      </Button>{" "}
     </ModalInner>
   );
 };
