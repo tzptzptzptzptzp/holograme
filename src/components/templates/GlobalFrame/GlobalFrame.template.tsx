@@ -27,7 +27,7 @@ export const GlobalFrame = ({
     <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-svh p-12 s:p-2">
       <div className="relative z-0 overflow-hidden w-full h-full rounded-3xl isolate">
         <Background />
-        <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0">
+        <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-[46px]">
           {contents && type === "PC" && (
             <div className="flex s:hidden items-end relative top-0 w-[50%] h-full pl-4">
               <Avatar />
