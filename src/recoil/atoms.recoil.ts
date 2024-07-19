@@ -6,7 +6,9 @@ import {
   ChatRoomStateType,
   CreateFavoriteStateType,
   EditChatStandardPhraseStateType,
+  EditFavoriteStateType,
   FavoriteChatRoomIdStateType,
+  FavoriteModeStateType,
   ModalStateType,
   SearchTypeStateType,
   SelectedContentStateType,
@@ -70,9 +72,26 @@ export const EditChatStandardPhraseState =
     },
   });
 
+export const FavoriteModeState = atom<FavoriteModeStateType | "">({
+  key: "FavoriteMode",
+  default: "",
+});
+
 export const CreateFavoriteState = atom<CreateFavoriteStateType>({
   key: "CreateFavorite",
   default: {
+    title: "",
+    url: "",
+    emojiId: "star",
+    emojiNative: "⭐",
+    emojiUnified: "2b50",
+  },
+});
+
+export const EditFavoriteState = atom<EditFavoriteStateType>({
+  key: "EditFavorite",
+  default: {
+    id: 0,
     title: "",
     url: "",
     emojiId: "star",

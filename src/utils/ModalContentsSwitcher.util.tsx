@@ -66,6 +66,14 @@ const CreateFavoriteModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const EditFavoriteModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Home/EditFavoriteModal/EditFavoriteModal.feature"
+    ).then((mod) => mod.EditFavoriteModal),
+  { loading: () => <Loader /> }
+);
+
 const EmojiSelectModalContent = dynamic(
   () =>
     import(
@@ -92,6 +100,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <DeleteChatStandardPhraseModalContent />;
     case "createFavorite":
       return <CreateFavoriteModalContent />;
+    case "editFavorite":
+      return <EditFavoriteModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
   }
