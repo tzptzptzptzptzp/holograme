@@ -8,6 +8,7 @@ import {
   EditChatStandardPhraseStateType,
   EditFavoriteStateType,
   FavoriteChatRoomIdStateType,
+  FavoriteModeStateType,
   ModalStateType,
   SearchTypeStateType,
   SelectedContentStateType,
@@ -70,6 +71,11 @@ export const EditChatStandardPhraseState =
       content: "",
     },
   });
+
+export const FavoriteModeState = atom<FavoriteModeStateType | "">({
+  key: "FavoriteMode",
+  default: "",
+});
 
 export const CreateFavoriteState = atom<CreateFavoriteStateType>({
   key: "CreateFavorite",
