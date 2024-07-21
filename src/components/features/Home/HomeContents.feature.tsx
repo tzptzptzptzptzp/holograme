@@ -5,6 +5,7 @@ import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButto
 import { FavoriteButton } from "@/components/molecules/FavoriteButton/FavoriteButton.molecule";
 import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecule";
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
+import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableArea/FavoriteDroppableArea.organism";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 
@@ -50,11 +51,11 @@ export const HomeContents = () => {
           deleteIcon={false}
         />
       )}
-      <ul className="flex gap-2 s:overflow-x-scroll">
+      <FavoriteDroppableArea>
         {favoriteData?.map((favorite, i) => (
           <FavoriteButton key={i} favorite={favorite} />
         ))}
-      </ul>
+      </FavoriteDroppableArea>
     </div>
   );
 };
