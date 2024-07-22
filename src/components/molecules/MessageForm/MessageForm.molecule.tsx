@@ -49,8 +49,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       setFocus("message");
       textareaRef.current?.focus();
     }
-    setValue("message", chatRoom?.defaultMessage || "");
-  }, [chatRoom, setFocus, setValue, type]);
+    if (!watch("message")) {
+      setValue("message", chatRoom?.defaultMessage || "");
+    }
+  }, [chatRoom, setFocus, setValue, type, watch]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {
