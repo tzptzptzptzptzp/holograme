@@ -38,6 +38,35 @@ export async function POST(req: Request) {
   }
 }
 
+export async function PUT(req: Request) {
+  try {
+    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const userId = await getUserIdFromToken(token);
+    const { favorites }: { favorites: { id: number; order: number }[] } =
+      await req.json();
+
+    const updates = favorites.map((favorite) =>
+      prisma.favorite.update({
+        where: { id: favorite.id, userId },
+        data: { order: favorite.order },
+      })
+    );
+
+    const results = await prisma.$transaction(updates);
+
+    return NextResponse.json(results);
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(req: Request) {
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
