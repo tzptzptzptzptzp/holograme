@@ -16,6 +16,7 @@ const createChatHistory = (chatMessage: ChatMessageStateType[]): string => {
       (msg, index) => `
 ### メッセージ ${index + 1}
 - ロール：${msg.role === "user" ? "ユーザー" : "アシスタント"}
+- 時刻：${new Date(msg.date).toLocaleString()}
 - 内容：
 ${RemoveMarkdown(msg.content)}`
     )
