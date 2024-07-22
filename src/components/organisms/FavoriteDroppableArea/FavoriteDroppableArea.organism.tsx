@@ -2,8 +2,9 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
-  KeyboardSensor,
+  MouseSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -27,9 +28,16 @@ export const FavoriteDroppableArea = ({
   setFavorites,
 }: Props) => {
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 15,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 15,
+      },
     })
   );
 
