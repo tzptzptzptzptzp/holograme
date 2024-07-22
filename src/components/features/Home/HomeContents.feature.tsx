@@ -33,11 +33,13 @@ export const HomeContents = () => {
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
-      <div className="flex gap-3 w-full">
+      <div className="flex gap-3 s:gap-2 w-full">
         <SearchForm />
-        <SearchTypeSwitcher />
-        <ClipboardPasteButton />
-        <ClipboardCopyButton />
+        <div className="l:contents m:contents s:flex s:justify-between w-full s:w-1/2">
+          <SearchTypeSwitcher />
+          <ClipboardPasteButton />
+          <ClipboardCopyButton />
+        </div>
       </div>
       <ul className="flex gap-2 w-full">
         {clipboard ? (
