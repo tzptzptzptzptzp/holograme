@@ -124,7 +124,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        "flex items-end gap-[6px] relative z-0 w-full pl-4 pr-3 py-2 rounded-3xl",
+        "flex items-end gap-[6px] relative z-0 w-full pl-4 s:pl-3 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
