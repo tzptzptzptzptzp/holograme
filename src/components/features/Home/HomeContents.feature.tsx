@@ -32,7 +32,7 @@ export const HomeContents = () => {
   }, [favoriteData]);
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="a-fade-in flex flex-col gap-3 w-full">
       <div className="flex gap-3 w-full">
         <SearchForm />
         <SearchTypeSwitcher />

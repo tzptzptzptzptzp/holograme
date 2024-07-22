@@ -1,3 +1,17 @@
+.a-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.45s 0.05s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .avatar {
   transform-origin: bottom;
   animation-iteration-count: infinite;

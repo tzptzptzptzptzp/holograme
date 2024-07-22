@@ -33,7 +33,7 @@ export const Avatar = () => {
     >
       <Image
         alt="Avatar"
-        className="u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full"
+        className="a-fade-in u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full"
         src="/bisyojo_chan.png"
         width={800}
         height={800}
