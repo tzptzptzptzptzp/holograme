@@ -109,6 +109,10 @@ export const textsConfig = {
       SUCCESS: "🦄 お気に入りを更新しました！",
       ERROR: "更新に失敗しました…",
     },
+    FAVORITE_ORDER_UPDATE: {
+      SUCCESS: "🦄 お気に入りの順番を更新しました！",
+      ERROR: "更新に失敗しました…",
+    },
     HISTORY_DELETE: {
       SUCCESS: "🦄 記憶を喪失しました！",
       ERROR: "削除に失敗しました…",

@@ -1,9 +1,11 @@
+import { textsConfig } from "@/config/texts.config";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
 import {
   closestCenter,
   DndContext,
   DragEndEvent,
   MouseSensor,
-  PointerSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -12,9 +14,9 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
   SortableContext,
-  sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { Favorite } from "@prisma/client";
+import { toast } from "react-toastify";
 
 type Props = {
   children: React.ReactNode;
@@ -27,6 +29,10 @@ export const FavoriteDroppableArea = ({
   favorites,
   setFavorites,
 }: Props) => {
+  const { refetch } = useGetFavorite();
+
+  const mutate = usePutFavoriteOrder();
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
@@ -57,6 +63,20 @@ export const FavoriteDroppableArea = ({
             order: index + 1,
           }));
         }
+
+        mutate(
+          { favorites: newItems },
+          {
+            onSuccess: () => {
+              toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
+              refetch();
+            },
+            onError: () => {
+              toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
+            },
+          }
+        );
+
         return newItems;
       });
     }
