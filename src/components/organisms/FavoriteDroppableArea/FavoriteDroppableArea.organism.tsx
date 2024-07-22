@@ -48,11 +48,16 @@ export const FavoriteDroppableArea = ({
         const oldIndex = items.findIndex((item) => item.id === active.id);
         const newIndex = items.findIndex((item) => item.id === over.id);
 
+        let newItems = [...items];
         if (oldIndex !== -1 && newIndex !== -1) {
-          return arrayMove(items, oldIndex, newIndex);
-        } else {
-          return items;
+          newItems = arrayMove(newItems, oldIndex, newIndex);
+
+          newItems = newItems.map((item, index) => ({
+            ...item,
+            order: index + 1,
+          }));
         }
+        return newItems;
       });
     }
   };
