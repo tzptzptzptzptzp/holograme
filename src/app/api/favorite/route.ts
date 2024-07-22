@@ -11,9 +11,12 @@ export async function POST(req: Request) {
     const userId = await getUserIdFromToken(token);
     const { title, url, emojiId, emojiNative, emojiUnified } = await req.json();
 
-    const items = await prisma.favorite.findMany({
+    const item = await prisma.favorite.findFirst({
       where: {
         userId,
+      },
+      orderBy: {
+        order: "desc",
       },
     });
 
@@ -22,7 +25,7 @@ export async function POST(req: Request) {
         userId,
         title,
         url,
-        order: items.length + 1,
+        order: item ? item.order + 1 : 1,
         emojiId,
         emojiNative,
         emojiUnified,
