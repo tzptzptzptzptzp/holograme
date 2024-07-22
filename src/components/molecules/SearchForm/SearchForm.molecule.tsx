@@ -66,7 +66,7 @@ export const SearchForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex gap-[6px] w-full pl-4 pr-3 py-2 bg-white rounded-full"
+      className="flex gap-[6px] w-full s:w-1/2 s:min-w-0 pl-4 pr-3 py-2 bg-white rounded-full"
     >
       <Input
         className="flex-1 w-full"

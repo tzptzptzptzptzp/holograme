@@ -75,12 +75,12 @@ export const ClipboardItem = ({
   };
   return (
     <li
-      className="flex items-center justify-between gap-1 px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
+      className="flex items-center justify-between gap-1 w-full min-w-0 px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
       onClick={handleClick}
     >
       {icon && (
         <Icons.ClipBoard
-          className="stroke-2"
+          className="min-w-[22px] min-h-[22px] stroke-2"
           color={colorConfig.primary}
           width={IconSize}
           height={IconSize}
@@ -98,12 +98,14 @@ export const ClipboardItem = ({
           <Button onClick={handleShow}>
             {isShow ? (
               <Icons.EyeSlash
+                className="min-w-[22px] min-h-[22px]"
                 color={colorConfig.error}
                 width={IconSize}
                 height={IconSize}
               />
             ) : (
               <Icons.Eye
+                className="min-w-[22px] min-h-[22px]"
                 color={colorConfig.text}
                 width={IconSize}
                 height={IconSize}
@@ -113,6 +115,7 @@ export const ClipboardItem = ({
         )}
         {copyIcon && (
           <Icons.Copy
+            className="min-w-[22px] min-h-[22px]"
             color={colorConfig.success}
             width={IconSize}
             height={IconSize}
@@ -121,6 +124,7 @@ export const ClipboardItem = ({
         {deleteIcon && (
           <Button onClick={handleDelete}>
             <Icons.Trash
+              className="min-w-[22px] min-h-[22px]"
               color={colorConfig.error}
               width={IconSize}
               height={IconSize}
