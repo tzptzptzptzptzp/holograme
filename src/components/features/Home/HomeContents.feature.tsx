@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Favorite } from "@prisma/client";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -10,6 +11,7 @@ import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 
 export const HomeContents = () => {
+  const [favorites, setFavorites] = useState<Favorite[] | []>([]);
   const [latest, setLatest] = useState({
     id: 0,
     content: "",
@@ -24,6 +26,10 @@ export const HomeContents = () => {
       content: clipboardData?.[0].content || "",
     });
   }, [clipboardData]);
+
+  useEffect(() => {
+    if (favoriteData) setFavorites(favoriteData);
+  }, [favoriteData]);
 
   return (
     <div className="flex flex-col gap-3 w-full">
@@ -51,8 +57,8 @@ export const HomeContents = () => {
           deleteIcon={false}
         />
       )}
-      <FavoriteDroppableArea>
-        {favoriteData?.map((favorite, i) => (
+      <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
+        {favorites?.map((favorite, i) => (
           <FavoriteButton key={i} favorite={favorite} />
         ))}
       </FavoriteDroppableArea>

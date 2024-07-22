@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { EditFavoriteState, SearchTypeState } from "@/recoil/atoms.recoil";
@@ -23,6 +25,14 @@ export const FavoriteButton = ({ favorite }: Props) => {
 
   const { handleOpen } = useModal();
 
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
+    id: favorite.id,
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+  };
+
   const handleClick = () => {
     if (searchType === "newTab") {
       window.open(favorite.url, "_blank");
@@ -42,6 +52,10 @@ export const FavoriteButton = ({ favorite }: Props) => {
       onContextMenu={handleContextMenu}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
     >
       <Button
         className="flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-100 hover:bg-opacity-50 duration-150"
