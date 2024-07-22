@@ -1,19 +1,107 @@
-import { DndContext, useDroppable } from "@dnd-kit/core";
-import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
+import { useRef } from "react";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  horizontalListSortingStrategy,
+  SortableContext,
+} from "@dnd-kit/sortable";
+import { Favorite } from "@prisma/client";
+import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
 
 type Props = {
   children: React.ReactNode;
+  favorites: Favorite[];
+  setFavorites: React.Dispatch<React.SetStateAction<Favorite[] | []>>;
 };
 
-const id = GenerateRandomID();
+export const FavoriteDroppableArea = ({
+  children,
+  favorites,
+  setFavorites,
+}: Props) => {
+  const mutateTimeout = useRef<NodeJS.Timeout | null>(null);
 
-export const FavoriteDroppableArea = ({ children }: Props) => {
-  const { setNodeRef } = useDroppable({
-    id: `id-favorite-droppable-${id}`,
-  });
+  const { refetch } = useGetFavorite();
+
+  const mutate = usePutFavoriteOrder();
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 15,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,
+        tolerance: 15,
+      },
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      setFavorites((items) => {
+        const oldIndex = items.findIndex((item) => item.id === active.id);
+        const newIndex = items.findIndex((item) => item.id === over.id);
+
+        let newItems = [...items];
+        if (oldIndex !== -1 && newIndex !== -1) {
+          newItems = arrayMove(newItems, oldIndex, newIndex);
+
+          newItems = newItems.map((item, index) => ({
+            ...item,
+            order: index + 1,
+          }));
+        }
+
+        if (mutateTimeout.current) {
+          clearTimeout(mutateTimeout.current);
+        }
+
+        mutateTimeout.current = setTimeout(() => {
+          mutate(
+            { favorites: newItems },
+            {
+              onSuccess: () => {
+                toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
+                refetch();
+              },
+              onError: () => {
+                toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
+              },
+            }
+          );
+        }, 2500);
+
+        return newItems;
+      });
+    }
+  };
   return (
-    <ul className="flex gap-2 s:overflow-x-scroll" ref={setNodeRef}>
-      <DndContext>{children}</DndContext>
-    </ul>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+      sensors={sensors}
+    >
+      <SortableContext
+        items={favorites}
+        strategy={horizontalListSortingStrategy}
+      >
+        <ul className="flex gap-2 s:overflow-x-scroll">{children}</ul>
+      </SortableContext>
+    </DndContext>
   );
 };
