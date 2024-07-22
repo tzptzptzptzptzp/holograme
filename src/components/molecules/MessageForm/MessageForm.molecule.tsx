@@ -124,7 +124,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={clsx(
-        "flex gap-[6px] relative z-0 w-full pl-4 pr-3 py-2 rounded-3xl",
+        "flex items-end gap-[6px] relative z-0 w-full pl-4 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
@@ -159,7 +159,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
           />
         )}
       />
-      <div className="flex gap-2">
+      <div className="flex gap-2 h-7">
         <Button disabled={apiPending} onClick={handleToggleStandardPhrase}>
           <Icons.Book
             color={apiPending ? colorConfig.disableText : colorConfig.text}
