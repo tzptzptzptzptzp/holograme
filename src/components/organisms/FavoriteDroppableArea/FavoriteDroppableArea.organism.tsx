@@ -1,6 +1,4 @@
-import { textsConfig } from "@/config/texts.config";
-import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
-import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
+import { useRef } from "react";
 import {
   closestCenter,
   DndContext,
@@ -17,6 +15,9 @@ import {
 } from "@dnd-kit/sortable";
 import { Favorite } from "@prisma/client";
 import { toast } from "react-toastify";
+import { textsConfig } from "@/config/texts.config";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
 
 type Props = {
   children: React.ReactNode;
@@ -29,6 +30,8 @@ export const FavoriteDroppableArea = ({
   favorites,
   setFavorites,
 }: Props) => {
+  const mutateTimeout = useRef<NodeJS.Timeout | null>(null);
+
   const { refetch } = useGetFavorite();
 
   const mutate = usePutFavoriteOrder();
@@ -64,18 +67,24 @@ export const FavoriteDroppableArea = ({
           }));
         }
 
-        mutate(
-          { favorites: newItems },
-          {
-            onSuccess: () => {
-              toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
-              refetch();
-            },
-            onError: () => {
-              toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
-            },
-          }
-        );
+        if (mutateTimeout.current) {
+          clearTimeout(mutateTimeout.current);
+        }
+
+        mutateTimeout.current = setTimeout(() => {
+          mutate(
+            { favorites: newItems },
+            {
+              onSuccess: () => {
+                toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
+                refetch();
+              },
+              onError: () => {
+                toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
+              },
+            }
+          );
+        }, 2500);
 
         return newItems;
       });
