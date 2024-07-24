@@ -75,7 +75,7 @@ export const ClipboardItem = ({
   };
   return (
     <li
-      className="flex items-center justify-between gap-1 w-full min-w-0 px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
+      className="flex items-center justify-between gap-1 w-full min-w-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
       onClick={handleClick}
     >
       {icon && (
