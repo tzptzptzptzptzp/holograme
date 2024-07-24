@@ -4,6 +4,7 @@ import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
 import { FavoriteButton } from "@/components/molecules/FavoriteButton/FavoriteButton.molecule";
+import { ModelItem } from "@/components/molecules/ModelItem/ModelItem.molecule";
 import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecule";
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
 import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableArea/FavoriteDroppableArea.organism";
@@ -63,6 +64,9 @@ export const HomeContents = () => {
             deleteIcon={false}
           />
         )}
+      </ul>
+      <ul className="flex gap-2 w-full">
+        <ModelItem id="gpt-4o-mini" created={1721172741} />
       </ul>
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
         {favorites?.map((favorite, i) => (
