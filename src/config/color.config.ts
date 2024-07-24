@@ -3,6 +3,7 @@ export const colorConfig = {
   background: "#FFF",
   primary: "#FCA5A5",
   secondary: "#7CB8FF",
+  gray: "#777",
   disableText: "#BBB",
   disableBackground: "#EEE",
   success: "#5da1ff",
