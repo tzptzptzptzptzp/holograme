@@ -1,3 +1,4 @@
+import { OpenAiModel } from "@/app/api/openai/route";
 import { ModalContentType } from "@/types";
 import { ChatMessage, Favorite, User } from "@prisma/client";
 
@@ -48,6 +49,8 @@ export type EditFavoriteStateType = Omit<
   Favorite,
   "userId" | "order" | "createdDate" | "updatedDate"
 >;
+
+export type ModelStateType = OpenAiModel;
 
 export type ModalStateType = {
   content: ModalContentType;

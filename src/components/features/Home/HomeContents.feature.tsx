@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Clipboard, Favorite } from "@prisma/client";
+import { useRecoilState } from "recoil";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -10,14 +11,18 @@ import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/Se
 import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableArea/FavoriteDroppableArea.organism";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { ModelsState } from "@/recoil/atoms.recoil";
 
 export const HomeContents = () => {
   const [favorites, setFavorites] = useState<Favorite[] | []>([]);
   const [clipboard, setClipboard] = useState<Clipboard[]>([]);
+  const [models, setModels] = useRecoilState(ModelsState);
 
   const { data: clipboardData } = useGetClipboard();
   const { data: favoriteData } = useGetFavorite();
+  const { data: modelsData } = useGetModels();
 
   const { type } = useDevice();
 
@@ -31,6 +36,10 @@ export const HomeContents = () => {
   useEffect(() => {
     if (favoriteData) setFavorites(favoriteData);
   }, [favoriteData]);
+
+  useEffect(() => {
+    if (modelsData) setModels(modelsData);
+  }, [modelsData, setModels]);
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
@@ -65,9 +74,11 @@ export const HomeContents = () => {
           />
         )}
       </ul>
-      <ul className="flex gap-2 w-full">
-        <ModelItem id="gpt-4o-mini" created={1721172741} />
-      </ul>
+      {type !== "SP" && (
+        <ul className="flex s:hidden gap-2 w-full">
+          <ModelItem id={models[0].id} created={models[0].created} />
+        </ul>
+      )}
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
         {favorites?.map((favorite, i) => (
           <FavoriteButton key={i} favorite={favorite} />

@@ -2,14 +2,16 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
 
+export type OpenAiModel = {
+  id: string;
+  object: string;
+  created: number;
+  owned_by: string;
+};
+
 type Response = {
   body: {
-    data: {
-      id: string;
-      object: string;
-      created: number;
-      owned_by: string;
-    }[];
+    data: OpenAiModel[];
   };
 };
 
