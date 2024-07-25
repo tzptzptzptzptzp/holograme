@@ -14,6 +14,8 @@ import {
   SelectedContentStateType,
   UserStateType,
 } from "./types.recoil";
+import { OpenAiModel } from "@/app/api/openai/route";
+import { ModelsDefaultValue } from "./default.recoil";
 
 export const InitializeState = atom<boolean>({
   key: "Initialize",
@@ -98,6 +100,11 @@ export const EditFavoriteState = atom<EditFavoriteStateType>({
     emojiNative: "⭐",
     emojiUnified: "2b50",
   },
+});
+
+export const ModelsState = atom<OpenAiModel[]>({
+  key: "Models",
+  default: ModelsDefaultValue,
 });
 
 export const ModalState = atom<ModalStateType>({
