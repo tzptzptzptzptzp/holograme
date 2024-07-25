@@ -5,5 +5,6 @@ export const queryKeysConfig = {
   GET_CLIPBOARD: "GET_CLIPBOARD",
   GET_FAVORITE: "GET_FAVORITE",
   GET_MEMO: "GET_MEMO",
+  GET_MODELS: "GET_MODELS",
   GET_USER: "GET_USER",
 };
