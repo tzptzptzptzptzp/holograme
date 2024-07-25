@@ -65,9 +65,11 @@ export const HomeContents = () => {
           />
         )}
       </ul>
-      <ul className="flex gap-2 w-full">
-        <ModelItem id="gpt-4o-mini" created={1721172741} />
-      </ul>
+      {type !== "SP" && (
+        <ul className="flex s:hidden gap-2 w-full">
+          <ModelItem id="gpt-4o-mini" created={1721172741} />
+        </ul>
+      )}
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
         {favorites?.map((favorite, i) => (
           <FavoriteButton key={i} favorite={favorite} />

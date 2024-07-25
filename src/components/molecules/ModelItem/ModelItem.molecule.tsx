@@ -24,23 +24,26 @@ export const ModelItem = ({ id, created }: Props) => {
         width={IconSize}
         height={IconSize}
       />
-      <div className="flex items-center gap-4 w-full">
-        <p className="text-gray truncate">
-          {id} - {new Date(formatCreated).toLocaleString()}
+      <div className="flex items-center gap-4 s:gap-1 w-full min-w-0">
+        <p className="s:max-w-[80%] text-gray truncate">
+          {id}
+          <span className="s:hidden">
+            - {new Date(formatCreated).toLocaleString()}
+          </span>
         </p>
         <Link
           className="flex items-center gap-1 relative text-gray"
           href={"https://platform.openai.com/docs/models"}
           target="_blank"
         >
-          openai.com/models
+          <span className="s:hidden">openai.com/models</span>
           <Icons.NewTab
             className="-translate-y-[0px] min-w-[14px] min-h-[14px] stroke-[2.5px]"
             color={colorConfig.gray}
             width={IconSize - 8}
             height={IconSize - 8}
           />
-          <span className="absolute bottom-1 w-full border-b-[1.5px] opacity-70 border-gray"></span>
+          <span className="s:hidden absolute bottom-1 w-full border-b-[1.5px] opacity-70 border-gray"></span>
         </Link>
       </div>
       <div className="flex items-center gap-3">
