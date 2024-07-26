@@ -1,8 +1,6 @@
 export const textsConfig = {
-  META: {
-    TITLE: "hologra Me",
-    DESCRIPTION:
-      "This web application serves as a next-generation homepage where your avatar supports you within a virtual space. It not only functions as a starting point for browsing but also offers a variety of features such as chat (powered by GPT), text sharing, task management, and note-taking. This innovative platform aims to enhance and streamline your digital life.",
+  AUTH: {
+    EMAIL_SENT: "確認メールを送信しました",
   },
   FORM: {
     CHAT: {
@@ -54,6 +52,16 @@ export const textsConfig = {
         ALERT: ["を削除するよ", "本当に大丈夫？"],
         BUTTON: "このお気に入りを削除する",
       },
+    },
+  },
+  META: {
+    TITLE: "hologra Me",
+    DESCRIPTION:
+      "This web application serves as a next-generation homepage where your avatar supports you within a virtual space. It not only functions as a starting point for browsing but also offers a variety of features such as chat (powered by GPT), text sharing, task management, and note-taking. This innovative platform aims to enhance and streamline your digital life.",
+  },
+  MODAL: {
+    MODELS_LIST: {
+      TITLE: "OpenAIモデル一覧",
     },
   },
   TOAST: {
@@ -153,8 +161,5 @@ export const textsConfig = {
       SUCCESS: "🦄 ユーザー情報を更新しました！",
       ERROR: "更新に失敗しました…",
     },
-  },
-  AUTH: {
-    EMAIL_SENT: "確認メールを送信しました",
   },
 };
