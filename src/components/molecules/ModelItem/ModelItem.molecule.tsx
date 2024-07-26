@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { format } from "date-fns";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { useModal } from "@/hooks/useModal.hook";
@@ -15,7 +16,6 @@ type Props = {
 
 export const ModelItem = ({ id, created }: Props) => {
   const [isNew, setIsNew] = useState(false);
-  const formatCreated = new Date(created * 1000).setMinutes(0, 0, 0);
 
   const { handleOpen } = useModal();
 
@@ -39,7 +39,7 @@ export const ModelItem = ({ id, created }: Props) => {
           {id}
           {created !== 0 && (
             <span className="s:hidden">
-              - {new Date(formatCreated).toLocaleString()}
+              {` - ${format(new Date(created * 1000), "yy/MM/dd - H:00")}`}
             </span>
           )}
           {isNew && (
