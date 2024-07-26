@@ -41,11 +41,16 @@ const getChatMessage = async (id: number) => {
 };
 
 export const useGetChatMessage = (id: number) => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT_MESSAGE, id],
     queryFn: () => getChatMessage(id),
     enabled: !!axios.defaults.headers.common["Authorization"] && id !== 0,
     staleTime: GetMinutesToMilliseconds(5),
     placeholderData: defaultValue,
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? defaultValue,
+  };
 };

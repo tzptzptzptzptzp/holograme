@@ -20,11 +20,16 @@ const getModels = async () => {
 };
 
 export const useGetModels = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MODELS],
     queryFn: getModels,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? [defaultValue],
+  };
 };

@@ -23,11 +23,16 @@ const getChat = async () => {
 };
 
 export const useGetChat = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT],
     queryFn: getChat,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? [defaultValue],
+  };
 };

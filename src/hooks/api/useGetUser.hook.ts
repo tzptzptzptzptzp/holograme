@@ -23,11 +23,16 @@ const getUser = async () => {
 };
 
 export const useGetUser = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_USER],
     queryFn: getUser,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: defaultValue,
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? defaultValue,
+  };
 };

@@ -20,11 +20,16 @@ const getClipboard = async () => {
 };
 
 export const useGetClipboard = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CLIPBOARD],
     queryFn: getClipboard,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? [defaultValue],
+  };
 };

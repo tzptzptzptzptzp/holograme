@@ -24,11 +24,16 @@ const getChatStandardPhrase = async () => {
 };
 
 export const useGetChatStandardPhrase = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT_STANDARD_PHRASE],
     queryFn: getChatStandardPhrase,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? [defaultValue],
+  };
 };

@@ -26,11 +26,16 @@ const getFavorite = async () => {
 };
 
 export const useGetFavorite = () => {
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_FAVORITE],
     queryFn: getFavorite,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  return {
+    ...queryResult,
+    data: queryResult.data ?? [defaultValue],
+  };
 };
