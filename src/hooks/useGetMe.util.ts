@@ -22,7 +22,7 @@ export const useGetMe = () => {
     fetchUser().then(() => {
       setIsLoading(false);
     });
-  }, []);
+  }, [supabase.auth]);
 
   return { user, isLoading };
 };
