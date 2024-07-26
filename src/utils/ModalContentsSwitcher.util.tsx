@@ -90,6 +90,14 @@ const EmojiSelectModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const ModelsListModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Home/ModelsListModal/ModelsListModal.feature"
+    ).then((mod) => mod.ModelsListModal),
+  { loading: () => <Loader /> }
+);
+
 export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
   switch (selectedContent) {
     case "createChat":
@@ -114,5 +122,7 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <DeleteFavoriteModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
+    case "modelsList":
+      return <ModelsListModalContent />;
   }
 };

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { format } from "date-fns";
+import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
+import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 
 const IconSize = 22;
@@ -13,7 +16,8 @@ type Props = {
 
 export const ModelItem = ({ id, created }: Props) => {
   const [isNew, setIsNew] = useState(false);
-  const formatCreated = new Date(created * 1000).setMinutes(0, 0, 0);
+
+  const { handleOpen } = useModal();
 
   useEffect(() => {
     const now = new Date().getTime();
@@ -22,13 +26,8 @@ export const ModelItem = ({ id, created }: Props) => {
       setIsNew(true);
     }
   }, [created]);
-
-  const handleClick = () => {};
   return (
-    <li
-      className="flex items-center justify-between gap-1 w-full min-w-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
-      onClick={handleClick}
-    >
+    <li className="flex items-center justify-between gap-1 w-full min-w-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default">
       <Icons.Beaker
         className="min-w-[22px] min-h-[22px] stroke-2"
         color={colorConfig.primary}
@@ -40,7 +39,7 @@ export const ModelItem = ({ id, created }: Props) => {
           {id}
           {created !== 0 && (
             <span className="s:hidden">
-              - {new Date(formatCreated).toLocaleString()}
+              {` - ${format(new Date(created * 1000), "yy/MM/dd - H:00")}`}
             </span>
           )}
           {isNew && (
@@ -67,12 +66,14 @@ export const ModelItem = ({ id, created }: Props) => {
         )}
       </div>
       <div className="flex items-center gap-3">
-        <Icons.ListBullet
-          className="min-w-[22px] min-h-[22px]"
-          color={colorConfig.text}
-          width={IconSize + 2}
-          height={IconSize + 2}
-        />
+        <Button onClick={() => handleOpen("modelsList")}>
+          <Icons.ListBullet
+            className="min-w-[22px] min-h-[22px]"
+            color={colorConfig.text}
+            width={IconSize + 2}
+            height={IconSize + 2}
+          />
+        </Button>
       </div>
     </li>
   );

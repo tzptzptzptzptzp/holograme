@@ -1,5 +1,17 @@
 import { atom } from "recoil";
 import { Session } from "@supabase/supabase-js";
+import { OpenAiModel } from "@/app/api/openai/route";
+import {
+  ChatMessagesDefaultValue,
+  ChatRoomDefaultValue,
+  ChatRoomOptionsDefaultValue,
+  CreateFavoriteDefaultValue,
+  EditChatStandardPhraseDefaultValue,
+  EditFavoriteDefaultValue,
+  ModalDefaultValue,
+  ModelsDefaultValue,
+  UserDefaultValue,
+} from "./default.recoil";
 import {
   ChatMessageStateType,
   ChatRoomOptionStateType,
@@ -14,17 +26,15 @@ import {
   SelectedContentStateType,
   UserStateType,
 } from "./types.recoil";
-import { OpenAiModel } from "@/app/api/openai/route";
-import { ModelsDefaultValue } from "./default.recoil";
 
 export const InitializeState = atom<boolean>({
   key: "Initialize",
   default: false,
 });
 
-export const UserState = atom<UserStateType | null>({
+export const UserState = atom<UserStateType>({
   key: "User",
-  default: null,
+  default: UserDefaultValue,
 });
 
 export const SessionState = atom<Session | null>({
@@ -42,9 +52,9 @@ export const SearchTypeState = atom<SearchTypeStateType>({
   default: "currentTab",
 });
 
-export const ChatRoomState = atom<ChatRoomStateType | null>({
+export const ChatRoomState = atom<ChatRoomStateType>({
   key: "ChatRoom",
-  default: null,
+  default: ChatRoomDefaultValue,
 });
 
 export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
@@ -56,50 +66,33 @@ export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
 
 export const ChatRoomOptionsState = atom<ChatRoomOptionStateType[]>({
   key: "ChatRoomOptions",
-  default: [],
+  default: ChatRoomOptionsDefaultValue,
 });
 
 export const ChatMessagesState = atom<ChatMessageStateType[]>({
   key: "ChatMessages",
-  default: [],
+  default: ChatMessagesDefaultValue,
 });
 
 export const EditChatStandardPhraseState =
   atom<EditChatStandardPhraseStateType>({
     key: "EditChatStandardPhrase",
-    default: {
-      id: 0,
-      title: "",
-      content: "",
-    },
+    default: EditChatStandardPhraseDefaultValue,
   });
 
-export const FavoriteModeState = atom<FavoriteModeStateType | "">({
+export const FavoriteModeState = atom<FavoriteModeStateType>({
   key: "FavoriteMode",
-  default: "",
+  default: "create",
 });
 
 export const CreateFavoriteState = atom<CreateFavoriteStateType>({
   key: "CreateFavorite",
-  default: {
-    title: "",
-    url: "",
-    emojiId: "star",
-    emojiNative: "⭐",
-    emojiUnified: "2b50",
-  },
+  default: CreateFavoriteDefaultValue,
 });
 
 export const EditFavoriteState = atom<EditFavoriteStateType>({
   key: "EditFavorite",
-  default: {
-    id: 0,
-    title: "",
-    url: "",
-    emojiId: "star",
-    emojiNative: "⭐",
-    emojiUnified: "2b50",
-  },
+  default: EditFavoriteDefaultValue,
 });
 
 export const ModelsState = atom<OpenAiModel[]>({
@@ -109,8 +102,5 @@ export const ModelsState = atom<OpenAiModel[]>({
 
 export const ModalState = atom<ModalStateType>({
   key: "Modal",
-  default: {
-    content: "",
-    isOpen: false,
-  },
+  default: ModalDefaultValue,
 });

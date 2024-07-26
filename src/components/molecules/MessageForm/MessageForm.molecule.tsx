@@ -28,6 +28,7 @@ type Inputs = {
 export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [apiPending, setApiPending] = useState(false);
+  const [isModified, setIsModified] = useState(false);
   const [isStandardPhraseOpen, setIsStandardPhraseOpen] = useState(false);
 
   const user = useRecoilValue(UserState);
@@ -49,10 +50,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
       setFocus("message");
       textareaRef.current?.focus();
     }
-    if (!watch("message")) {
+    if (!isModified) {
       setValue("message", chatRoom?.defaultMessage || "");
     }
-  }, [chatRoom, setFocus, setValue, type, watch]);
+  }, [chatRoom, isModified, setFocus, setValue, type]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {
@@ -100,6 +101,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
         },
         onSettled: async () => {
           refetch();
+          setIsModified(false);
           setApiPending(false);
           await setTimeout(() => {
             setFocus("message");
@@ -149,7 +151,10 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
             className="flex-1 w-full bg-transparent"
             disabled={apiPending}
             onBlur={onBlur}
-            onChange={onChange}
+            onChange={() => {
+              onChange();
+              setIsModified(true);
+            }}
             onInput={adjustHeight}
             onKeyDown={handleKeyPress}
             placeholder={"🎉 聞きたいことを入力してね！何を聞く？"}

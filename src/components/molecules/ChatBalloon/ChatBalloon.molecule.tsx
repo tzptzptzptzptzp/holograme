@@ -22,7 +22,7 @@ export const ChatBalloon = ({ message, role }: Props) => {
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
-    setMenuVisible(true);
+    setMenuVisible((prev) => !prev);
   };
 
   const handleCopy = () => {
