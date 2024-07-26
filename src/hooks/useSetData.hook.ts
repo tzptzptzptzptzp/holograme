@@ -40,7 +40,7 @@ export const useSetData = () => {
   }, [userData, setUser]);
 
   useEffect(() => {
-    if (chatData) {
+    if (chatData && chatData![0].id) {
       if (favoriteChatRoomId) {
         const chatRoom = chatData.find(
           (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
