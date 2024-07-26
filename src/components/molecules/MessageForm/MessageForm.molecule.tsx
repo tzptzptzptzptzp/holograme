@@ -151,8 +151,8 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
             className="flex-1 w-full bg-transparent"
             disabled={apiPending}
             onBlur={onBlur}
-            onChange={() => {
-              onChange();
+            onChange={(e) => {
+              onChange(e);
               setIsModified(true);
             }}
             onInput={adjustHeight}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Clipboard, Favorite } from "@prisma/client";
-import { useRecoilState } from "recoil";
+import { OpenAiModel } from "@/app/api/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -13,12 +13,11 @@ import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
-import { ModelsState } from "@/recoil/atoms.recoil";
 
 export const HomeContents = () => {
-  const [favorites, setFavorites] = useState<Favorite[] | []>([]);
-  const [clipboard, setClipboard] = useState<Clipboard[]>([]);
-  const [models, setModels] = useRecoilState(ModelsState);
+  const [clipboards, setClipboards] = useState<Clipboard[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
+  const [models, setModels] = useState<OpenAiModel[]>([]);
 
   const { data: clipboardData } = useGetClipboard();
   const { data: favoriteData } = useGetFavorite();
@@ -29,7 +28,7 @@ export const HomeContents = () => {
   useEffect(() => {
     if (clipboardData) {
       const trimmedClipboard = clipboardData.slice(0, type === "SP" ? 2 : 3);
-      setClipboard(trimmedClipboard);
+      setClipboards(trimmedClipboard);
     }
   }, [clipboardData, type]);
 
@@ -38,8 +37,11 @@ export const HomeContents = () => {
   }, [favoriteData]);
 
   useEffect(() => {
-    if (modelsData) setModels(modelsData);
-  }, [modelsData, setModels]);
+    if (modelsData) {
+      const trimmedModels = modelsData.slice(0, 1);
+      setModels(trimmedModels);
+    }
+  }, [modelsData]);
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
@@ -52,31 +54,22 @@ export const HomeContents = () => {
         </div>
       </div>
       <ul className="flex gap-2 w-full">
-        {clipboard ? (
-          clipboard.map((item, i) => (
-            <ClipboardItem
-              key={i}
-              content={item.content}
-              id={item.id}
-              icon
-              copyIcon={false}
-              deleteIcon={false}
-            />
-          ))
-        ) : (
+        {clipboards.map((clipboard, i) => (
           <ClipboardItem
-            content=""
-            id={0}
+            key={i}
+            content={clipboard.content}
+            id={clipboard.id}
             icon
-            showIcon={false}
             copyIcon={false}
             deleteIcon={false}
           />
-        )}
+        ))}
       </ul>
       {type !== "SP" && (
         <ul className="flex s:hidden gap-2 w-full">
-          <ModelItem id={models[0].id} created={models[0].created} />
+          {models.map((model, i) => (
+            <ModelItem key={i} id={model.id} created={model.created} />
+          ))}
         </ul>
       )}
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>

@@ -44,7 +44,7 @@ export const useSession = () => {
     return () => {
       authListener?.subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase.auth]);
 
   return { authStatus, session };
 };

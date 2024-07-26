@@ -48,7 +48,8 @@ export const SearchForm = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const query = data.search;
+    const query = data.search.trim();
+    if (!query) return;
     const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
       query
     )}`;
@@ -71,7 +72,7 @@ export const SearchForm = () => {
       <Input
         className="flex-1 w-full"
         placeholder={placeholder}
-        {...register("search")}
+        {...register("search", { required: true })}
       />
       <div className="flex gap-1">
         <Button className="w-fit" type="submit">
