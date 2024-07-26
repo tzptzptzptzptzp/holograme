@@ -10,7 +10,7 @@ const defaultValue = {
   title: "",
   url: "",
   emojiId: "",
-  emojiNative: "",
+  emojiNative: "🦄",
   emojiUnified: "",
   order: 0,
   createdDate: new Date(),
