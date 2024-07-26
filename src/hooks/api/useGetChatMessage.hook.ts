@@ -12,6 +12,26 @@ export type GetChatMessageResponse = {
   messages: CustomChatMessage[];
 } & ChatRoom;
 
+const defaultValue: GetChatMessageResponse = {
+  id: 0,
+  userId: "",
+  name: "",
+  description: "",
+  defaultMessage: "",
+  createdDate: new Date(),
+  updatedDate: new Date(),
+  messages: [
+    {
+      id: 0,
+      userId: "",
+      roomId: 0,
+      content: "",
+      role: "user",
+      date: new Date(),
+    },
+  ],
+};
+
 const getChatMessage = async (id: number) => {
   if (!axios.defaults.headers.common["Authorization"] || id === 0) {
     throw new Error("Authorization token is missing");
@@ -26,5 +46,6 @@ export const useGetChatMessage = (id: number) => {
     queryFn: () => getChatMessage(id),
     enabled: !!axios.defaults.headers.common["Authorization"] && id !== 0,
     staleTime: GetMinutesToMilliseconds(5),
+    placeholderData: defaultValue,
   });
 };
