@@ -23,7 +23,10 @@ export const CodeBlock = ({ className, children }: Props) => {
   return match ? (
     <>
       <div className="flex justify-between px-2 py-[2px] rounded-t-md bg-white text-text">
-        <p>{lang}</p>
+        <p className="flex items-center gap-1">
+          <Icons.CommandLine width={20} height={20} />
+          {lang}
+        </p>
         <Button onClick={handleCopy}>
           <Icons.Copy width={20} height={20} />
         </Button>
