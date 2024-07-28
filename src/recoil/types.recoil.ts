@@ -8,6 +8,7 @@ export type SelectedContentStateType =
   | "home"
   | "chat"
   | "clipboard"
+  | "writer"
   | "memo"
   | "history"
   | "setting";
