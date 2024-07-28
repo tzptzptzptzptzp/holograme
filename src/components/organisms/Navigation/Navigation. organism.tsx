@@ -25,6 +25,7 @@ export const Navigation = () => {
         <NavigationItem name="home" />
         <NavigationItem name="chat" />
         <NavigationItem name="clipboard" />
+        <NavigationItem name="writer" />
         <NavigationItem name="memo" />
         <NavigationItem name="history" />
         <NavigationItem name="setting" />

@@ -15,6 +15,7 @@ const IconComponents: Record<SelectedContentStateType, React.FC<IconType>> = {
   home: Icons.Home,
   chat: Icons.Chat,
   clipboard: Icons.ClipBoard,
+  writer: Icons.Pencil,
   memo: Icons.PencilSquare,
   history: Icons.ArchiveBox,
   setting: Icons.Config,
