@@ -6,6 +6,7 @@ import { Beaker } from "./Beaker/Beaker.icon";
 import { Book } from "./Book/Book.icon";
 import { Chat } from "./Chat/Chat.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
+import { CommandLine } from "./CommandLine/CommandLine.icon";
 import { Config } from "./Config/Config.icon";
 import { Copy } from "./Copy/Copy.icon";
 import { Eye } from "./Eye/Eye.icon";
@@ -32,6 +33,7 @@ export const Icons = {
   Book,
   Chat,
   ClipBoard,
+  CommandLine,
   Config,
   Copy,
   Eye,
