@@ -1,6 +1,7 @@
 import { AirPlane } from "./AirPlane/AirPlane.icon";
 import { ArchiveBox } from "./ArchiveBox/ArchiveBox.icon";
 import { ArrowPath } from "./ArrowPath/ArrowPath.icon";
+import { ArrowRightCircle } from "./ArrowRightCircle/ArrowRightCircle.icon";
 import { ArrowUturnLeft } from "./ArrowUturnLeft/ArrowUturnLeft.icon";
 import { Beaker } from "./Beaker/Beaker.icon";
 import { Book } from "./Book/Book.icon";
@@ -22,12 +23,15 @@ import { PlusCircle } from "./PlusCircle/PlusCircle.icon";
 import { Search } from "./Search/Search.icon";
 import { Star } from "./Star/Star.icon";
 import { Trash } from "./Trash/Trash.icon";
+import { User } from "./User/User.icon";
+import { UserCircle } from "./UserCircle/UserCircle.icon";
 import { XMark } from "./XMark/XMark.icon";
 
 export const Icons = {
   AirPlane,
   ArchiveBox,
   ArrowPath,
+  ArrowRightCircle,
   ArrowUturnLeft,
   Beaker,
   Book,
@@ -49,5 +53,7 @@ export const Icons = {
   Search,
   Star,
   Trash,
+  User,
+  UserCircle,
   XMark,
 };
