@@ -36,7 +36,7 @@ export const HistoryItem = ({
   };
   return (
     <li
-      className="flex items-center justify-between gap-1 px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-pointer"
+      className="flex items-center justify-between gap-1 relative z-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 cursor-pointer"
       onClick={OpenIsCurrentTab}
     >
       {icon && (

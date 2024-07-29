@@ -26,7 +26,6 @@ type Props = {
   title: string;
   id: number;
   archived: boolean;
-  icon?: boolean;
   editIcon?: boolean;
   showIcon?: boolean;
   deleteIcon?: boolean;
@@ -37,7 +36,6 @@ export const MemoItem = ({
   title,
   id,
   archived,
-  icon = false,
   editIcon = true,
   showIcon = true,
   deleteIcon = true,
@@ -164,20 +162,12 @@ export const MemoItem = ({
   return (
     <li
       className={clsx(
-        "px-4 py-2 rounded-3xl bg-white bg-opacity-90 relative z-0",
+        "relative z-0 min-h-[45px] px-4 py-2 rounded-3xl bg-white bg-opacity-90",
         isShow ? "cursor-default" : "cursor-pointer"
       )}
       onClick={handleClick}
     >
-      <div className="flex items-center justify-between gap-2">
-        {icon && (
-          <Icons.ClipBoard
-            className="stroke-2"
-            color={colorConfig.primary}
-            width={IconSize}
-            height={IconSize}
-          />
-        )}
+      <div className="flex items-center justify-between gap-2 min-h-[29px]">
         {isEditing ? (
           <FormInput
             inputClassName="min-w-0 border-none"
