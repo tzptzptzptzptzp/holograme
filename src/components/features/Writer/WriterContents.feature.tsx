@@ -1,4 +1,5 @@
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
+import { WriterUserItem } from "@/components/molecules/WriterUserItem/WriterUserItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { Icons } from "@/icons";
 
@@ -13,7 +14,9 @@ export const WriterContents = () => {
           </div>
         </ContentHead>
       </div>
-      <div>Writer</div>
+      <ul className="flex flex-col gap-3">
+        <WriterUserItem username="User1" />
+      </ul>
     </ContentWrapper>
   );
 };
