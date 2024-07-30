@@ -1,5 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { useSignOut } from "@/hooks/useSignOut.util";
+import { useSignOut } from "@/hooks/auth/useSignOut.hook";
 import clsx from "clsx";
 
 type Props = {

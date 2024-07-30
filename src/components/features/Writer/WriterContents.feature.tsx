@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { WriterUserItem } from "@/components/molecules/WriterUserItem/WriterUserItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { useWriter } from "@/hooks/features/useWriter.hook";
 import { Icons } from "@/icons";
 
 export const WriterContents = () => {
+  const { isRequestView, handleSelectWriter } = useWriter();
   return (
     <ContentWrapper>
       <div className="flex gap-3">
@@ -14,9 +17,22 @@ export const WriterContents = () => {
           </div>
         </ContentHead>
       </div>
-      <ul className="flex flex-col gap-3">
-        <WriterUserItem username="User1" />
-      </ul>
+      {isRequestView ? (
+        <div>request view</div>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          <WriterUserItem
+            id={1}
+            onClick={handleSelectWriter}
+            username="User1"
+          />
+          <WriterUserItem
+            id={2}
+            onClick={handleSelectWriter}
+            username="User2"
+          />
+        </ul>
+      )}
     </ContentWrapper>
   );
 };
