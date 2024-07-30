@@ -6,8 +6,8 @@ import { CircleContainer } from "@/components/molecules/CircleContainer/CircleCo
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { usePostUser } from "@/hooks/api/usePostUser.hook";
-import { useSignIn } from "@/hooks/useSignIn.util";
-import { useSignUp } from "@/hooks/useSignUp.util";
+import { useSignIn } from "@/hooks/useSignIn.hook";
+import { useSignUp } from "@/hooks/useSignUp.hook";
 import { Icons } from "@/icons";
 
 type Inputs = {
