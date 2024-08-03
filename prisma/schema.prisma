@@ -25,6 +25,7 @@ model User {
   updatedDate DateTime @updatedAt
 
   writers    Writer[]
+  blogPosts  BlogPost[]
 }
 
 model ChatRoom {
@@ -109,4 +110,20 @@ model Writer {
   updatedDate    DateTime @updatedAt
 
   user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blogPosts      BlogPost[]
+}
+
+model BlogPost {
+  id          Int @id @default(autoincrement())
+  userId      String
+  writerId    Int
+  title       String
+  prompt      String
+  content     String
+
+  createdDate DateTime @default(now()) 
+  updatedDate DateTime @updatedAt
+
+  user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  writer      Writer @relation(fields: [writerId], references: [id], onDelete: Cascade)
 }
