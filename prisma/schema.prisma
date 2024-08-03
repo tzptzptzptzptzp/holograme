@@ -23,6 +23,8 @@ model User {
 
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
+
+  writers    Writer[]
 }
 
 model ChatRoom {
@@ -91,4 +93,20 @@ model Memo {
 
   createdDate DateTime @default(now()) 
   updatedDate DateTime @updatedAt
+}
+
+model Writer {
+  id             Int @id @default(autoincrement())
+  userId         String
+  name           String
+  expertise      String
+  targetAudience String
+  sitePurpose    String
+  siteGenre      String
+  toneAndStyle   String
+
+  createdDate    DateTime @default(now()) 
+  updatedDate    DateTime @updatedAt
+
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
