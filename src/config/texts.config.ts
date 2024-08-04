@@ -53,6 +53,23 @@ export const textsConfig = {
         BUTTON: "このお気に入りを削除する",
       },
     },
+    WRITER: {
+      NAME: "ライター名",
+      EXPERTISE: "専門性",
+      TARGET_AUDIENCE: "対象読者",
+      SITE_PURPOSE: "サイトの目的",
+      SIRE_GENRE: "サイトのジャンル",
+      TONE_AND_STYLE: "口調・スタイル",
+      TITLE: {
+        CREATE: "ライター作成",
+        DELETE: "ライター削除",
+        EDIT: "ライター編集",
+      },
+      DELETE: {
+        ALERT: ["を削除するよ", "本当に大丈夫？"],
+        BUTTON: "このルームを削除する",
+      },
+    },
   },
   META: {
     TITLE: "hologra Me",
@@ -160,6 +177,10 @@ export const textsConfig = {
     USER_UPDATE: {
       SUCCESS: "🦄 ユーザー情報を更新しました！",
       ERROR: "更新に失敗しました…",
+    },
+    WRITER_CREATE: {
+      SUCCESS: "🦄 ライターを作成しました！",
+      ERROR: "作成に失敗しました…",
     },
   },
 };
