@@ -82,6 +82,14 @@ const DeleteFavoriteModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const CreateWriterModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Writer/CreateWriterModal/CreateWriterModal.feature"
+    ).then((mod) => mod.CreateWriterModal),
+  { loading: () => <Loader /> }
+);
+
 const EmojiSelectModalContent = dynamic(
   () =>
     import(
@@ -120,6 +128,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <EditFavoriteModalContent />;
     case "deleteFavorite":
       return <DeleteFavoriteModalContent />;
+    case "createWriter":
+      return <CreateWriterModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
     case "modelsList":

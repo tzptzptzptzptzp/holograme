@@ -10,5 +10,6 @@ export type ModalContentType =
   | "createFavorite"
   | "editFavorite"
   | "deleteFavorite"
+  | "createWriter"
   | "emojiSelect"
   | "modelsList";
