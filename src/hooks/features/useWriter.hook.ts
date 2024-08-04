@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useState } from "react";
 
 type WriterType = {
   id: number;
@@ -12,7 +12,8 @@ export const useWriter = () => {
   const [isRequestView, setIsRequestView] = useState<boolean>(false);
   const [writer, setWriter] = useState<WriterType>(writerDefaultValue);
 
-  const handleSelectWriter = (id: number) => {
+  const handleSelectWriter = (e: MouseEvent<HTMLLIElement>, id: number) => {
+    if ((e.target as HTMLElement).closest("button")) return;
     setWriter({ id });
     setIsRequestView(true);
   };

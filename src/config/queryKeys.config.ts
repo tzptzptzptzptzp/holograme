@@ -7,4 +7,5 @@ export const queryKeysConfig = {
   GET_MEMO: "GET_MEMO",
   GET_MODELS: "GET_MODELS",
   GET_USER: "GET_USER",
+  GET_WRITER: "GET_WRITER",
 };
