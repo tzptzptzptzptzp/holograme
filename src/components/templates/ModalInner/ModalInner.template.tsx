@@ -1,7 +1,8 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { useModal } from "@/hooks/useModal.hook";
 
-const className = "flex flex-col gap-4";
+const WrapperClassName = "max-h-[50vh] overflow-y-scroll";
+const InnerClassName = "flex flex-col gap-4";
 
 const Form = ({
   buttonDisabled = false,
@@ -17,8 +18,10 @@ const Form = ({
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   return (
-    <form className={className} onSubmit={onSubmit}>
-      {children}
+    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+      <div className={WrapperClassName}>
+        <div className={InnerClassName}>{children}</div>
+      </div>
       {enableButton && (
         <Buttons disabled={buttonDisabled} buttonText={buttonText} />
       )}
@@ -27,7 +30,11 @@ const Form = ({
 };
 
 const Div = ({ children }: { children: React.ReactNode }) => {
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={WrapperClassName}>
+      <div className={InnerClassName}>{children}</div>
+    </div>
+  );
 };
 
 const Buttons = ({
