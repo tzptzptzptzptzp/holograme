@@ -1,12 +1,15 @@
-import { useEffect } from "react";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { WriterUserItem } from "@/components/molecules/WriterUserItem/WriterUserItem.molecule";
+import { WriterRequestForm } from "@/components/organisms/WriterRequestForm/WriterRequestForm.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { useWriter } from "@/hooks/features/useWriter.hook";
 import { Icons } from "@/icons";
 
 export const WriterContents = () => {
   const { isRequestView, handleSelectWriter } = useWriter();
+
+  const { data: writerData } = useGetWriter();
   return (
     <ContentWrapper>
       <div className="flex gap-3">
@@ -18,19 +21,19 @@ export const WriterContents = () => {
         </ContentHead>
       </div>
       {isRequestView ? (
-        <div>request view</div>
+        <div className="flex flex-col h-full">
+          <WriterRequestForm />
+        </div>
       ) : (
         <ul className="flex flex-col gap-3">
-          <WriterUserItem
-            id={1}
-            onClick={handleSelectWriter}
-            username="User1"
-          />
-          <WriterUserItem
-            id={2}
-            onClick={handleSelectWriter}
-            username="User2"
-          />
+          {writerData.map((writer, i) => (
+            <WriterUserItem
+              key={i}
+              id={writer.id}
+              onClick={handleSelectWriter}
+              username={writer.name}
+            />
+          ))}
         </ul>
       )}
     </ContentWrapper>
