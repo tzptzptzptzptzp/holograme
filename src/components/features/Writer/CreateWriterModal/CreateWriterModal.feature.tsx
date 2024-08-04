@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
+import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { usePostWriter } from "@/hooks/api/usePostWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
@@ -20,6 +21,7 @@ type Inputs = {
 export const CreateWriterModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
+  const { refetch } = useGetWriter();
   const mutate = usePostWriter();
 
   const {
@@ -46,6 +48,7 @@ export const CreateWriterModal = () => {
         onSuccess: () => {
           toast(textsConfig.TOAST.WRITER_CREATE.SUCCESS);
           setApiPending(false);
+          refetch();
           handleClose();
         },
         onError: () => {
