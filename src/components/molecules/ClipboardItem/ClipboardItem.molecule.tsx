@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
-import { Icons } from "@/icons";
-import { GetMaskedText } from "@/utils/GetMaskedText.util";
-import { getTrimmedText } from "@/utils/GetTrimmedText.util";
 import { useDeleteClipboard } from "@/hooks/api/useDeleteClipboard.hook";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { Icons } from "@/icons";
+import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
+import { GetMaskedText } from "@/utils/GetMaskedText.util";
+import { getTrimmedText } from "@/utils/GetTrimmedText.util";
 
 const IconSize = 22;
 const TEXT_LENGTH_LIMIT = 15;
@@ -15,7 +17,6 @@ const TEXT_LENGTH_LIMIT = 15;
 type Props = {
   content: string;
   id: number;
-  icon?: boolean;
   showIcon?: boolean;
   copyIcon?: boolean;
   deleteIcon?: boolean;
@@ -24,7 +25,6 @@ type Props = {
 export const ClipboardItem = ({
   content,
   id,
-  icon = false,
   showIcon = true,
   copyIcon = true,
   deleteIcon = true,
@@ -55,9 +55,11 @@ export const ClipboardItem = ({
   };
 
   const handleClick = async (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if ((e.target as HTMLElement).closest("button")) return;
+    const closestButton = (e.target as HTMLElement).closest("button");
+    if (closestButton && closestButton.id.startsWith("exclude")) return;
+
     try {
       await navigator.clipboard.writeText(content).then(() => {
         toast(
@@ -74,19 +76,14 @@ export const ClipboardItem = ({
     }
   };
   return (
-    <li
-      className="flex items-center justify-between gap-1 w-full min-w-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default"
-      onClick={handleClick}
-    >
-      {icon && (
-        <Icons.ClipBoard
-          className="min-w-[22px] min-h-[22px] stroke-2"
-          color={colorConfig.primary}
-          width={IconSize}
-          height={IconSize}
-        />
-      )}
-      <p className="w-full text-gray truncate">
+    <ItemBase onClick={handleClick}>
+      <Icons.ClipBoard
+        className="min-w-[22px] min-h-[22px] stroke-2"
+        color={colorConfig.primary}
+        width={IconSize}
+        height={IconSize}
+      />
+      <p className="w-full text-gray text-left truncate">
         {content === ""
           ? "まだ何も受け取っていません…"
           : isShow
@@ -95,7 +92,7 @@ export const ClipboardItem = ({
       </p>
       <div className="flex items-center gap-3">
         {showIcon && (
-          <Button onClick={handleShow}>
+          <Button id={`exclude${GenerateRandomID()}`} onClick={handleShow}>
             {isShow ? (
               <Icons.EyeSlash
                 className="min-w-[22px] min-h-[22px]"
@@ -122,7 +119,7 @@ export const ClipboardItem = ({
           />
         )}
         {deleteIcon && (
-          <Button onClick={handleDelete}>
+          <Button id={`exclude${GenerateRandomID()}`} onClick={handleDelete}>
             <Icons.Trash
               className="min-w-[22px] min-h-[22px]"
               color={colorConfig.error}
@@ -132,6 +129,6 @@ export const ClipboardItem = ({
           </Button>
         )}
       </div>
-    </li>
+    </ItemBase>
   );
 };

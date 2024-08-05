@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
 import { colorConfig } from "@/config/color.config";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
@@ -27,7 +28,7 @@ export const ModelItem = ({ id, created }: Props) => {
     }
   }, [created]);
   return (
-    <li className="flex items-center justify-between gap-1 w-full min-w-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 relative z-0 cursor-default">
+    <ItemBase>
       <Icons.Beaker
         className="min-w-[22px] min-h-[22px] stroke-2"
         color={colorConfig.primary}
@@ -75,6 +76,6 @@ export const ModelItem = ({ id, created }: Props) => {
           />
         </Button>
       </div>
-    </li>
+    </ItemBase>
   );
 };
