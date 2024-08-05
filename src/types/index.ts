@@ -1,3 +1,7 @@
+export type ClickHandlerType =
+  | (() => void)
+  | ((event: React.MouseEvent<HTMLButtonElement>) => void);
+
 export type ModalContentType =
   | ""
   | "createChat"

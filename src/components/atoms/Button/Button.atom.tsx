@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import styles from "./Button.module.scss";
+import { ClickHandlerType } from "@/types";
 
 type Props = {
   children: React.ReactNode;
@@ -7,7 +8,7 @@ type Props = {
   disabled?: boolean;
   hover?: boolean;
   id?: string;
-  onClick?: () => void;
+  onClick?: ClickHandlerType;
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "cancel" | "disable" | "none";
 };

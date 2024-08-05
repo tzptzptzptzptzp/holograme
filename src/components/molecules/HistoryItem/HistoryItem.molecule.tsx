@@ -1,6 +1,8 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
+import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 const IconSize = 22;
 
@@ -25,9 +27,11 @@ export const HistoryItem = ({
   )}`;
 
   const OpenIsCurrentTab = async (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    if ((e.target as HTMLElement).closest("button")) return;
+    const closestButton = (e.target as HTMLElement).closest("button");
+    if (closestButton && closestButton.id.startsWith("exclude")) return;
+
     window.location.href = googleSearchUrl;
   };
 
@@ -35,22 +39,19 @@ export const HistoryItem = ({
     window.open(googleSearchUrl, "_blank");
   };
   return (
-    <li
-      className="flex items-center justify-between gap-1 relative z-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 cursor-pointer"
-      onClick={OpenIsCurrentTab}
-    >
+    <ItemBase onClick={OpenIsCurrentTab}>
       {icon && (
         <Icons.Search
-          className="stroke-2"
+          className="min-w-[22px] min-h-[22px] stroke-2"
           color={colorConfig.primary}
           width={IconSize}
           height={IconSize}
         />
       )}
-      <p className="w-full text-gray truncate">{content}</p>
+      <p className="w-full text-gray text-left truncate">{content}</p>
       <div className="flex items-center gap-3">
         {newTabIcon && (
-          <Button onClick={OpenIsNewTab}>
+          <Button id={`exclude${GenerateRandomID()}`} onClick={OpenIsNewTab}>
             <Icons.NewTab
               color={colorConfig.success}
               width={IconSize}
@@ -59,7 +60,7 @@ export const HistoryItem = ({
           </Button>
         )}
         {deleteIcon && (
-          <Button onClick={onDelete}>
+          <Button id={`exclude${GenerateRandomID()}`} onClick={onDelete}>
             <Icons.Trash
               color={colorConfig.error}
               width={IconSize}
@@ -68,6 +69,6 @@ export const HistoryItem = ({
           </Button>
         )}
       </div>
-    </li>
+    </ItemBase>
   );
 };

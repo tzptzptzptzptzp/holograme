@@ -59,7 +59,6 @@ export const HomeContents = () => {
             key={i}
             content={clipboard.content}
             id={clipboard.id}
-            icon
             copyIcon={false}
             deleteIcon={false}
           />
