@@ -1,20 +1,25 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
+import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 const IconSize = 22;
 
 type Props = {
   id: number;
-  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, id: number) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>, id: number) => void;
   username: string;
 };
 
 export const WriterUserItem = ({ id, onClick, username }: Props) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick(e, id);
+  };
   return (
-    <li
+    <ItemBase
       className="flex items-center justify-between gap-1 relative z-0 min-h-[45px] px-4 py-2 rounded-full bg-white bg-opacity-90 cursor-pointer"
-      onClick={(e) => onClick(e, id)}
+      onClick={handleClick}
     >
       <Icons.UserCircle
         className="min-w-[22px] min-h-[22px] stroke-2"
@@ -22,21 +27,21 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
         width={IconSize}
         height={IconSize}
       />
-      <p className="w-full text-gray truncate">{username}</p>
+      <p className="w-full text-gray text-left truncate">{username}</p>
       <div className="flex items-center gap-3">
         <Icons.ArrowRightCircle
           color={colorConfig.secondary}
           width={IconSize}
           height={IconSize}
         />
-        <Button>
+        <Button id={`exclude${GenerateRandomID()}`}>
           <Icons.Trash
             color={colorConfig.error}
             width={IconSize}
             height={IconSize}
           />
         </Button>
-        <Button>
+        <Button id={`exclude${GenerateRandomID()}`}>
           <Icons.Config
             color={colorConfig.text}
             width={IconSize}
@@ -44,6 +49,6 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
           />
         </Button>
       </div>
-    </li>
+    </ItemBase>
   );
 };
