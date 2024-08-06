@@ -9,9 +9,13 @@ import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 
 export const WriterContents = () => {
-  const { data: writerData } = useGetWriter();
-
-  const { isRequestView, handleSelectWriter, setIsRequestView } = useWriter();
+  const {
+    isRequestView,
+    writer,
+    writerData,
+    handleSelectWriter,
+    setIsRequestView,
+  } = useWriter();
   const { handleOpen } = useModal();
   return (
     <ContentWrapper>
@@ -42,7 +46,7 @@ export const WriterContents = () => {
       </div>
       {isRequestView ? (
         <div className="flex flex-col h-full">
-          <WriterRequestForm />
+          <WriterRequestForm writer={writer} />
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
