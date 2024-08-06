@@ -1,6 +1,6 @@
 export type ClickHandlerType =
   | (() => void)
-  | ((event: React.MouseEvent<HTMLButtonElement>) => void);
+  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 
 export type ModalContentType =
   | ""
