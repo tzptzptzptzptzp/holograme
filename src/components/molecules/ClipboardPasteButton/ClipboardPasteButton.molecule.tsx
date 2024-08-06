@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
@@ -6,6 +5,7 @@ import { textsConfig } from "@/config/texts.config";
 import { usePostClipboard } from "@/hooks/api/usePostClipboard.hook";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 const TEXT_LENGTH_LIMIT = 15;
 
@@ -35,7 +35,7 @@ export const ClipboardPasteButton = () => {
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
       <Button
-        className={clsx(
+        className={cn(
           "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 duration-150"
         )}
         onClick={handleClick}

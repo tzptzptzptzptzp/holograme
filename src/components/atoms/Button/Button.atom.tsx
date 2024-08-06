@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import styles from "./Button.module.scss";
 import { ClickHandlerType } from "@/types";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ export const Button = ({
 }: Props) => {
   return (
     <button
-      className={clsx(
+      className={cn(
         styles.button,
         styles[variant],
         hover && styles.hover,

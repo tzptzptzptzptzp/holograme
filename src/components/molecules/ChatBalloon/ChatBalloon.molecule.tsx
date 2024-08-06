@@ -1,10 +1,10 @@
 import { useState } from "react";
-import clsx from "clsx";
 import styles from "./ChatBalloon.module.scss";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   message: string;
@@ -31,12 +31,12 @@ export const ChatBalloon = ({ message, role }: Props) => {
   };
   return (
     <div
-      className={clsx(styles.balloon, styles[role])}
+      className={cn(styles.balloon, styles[role])}
       onContextMenu={(e) => handleContextMenu(e)}
     >
-      <div className={clsx(styles.inner, styles[role])}>
+      <div className={cn(styles.inner, styles[role])}>
         <div
-          className={clsx(
+          className={cn(
             "flex flex-col gap-4",
             message === "考え中" && styles.thinking
           )}
@@ -44,7 +44,7 @@ export const ChatBalloon = ({ message, role }: Props) => {
           <CustomReactMarkdown markdown={message} />
         </div>
         {menuVisible && (
-          <div className={clsx(styles.contextMenu, styles[role])}>
+          <div className={cn(styles.contextMenu, styles[role])}>
             <Button
               className="flex items-center font-bold"
               onClick={handleCopy}

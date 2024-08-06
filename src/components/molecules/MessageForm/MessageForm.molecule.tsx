@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import clsx from "clsx";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRecoilValue } from "recoil";
@@ -11,6 +10,7 @@ import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
+import { useDevice } from "@/hooks/useDevice.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { Icons } from "@/icons";
 import {
@@ -18,8 +18,8 @@ import {
   ChatRoomState,
   UserState,
 } from "@/recoil/atoms.recoil";
+import { cn } from "@/utils/cn.util";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
-import { useDevice } from "@/hooks/useDevice.hook";
 
 type Inputs = {
   message: string;
@@ -125,13 +125,13 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={clsx(
+      className={cn(
         "flex items-end gap-[6px] relative z-0 w-full pl-4 s:pl-3 pr-3 py-2 rounded-3xl",
         apiPending ? "bg-disableBackground" : "bg-white"
       )}
     >
       <div
-        className={clsx(
+        className={cn(
           "fixed top-0 right-0 bottom-0 left-0 -z-10 w-full h-full",
           isStandardPhraseOpen
             ? "pointer-events-auto"

@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import clsx from "clsx";
 import Highlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import { srcery } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { textsConfig } from "@/config/texts.config";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   className?: string;
@@ -37,7 +37,7 @@ export const CodeBlock = ({ className, children }: Props) => {
     </>
   ) : (
     <code
-      className={clsx(
+      className={cn(
         "inline-block max-w-full mx-[3px] px-1 py-[2px] border border-white rounded bg-white bg-opacity-80 text-text text-[15px] leading-[1.5] whitespace-pre-wrap",
         className
       )}

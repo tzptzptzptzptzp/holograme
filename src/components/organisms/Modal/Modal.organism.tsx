@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { useModal } from "@/hooks/useModal.hook";
+import { cn } from "@/utils/cn.util";
 import { ModalContentsSwitcher } from "@/utils/ModalContentsSwitcher.util";
 
 export const Modal = () => {
@@ -7,7 +7,7 @@ export const Modal = () => {
 
   return (
     <div
-      className={clsx(
+      className={cn(
         "flex items-center justify-center absolute top-0 right-0 bottom-0 left-0 z-30 p-12 s:p-4 duration-300 transition-all",
         isOpen
           ? "opacity-100 pointer-events-auto"

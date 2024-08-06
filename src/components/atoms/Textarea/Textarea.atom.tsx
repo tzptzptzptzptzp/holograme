@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 
 type TextareaProps = {
   className?: string;
@@ -34,7 +34,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     return (
       <textarea
-        className={clsx(
+        className={cn(
           "w-full max-h-80 py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText resize-none",
           className
         )}

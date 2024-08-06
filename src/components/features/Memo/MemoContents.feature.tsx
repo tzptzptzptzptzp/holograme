@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
@@ -10,6 +9,7 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { usePostMemo } from "@/hooks/api/usePostMemo.hook";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 type MemoType = {
   id: number;
@@ -69,7 +69,7 @@ export const MemoContents = () => {
           </div>
           <div className="flex items-center gap-1.5">
             <Button
-              className={clsx(
+              className={cn(
                 "flex-shrink-0",
                 isArchive ? "opacity-100" : "opacity-50"
               )}

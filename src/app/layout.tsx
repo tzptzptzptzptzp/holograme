@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { M_PLUS_Rounded_1c } from "next/font/google";
-import clsx from "clsx";
 import { Provider } from "@/components/templates/Provider/Provider.template";
 import { textsConfig } from "@/config/texts.config";
+import { cn } from "@/utils/cn.util";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.scss";
@@ -25,7 +25,7 @@ export default function RootLayout({
         <head>
           <link rel="manifest" href="/manifest.json" />
         </head>
-        <body className={clsx(font.className, "text-text")}>{children}</body>
+        <body className={cn(font.className, "text-text")}>{children}</body>
       </html>
     </Provider>
   );

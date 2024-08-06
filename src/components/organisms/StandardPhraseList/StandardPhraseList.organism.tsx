@@ -1,9 +1,9 @@
-import clsx from "clsx";
 import { StandardPhraseItem } from "@/components/molecules/StandardPhraseItem/StandardPhraseItem.molecule";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Icons } from "@/icons";
 import { useModal } from "@/hooks/useModal.hook";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   isOpen: boolean;
@@ -16,7 +16,7 @@ export const StandardPhraseList = ({ isOpen, setStandardPhrase }: Props) => {
   const { data } = useGetChatStandardPhrase();
   return (
     <div
-      className={clsx(
+      className={cn(
         "absolute right-0 left-0 w-full pb-2 duration-300",
         isOpen
           ? "bottom-full opacity-1 pointer-events-auto"

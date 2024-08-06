@@ -1,10 +1,10 @@
-import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
 import { SearchTypeState } from "@/recoil/atoms.recoil";
-import { useEffect, useState } from "react";
+import { cn } from "@/utils/cn.util";
 
 export const SearchTypeSwitcher = () => {
   const [iconColor, setIconColor] = useState(colorConfig.disableText);
@@ -24,7 +24,7 @@ export const SearchTypeSwitcher = () => {
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
       <Button
-        className={clsx(
+        className={cn(
           "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white duration-150",
           buttonBgOpacity
         )}

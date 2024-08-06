@@ -1,6 +1,6 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { useSignOut } from "@/hooks/auth/useSignOut.hook";
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   isHovered: boolean;
@@ -14,7 +14,7 @@ export const UserMenu = ({ isHovered }: Props) => {
   };
   return (
     <div
-      className={clsx(
+      className={cn(
         "absolute right-full s:-right-4 pr-10 s:pr-0 duration-300",
         isHovered
           ? "u-centering-y s:-top-[2.35rem] opacity-1 pointer-events-auto"

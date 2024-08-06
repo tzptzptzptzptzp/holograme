@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import clsx from "clsx";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage.form";
+import { cn } from "@/utils/cn.util";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 type Props = {
@@ -42,18 +42,18 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
   ) => {
     const id = GenerateRandomID();
     return (
-      <div className={clsx("flex flex-col", wrapperClassName)}>
+      <div className={cn("flex flex-col", wrapperClassName)}>
         <div className="flex flex-col">
           {label && (
             <label
-              className={clsx("px-1 text-[12px]", labelClassName)}
+              className={cn("px-1 text-[12px]", labelClassName)}
               htmlFor={id}
             >
               {label}
             </label>
           )}
           <Input
-            className={clsx(
+            className={cn(
               "min-w-[390px] s:min-w-0 border-b-2 border-text bg-white bg-opacity-50",
               inputClassName
             )}
