@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { Bounce, ToastContainer } from "react-toastify";
 import { useRecoilValue } from "recoil";
 import { Avatar } from "@/components/atoms/Avatar/Avatar.atom";
@@ -8,6 +7,7 @@ import { Modal } from "@/components/organisms/Modal/Modal.organism";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ export const GlobalFrame = ({
             </div>
           )}
           <main
-            className={clsx(
+            className={cn(
               "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:overflow-x-hidden w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4",
               shadow && "u-shadow-sm"
             )}

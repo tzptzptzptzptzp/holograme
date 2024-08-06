@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
@@ -6,6 +5,7 @@ import { Icons } from "@/icons";
 import { IconType } from "@/icons/icon.type";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   name: SelectedContentStateType;
@@ -36,14 +36,14 @@ export const NavigationItem = ({ name }: Props) => {
   return (
     <li>
       <Button
-        className={clsx(
+        className={cn(
           "hover:opacity-100 transition-all duration-150",
           selectedContent !== name && "opacity-70"
         )}
         onClick={() => handleClick(name)}
       >
         <IconComponent
-          className={clsx(
+          className={cn(
             "hover:stroke-2 transition-all duration-150",
             selectedContent === name && "stroke-2"
           )}

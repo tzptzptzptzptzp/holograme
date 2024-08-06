@@ -3,15 +3,18 @@ import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.mole
 import { WriterUserItem } from "@/components/molecules/WriterUserItem/WriterUserItem.molecule";
 import { WriterRequestForm } from "@/components/organisms/WriterRequestForm/WriterRequestForm.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
-import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 
 export const WriterContents = () => {
-  const { data: writerData } = useGetWriter();
-
-  const { isRequestView, handleSelectWriter, setIsRequestView } = useWriter();
+  const {
+    isRequestView,
+    writer,
+    writerData,
+    handleSelectWriter,
+    setIsRequestView,
+  } = useWriter();
   const { handleOpen } = useModal();
   return (
     <ContentWrapper>
@@ -42,7 +45,7 @@ export const WriterContents = () => {
       </div>
       {isRequestView ? (
         <div className="flex flex-col h-full">
-          <WriterRequestForm />
+          <WriterRequestForm writer={writer} />
         </div>
       ) : (
         <ul className="flex flex-col gap-3">

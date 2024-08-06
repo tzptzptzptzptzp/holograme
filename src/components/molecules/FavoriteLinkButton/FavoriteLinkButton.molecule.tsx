@@ -1,14 +1,14 @@
 import Link from "next/link";
-import clsx from "clsx";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 export const FavoriteLinkButton = () => {
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
       <Link
         href={"/"}
-        className={clsx(
+        className={cn(
           "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 duration-150"
         )}
       >

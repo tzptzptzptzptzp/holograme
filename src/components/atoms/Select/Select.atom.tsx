@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 
 type Option = {
   id: number;
@@ -16,7 +16,7 @@ type Props = {
 export const Select = ({ className, id, onChange, options, value }: Props) => {
   return (
     <select
-      className={clsx(
+      className={cn(
         "w-full max-w-fit text-right truncate focus-visible:outline-none",
         className
       )}

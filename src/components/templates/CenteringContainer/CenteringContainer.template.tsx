@@ -1,11 +1,11 @@
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 
 type Props = { children: React.ReactNode; className?: string };
 
 export const CenteringContainer = ({ children, className }: Props) => {
   return (
     <div
-      className={clsx(
+      className={cn(
         "flex items-center justify-center w-full h-full",
         className
       )}

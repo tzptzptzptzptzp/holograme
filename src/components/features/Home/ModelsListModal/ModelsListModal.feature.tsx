@@ -1,11 +1,11 @@
 import Link from "next/link";
-import clsx from "clsx";
 import { format } from "date-fns";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 export const ModelsListModal = () => {
   const { data: modelsData } = useGetModels();
@@ -33,7 +33,7 @@ export const ModelsListModal = () => {
           {modelsData?.map((model, i) => (
             <li
               key={i}
-              className={clsx(
+              className={cn(
                 "flex gap-2 p-1 border-t border-disableBackground",
                 modelsData.length - 1 === i && "border-b"
               )}

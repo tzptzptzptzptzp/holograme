@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
@@ -13,6 +12,7 @@ import { usePutMemo } from "@/hooks/api/usePutMemo.hook";
 import { usePutMemoArchive } from "@/hooks/api/usePutMemoArchive.hook";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { Icons } from "@/icons";
+import { cn } from "@/utils/cn.util";
 
 const IconSize = 22;
 
@@ -161,7 +161,7 @@ export const MemoItem = ({
   };
   return (
     <li
-      className={clsx(
+      className={cn(
         "relative z-0 min-h-[45px] px-4 py-2 rounded-3xl bg-white bg-opacity-90",
         isShow ? "cursor-default" : "cursor-pointer"
       )}

@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import ReactMarkdown from "react-markdown";
 import { CodeBlock } from "@/components/molecules/CodeBlock/CodeBlock.molecule";
+import { cn } from "@/utils/cn.util";
 
 export const CustomReactMarkdown = ({
   className,
@@ -11,7 +11,7 @@ export const CustomReactMarkdown = ({
 }) => {
   return (
     <ReactMarkdown
-      className={clsx("flex flex-col gap-2 leading-[1.8]", className)}
+      className={cn("flex flex-col gap-2 leading-[1.8]", className)}
       components={{
         code: CodeBlock,
         h1: ({ children }) => (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 import { GetRandomInt } from "@/utils/GetRandomInt.util";
 
 const ANIMATION_INDEX_LIMIT = 32;
@@ -24,7 +24,7 @@ export const Avatar = () => {
   }, []);
   return (
     <div
-      className={clsx(
+      className={cn(
         "u-shadow-avatar flex items-end relative w-full h-full s:h-full select-none pointer-events-none",
         "avatar",
         animationIndex,

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import clsx from "clsx";
+import { cn } from "@/utils/cn.util";
 
 type Props = {
   className?: string;
@@ -31,7 +31,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
   ) => {
     return (
       <input
-        className={clsx(
+        className={cn(
           "w-full py-[2px] px-1 focus:outline-none disabled:bg-disableBackground disabled:text-disableText",
           className
         )}
