@@ -44,9 +44,7 @@ export const WriterContents = () => {
         </ContentHead>
       </div>
       {isRequestView ? (
-        <div className="flex flex-col h-full">
-          <WriterRequestForm writer={writer} />
-        </div>
+        <WriterRequestForm writer={writer} />
       ) : (
         <ul className="flex flex-col gap-3">
           {writerData.map((writer, i) => (
