@@ -53,6 +53,12 @@ export const textsConfig = {
         BUTTON: "このお気に入りを削除する",
       },
     },
+    SETTING: {
+      USERNAME: "ユーザー名",
+      NICKNAME: "ニックネーム",
+      LOCATION: "居住地",
+      EMAIL: "メールアドレス",
+    },
     WRITER: {
       NAME: "ライター名",
       EXPERTISE: "専門性",

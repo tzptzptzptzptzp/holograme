@@ -11,6 +11,7 @@ import { useGetUser } from "@/hooks/api/useGetUser.hook";
 import { usePutUser } from "@/hooks/api/usePutUser.hook";
 import { Icons } from "@/icons";
 import { UserState } from "@/recoil/atoms.recoil";
+import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
   email: string;
@@ -24,7 +25,12 @@ export const SettingContents = () => {
 
   const user = useRecoilValue(UserState);
 
-  const { register, handleSubmit, setValue } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<Inputs>();
 
   const { refetch } = useGetUser();
 
@@ -79,28 +85,40 @@ export const SettingContents = () => {
       >
         <FormInput
           inputClassName="border-none"
-          label="ユーザー名"
-          placeholder="ユーザー名を入力してください"
-          {...register("username", { required: true })}
+          label={textsConfig.FORM.SETTING.USERNAME}
+          errorMessage={errors.username?.message}
+          placeholder={`${textsConfig.FORM.SETTING.USERNAME}を入力`}
+          {...register("username", {
+            required: GetRequiredMessage(textsConfig.FORM.SETTING.USERNAME),
+          })}
         />
         <FormInput
           inputClassName="border-none"
-          label="呼ばれたい名前・ニックネーム"
-          placeholder="呼ばれ方を入力してください"
-          {...register("nickname", { required: true })}
+          label={textsConfig.FORM.SETTING.NICKNAME}
+          errorMessage={errors.nickname?.message}
+          placeholder={`${textsConfig.FORM.SETTING.NICKNAME}を入力`}
+          {...register("nickname", {
+            required: GetRequiredMessage(textsConfig.FORM.SETTING.NICKNAME),
+          })}
         />
         <FormInput
           inputClassName="border-none"
-          label="居住地（天気を聞いた時などに使用されます）"
-          placeholder="居住地を入力してください"
-          {...register("location", { required: true })}
+          label={textsConfig.FORM.SETTING.LOCATION}
+          errorMessage={errors.location?.message}
+          placeholder={`${textsConfig.FORM.SETTING.LOCATION}を入力`}
+          {...register("location", {
+            required: GetRequiredMessage(textsConfig.FORM.SETTING.LOCATION),
+          })}
         />
         <FormInput
           disabled
           inputClassName="border-none"
-          label="メールアドレス"
-          placeholder="メールアドレスを入力してください"
-          {...register("email", { required: true })}
+          label={textsConfig.FORM.SETTING.EMAIL}
+          errorMessage={errors.email?.message}
+          placeholder={`${textsConfig.FORM.SETTING.EMAIL}を入力`}
+          {...register("email", {
+            required: GetRequiredMessage(textsConfig.FORM.SETTING.EMAIL),
+          })}
         />
         <div className="flex justify-end s:justify-between gap-4 w-2/3 s:w-full mr-0 ml-auto">
           <Button
