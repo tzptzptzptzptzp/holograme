@@ -98,6 +98,13 @@ export const textsConfig = {
         SITE_GENRE: "サイトのジャンル",
         TONE_AND_STYLE: "口調・スタイル",
       },
+      SELECT_OPTIONS: {
+        ARTICLE_ROLE: [
+          { id: 1, name: "収益記事" },
+          { id: 2, name: "集客記事" },
+          { id: 3, name: "その他" },
+        ],
+      },
     },
   },
   META: {

@@ -90,6 +90,14 @@ const CreateWriterModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const EditWriterModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Writer/EditWriterModal/EditWriterModal.feature"
+    ).then((mod) => mod.EditWriterModal),
+  { loading: () => <Loader /> }
+);
+
 const EmojiSelectModalContent = dynamic(
   () =>
     import(
@@ -130,6 +138,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <DeleteFavoriteModalContent />;
     case "createWriter":
       return <CreateWriterModalContent />;
+    case "editWriter":
+      return <EditWriterModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
     case "modelsList":
