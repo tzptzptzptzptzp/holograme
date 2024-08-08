@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import { Writer } from "@prisma/client";
+import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { FormSelect } from "@/components/forms/FormSelect/FormSelect.form";
 import { textsConfig } from "@/config/texts.config";
+import { Icons } from "@/icons";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
+import { useModal } from "@/hooks/useModal.hook";
 
 const inputClassName = "w-full min-w-0 border-none";
 const wrapperClassName = "w-full";
@@ -40,11 +43,17 @@ export const WriterRequestForm = ({ writer }: Props) => {
     setValue,
     formState: { errors },
   } = useForm<Inputs>();
+  const { handleOpen } = useModal();
   return (
     <div className="flex flex-col gap-2 h-auto min-h-0 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0">
       <div className="flex items-center justify-between">
         <h2 className="text-[18px]">{textsConfig.FORM.WRITER_REQUEST.TITLE}</h2>
-        <p>{writer.name}</p>
+        <div className="flex gap-1">
+          <p>{writer.name}</p>
+          <Button onClick={() => handleOpen("editWriter")}>
+            <Icons.Config />
+          </Button>
+        </div>
       </div>
       <div className="overflow-y-scroll h-auto">
         <form className="flex flex-col gap-4">
