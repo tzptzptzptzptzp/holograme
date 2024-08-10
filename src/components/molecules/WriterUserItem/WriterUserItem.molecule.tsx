@@ -1,6 +1,7 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
 import { colorConfig } from "@/config/color.config";
+import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const WriterUserItem = ({ id, onClick, username }: Props) => {
+  const { handleOpen } = useModal();
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClick(e, id);
   };
@@ -41,7 +43,10 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
             height={IconSize}
           />
         </Button>
-        <Button id={`exclude${GenerateRandomID()}`}>
+        <Button
+          id={`exclude${GenerateRandomID()}`}
+          onClick={() => handleOpen("editWriter")}
+        >
           <Icons.Config
             color={colorConfig.text}
             width={IconSize}
