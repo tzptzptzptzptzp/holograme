@@ -10,30 +10,6 @@ import {
   UserStateType,
 } from "./types.recoil";
 
-export const UserDefaultValue: UserStateType = {
-  id: "",
-  username: "",
-  nickname: "",
-  email: "",
-  location: "",
-  createdDate: new Date(),
-  updatedDate: new Date(),
-};
-
-export const ChatRoomDefaultValue: ChatRoomStateType = {
-  id: 0,
-  name: "",
-  description: "",
-  defaultMessage: "",
-};
-
-export const ChatRoomOptionsDefaultValue: ChatRoomOptionStateType[] = [
-  {
-    id: 0,
-    name: "",
-  },
-];
-
 export const ChatMessagesDefaultValue: ChatMessageStateType[] = [
   {
     id: 0,
@@ -45,12 +21,19 @@ export const ChatMessagesDefaultValue: ChatMessageStateType[] = [
   },
 ];
 
-export const EditChatStandardPhraseDefaultValue: EditChatStandardPhraseStateType =
+export const ChatRoomOptionsDefaultValue: ChatRoomOptionStateType[] = [
   {
     id: 0,
-    title: "",
-    content: "",
-  };
+    name: "",
+  },
+];
+
+export const ChatRoomDefaultValue: ChatRoomStateType = {
+  id: 0,
+  name: "",
+  description: "",
+  defaultMessage: "",
+};
 
 export const CreateFavoriteDefaultValue: CreateFavoriteStateType = {
   title: "",
@@ -60,6 +43,13 @@ export const CreateFavoriteDefaultValue: CreateFavoriteStateType = {
   emojiUnified: "2b50",
 };
 
+export const EditChatStandardPhraseDefaultValue: EditChatStandardPhraseStateType =
+  {
+    id: 0,
+    title: "",
+    content: "",
+  };
+
 export const EditFavoriteDefaultValue: EditFavoriteStateType = {
   id: 0,
   title: "",
@@ -67,6 +57,11 @@ export const EditFavoriteDefaultValue: EditFavoriteStateType = {
   emojiId: "star",
   emojiNative: "⭐",
   emojiUnified: "2b50",
+};
+
+export const ModalDefaultValue: ModalStateType = {
+  content: "",
+  isOpen: false,
 };
 
 export const ModelsDefaultValue: ModelStateType[] = [
@@ -78,7 +73,12 @@ export const ModelsDefaultValue: ModelStateType[] = [
   },
 ];
 
-export const ModalDefaultValue: ModalStateType = {
-  content: "",
-  isOpen: false,
+export const UserDefaultValue: UserStateType = {
+  id: "",
+  username: "",
+  nickname: "",
+  email: "",
+  location: "",
+  createdDate: new Date(),
+  updatedDate: new Date(),
 };
