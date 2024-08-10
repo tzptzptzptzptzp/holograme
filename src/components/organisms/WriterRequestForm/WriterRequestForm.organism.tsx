@@ -232,6 +232,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.EXPERTISE}
                 errorMessage={errors.expertise?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.EXPERTISE}を入力`}
+                value={writer.expertise}
                 {...register("expertise", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.EXPERTISE
@@ -245,6 +246,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.TARGET_AUDIENCE}
                 errorMessage={errors.targetAudience?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.TARGET_AUDIENCE}を入力`}
+                value={writer.targetAudience}
                 {...register("targetAudience", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.TARGET_AUDIENCE
@@ -260,6 +262,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_GENRE}
                 errorMessage={errors.siteGenre?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_GENRE}を入力`}
+                value={writer.siteGenre}
                 {...register("siteGenre", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_GENRE
@@ -273,6 +276,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_PURPOSE}
                 errorMessage={errors.sitePurpose?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_PURPOSE}を入力`}
+                value={writer.sitePurpose}
                 {...register("sitePurpose", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_PURPOSE
@@ -288,6 +292,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.TONE_AND_STYLE}
                 errorMessage={errors.toneAndStyle?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.TONE_AND_STYLE}を入力`}
+                value={writer.toneAndStyle}
                 {...register("toneAndStyle", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.TONE_AND_STYLE
