@@ -1,23 +1,11 @@
 import { MouseEvent, useState } from "react";
-import { Writer } from "@prisma/client";
+import { useRecoilState } from "recoil";
 import { useGetWriter } from "../api/useGetWriter.hook";
-
-const writerDefaultValue = {
-  id: 0,
-  userId: "",
-  name: "",
-  expertise: "",
-  targetAudience: "",
-  sitePurpose: "",
-  siteGenre: "",
-  toneAndStyle: "",
-  createdDate: new Date(),
-  updatedDate: new Date(),
-};
+import { WriterState } from "@/recoil/atoms.recoil";
 
 export const useWriter = () => {
   const [isRequestView, setIsRequestView] = useState<boolean>(false);
-  const [writer, setWriter] = useState<Writer>(writerDefaultValue);
+  const [writer, setWriter] = useRecoilState(WriterState);
 
   const { data: writerData } = useGetWriter();
 
