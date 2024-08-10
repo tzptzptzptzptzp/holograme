@@ -9,6 +9,7 @@ import {
   ModalDefaultValue,
   ModelsDefaultValue,
   UserDefaultValue,
+  WriterDefaultValue,
 } from "./default.recoil";
 import {
   ChatMessageStateType,
@@ -25,6 +26,7 @@ import {
   SelectedContentStateType,
   SessionStateType,
   UserStateType,
+  WriterStateType,
 } from "./types.recoil";
 
 export const ChatMessagesState = atom<ChatMessageStateType[]>({
@@ -102,4 +104,9 @@ export const UserState = atom<UserStateType>({
 export const SearchTypeState = atom<SearchTypeStateType>({
   key: "SearchType",
   default: "currentTab",
+});
+
+export const WriterState = atom<WriterStateType>({
+  key: "Writer",
+  default: WriterDefaultValue,
 });

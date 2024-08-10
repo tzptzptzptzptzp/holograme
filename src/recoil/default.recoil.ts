@@ -8,6 +8,7 @@ import {
   ModalStateType,
   ModelStateType,
   UserStateType,
+  WriterStateType,
 } from "./types.recoil";
 
 export const ChatMessagesDefaultValue: ChatMessageStateType[] = [
@@ -79,6 +80,19 @@ export const UserDefaultValue: UserStateType = {
   nickname: "",
   email: "",
   location: "",
+  createdDate: new Date(),
+  updatedDate: new Date(),
+};
+
+export const WriterDefaultValue: WriterStateType = {
+  id: 0,
+  userId: "",
+  name: "",
+  expertise: "",
+  targetAudience: "",
+  sitePurpose: "",
+  siteGenre: "",
+  toneAndStyle: "",
   createdDate: new Date(),
   updatedDate: new Date(),
 };

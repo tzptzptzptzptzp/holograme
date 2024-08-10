@@ -1,6 +1,6 @@
 import { OpenAiModel } from "@/app/api/openai/route";
 import { ModalContentType } from "@/types";
-import { ChatMessage, Favorite, User } from "@prisma/client";
+import { ChatMessage, Favorite, User, Writer } from "@prisma/client";
 import { Session } from "@supabase/supabase-js";
 
 export type ChatMessageStateType = Omit<ChatMessage, "role"> & {
@@ -60,3 +60,5 @@ export type SelectedContentStateType =
 export type SessionStateType = Session;
 
 export type UserStateType = User;
+
+export type WriterStateType = Writer;
