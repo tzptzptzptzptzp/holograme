@@ -2,6 +2,15 @@ export const textsConfig = {
   AUTH: {
     EMAIL_SENT: "確認メールを送信しました",
   },
+  BUTTON: {
+    CANCEL: "閉じる",
+    CREATE: "作成",
+    DELETE: "削除",
+    LOGIN: "ログイン",
+    LOGOUT: "ログアウト",
+    SIGNUP: "新規登録",
+    UPDATE: "更新",
+  },
   FORM: {
     CHAT: {
       NAME: "チャットルーム名",
@@ -217,6 +226,14 @@ export const textsConfig = {
     WRITER_CREATE: {
       SUCCESS: "🦄 ライターを作成しました！",
       ERROR: "作成に失敗しました…",
+    },
+    WRITER_DELETE: {
+      SUCCESS: "🦄 ライターを削除しました！",
+      ERROR: "削除に失敗しました…",
+    },
+    WRITER_UPDATE: {
+      SUCCESS: "🦄 ライターを更新しました！",
+      ERROR: "更新に失敗しました…",
     },
   },
 };

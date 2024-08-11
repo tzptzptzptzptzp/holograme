@@ -51,7 +51,7 @@ export const DeleteFavoriteModal = () => {
   return (
     <ModalInner
       buttonDisabled={apiPending}
-      buttonText="削除"
+      buttonText={textsConfig.BUTTON.DELETE}
       form
       onSubmit={(e) => onSubmit(e)}
       title={textsConfig.FORM.FAVORITE.TITLE.DELETE}

@@ -48,7 +48,7 @@ export const DeleteChatModal = () => {
   return (
     <ModalInner
       buttonDisabled={apiPending}
-      buttonText="削除"
+      buttonText={textsConfig.BUTTON.DELETE}
       form
       onSubmit={(e) => onSubmit(e)}
       title={textsConfig.FORM.CHAT.TITLE.DELETE}

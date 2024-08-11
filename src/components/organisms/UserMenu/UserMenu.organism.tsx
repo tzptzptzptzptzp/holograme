@@ -1,4 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { textsConfig } from "@/config/texts.config";
 import { useSignOut } from "@/hooks/auth/useSignOut.hook";
 import { cn } from "@/utils/cn.util";
 
@@ -23,7 +24,7 @@ export const UserMenu = ({ isHovered }: Props) => {
     >
       <ul className="min-w-[200px] px-3 py-2 rounded-lg bg-white shadow-sm">
         <li className="leading-normal">
-          <Button onClick={handleSignOut}>ログアウト</Button>
+          <Button onClick={handleSignOut}>{textsConfig.BUTTON.LOGOUT}</Button>
         </li>
       </ul>
     </div>

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
-import { usePostWriter } from "@/hooks/api/usePostWriter.hook";
+import { usePutWriter } from "@/hooks/api/usePutWriter.hook";
+import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
@@ -22,21 +23,34 @@ export const EditWriterModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
   const { refetch } = useGetWriter();
-  const mutate = usePostWriter();
+  const mutate = usePutWriter();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>();
 
   const { handleClose } = useModal();
+
+  const { writer } = useWriter();
+
+  useEffect(() => {
+    setValue("name", writer.name);
+    setValue("expertise", writer.expertise);
+    setValue("targetAudience", writer.targetAudience);
+    setValue("sitePurpose", writer.sitePurpose);
+    setValue("siteGenre", writer.siteGenre);
+    setValue("toneAndStyle", writer.toneAndStyle);
+  }, [writer, setValue]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (apiPending) return;
     setApiPending(true);
     mutate(
       {
+        id: writer.id,
         name: data.name,
         expertise: data.expertise,
         targetAudience: data.targetAudience,
@@ -46,13 +60,13 @@ export const EditWriterModal = () => {
       },
       {
         onSuccess: () => {
-          toast(textsConfig.TOAST.WRITER_CREATE.SUCCESS);
+          toast(textsConfig.TOAST.WRITER_UPDATE.SUCCESS);
           setApiPending(false);
           refetch();
           handleClose();
         },
         onError: () => {
-          toast.error(textsConfig.TOAST.WRITER_CREATE.ERROR);
+          toast.error(textsConfig.TOAST.WRITER_UPDATE.ERROR);
         },
         onSettled: () => {
           setApiPending(false);
@@ -64,6 +78,7 @@ export const EditWriterModal = () => {
   return (
     <ModalInner
       buttonDisabled={apiPending}
+      buttonText="更新"
       form
       onSubmit={handleSubmit(onSubmit)}
       title={textsConfig.FORM.WRITER.TITLE.EDIT}
