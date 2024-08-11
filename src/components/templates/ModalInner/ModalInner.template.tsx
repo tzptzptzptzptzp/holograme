@@ -1,4 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { textsConfig } from "@/config/texts.config";
 import { useModal } from "@/hooks/useModal.hook";
 
 const WrapperClassName = "max-h-[50vh] overflow-y-scroll";
@@ -53,7 +54,7 @@ const Buttons = ({
         type="reset"
         variant="cancel"
       >
-        閉じる
+        {textsConfig.BUTTON.CANCEL}
       </Button>
       <Button
         className="!w-1/3"
@@ -79,7 +80,7 @@ type Props = {
 
 export const ModalInner = ({
   buttonDisabled = false,
-  buttonText = "作成",
+  buttonText = textsConfig.BUTTON.CREATE,
   children,
   enableButton = true,
   form = false,

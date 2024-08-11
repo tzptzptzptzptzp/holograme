@@ -116,7 +116,9 @@ export default function Auth() {
                   signUpIsLoading || signInIsLoading ? "disable" : "primary"
                 }
               >
-                {mode === "signIn" ? "ログイン" : "新規登録"}
+                {mode === "signIn"
+                  ? textsConfig.BUTTON.LOGIN
+                  : textsConfig.BUTTON.SIGNUP}
               </Button>
             </div>
           </form>

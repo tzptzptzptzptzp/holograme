@@ -2,6 +2,15 @@ export const textsConfig = {
   AUTH: {
     EMAIL_SENT: "確認メールを送信しました",
   },
+  BUTTON: {
+    CANCEL: "閉じる",
+    CREATE: "作成",
+    DELETE: "削除",
+    LOGIN: "ログイン",
+    LOGOUT: "ログアウト",
+    SIGNUP: "新規登録",
+    UPDATE: "更新",
+  },
   FORM: {
     CHAT: {
       NAME: "チャットルーム名",
