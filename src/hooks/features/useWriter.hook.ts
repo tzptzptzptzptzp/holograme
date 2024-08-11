@@ -12,19 +12,22 @@ export const useWriter = () => {
   const handleSelectWriter = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     const closestButton = (e.target as HTMLElement).closest("button");
     if (closestButton && closestButton.id.startsWith("exclude")) return;
+    setFindWriter(id);
+    setIsRequestView(true);
+  };
 
+  const setFindWriter = (id: number) => {
     const selectedWriter = writerData.find((writer) => writer.id === id);
-
     if (selectedWriter) {
       setWriter(selectedWriter);
     }
-    setIsRequestView(true);
   };
   return {
     isRequestView,
     writer,
     writerData,
     handleSelectWriter,
+    setFindWriter,
     setIsRequestView,
     setWriter,
   };
