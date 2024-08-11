@@ -218,5 +218,13 @@ export const textsConfig = {
       SUCCESS: "🦄 ライターを作成しました！",
       ERROR: "作成に失敗しました…",
     },
+    WRITER_DELETE: {
+      SUCCESS: "🦄 ライターを削除しました！",
+      ERROR: "削除に失敗しました…",
+    },
+    WRITER_UPDATE: {
+      SUCCESS: "🦄 ライターを更新しました！",
+      ERROR: "更新に失敗しました…",
+    },
   },
 };
