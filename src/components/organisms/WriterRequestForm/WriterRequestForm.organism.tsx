@@ -9,6 +9,7 @@ import { textsConfig } from "@/config/texts.config";
 import { Icons } from "@/icons";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 import { useModal } from "@/hooks/useModal.hook";
+import { useEffect } from "react";
 
 const inputClassName = "w-full min-w-0 border-none";
 const wrapperClassName = "w-full";
@@ -54,6 +55,14 @@ export const WriterRequestForm = ({ writer }: Props) => {
 
   const { handleOpen } = useModal();
 
+  useEffect(() => {
+    setValue("expertise", writer.expertise);
+    setValue("targetAudience", writer.targetAudience);
+    setValue("siteGenre", writer.siteGenre);
+    setValue("sitePurpose", writer.sitePurpose);
+    setValue("toneAndStyle", writer.toneAndStyle);
+  }, [setValue, writer]);
+
   const onSubmit = (data: Inputs) => {
     console.log(data);
   };
@@ -67,6 +76,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
         <Button
           className="!w-fit hover:opacity-70"
           hover={false}
+          type="submit"
           variant="secondary"
         >
           記事を書く
