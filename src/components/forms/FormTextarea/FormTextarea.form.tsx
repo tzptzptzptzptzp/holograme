@@ -75,7 +75,6 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
-            required={required}
             rows={rows}
             value={value}
             {...props}

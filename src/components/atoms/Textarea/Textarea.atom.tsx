@@ -11,7 +11,6 @@ type TextareaProps = {
   onInput?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
-  required?: boolean;
   rows?: number;
   value?: string;
 };
@@ -28,7 +27,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       onInput,
       onKeyDown,
       placeholder,
-      required = false,
       rows = 3,
       ...props
     },
@@ -49,7 +47,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         ref={ref}
-        required={required}
         rows={rows}
         {...props}
       />

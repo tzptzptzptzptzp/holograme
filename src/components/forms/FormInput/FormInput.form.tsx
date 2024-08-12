@@ -72,7 +72,6 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
-            required={required}
             type={type}
             value={value}
             {...props}

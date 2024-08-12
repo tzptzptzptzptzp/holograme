@@ -68,7 +68,6 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
             onChange={onChange}
             options={options}
             ref={ref}
-            required={required}
             value={value}
             {...props}
           />
