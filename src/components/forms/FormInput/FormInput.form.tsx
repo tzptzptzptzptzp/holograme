@@ -52,6 +52,11 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
               htmlFor={id}
             >
               {label}
+              {required && (
+                <span className="block -translate-y-[1.5px] ml-[1px] text-red">
+                  *
+                </span>
+              )}
             </label>
           )}
           <Input

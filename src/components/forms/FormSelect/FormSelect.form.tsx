@@ -47,10 +47,15 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
         <div className="flex flex-col">
           {label && (
             <label
-              className={cn("px-1 text-[12px]", labelClassName)}
+              className={cn("flex px-1 text-[12px]", labelClassName)}
               htmlFor={id}
             >
               {label}
+              {required && (
+                <span className="block -translate-y-[1.5px] ml-[1px] text-red">
+                  *
+                </span>
+              )}{" "}
             </label>
           )}
           <Select
