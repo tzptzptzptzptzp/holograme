@@ -17,7 +17,7 @@ type Inputs = {
 
 const InputClassName =
   "w-[250px] px-3 pt-[4px] pb-[7px] border-2 border-white rounded-md bg-white bg-opacity-50";
-const ErrorClassName = "mt-1 px-1 text-red-400 text-[12px] font-bold";
+const ErrorClassName = "mt-1 px-1 text-red text-[12px] font-bold";
 
 export default function Auth() {
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");

@@ -18,6 +18,7 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
   placeholder?: string;
+  required?: boolean;
   value?: string;
   wrapperClassName?: string;
 };
@@ -33,6 +34,7 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
       onChange,
       options,
       placeholder,
+      required = false,
       value,
       wrapperClassName,
       ...props
@@ -45,10 +47,15 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
         <div className="flex flex-col">
           {label && (
             <label
-              className={cn("px-1 text-[12px]", labelClassName)}
+              className={cn("flex px-1 text-[12px]", labelClassName)}
               htmlFor={id}
             >
               {label}
+              {required && (
+                <span className="block -translate-y-[1.5px] ml-[1px] text-red">
+                  *
+                </span>
+              )}{" "}
             </label>
           )}
           <Select
@@ -61,6 +68,7 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
             onChange={onChange}
             options={options}
             ref={ref}
+            required={required}
             value={value}
             {...props}
           />

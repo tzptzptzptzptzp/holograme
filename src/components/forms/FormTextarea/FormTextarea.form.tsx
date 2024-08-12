@@ -15,6 +15,7 @@ type Props = {
   onInput?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
+  required?: boolean;
   rows?: number;
   textareaClassName?: string;
   value?: string;
@@ -34,6 +35,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
       onInput,
       onKeyDown,
       placeholder,
+      required = false,
       rows = 3,
       textareaClassName,
       value,
@@ -48,10 +50,15 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
         <div className="flex flex-col">
           {label && (
             <label
-              className={cn("px-1 text-[12px]", labelClassName)}
+              className={cn("flex px-1 text-[12px]", labelClassName)}
               htmlFor={id}
             >
               {label}
+              {required && (
+                <span className="block -translate-y-[1.5px] ml-[1px] text-red">
+                  *
+                </span>
+              )}{" "}
             </label>
           )}
           <Textarea
@@ -68,6 +75,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
+            required={required}
             rows={rows}
             value={value}
             {...props}

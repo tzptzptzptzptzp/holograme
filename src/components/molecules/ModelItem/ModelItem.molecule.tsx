@@ -44,7 +44,7 @@ export const ModelItem = ({ id, created }: Props) => {
             </span>
           )}
           {isNew && (
-            <span className="a-flash inline-block -translate-y-[2.5px] pl-1 text-red-400 text-[12px]">
+            <span className="a-flash inline-block -translate-y-[2.5px] pl-1 text-red text-[12px]">
               new
             </span>
           )}

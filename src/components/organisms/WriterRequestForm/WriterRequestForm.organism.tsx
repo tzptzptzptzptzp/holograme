@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Writer } from "@prisma/client";
+import { Border } from "@/components/atoms/Border/Border.atom";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
@@ -22,8 +23,8 @@ type Inputs = {
   word_count: number;
   keywords: string;
   structureAndHeadings: string;
-  productInfo: string;
-  productUrl: string;
+  productInfo?: string;
+  productUrl?: string;
   articleRole: string;
   revenueArticleTitle?: string;
   revenueArticleUrl?: string;
@@ -41,22 +42,38 @@ export const WriterRequestForm = ({ writer }: Props) => {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const productInfo = watch("productInfo");
+  const productUrl = watch("productUrl");
+  const revenueArticleTitle = watch("revenueArticleTitle");
+  const revenueArticleUrl = watch("revenueArticleUrl");
+  const revenueArticleSummary = watch("revenueArticleSummary");
+
   const { handleOpen } = useModal();
+
+  const onSubmit = (data: Inputs) => {
+    console.log(data);
+  };
   return (
-    <div className="flex flex-col gap-2 h-auto min-h-0 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0">
+    <form
+      className="flex flex-col gap-2 h-auto min-h-0 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex items-center justify-between">
         <h2 className="text-[18px]">{textsConfig.FORM.WRITER_REQUEST.TITLE}</h2>
-        <div className="flex gap-1">
-          <p>{writer.name}</p>
-          <Button onClick={() => handleOpen("editWriter")}>
-            <Icons.Config />
-          </Button>
-        </div>
+        <Button
+          className="!w-fit hover:opacity-70"
+          hover={false}
+          variant="secondary"
+        >
+          記事を書く
+        </Button>
       </div>
       <div className="overflow-y-scroll h-auto">
-        <form className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p>{textsConfig.FORM.WRITER_REQUEST.SECTIONS[0]}</p>
             <div className="flex gap-4">
@@ -66,6 +83,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.TITLE}
                 errorMessage={errors.title?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.TITLE}を入力`}
+                required
                 {...register("title", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.TITLE
@@ -78,6 +96,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT}
                 errorMessage={errors.word_count?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT}を入力`}
+                required
                 {...register("word_count", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT
@@ -91,12 +110,14 @@ export const WriterRequestForm = ({ writer }: Props) => {
               label={textsConfig.FORM.WRITER_REQUEST.INPUTS.SUMMARY}
               errorMessage={errors.summary?.message}
               placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.SUMMARY}を入力`}
+              required
               {...register("summary", {
                 required: GetRequiredMessage(
                   textsConfig.FORM.WRITER_REQUEST.INPUTS.SUMMARY
                 ),
               })}
             />
+            <Border />
             <p>{textsConfig.FORM.WRITER_REQUEST.SECTIONS[1]}</p>
             <FormInput
               inputClassName={inputClassName}
@@ -104,6 +125,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
               label={textsConfig.FORM.WRITER_REQUEST.INPUTS.KEYWORDS}
               errorMessage={errors.keywords?.message}
               placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.KEYWORDS}を入力`}
+              required
               {...register("keywords", {
                 required: GetRequiredMessage(
                   textsConfig.FORM.WRITER_REQUEST.INPUTS.KEYWORDS
@@ -118,6 +140,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
               }
               errorMessage={errors.structureAndHeadings?.message}
               placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.STRUCTURE_AND_HEADINGS}を入力`}
+              required
               {...register("structureAndHeadings", {
                 required: GetRequiredMessage(
                   textsConfig.FORM.WRITER_REQUEST.INPUTS.STRUCTURE_AND_HEADINGS
@@ -131,10 +154,14 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_INFO}
                 errorMessage={errors.productInfo?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_INFO}を入力`}
+                required={productInfo || productUrl ? true : false}
                 {...register("productInfo", {
-                  required: GetRequiredMessage(
-                    textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_INFO
-                  ),
+                  required:
+                    productInfo || productUrl
+                      ? GetRequiredMessage(
+                          textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_INFO
+                        )
+                      : false,
                 })}
               />
               <FormInput
@@ -143,10 +170,14 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_URL}
                 errorMessage={errors.productUrl?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_URL}を入力`}
+                required={productInfo || productUrl ? true : false}
                 {...register("productUrl", {
-                  required: GetRequiredMessage(
-                    textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_URL
-                  ),
+                  required:
+                    productInfo || productUrl
+                      ? GetRequiredMessage(
+                          textsConfig.FORM.WRITER_REQUEST.INPUTS.PRODUCT_URL
+                        )
+                      : false,
                 })}
               />
             </div>
@@ -159,10 +190,23 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 }
                 errorMessage={errors.revenueArticleTitle?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_TITLE}を入力`}
+                required={
+                  revenueArticleTitle ||
+                  revenueArticleUrl ||
+                  revenueArticleSummary
+                    ? true
+                    : false
+                }
                 {...register("revenueArticleTitle", {
-                  required: GetRequiredMessage(
-                    textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_TITLE
-                  ),
+                  required:
+                    revenueArticleTitle ||
+                    revenueArticleUrl ||
+                    revenueArticleSummary
+                      ? GetRequiredMessage(
+                          textsConfig.FORM.WRITER_REQUEST.INPUTS
+                            .REVENUE_ARTICLE_TITLE
+                        )
+                      : false,
                 })}
               />
               <FormInput
@@ -173,10 +217,23 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 }
                 errorMessage={errors.revenueArticleUrl?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_URL}を入力`}
+                required={
+                  revenueArticleTitle ||
+                  revenueArticleUrl ||
+                  revenueArticleSummary
+                    ? true
+                    : false
+                }
                 {...register("revenueArticleUrl", {
-                  required: GetRequiredMessage(
-                    textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_URL
-                  ),
+                  required:
+                    revenueArticleTitle ||
+                    revenueArticleUrl ||
+                    revenueArticleSummary
+                      ? GetRequiredMessage(
+                          textsConfig.FORM.WRITER_REQUEST.INPUTS
+                            .REVENUE_ARTICLE_URL
+                        )
+                      : false,
                 })}
               />
             </div>
@@ -188,10 +245,23 @@ export const WriterRequestForm = ({ writer }: Props) => {
               }
               errorMessage={errors.revenueArticleSummary?.message}
               placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_SUMMARY}を入力`}
+              required={
+                revenueArticleTitle ||
+                revenueArticleUrl ||
+                revenueArticleSummary
+                  ? true
+                  : false
+              }
               {...register("revenueArticleSummary", {
-                required: GetRequiredMessage(
-                  textsConfig.FORM.WRITER_REQUEST.INPUTS.REVENUE_ARTICLE_SUMMARY
-                ),
+                required:
+                  revenueArticleTitle ||
+                  revenueArticleUrl ||
+                  revenueArticleSummary
+                    ? GetRequiredMessage(
+                        textsConfig.FORM.WRITER_REQUEST.INPUTS
+                          .REVENUE_ARTICLE_SUMMARY
+                      )
+                    : false,
               })}
             />
             <div className="flex gap-4">
@@ -204,6 +274,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                   textsConfig.FORM.WRITER_REQUEST.SELECT_OPTIONS.ARTICLE_ROLE
                 }
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.ARTICLE_ROLE}を入力`}
+                required
                 {...register("articleRole", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.ARTICLE_ROLE
@@ -216,14 +287,19 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.REFERENCE_URLS}
                 errorMessage={errors.referenceUrls?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.REFERENCE_URLS}を入力`}
-                {...register("referenceUrls", {
-                  required: GetRequiredMessage(
-                    textsConfig.FORM.WRITER_REQUEST.INPUTS.REFERENCE_URLS
-                  ),
-                })}
+                {...register("referenceUrls")}
               />
             </div>
-            <p>{textsConfig.FORM.WRITER_REQUEST.SECTIONS[2]}</p>
+            <Border />
+            <div className="flex justify-between">
+              <p>{textsConfig.FORM.WRITER_REQUEST.SECTIONS[2]}</p>
+              <div className="flex gap-1">
+                <p>{writer.name}</p>
+                <Button onClick={() => handleOpen("editWriter")}>
+                  <Icons.Config />
+                </Button>
+              </div>
+            </div>
             <div className="flex gap-4">
               <FormInput
                 disabled
@@ -232,6 +308,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.EXPERTISE}
                 errorMessage={errors.expertise?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.EXPERTISE}を入力`}
+                required
                 value={writer.expertise}
                 {...register("expertise", {
                   required: GetRequiredMessage(
@@ -246,6 +323,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.TARGET_AUDIENCE}
                 errorMessage={errors.targetAudience?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.TARGET_AUDIENCE}を入力`}
+                required
                 value={writer.targetAudience}
                 {...register("targetAudience", {
                   required: GetRequiredMessage(
@@ -262,6 +340,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_GENRE}
                 errorMessage={errors.siteGenre?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_GENRE}を入力`}
+                required
                 value={writer.siteGenre}
                 {...register("siteGenre", {
                   required: GetRequiredMessage(
@@ -276,6 +355,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_PURPOSE}
                 errorMessage={errors.sitePurpose?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.SITE_PURPOSE}を入力`}
+                required
                 value={writer.sitePurpose}
                 {...register("sitePurpose", {
                   required: GetRequiredMessage(
@@ -292,6 +372,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.TONE_AND_STYLE}
                 errorMessage={errors.toneAndStyle?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.TONE_AND_STYLE}を入力`}
+                required
                 value={writer.toneAndStyle}
                 {...register("toneAndStyle", {
                   required: GetRequiredMessage(
@@ -302,8 +383,8 @@ export const WriterRequestForm = ({ writer }: Props) => {
               <div className="w-full"></div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };

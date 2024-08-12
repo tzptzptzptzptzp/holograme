@@ -15,6 +15,7 @@ type Props = {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  required?: boolean;
   type?: "text" | "password" | "email";
   value?: string;
   wrapperClassName?: string;
@@ -33,6 +34,7 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
       onInput,
       onKeyDown,
       placeholder,
+      required = false,
       type = "text",
       value,
       wrapperClassName,
@@ -46,10 +48,15 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
         <div className="flex flex-col">
           {label && (
             <label
-              className={cn("px-1 text-[12px]", labelClassName)}
+              className={cn("flex px-1 text-[12px]", labelClassName)}
               htmlFor={id}
             >
               {label}
+              {required && (
+                <span className="block -translate-y-[1.5px] ml-[1px] text-red">
+                  *
+                </span>
+              )}
             </label>
           )}
           <Input
@@ -65,6 +72,7 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
+            required={required}
             type={type}
             value={value}
             {...props}
