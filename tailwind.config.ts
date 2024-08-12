@@ -19,6 +19,7 @@ const config: Config = {
         primary: "#FCA5A5",
         secondary: "#7CB8FF",
         gray: "#777",
+        red: "#F87171",
         disableText: "#BBB",
         disableBackground: "#EEE",
       },
