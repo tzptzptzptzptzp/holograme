@@ -18,6 +18,7 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
   placeholder?: string;
+  required?: boolean;
   value?: string;
   wrapperClassName?: string;
 };
@@ -33,6 +34,7 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
       onChange,
       options,
       placeholder,
+      required = false,
       value,
       wrapperClassName,
       ...props
@@ -61,6 +63,7 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
             onChange={onChange}
             options={options}
             ref={ref}
+            required={required}
             value={value}
             {...props}
           />

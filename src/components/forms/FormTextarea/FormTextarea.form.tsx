@@ -15,6 +15,7 @@ type Props = {
   onInput?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
+  required?: boolean;
   rows?: number;
   textareaClassName?: string;
   value?: string;
@@ -34,6 +35,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
       onInput,
       onKeyDown,
       placeholder,
+      required = false,
       rows = 3,
       textareaClassName,
       value,
@@ -68,6 +70,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
+            required={required}
             rows={rows}
             value={value}
             {...props}

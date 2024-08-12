@@ -10,6 +10,7 @@ type Props = {
   onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  required?: boolean;
   type?: "text" | "password" | "email";
   value?: string;
 };
@@ -23,6 +24,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
       onBlur,
       onChange,
       placeholder,
+      required = false,
       type = "text",
       value,
       ...props
@@ -41,6 +43,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
         onChange={onChange}
         placeholder={placeholder}
         ref={ref}
+        required={required}
         type={type}
         value={value}
         {...props}
