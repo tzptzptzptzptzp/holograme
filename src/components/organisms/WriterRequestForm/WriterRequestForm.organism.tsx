@@ -53,13 +53,27 @@ export const WriterRequestForm = ({ writer }: Props) => {
   const revenueArticleSummary = watch("revenueArticleSummary");
 
   const { handleOpen } = useModal();
+
+  const onSubmit = (data: Inputs) => {
+    console.log(data);
+  };
   return (
-    <div className="flex flex-col gap-2 h-auto min-h-0 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0">
+    <form
+      className="flex flex-col gap-2 h-auto min-h-0 px-6 py-4 rounded-3xl bg-white bg-opacity-90 relative z-0"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex items-center justify-between">
         <h2 className="text-[18px]">{textsConfig.FORM.WRITER_REQUEST.TITLE}</h2>
+        <Button
+          className="!w-fit hover:opacity-70"
+          hover={false}
+          variant="secondary"
+        >
+          記事を書く
+        </Button>
       </div>
       <div className="overflow-y-scroll h-auto">
-        <form className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <p>{textsConfig.FORM.WRITER_REQUEST.SECTIONS[0]}</p>
             <div className="flex gap-4">
@@ -369,8 +383,8 @@ export const WriterRequestForm = ({ writer }: Props) => {
               <div className="w-full"></div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   );
 };
