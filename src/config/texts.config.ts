@@ -127,6 +127,10 @@ export const textsConfig = {
     },
   },
   TOAST: {
+    BLOG_POST_CREATE: {
+      SUCCESS: "🦄 記事の執筆に成功しました！",
+      ERROR: "記事の執筆に失敗しました…",
+    },
     CHAT_CREATE: {
       SUCCESS: "🦄 チャットルームを作成しました！",
     },

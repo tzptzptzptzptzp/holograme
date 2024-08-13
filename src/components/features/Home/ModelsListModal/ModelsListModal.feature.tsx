@@ -5,7 +5,7 @@ import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 export const ModelsListModal = () => {
   const { data: modelsData } = useGetModels();

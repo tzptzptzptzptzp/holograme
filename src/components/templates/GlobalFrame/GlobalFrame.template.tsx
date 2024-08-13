@@ -7,7 +7,7 @@ import { Modal } from "@/components/organisms/Modal/Modal.organism";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   children: React.ReactNode;

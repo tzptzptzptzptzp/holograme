@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
 import { SearchTypeState } from "@/recoil/atoms.recoil";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 export const SearchTypeSwitcher = () => {
   const [iconColor, setIconColor] = useState(colorConfig.disableText);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 import { GetRandomInt } from "@/utils/GetRandomInt.util";
 
 const ANIMATION_INDEX_LIMIT = 32;

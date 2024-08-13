@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../../../apiHelpers/getUserIdFromToken.helper";
+import { generateGPTResponse } from "@/app/apiHelpers/generateGPTResponse.helper";
+import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
 import { prisma } from "../../../../../libs/Prisma.lib";
 
 export async function POST(
@@ -13,15 +14,23 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const { title, prompt, content } = await req.json();
+    const { title, prompt } = await req.json();
 
+    const gptResponse = await generateGPTResponse(prompt);
+
+    if (gptResponse === null) {
+      return NextResponse.json(
+        { error: "Failed to generate GPT response" },
+        { status: 500 }
+      );
+    }
     const data = await prisma.blogPost.create({
       data: {
         userId,
         writerId: id,
         title,
         prompt,
-        content,
+        content: gptResponse,
       },
     });
 

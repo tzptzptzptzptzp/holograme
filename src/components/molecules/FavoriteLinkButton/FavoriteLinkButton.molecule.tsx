@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 export const FavoriteLinkButton = () => {
   return (

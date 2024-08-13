@@ -1,6 +1,6 @@
 import styles from "./Button.module.scss";
 import { ClickHandlerType } from "@/types";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   children: React.ReactNode;

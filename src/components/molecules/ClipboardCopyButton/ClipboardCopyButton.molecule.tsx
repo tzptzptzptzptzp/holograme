@@ -4,7 +4,7 @@ import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 const TEXT_LENGTH_LIMIT = 15;
 

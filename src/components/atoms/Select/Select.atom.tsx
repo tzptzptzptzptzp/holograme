@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Option = {
   id: number;
@@ -12,15 +12,11 @@ type Props = {
   id: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Option[];
-  required?: boolean;
   value?: string | number;
 };
 
 export const Select = forwardRef<HTMLSelectElement, Props>(
-  (
-    { className, disabled, id, onChange, options, required = false, value },
-    ref
-  ) => {
+  ({ className, disabled, id, onChange, options, value }, ref) => {
     return (
       <select
         className={cn(
@@ -33,7 +29,6 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
         onChange={onChange}
         value={value}
         ref={ref}
-        required={required}
       >
         {options.map((option) => (
           <option key={option.id} value={option.id}>

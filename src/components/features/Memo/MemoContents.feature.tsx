@@ -9,7 +9,7 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { usePostMemo } from "@/hooks/api/usePostMemo.hook";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type MemoType = {
   id: number;

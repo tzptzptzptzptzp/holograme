@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { Select } from "@/components/atoms/Select/Select.atom";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage.form";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 type Option = {
@@ -68,7 +68,6 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
             onChange={onChange}
             options={options}
             ref={ref}
-            required={required}
             value={value}
             {...props}
           />

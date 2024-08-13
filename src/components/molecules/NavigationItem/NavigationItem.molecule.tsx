@@ -5,7 +5,7 @@ import { Icons } from "@/icons";
 import { IconType } from "@/icons/icon.type";
 import { SelectedContentState } from "@/recoil/atoms.recoil";
 import { SelectedContentStateType } from "@/recoil/types.recoil";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   name: SelectedContentStateType;
