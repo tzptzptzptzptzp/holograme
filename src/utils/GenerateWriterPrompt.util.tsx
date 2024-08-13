@@ -37,8 +37,7 @@ export const GenerateWriterPrompt = ({
   siteGenre,
   toneAndStyle,
 }: GenerateWriterPromptType): string => {
-  const prompt =
-    `
+  const prompt = `
   下記情報を元に、SEO対策を意識し、検索順位を上げるための適切なブログ記事を執筆してください。
   
   - 基本情報（記事単位）
@@ -68,6 +67,7 @@ export const GenerateWriterPrompt = ({
   
   - 出力条件
     - マークダウン形式で見出しや強調、リストなどを適切に使用する
+    - 如何なる場合も指定された形式で出力する
     - 読者を惹きつける導入を記事の先頭に挿入する
     - 記事本文の構成は以下のようにする
       - 導入
@@ -76,13 +76,13 @@ export const GenerateWriterPrompt = ({
     - 集客記事の場合は記事の要所に適切に収益記事へ誘導するような内容を入れ込む
     - h2、h3を基本的に使用し、必要であればh4も使用する h5、h6は使用しない
     - メタ情報のtitle、descriptionも合わせて出力し、SEO対策を意識した魅力的なタイトル、概要を設定する
-    - 以下のオブジェクト形式で返却する` +
-    "(```jsonでラップしない)" +
-    `{
-    "title": "ブログタイトル" : string;
-    "description": "ブログ概要" : string;
-    "content": "記事本文" : string;
-  }
+    - オブジェクトはコードブロック（\`\`\`）でラップせずに、そのまま記述する
+    - 以下のオブジェクト形式で返却する
+    {
+      "title": "ブログタイトル" : string;
+      "description": "ブログ概要" : string;
+      "content": "記事本文" : string;
+    }
   `;
 
   return prompt;
