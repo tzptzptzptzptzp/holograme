@@ -24,6 +24,14 @@ export type CreateFavoriteStateType = Omit<
   "id" | "userId" | "order" | "createdDate" | "updatedDate"
 >;
 
+export type CurrentBlogPostStateType = {
+  id: number;
+  title: string;
+  description: string;
+  content: string;
+  prompt: string;
+};
+
 export type EditChatStandardPhraseStateType = {
   id: number;
   title: string;

@@ -4,6 +4,7 @@ import {
   ChatRoomDefaultValue,
   ChatRoomOptionsDefaultValue,
   CreateFavoriteDefaultValue,
+  CurrentBlogPostDefaultValue,
   EditChatStandardPhraseDefaultValue,
   EditFavoriteDefaultValue,
   ModalDefaultValue,
@@ -16,6 +17,7 @@ import {
   ChatRoomOptionStateType,
   ChatRoomStateType,
   CreateFavoriteStateType,
+  CurrentBlogPostStateType,
   EditChatStandardPhraseStateType,
   EditFavoriteStateType,
   FavoriteChatRoomIdStateType,
@@ -47,6 +49,11 @@ export const ChatRoomOptionsState = atom<ChatRoomOptionStateType[]>({
 export const CreateFavoriteState = atom<CreateFavoriteStateType>({
   key: "CreateFavorite",
   default: CreateFavoriteDefaultValue,
+});
+
+export const CurrentBlogPostState = atom<CurrentBlogPostStateType>({
+  key: "CurrentBlogPost",
+  default: CurrentBlogPostDefaultValue,
 });
 
 export const EditChatStandardPhraseState =
