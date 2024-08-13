@@ -21,7 +21,7 @@ type Props = {
 type Inputs = {
   title: string;
   summary: string;
-  word_count: number;
+  wordCount: number;
   keywords: string;
   structureAndHeadings: string;
   productInfo?: string;
@@ -104,10 +104,10 @@ export const WriterRequestForm = ({ writer }: Props) => {
                 inputClassName={inputClassName}
                 wrapperClassName={wrapperClassName}
                 label={textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT}
-                errorMessage={errors.word_count?.message}
+                errorMessage={errors.wordCount?.message}
                 placeholder={`${textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT}を入力`}
                 required
-                {...register("word_count", {
+                {...register("wordCount", {
                   required: GetRequiredMessage(
                     textsConfig.FORM.WRITER_REQUEST.INPUTS.WORD_COUNT
                   ),
