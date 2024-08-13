@@ -9,6 +9,7 @@ import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form"
 import { FormSelect } from "@/components/forms/FormSelect/FormSelect.form";
 import { textsConfig } from "@/config/texts.config";
 import { usePostBlogPost } from "@/hooks/api/usePostBlogPost.hook";
+import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { GenerateWriterPrompt } from "@/utils/GenerateWriterPrompt.util";
@@ -45,6 +46,8 @@ type Inputs = {
 
 export const WriterRequestForm = ({ writer }: Props) => {
   const [apiPending, setApiPending] = useState(false);
+
+  const { setCurrentBlogPost } = useBlogPost();
 
   const {
     register,
@@ -84,11 +87,24 @@ export const WriterRequestForm = ({ writer }: Props) => {
       revenueArticleSummary: data.revenueArticleSummary || noData,
       referenceUrls: data.referenceUrls || noData,
     });
+    handleOpen("showBlogPost");
     mutate(
       { title: data.title, id: writer.id, prompt },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           toast(textsConfig.TOAST.BLOG_POST_CREATE.SUCCESS);
+          const jsonData: {
+            title: string;
+            description: string;
+            content: string;
+          } = JSON.parse(data.content);
+          setCurrentBlogPost({
+            id: data.id,
+            title: jsonData.title,
+            description: jsonData.description,
+            content: jsonData.content,
+            prompt: data.prompt,
+          });
         },
         onError: () => {
           toast.error(textsConfig.TOAST.BLOG_POST_CREATE.ERROR);
@@ -108,9 +124,10 @@ export const WriterRequestForm = ({ writer }: Props) => {
         <h2 className="text-[18px]">{textsConfig.FORM.WRITER_REQUEST.TITLE}</h2>
         <Button
           className="!w-fit hover:opacity-70"
+          disabled={apiPending}
           hover={false}
           type="submit"
-          variant="secondary"
+          variant={apiPending ? "disable" : "primary"}
         >
           記事を書く
         </Button>

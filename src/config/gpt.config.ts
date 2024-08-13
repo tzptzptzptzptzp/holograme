@@ -1,4 +1,5 @@
 export const gptConfig = {
-  MODEL: "gpt-4o-2024-05-13",
+  MODEL:
+    process.env.NODE_ENV === "production" ? "gpt-4o-2024-08-06" : "gpt-4o-mini",
   MAX_TOKENS: 2500,
 };

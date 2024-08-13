@@ -1,6 +1,17 @@
+.white {
+  --color: white;
+}
+
+.primary {
+  --color: var(--app-primary);
+}
+
+.secondary {
+  --color: var(--app-secondary);
+}
+
 .loader1 {
   --size: 120px;
-  --color: white;
   --animation-timing-function: linear;
   --animation-duration: 2s;
   position: relative;
@@ -40,7 +51,6 @@
 .loader2 {
   --size: 39px;
   --stroke-width: calc(var(--size) / 6);
-  --color: var(--app-primary);
   --animation-timing-function: linear;
   --animation-duration: 4s;
   position: relative;

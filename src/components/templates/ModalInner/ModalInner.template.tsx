@@ -1,6 +1,7 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { textsConfig } from "@/config/texts.config";
 import { useModal } from "@/hooks/useModal.hook";
+import { cn } from "@/utils/Cn.util";
 
 const WrapperClassName = "max-h-[50vh] overflow-y-scroll";
 const InnerClassName = "flex flex-col gap-4";
@@ -72,6 +73,7 @@ type Props = {
   buttonDisabled?: boolean;
   buttonText?: string;
   children: React.ReactNode;
+  className?: string;
   enableButton?: boolean;
   form?: boolean;
   title?: string;
@@ -82,13 +84,14 @@ export const ModalInner = ({
   buttonDisabled = false,
   buttonText = textsConfig.BUTTON.CREATE,
   children,
+  className,
   enableButton = true,
   form = false,
   title,
   onSubmit,
 }: Props) => {
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className={cn("flex flex-col gap-2 w-full", className)}>
       {title && <p className="text-[20px] text-center">{title}</p>}
       {form ? (
         <Form

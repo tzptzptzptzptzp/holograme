@@ -3,6 +3,7 @@ import {
   ChatRoomOptionStateType,
   ChatRoomStateType,
   CreateFavoriteStateType,
+  CurrentBlogPostStateType,
   EditChatStandardPhraseStateType,
   EditFavoriteStateType,
   ModalStateType,
@@ -42,6 +43,14 @@ export const CreateFavoriteDefaultValue: CreateFavoriteStateType = {
   emojiId: "star",
   emojiNative: "⭐",
   emojiUnified: "2b50",
+};
+
+export const CurrentBlogPostDefaultValue: CurrentBlogPostStateType = {
+  id: 0,
+  title: "",
+  description: "",
+  content: "",
+  prompt: "",
 };
 
 export const EditChatStandardPhraseDefaultValue: EditChatStandardPhraseStateType =

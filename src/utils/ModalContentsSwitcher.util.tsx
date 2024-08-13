@@ -98,6 +98,14 @@ const EditWriterModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const ShowBlogPostModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Writer/ShowBlogPostModal/ShowBlogPostModal.feature"
+    ).then((mod) => mod.ShowBlogPostModal),
+  { loading: () => <Loader /> }
+);
+
 const EmojiSelectModalContent = dynamic(
   () =>
     import(
@@ -140,6 +148,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <CreateWriterModalContent />;
     case "editWriter":
       return <EditWriterModalContent />;
+    case "showBlogPost":
+      return <ShowBlogPostModalContent />;
     case "emojiSelect":
       return <EmojiSelectModalContent />;
     case "modelsList":

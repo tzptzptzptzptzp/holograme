@@ -122,6 +122,12 @@ export const textsConfig = {
       "This web application serves as a next-generation homepage where your avatar supports you within a virtual space. It not only functions as a starting point for browsing but also offers a variety of features such as chat (powered by GPT), text sharing, task management, and note-taking. This innovative platform aims to enhance and streamline your digital life.",
   },
   MODAL: {
+    BLOG_POST: {
+      ARTICLE: "記事の本文",
+      AWAITING: "記事を作成中…",
+      DESCRIPTION: "記事の概要",
+      PROMPT: "プロンプト",
+    },
     MODELS_LIST: {
       TITLE: "OpenAIモデル一覧",
     },
