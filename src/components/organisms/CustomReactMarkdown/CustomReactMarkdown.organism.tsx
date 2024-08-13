@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import { CodeBlock } from "@/components/molecules/CodeBlock/CodeBlock.molecule";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 export const CustomReactMarkdown = ({
   className,

@@ -12,7 +12,7 @@ import { usePutMemo } from "@/hooks/api/usePutMemo.hook";
 import { usePutMemoArchive } from "@/hooks/api/usePutMemoArchive.hook";
 import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 const IconSize = 22;
 

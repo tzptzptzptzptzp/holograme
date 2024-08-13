@@ -18,7 +18,7 @@ import {
   ChatRoomState,
   UserState,
 } from "@/recoil/atoms.recoil";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
 type Inputs = {

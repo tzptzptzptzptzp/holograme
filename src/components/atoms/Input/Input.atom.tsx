@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   className?: string;

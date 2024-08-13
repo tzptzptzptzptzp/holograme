@@ -1,5 +1,5 @@
 import { useModal } from "@/hooks/useModal.hook";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 import { ModalContentsSwitcher } from "@/utils/ModalContentsSwitcher.util";
 
 export const Modal = () => {

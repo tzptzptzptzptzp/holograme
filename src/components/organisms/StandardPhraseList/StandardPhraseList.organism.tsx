@@ -3,7 +3,7 @@ import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.h
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Icons } from "@/icons";
 import { useModal } from "@/hooks/useModal.hook";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   isOpen: boolean;

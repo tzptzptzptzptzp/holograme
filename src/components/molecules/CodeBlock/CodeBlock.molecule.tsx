@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { textsConfig } from "@/config/texts.config";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   className?: string;

@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   message: string;

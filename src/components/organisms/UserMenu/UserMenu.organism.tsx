@@ -1,7 +1,7 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { textsConfig } from "@/config/texts.config";
 import { useSignOut } from "@/hooks/auth/useSignOut.hook";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 
 type Props = {
   isHovered: boolean;

@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage.form";
-import { cn } from "@/utils/cn.util";
+import { cn } from "@/utils/Cn.util";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 type Props = {
