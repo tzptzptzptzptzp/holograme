@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Writer } from "@prisma/client";
 import { Border } from "@/components/atoms/Border/Border.atom";
 import { Button } from "@/components/atoms/Button/Button.atom";
@@ -6,13 +8,16 @@ import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { FormSelect } from "@/components/forms/FormSelect/FormSelect.form";
 import { textsConfig } from "@/config/texts.config";
-import { Icons } from "@/icons";
-import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
+import { usePostBlogPost } from "@/hooks/api/usePostBlogPost.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { useEffect } from "react";
+import { Icons } from "@/icons";
+import { GenerateWriterPrompt } from "@/utils/GenerateWriterPrompt.util";
+import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 const inputClassName = "w-full min-w-0 border-none";
 const wrapperClassName = "w-full";
+
+const noData = "なし";
 
 type Props = {
   writer: Writer;
@@ -39,6 +44,8 @@ type Inputs = {
 };
 
 export const WriterRequestForm = ({ writer }: Props) => {
+  const [apiPending, setApiPending] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -55,6 +62,8 @@ export const WriterRequestForm = ({ writer }: Props) => {
 
   const { handleOpen } = useModal();
 
+  const mutate = usePostBlogPost();
+
   useEffect(() => {
     setValue("expertise", writer.expertise);
     setValue("targetAudience", writer.targetAudience);
@@ -64,7 +73,31 @@ export const WriterRequestForm = ({ writer }: Props) => {
   }, [setValue, writer]);
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
+    if (apiPending) return;
+    setApiPending(true);
+    const prompt = GenerateWriterPrompt({
+      ...data,
+      productInfo: data.productInfo || noData,
+      productUrl: data.productUrl || noData,
+      revenueArticleTitle: data.revenueArticleTitle || noData,
+      revenueArticleUrl: data.revenueArticleUrl || noData,
+      revenueArticleSummary: data.revenueArticleSummary || noData,
+      referenceUrls: data.referenceUrls || noData,
+    });
+    mutate(
+      { title: data.title, id: writer.id, prompt },
+      {
+        onSuccess: () => {
+          toast(textsConfig.TOAST.BLOG_POST_CREATE.SUCCESS);
+        },
+        onError: () => {
+          toast.error(textsConfig.TOAST.BLOG_POST_CREATE.ERROR);
+        },
+        onSettled: () => {
+          setApiPending(false);
+        },
+      }
+    );
   };
   return (
     <form
