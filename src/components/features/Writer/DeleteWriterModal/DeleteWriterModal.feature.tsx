@@ -3,14 +3,17 @@ import { toast } from "react-toastify";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
-import { useDeleteFavorite } from "@/hooks/api/useDeleteFavorite.hook";
+import { useDeleteWriter } from "@/hooks/api/useDeleteWriter.hook";
 import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
+import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 
 export const DeleteWriterModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const mutate = useDeleteFavorite();
+  const { writer, resetWriter } = useWriter();
+
+  const mutate = useDeleteWriter();
   const { refetch } = useGetWriter();
 
   const { handleClose } = useModal();
@@ -19,15 +22,16 @@ export const DeleteWriterModal = () => {
     e.preventDefault();
     setApiPending(true);
     mutate(
-      { id: 0 },
+      { id: writer.id },
       {
         onSuccess: () => {
-          toast(textsConfig.TOAST.FAVORITE_DELETE.SUCCESS);
+          toast(textsConfig.TOAST.WRITER_DELETE.SUCCESS);
           refetch();
+          resetWriter();
           handleClose();
         },
         onError: () => {
-          toast.error(textsConfig.TOAST.CHAT_STANDARD_PHRASE_UPDATE.ERROR);
+          toast.error(textsConfig.TOAST.WRITER_DELETE.ERROR);
         },
         onSettled: () => {
           setApiPending(false);
@@ -46,8 +50,7 @@ export const DeleteWriterModal = () => {
     >
       <div className="flex flex-col items-center justify-center min-w-[250px]">
         <ErrorMessage>
-          {/* {editFavorite.title + textsConfig.FORM.WRITER.DELETE.ALERT[0]} */}
-          title
+          {writer.name + textsConfig.FORM.WRITER.DELETE.ALERT[0]}
         </ErrorMessage>
         <ErrorMessage>{textsConfig.FORM.WRITER.DELETE.ALERT[1]}</ErrorMessage>
       </div>
