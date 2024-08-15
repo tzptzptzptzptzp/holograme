@@ -60,7 +60,7 @@ const FormSelect = forwardRef<HTMLSelectElement, Props>(
           )}
           <Select
             className={cn(
-              "max-w-none min-w-[390px] s:min-w-0 py-[2px] px-1 border-b-2 border-text bg-white bg-opacity-50 text-left",
+              "max-w-none py-[2px] px-1 border-b-2 border-text bg-white bg-opacity-50 text-left",
               selectClassName
             )}
             disabled={disabled}

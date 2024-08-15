@@ -173,7 +173,6 @@ export const MemoItem = ({
             inputClassName="min-w-0 border-none"
             placeholder="タイトル"
             value={watch("title")}
-            wrapperClassName="w-full"
             {...register("title")}
           />
         ) : (

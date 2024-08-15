@@ -63,7 +63,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, Props>(
           )}
           <Textarea
             className={cn(
-              "min-w-[390px] s:min-w-0 border-b-2 border-text bg-white bg-opacity-50",
+              "border-b-2 border-text bg-white bg-opacity-50",
               textareaClassName
             )}
             cols={cols}
