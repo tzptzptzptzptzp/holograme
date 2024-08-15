@@ -5,6 +5,7 @@ import { ArrowRightCircle } from "./ArrowRightCircle/ArrowRightCircle.icon";
 import { ArrowUturnLeft } from "./ArrowUturnLeft/ArrowUturnLeft.icon";
 import { Beaker } from "./Beaker/Beaker.icon";
 import { Book } from "./Book/Book.icon";
+import { BuildingLibrary } from "./BuildingLibrary/BuildingLibrary.icon";
 import { Chat } from "./Chat/Chat.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
 import { CommandLine } from "./CommandLine/CommandLine.icon";
@@ -35,6 +36,7 @@ export const Icons = {
   ArrowUturnLeft,
   Beaker,
   Book,
+  BuildingLibrary,
   Chat,
   ClipBoard,
   CommandLine,
