@@ -18,19 +18,19 @@ const DeleteChatContent = dynamic(
   { loading: () => <Loader /> }
 );
 
-const DeleteChatMessagesContent = dynamic(
-  () =>
-    import(
-      "@/components/features/Chat/DeleteChatMessagesModal/DeleteChatMessagesModal.feature"
-    ).then((mod) => mod.DeleteChatMessagesModal),
-  { loading: () => <Loader /> }
-);
-
 const EditChatContent = dynamic(
   () =>
     import(
       "@/components/features/Chat/EditChatModal/EditChatModal.feature"
     ).then((mod) => mod.EditChatModal),
+  { loading: () => <Loader /> }
+);
+
+const DeleteChatMessagesContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Chat/DeleteChatMessagesModal/DeleteChatMessagesModal.feature"
+    ).then((mod) => mod.DeleteChatMessagesModal),
   { loading: () => <Loader /> }
 );
 
@@ -90,6 +90,14 @@ const CreateWriterModalContent = dynamic(
   { loading: () => <Loader /> }
 );
 
+const DeleteWriterModalContent = dynamic(
+  () =>
+    import(
+      "@/components/features/Writer/DeleteWriterModal/DeleteWriterModal.feature"
+    ).then((mod) => mod.DeleteWriterModal),
+  { loading: () => <Loader /> }
+);
+
 const EditWriterModalContent = dynamic(
   () =>
     import(
@@ -136,10 +144,10 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <CreateChatContent />;
     case "deleteChat":
       return <DeleteChatContent />;
-    case "deleteChatMessages":
-      return <DeleteChatMessagesContent />;
     case "editChat":
       return <EditChatContent />;
+    case "deleteChatMessages":
+      return <DeleteChatMessagesContent />;
     case "createChatStandardPhrase":
       return <CreateChatStandardPhraseContent />;
     case "editChatStandardPhrase":
@@ -154,6 +162,8 @@ export const ModalContentsSwitcher = (selectedContent: ModalContentType) => {
       return <DeleteFavoriteModalContent />;
     case "createWriter":
       return <CreateWriterModalContent />;
+    case "deleteWriter":
+      return <DeleteWriterModalContent />;
     case "editWriter":
       return <EditWriterModalContent />;
     case "blogPostList":

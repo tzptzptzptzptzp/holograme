@@ -7,7 +7,7 @@ import { useDeleteFavorite } from "@/hooks/api/useDeleteFavorite.hook";
 import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 
-export const DeleteFavoriteModal = () => {
+export const DeleteWriterModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
   const mutate = useDeleteFavorite();
