@@ -42,7 +42,10 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
           width={IconSize}
           height={IconSize}
         />
-        <Button id={`exclude${GenerateRandomID()}`}>
+        <Button
+          id={`exclude${GenerateRandomID()}`}
+          onClick={() => handleOpen("deleteWriter")}
+        >
           <Icons.Trash
             color={colorConfig.error}
             width={IconSize}

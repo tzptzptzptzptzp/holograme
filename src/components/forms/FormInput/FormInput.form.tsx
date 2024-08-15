@@ -44,8 +44,8 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
   ) => {
     const id = GenerateRandomID();
     return (
-      <div className={cn("flex flex-col", wrapperClassName)}>
-        <div className="flex flex-col">
+      <div className={cn("flex flex-col w-full", wrapperClassName)}>
+        <div className="flex flex-col w-full">
           {label && (
             <label
               className={cn("flex px-1 text-[12px]", labelClassName)}
@@ -61,7 +61,7 @@ const FormInput = forwardRef<HTMLInputElement, Props>(
           )}
           <Input
             className={cn(
-              "min-w-[390px] s:min-w-0 border-b-2 border-text bg-white bg-opacity-50",
+              "border-b-2 border-text bg-white bg-opacity-50",
               inputClassName
             )}
             disabled={disabled}

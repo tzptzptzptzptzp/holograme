@@ -29,16 +29,16 @@ export const ModelsListModal = () => {
             <span className="s:hidden absolute bottom-1 w-full border-b-[1.5px] opacity-70 border-gray"></span>
           </Link>
         </div>
-        <ul className="flex flex-col overflow-y-scroll max-h-96">
+        <ul className="flex flex-col overflow-y-scroll w-full">
           {modelsData?.map((model, i) => (
             <li
               key={i}
               className={cn(
-                "flex gap-2 p-1 border-t border-disableBackground",
+                "flex justify-between gap-2 w-full p-1 border-t border-disableBackground",
                 modelsData.length - 1 === i && "border-b"
               )}
             >
-              <p className="w-[250px] truncate">{model.id}</p>
+              <p className="truncate">{model.id}</p>
               <p className="w-fit text-right">
                 {format(new Date(model.created * 1000), "yy/MM/dd - H:00")}
               </p>
