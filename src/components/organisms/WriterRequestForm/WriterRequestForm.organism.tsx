@@ -14,8 +14,10 @@ import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { GenerateWriterPrompt } from "@/utils/GenerateWriterPrompt.util";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
+import { colorConfig } from "@/config/color.config";
+import { useGetBlogPost } from "@/hooks/api/useGetBlogPost.hook";
 
-const inputClassName = "w-full min-w-0 border-none";
+const inputClassName = "border-none";
 const wrapperClassName = "w-full";
 
 const noData = "なし";
@@ -47,6 +49,7 @@ type Inputs = {
 export const WriterRequestForm = ({ writer }: Props) => {
   const [apiPending, setApiPending] = useState(false);
 
+  const { data } = useGetBlogPost(writer.id);
   const { setCurrentBlogPost } = useBlogPost();
 
   const {
@@ -121,16 +124,32 @@ export const WriterRequestForm = ({ writer }: Props) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-[18px]">{textsConfig.FORM.WRITER_REQUEST.TITLE}</h2>
-        <Button
-          className="!w-fit hover:opacity-70"
-          disabled={apiPending}
-          hover={false}
-          type="submit"
-          variant={apiPending ? "disable" : "primary"}
-        >
-          記事を書く
-        </Button>
+        <div className="flex gap-1">
+          <h2 className="text-[18px]">
+            {textsConfig.FORM.WRITER_REQUEST.TITLE}
+          </h2>
+          {data.length > 0 && data[0].id !== 0 && (
+            <div className="flex items-center">
+              <Button
+                className="flex items-center gap-1 h-fit pr-[3px] pl-[2px] text-[12px] border-b leading-tight"
+                onClick={() => handleOpen("blogPostList")}
+              >
+                記事一覧
+              </Button>
+            </div>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button
+            className="!w-fit hover:opacity-70"
+            disabled={apiPending}
+            hover={false}
+            type="submit"
+            variant={apiPending ? "disable" : "primary"}
+          >
+            記事を書く
+          </Button>
+        </div>
       </div>
       <div className="overflow-y-scroll h-auto">
         <div className="flex flex-col gap-4">
