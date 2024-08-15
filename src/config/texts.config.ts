@@ -82,7 +82,7 @@ export const textsConfig = {
       },
       DELETE: {
         ALERT: ["を削除するよ", "本当に大丈夫？"],
-        BUTTON: "このルームを削除する",
+        BUTTON: "このライターを削除する",
       },
     },
     WRITER_REQUEST: {
