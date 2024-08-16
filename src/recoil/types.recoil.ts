@@ -1,6 +1,6 @@
 import { OpenAiModel } from "@/app/api/openai/route";
 import { ModalContentType } from "@/types";
-import { ChatMessage, Favorite, User, Writer } from "@prisma/client";
+import { ChatMessage, Clipboard, Favorite, User, Writer } from "@prisma/client";
 import { Session } from "@supabase/supabase-js";
 
 export type ChatMessageStateType = Omit<ChatMessage, "role"> & {
@@ -18,6 +18,8 @@ export type ChatRoomStateType = {
   description: string;
   defaultMessage: string;
 };
+
+export type ClipboardStateType = Clipboard;
 
 export type CreateFavoriteStateType = Omit<
   Favorite,
@@ -42,6 +44,8 @@ export type EditFavoriteStateType = Omit<
   Favorite,
   "userId" | "order" | "createdDate" | "updatedDate"
 >;
+
+export type FavoriteStateType = Favorite;
 
 export type FavoriteChatRoomIdStateType = number;
 

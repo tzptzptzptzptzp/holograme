@@ -7,6 +7,7 @@ import {
   CurrentBlogPostDefaultValue,
   EditChatStandardPhraseDefaultValue,
   EditFavoriteDefaultValue,
+  FavoritesDefaultValue,
   ModalDefaultValue,
   ModelsDefaultValue,
   UserDefaultValue,
@@ -16,12 +17,14 @@ import {
   ChatMessageStateType,
   ChatRoomOptionStateType,
   ChatRoomStateType,
+  ClipboardStateType,
   CreateFavoriteStateType,
   CurrentBlogPostStateType,
   EditChatStandardPhraseStateType,
   EditFavoriteStateType,
   FavoriteChatRoomIdStateType,
   FavoriteModeStateType,
+  FavoriteStateType,
   ModalStateType,
   ModelStateType,
   SearchTypeStateType,
@@ -46,6 +49,11 @@ export const ChatRoomOptionsState = atom<ChatRoomOptionStateType[]>({
   default: ChatRoomOptionsDefaultValue,
 });
 
+export const ClipboardsState = atom<ClipboardStateType[]>({
+  key: "Clipboards",
+  default: [],
+});
+
 export const CreateFavoriteState = atom<CreateFavoriteStateType>({
   key: "CreateFavorite",
   default: CreateFavoriteDefaultValue,
@@ -67,6 +75,11 @@ export const EditFavoriteState = atom<EditFavoriteStateType>({
   default: EditFavoriteDefaultValue,
 });
 
+export const FavoritesState = atom<FavoriteStateType[]>({
+  key: "Favorites",
+  default: FavoritesDefaultValue,
+});
+
 export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
   {
     key: "FavoriteChatRoomId",
@@ -76,11 +89,6 @@ export const FavoriteChatRoomIdState = atom<FavoriteChatRoomIdStateType | null>(
 export const FavoriteModeState = atom<FavoriteModeStateType>({
   key: "FavoriteMode",
   default: "create",
-});
-
-export const InitializeState = atom<boolean>({
-  key: "Initialize",
-  default: false,
 });
 
 export const ModalState = atom<ModalStateType>({
