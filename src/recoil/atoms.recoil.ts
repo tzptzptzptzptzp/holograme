@@ -78,11 +78,6 @@ export const FavoriteModeState = atom<FavoriteModeStateType>({
   default: "create",
 });
 
-export const InitializeState = atom<boolean>({
-  key: "Initialize",
-  default: false,
-});
-
 export const ModalState = atom<ModalStateType>({
   key: "Modal",
   default: ModalDefaultValue,
