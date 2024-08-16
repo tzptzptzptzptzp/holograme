@@ -38,7 +38,7 @@ export const HistoryContents = () => {
           <p>Search History</p>
         </ContentHead>
       </div>
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-3 overflow-y-scroll">
         {searchHistory.map((content: string, i: number) => (
           <HistoryItem
             key={i}
