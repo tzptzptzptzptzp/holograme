@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { useGetChat } from "./api/useGetChat.hook";
 import { useGetChatMessage } from "./api/useGetChatMessage.hook";
-import { useGetUser } from "./api/useGetUser.hook";
 import {
   ChatMessagesState,
   ChatRoomOptionsState,
@@ -10,8 +8,9 @@ import {
   FavoriteChatRoomIdState,
   UserState,
 } from "@/recoil/atoms.recoil";
+import { GlobalDataType } from "@/types";
 
-export const useSetData = () => {
+export const useSetData = (globalData: GlobalDataType) => {
   const setUser = useSetRecoilState(UserState);
   const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
   const setChatMessages = useSetRecoilState(ChatMessagesState);
@@ -20,8 +19,6 @@ export const useSetData = () => {
     FavoriteChatRoomIdState
   );
 
-  const { data: userData } = useGetUser();
-  const { data: chatData } = useGetChat();
   const { data: chatMessagesData } = useGetChatMessage(
     favoriteChatRoomId || chatRoom?.id || 0
   );
@@ -34,15 +31,13 @@ export const useSetData = () => {
   }, [setFavoriteChatRoomId]);
 
   useEffect(() => {
-    if (userData) {
-      setUser(userData);
-    }
-  }, [userData, setUser]);
+    setUser(globalData.userData);
+  }, [globalData.userData, setUser]);
 
   useEffect(() => {
-    if (chatData.length) {
+    if (globalData.chatData.length) {
       if (favoriteChatRoomId) {
-        const chatRoom = chatData.find(
+        const chatRoom = globalData.chatData.find(
           (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
         );
         if (!chatRoom) return;
@@ -54,20 +49,25 @@ export const useSetData = () => {
         });
       } else {
         setChatRoom({
-          id: chatData[0].id,
-          name: chatData[0].name,
-          description: chatData[0].description,
-          defaultMessage: chatData[0].defaultMessage,
+          id: globalData.chatData[0].id,
+          name: globalData.chatData[0].name,
+          description: globalData.chatData[0].description,
+          defaultMessage: globalData.chatData[0].defaultMessage,
         });
       }
       setChatRoomOptions(
-        chatData.map((chatRoom) => ({
+        globalData.chatData.map((chatRoom) => ({
           id: chatRoom.id,
           name: chatRoom.name,
         }))
       );
     }
-  }, [chatData, favoriteChatRoomId, setChatRoom, setChatRoomOptions]);
+  }, [
+    globalData.chatData,
+    favoriteChatRoomId,
+    setChatRoom,
+    setChatRoomOptions,
+  ]);
 
   useEffect(() => {
     if (chatMessagesData) {
