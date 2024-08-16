@@ -29,7 +29,7 @@ export const ClipboardContents = () => {
       {isLoading && !data ? (
         <Loader />
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3 overflow-y-scroll">
           {data?.map((item: Clipboard) => (
             <ClipboardItem key={item.id} content={item.content} id={item.id} />
           )) ?? (

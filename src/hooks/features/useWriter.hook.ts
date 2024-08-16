@@ -1,11 +1,12 @@
 import { MouseEvent, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { useGetWriter } from "../api/useGetWriter.hook";
 import { WriterState } from "@/recoil/atoms.recoil";
 
 export const useWriter = () => {
   const [isRequestView, setIsRequestView] = useState<boolean>(false);
   const [writer, setWriter] = useRecoilState(WriterState);
+  const resetWriter = useResetRecoilState(WriterState);
 
   const { data: writerData } = useGetWriter();
 
@@ -27,6 +28,7 @@ export const useWriter = () => {
     writer,
     writerData,
     handleSelectWriter,
+    resetWriter,
     setFindWriter,
     setIsRequestView,
     setWriter,

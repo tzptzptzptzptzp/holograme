@@ -162,8 +162,8 @@ export const MemoItem = ({
   return (
     <li
       className={cn(
-        "relative z-0 min-h-[45px] px-4 py-2 rounded-3xl bg-white bg-opacity-90",
-        isShow ? "cursor-default" : "cursor-pointer"
+        "relative z-0 h-fit  px-4 py-2 rounded-3xl bg-white bg-opacity-90",
+        isShow ? "min-h-fit cursor-default" : "min-h-[45px] cursor-pointer"
       )}
       onClick={handleClick}
     >

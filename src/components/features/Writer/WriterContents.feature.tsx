@@ -46,7 +46,7 @@ export const WriterContents = () => {
       {isRequestView ? (
         <WriterRequestForm writer={writer} />
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3 overflow-y-scroll">
           {writerData.map((writer, i) => (
             <WriterUserItem
               key={i}

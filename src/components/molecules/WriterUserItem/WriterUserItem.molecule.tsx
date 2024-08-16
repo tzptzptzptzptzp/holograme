@@ -20,6 +20,10 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClick(e, id);
   };
+  const handleDelete = () => {
+    handleOpen("deleteWriter");
+    setFindWriter(id);
+  };
   const handleEdit = () => {
     handleOpen("editWriter");
     setFindWriter(id);
@@ -42,10 +46,7 @@ export const WriterUserItem = ({ id, onClick, username }: Props) => {
           width={IconSize}
           height={IconSize}
         />
-        <Button
-          id={`exclude${GenerateRandomID()}`}
-          onClick={() => handleOpen("deleteWriter")}
-        >
+        <Button id={`exclude${GenerateRandomID()}`} onClick={handleDelete}>
           <Icons.Trash
             color={colorConfig.error}
             width={IconSize}

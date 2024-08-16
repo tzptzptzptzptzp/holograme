@@ -91,7 +91,7 @@ export const MemoContents = () => {
       {isLoading && !data ? (
         <Loader />
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-3 overflow-y-scroll">
           {memo?.map((item) => (
             <MemoItem
               key={item.id}
