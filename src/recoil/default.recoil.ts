@@ -2,10 +2,12 @@ import {
   ChatMessageStateType,
   ChatRoomOptionStateType,
   ChatRoomStateType,
+  ClipboardStateType,
   CreateFavoriteStateType,
   CurrentBlogPostStateType,
   EditChatStandardPhraseStateType,
   EditFavoriteStateType,
+  FavoriteStateType,
   ModalStateType,
   ModelStateType,
   UserStateType,
@@ -36,6 +38,15 @@ export const ChatRoomDefaultValue: ChatRoomStateType = {
   description: "",
   defaultMessage: "",
 };
+
+export const ClipboardsDefaultValue: ClipboardStateType[] = [
+  {
+    id: 0,
+    userId: "",
+    content: "",
+    date: new Date(),
+  },
+];
 
 export const CreateFavoriteDefaultValue: CreateFavoriteStateType = {
   title: "",
@@ -68,6 +79,21 @@ export const EditFavoriteDefaultValue: EditFavoriteStateType = {
   emojiNative: "⭐",
   emojiUnified: "2b50",
 };
+
+export const FavoritesDefaultValue: FavoriteStateType[] = [
+  {
+    id: 0,
+    userId: "",
+    title: "",
+    url: "",
+    emojiId: "",
+    emojiNative: "🦄",
+    emojiUnified: "",
+    order: 0,
+    createdDate: new Date(),
+    updatedDate: new Date(),
+  },
+];
 
 export const ModalDefaultValue: ModalStateType = {
   content: "",

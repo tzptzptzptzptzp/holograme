@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Clipboard, Favorite } from "@prisma/client";
+import { useRecoilState } from "recoil";
 import { OpenAiModel } from "@/app/api/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
@@ -9,32 +9,21 @@ import { ModelItem } from "@/components/molecules/ModelItem/ModelItem.molecule";
 import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecule";
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
 import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableArea/FavoriteDroppableArea.organism";
-import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
-import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { ClipboardsState, FavoritesState } from "@/recoil/atoms.recoil";
 
 export const HomeContents = () => {
-  const [clipboards, setClipboards] = useState<Clipboard[]>([]);
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [models, setModels] = useState<OpenAiModel[]>([]);
 
-  const { data: clipboardData } = useGetClipboard();
-  const { data: favoriteData } = useGetFavorite();
+  const [clipboards] = useRecoilState(ClipboardsState);
+  const [favorites, setFavorites] = useRecoilState(FavoritesState);
+
   const { data: modelsData } = useGetModels();
 
   const { type } = useDevice();
 
-  useEffect(() => {
-    if (clipboardData) {
-      const trimmedClipboard = clipboardData.slice(0, type === "SP" ? 2 : 3);
-      setClipboards(trimmedClipboard);
-    }
-  }, [clipboardData, type]);
-
-  useEffect(() => {
-    if (favoriteData) setFavorites(favoriteData);
-  }, [favoriteData]);
+  const trimmedClipboards = clipboards.slice(0, type === "SP" ? 2 : 3);
 
   useEffect(() => {
     if (modelsData) {
@@ -54,7 +43,7 @@ export const HomeContents = () => {
         </div>
       </div>
       <ul className="flex gap-2 w-full">
-        {clipboards.map((clipboard, i) => (
+        {trimmedClipboards.map((clipboard, i) => (
           <ClipboardItem
             key={i}
             content={clipboard.content}

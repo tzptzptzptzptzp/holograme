@@ -5,7 +5,9 @@ import {
   ChatMessagesState,
   ChatRoomOptionsState,
   ChatRoomState,
+  ClipboardsState,
   FavoriteChatRoomIdState,
+  FavoritesState,
   UserState,
 } from "@/recoil/atoms.recoil";
 import { GlobalDataType } from "@/types";
@@ -14,6 +16,8 @@ export const useSetData = (globalData: GlobalDataType) => {
   const setUser = useSetRecoilState(UserState);
   const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
   const setChatMessages = useSetRecoilState(ChatMessagesState);
+  const setClipboards = useSetRecoilState(ClipboardsState);
+  const setFavorites = useSetRecoilState(FavoritesState);
   const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
     FavoriteChatRoomIdState
@@ -23,16 +27,16 @@ export const useSetData = (globalData: GlobalDataType) => {
     favoriteChatRoomId || chatRoom?.id || 0
   );
 
+  setUser(globalData.userData);
+  setClipboards(globalData.clipboardData);
+  setFavorites(globalData.favoriteData);
+
   useEffect(() => {
     const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
     if (favoriteChatRoom) {
       setFavoriteChatRoomId(Number(favoriteChatRoom));
     }
   }, [setFavoriteChatRoomId]);
-
-  useEffect(() => {
-    setUser(globalData.userData);
-  }, [globalData.userData, setUser]);
 
   useEffect(() => {
     if (globalData.chatData.length) {

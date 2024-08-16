@@ -1,4 +1,4 @@
-import { ChatRoom, User } from "@prisma/client";
+import { ChatRoom, Clipboard, Favorite, User } from "@prisma/client";
 
 export type ClickHandlerType =
   | (() => void)
@@ -6,6 +6,8 @@ export type ClickHandlerType =
 
 export type GlobalDataType = {
   chatData: ChatRoom[];
+  clipboardData: Clipboard[];
+  favoriteData: Favorite[];
   userData: User;
 };
 
