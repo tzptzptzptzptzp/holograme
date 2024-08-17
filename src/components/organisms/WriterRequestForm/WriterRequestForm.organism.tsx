@@ -49,7 +49,7 @@ type Inputs = {
 export const WriterRequestForm = ({ writer }: Props) => {
   const [apiPending, setApiPending] = useState(false);
 
-  const { data } = useGetBlogPost(writer.id);
+  const { data, refetch } = useGetBlogPost(writer.id);
   const { setCurrentBlogPost } = useBlogPost();
 
   const {
@@ -108,6 +108,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
             content: jsonData.content,
             prompt: data.prompt,
           });
+          refetch();
         },
         onError: () => {
           toast.error(textsConfig.TOAST.BLOG_POST_CREATE.ERROR);
