@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Border } from "@/components/atoms/Border/Border.atom";
 import { Button } from "@/components/atoms/Button/Button.atom";
@@ -41,35 +42,46 @@ const Header = ({
 };
 
 export const ShowBlogPostModal = () => {
+  const [blogPost, setBlogPost] = useState({
+    id: 0,
+    title: "",
+    description: "",
+    content: "",
+    prompt: "",
+  });
   const { currentBlogPost } = useBlogPost();
+
+  useEffect(() => {
+    setBlogPost(currentBlogPost);
+  }, [currentBlogPost, setBlogPost]);
   return (
     <ModalInner
       className="max-w-5xl"
       title={
-        currentBlogPost.title !== ""
-          ? currentBlogPost.title
+        blogPost.title !== ""
+          ? blogPost.title
           : textsConfig.MODAL.BLOG_POST.AWAITING
       }
     >
-      {currentBlogPost.id !== 0 ? (
+      {blogPost.id !== 0 ? (
         <div className="flex flex-col gap-6">
           <div>
             <Header
-              copyContent={currentBlogPost.description}
+              copyContent={blogPost.description}
               title={textsConfig.MODAL.BLOG_POST.DESCRIPTION}
             />
-            <p>{currentBlogPost.description}</p>
+            <p>{blogPost.description}</p>
           </div>
           <div>
             <Header
-              copyContent={currentBlogPost.content}
+              copyContent={blogPost.content}
               title={textsConfig.MODAL.BLOG_POST.ARTICLE}
             />
-            <CustomReactMarkdown markdown={currentBlogPost.content} />
+            <CustomReactMarkdown markdown={blogPost.content} />
           </div>
           <div>
             <Header title={textsConfig.MODAL.BLOG_POST.PROMPT} />
-            <CustomReactMarkdown markdown={currentBlogPost.prompt} />
+            <CustomReactMarkdown markdown={blogPost.prompt} />
           </div>
         </div>
       ) : (

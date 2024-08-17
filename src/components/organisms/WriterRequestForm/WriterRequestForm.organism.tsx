@@ -50,7 +50,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
   const [apiPending, setApiPending] = useState(false);
 
   const { data, refetch } = useGetBlogPost(writer.id);
-  const { setCurrentBlogPost } = useBlogPost();
+  const { resetBlogPost, setCurrentBlogPost } = useBlogPost();
 
   const {
     register,
@@ -81,6 +81,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
   const onSubmit = (data: Inputs) => {
     if (apiPending) return;
     setApiPending(true);
+    resetBlogPost();
     const prompt = GenerateWriterPrompt({
       ...data,
       productInfo: data.productInfo || noData,
