@@ -28,8 +28,6 @@ export const BlogPostListModal = () => {
       prompt: article.prompt,
     });
   };
-
-  console.log(data);
   return (
     <ModalInner className="max-w-5xl" title={"a"}>
       <ul className="flex flex-col overflow-y-scroll w-full">

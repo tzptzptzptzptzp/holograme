@@ -8,14 +8,13 @@ import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { FormSelect } from "@/components/forms/FormSelect/FormSelect.form";
 import { textsConfig } from "@/config/texts.config";
+import { useGetBlogPost } from "@/hooks/api/useGetBlogPost.hook";
 import { usePostBlogPost } from "@/hooks/api/usePostBlogPost.hook";
 import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import { GenerateWriterPrompt } from "@/utils/GenerateWriterPrompt.util";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
-import { colorConfig } from "@/config/color.config";
-import { useGetBlogPost } from "@/hooks/api/useGetBlogPost.hook";
 
 const inputClassName = "border-none";
 const wrapperClassName = "w-full";
@@ -49,8 +48,8 @@ type Inputs = {
 export const WriterRequestForm = ({ writer }: Props) => {
   const [apiPending, setApiPending] = useState(false);
 
-  const { data } = useGetBlogPost(writer.id);
-  const { setCurrentBlogPost } = useBlogPost();
+  const { data, refetch } = useGetBlogPost(writer.id);
+  const { resetBlogPost, setCurrentBlogPost } = useBlogPost();
 
   const {
     register,
@@ -78,9 +77,23 @@ export const WriterRequestForm = ({ writer }: Props) => {
     setValue("toneAndStyle", writer.toneAndStyle);
   }, [setValue, writer]);
 
+  const resetForm = () => {
+    setValue("title", "");
+    setValue("summary", "");
+    setValue("keywords", "");
+    setValue("structureAndHeadings", "");
+    setValue("productInfo", "");
+    setValue("productUrl", "");
+    setValue("revenueArticleTitle", "");
+    setValue("revenueArticleUrl", "");
+    setValue("revenueArticleSummary", "");
+    setValue("referenceUrls", "");
+  };
+
   const onSubmit = (data: Inputs) => {
     if (apiPending) return;
     setApiPending(true);
+    resetBlogPost();
     const prompt = GenerateWriterPrompt({
       ...data,
       productInfo: data.productInfo || noData,
@@ -108,6 +121,8 @@ export const WriterRequestForm = ({ writer }: Props) => {
             content: jsonData.content,
             prompt: data.prompt,
           });
+          resetForm();
+          refetch();
         },
         onError: () => {
           toast.error(textsConfig.TOAST.BLOG_POST_CREATE.ERROR);
