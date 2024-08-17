@@ -3,7 +3,7 @@ import { cn } from "@/utils/Cn.util";
 import { ModalContentsSwitcher } from "@/utils/ModalContentsSwitcher.util";
 
 export const Modal = () => {
-  const { content, isOpen, handleClose } = useModal();
+  const { content, isCloseDisabled, isOpen, handleClose } = useModal();
 
   return (
     <div
@@ -16,9 +16,11 @@ export const Modal = () => {
     >
       <div
         className="absolute z-0 w-full h-full bg-black bg-opacity-30 cursor-pointer"
-        onClick={handleClose}
+        onClick={() => {
+          !isCloseDisabled && handleClose();
+        }}
       ></div>
-      <div className="u-shadow-sm flex items-center justify-center z-10 overflow-x-hidden overflow-y-scroll max-h-[80%] p-8 s:p-4 rounded-3xl bg-white">
+      <div className="u-shadow-sm flex items-center justify-center z-10 overflow-x-hidden overflow-y-scroll max-w-[820px] s:max-w-full min-w-[600px] s:min-w-full max-h-[80%] p-8 s:p-4 rounded-3xl bg-white">
         {ModalContentsSwitcher(content)}
       </div>
     </div>

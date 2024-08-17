@@ -97,6 +97,7 @@ export const FavoritesDefaultValue: FavoriteStateType[] = [
 
 export const ModalDefaultValue: ModalStateType = {
   content: "",
+  isCloseDisabled: false,
   isOpen: false,
 };
 

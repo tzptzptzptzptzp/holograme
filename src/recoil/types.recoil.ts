@@ -53,6 +53,7 @@ export type FavoriteModeStateType = "create" | "edit";
 
 export type ModalStateType = {
   content: ModalContentType;
+  isCloseDisabled: boolean;
   isOpen: boolean;
 };
 
