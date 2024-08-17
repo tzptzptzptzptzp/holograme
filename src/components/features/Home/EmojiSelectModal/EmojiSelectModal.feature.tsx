@@ -42,7 +42,7 @@ export const EmojiSelectModal = () => {
     }
   };
   return (
-    <ModalInner enableButton={false}>
+    <ModalInner className="min-w-0" enableButton={false}>
       <Picker data={data} onEmojiSelect={handleSelect} />
     </ModalInner>
   );
