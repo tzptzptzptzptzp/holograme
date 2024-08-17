@@ -7,6 +7,7 @@ import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { CurrentBlogPostState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
+import { Icons } from "@/icons";
 
 export const BlogPostListModal = () => {
   const setCurrentBlogPost = useSetRecoilState(CurrentBlogPostState);
@@ -40,7 +41,7 @@ export const BlogPostListModal = () => {
             )}
           >
             <Button
-              className="truncate hover:opacity-70"
+              className="flex items-center justify-between w-full text-left truncate hover:opacity-70"
               hover={false}
               onClick={() => {
                 handleClick(blogPost);
@@ -48,6 +49,7 @@ export const BlogPostListModal = () => {
               }}
             >
               {blogPost.title}
+              <Icons.ArrowRightCircle width={22} height={22} />
             </Button>
           </li>
         ))}
