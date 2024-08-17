@@ -65,7 +65,7 @@ export const CreateFavoriteModal = () => {
       title: title,
       url: url,
     }));
-    onOpen("emojiSelect");
+    onOpen("emojiSelect", true);
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
