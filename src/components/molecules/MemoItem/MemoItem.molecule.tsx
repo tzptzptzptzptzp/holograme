@@ -58,16 +58,6 @@ export const MemoItem = ({
     setValue("title", title);
   }, [content, title, setValue]);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      if (isEditing || isShow) {
-        contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
-      } else {
-        contentRef.current.style.height = "0px";
-      }
-    }
-  }, [isEditing, isShow]);
-
   const handleArchive = () => {
     setApiPending(true);
     archiveMutate(
@@ -151,10 +141,6 @@ export const MemoItem = ({
         onSettled: () => {
           setApiPending(false);
           setIsEditing(false);
-          if (contentRef.current) {
-            contentRef.current.style.height = "0px";
-            contentRef.current.style.height = `auto`;
-          }
         },
       }
     );
@@ -163,7 +149,7 @@ export const MemoItem = ({
     <li
       className={cn(
         "relative z-0 h-fit px-4 py-2 rounded-3xl bg-white bg-opacity-90",
-        isShow ? "min-h-fit cursor-default" : "min-h-[45px] cursor-pointer"
+        isShow ? "cursor-default" : "cursor-pointer"
       )}
       onClick={handleClick}
     >
@@ -239,45 +225,51 @@ export const MemoItem = ({
           )}
         </div>
       </div>
-      <div className="overflow-hidden duration-150" ref={contentRef}>
-        {isEditing ? (
-          <>
-            <FormTextarea
-              textareaClassName="pt-[4px] border-none"
-              placeholder="内容"
-              value={watch("content")}
-              wrapperClassName="pt-[6px]"
-              {...register("content")}
-            />
-            <div className="flex justify-end gap-4 w-2/3 s:w-full mr-0 ml-auto pt-2">
-              <Button
-                className="!w-1/3 s:!w-1/2"
-                onClick={handleCancel}
-                type="reset"
-                variant="cancel"
-              >
-                キャンセル
-              </Button>
-              <Button
-                className="!w-1/3 s:!w-1/2"
-                disabled={apiPending}
-                onClick={handleSubmit}
-                type="submit"
-                variant={apiPending ? "disable" : "primary"}
-              >
-                更新
-              </Button>
-            </div>
-          </>
-        ) : (
-          isShow &&
-          content && (
-            <CustomReactMarkdown
-              className="pt-2 whitespace-pre-wrap"
-              markdown={content}
-            />
-          )
+      <div
+        className={cn(
+          "grid duration-300",
+          isShow || isEditing ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
+      >
+        <div className="overflow-hidden" ref={contentRef}>
+          {isEditing ? (
+            <>
+              <FormTextarea
+                textareaClassName="pt-[4px] border-none"
+                placeholder="内容"
+                value={watch("content")}
+                wrapperClassName="pt-[6px]"
+                {...register("content")}
+              />
+              <div className="flex justify-end gap-4 w-2/3 s:w-full mr-0 ml-auto pt-2">
+                <Button
+                  className="!w-1/3 s:!w-1/2"
+                  onClick={handleCancel}
+                  type="reset"
+                  variant="cancel"
+                >
+                  キャンセル
+                </Button>
+                <Button
+                  className="!w-1/3 s:!w-1/2"
+                  disabled={apiPending}
+                  onClick={handleSubmit}
+                  type="submit"
+                  variant={apiPending ? "disable" : "primary"}
+                >
+                  更新
+                </Button>
+              </div>
+            </>
+          ) : (
+            content && (
+              <CustomReactMarkdown
+                className="pt-2 whitespace-pre-wrap"
+                markdown={content}
+              />
+            )
+          )}
+        </div>
       </div>
     </li>
   );
