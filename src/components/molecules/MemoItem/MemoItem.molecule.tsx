@@ -107,7 +107,7 @@ export const MemoItem = ({
     ) {
       return;
     }
-    if (isShow) return;
+    if (isShow && content !== "") return;
     setIsShow(true);
   };
 
@@ -162,7 +162,7 @@ export const MemoItem = ({
   return (
     <li
       className={cn(
-        "relative z-0 h-fit  px-4 py-2 rounded-3xl bg-white bg-opacity-90",
+        "relative z-0 h-fit px-4 py-2 rounded-3xl bg-white bg-opacity-90",
         isShow ? "min-h-fit cursor-default" : "min-h-[45px] cursor-pointer"
       )}
       onClick={handleClick}
@@ -179,7 +179,7 @@ export const MemoItem = ({
           <p className="w-full text-gray truncate">{title}</p>
         )}
         <div className="flex items-center gap-3">
-          {showIcon && (
+          {showIcon && content !== "" && (
             <Button onClick={handleShow}>
               {isShow ? (
                 <Icons.EyeSlash
@@ -270,6 +270,7 @@ export const MemoItem = ({
             </div>
           </>
         ) : (
+          isShow &&
           content && (
             <CustomReactMarkdown
               className="pt-2 whitespace-pre-wrap"
