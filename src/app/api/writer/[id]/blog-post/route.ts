@@ -62,6 +62,9 @@ export async function GET(
 
     const data = await prisma.blogPost.findMany({
       where: { userId, writerId: id },
+      orderBy: {
+        createdDate: "desc",
+      },
     });
 
     return NextResponse.json(data);
