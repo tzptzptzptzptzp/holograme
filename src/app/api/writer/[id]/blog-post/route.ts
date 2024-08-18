@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { generateGPTResponse } from "@/app/apiHelpers/generateGPTResponse.helper";
 import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
-import { prisma } from "../../../../../libs/Prisma.lib";
+import { gptConfig } from "@/config/gpt.config";
+import { prisma } from "@/libs/Prisma.lib";
 
 export async function POST(
   req: Request,
@@ -16,7 +17,11 @@ export async function POST(
     const userId = await getUserIdFromToken(token);
     const { title, prompt } = await req.json();
 
-    const gptResponse = await generateGPTResponse(prompt);
+    const gptResponse = await generateGPTResponse(
+      prompt,
+      undefined,
+      gptConfig.MAX_TOKENS.WRITING
+    );
 
     if (gptResponse === null) {
       return NextResponse.json(
