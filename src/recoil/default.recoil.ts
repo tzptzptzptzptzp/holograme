@@ -59,7 +59,6 @@ export const CreateFavoriteDefaultValue: CreateFavoriteStateType = {
 export const CurrentBlogPostDefaultValue: CurrentBlogPostStateType = {
   id: 0,
   title: "",
-  description: "",
   content: "",
   prompt: "",
 };

@@ -16,16 +16,10 @@ export const BlogPostListModal = () => {
   const { handleOpen } = useModal();
 
   const handleClick = (article: BlogPost) => {
-    const jsonData: {
-      title: string;
-      description: string;
-      content: string;
-    } = JSON.parse(article.content);
     setCurrentBlogPost({
       id: article.id,
-      title: jsonData.title,
-      description: jsonData.description,
-      content: jsonData.content,
+      title: article.title,
+      content: article.content,
       prompt: article.prompt,
     });
   };

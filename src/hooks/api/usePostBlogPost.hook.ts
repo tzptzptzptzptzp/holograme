@@ -9,7 +9,9 @@ const postBlogPost = async ({
   title: string;
   id: number;
   prompt: string;
-}): Promise<{ data: { id: number; content: string; prompt: string } }> => {
+}): Promise<{
+  data: { id: number; title: string; content: string; prompt: string };
+}> => {
   return await axios.post(`/api/writer/${id}/blog-post`, {
     title,
     prompt,

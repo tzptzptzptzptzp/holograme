@@ -45,7 +45,6 @@ export const ShowBlogPostModal = () => {
   const [blogPost, setBlogPost] = useState({
     id: 0,
     title: "",
-    description: "",
     content: "",
     prompt: "",
   });
@@ -65,13 +64,6 @@ export const ShowBlogPostModal = () => {
     >
       {blogPost.id !== 0 ? (
         <div className="flex flex-col gap-6">
-          <div>
-            <Header
-              copyContent={blogPost.description}
-              title={textsConfig.MODAL.BLOG_POST.DESCRIPTION}
-            />
-            <p>{blogPost.description}</p>
-          </div>
           <div>
             <Header
               copyContent={blogPost.content}
