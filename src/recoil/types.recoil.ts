@@ -29,7 +29,6 @@ export type CreateFavoriteStateType = Omit<
 export type CurrentBlogPostStateType = {
   id: number;
   title: string;
-  description: string;
   content: string;
   prompt: string;
 };

@@ -109,16 +109,10 @@ export const WriterRequestForm = ({ writer }: Props) => {
       {
         onSuccess: ({ data }) => {
           toast(textsConfig.TOAST.BLOG_POST_CREATE.SUCCESS);
-          const jsonData: {
-            title: string;
-            description: string;
-            content: string;
-          } = JSON.parse(data.content);
           setCurrentBlogPost({
             id: data.id,
-            title: jsonData.title,
-            description: jsonData.description,
-            content: jsonData.content,
+            title: data.title,
+            content: data.content,
             prompt: data.prompt,
           });
           resetForm();
