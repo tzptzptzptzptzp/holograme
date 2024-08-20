@@ -52,6 +52,7 @@ export const ShowBlogPostModal = () => {
     content: "",
     prompt: "",
   });
+  const [isShowContent, setIsShowContent] = useState(true);
   const [isShowPrompt, setIsShowPrompt] = useState(false);
   const { currentBlogPost } = useBlogPost();
 
@@ -59,7 +60,11 @@ export const ShowBlogPostModal = () => {
     setBlogPost(currentBlogPost);
   }, [currentBlogPost, setBlogPost]);
 
-  const handleOpen = () => {
+  const handleShowContent = () => {
+    setIsShowContent((prev) => !prev);
+  };
+
+  const handleShowPrompt = () => {
     setIsShowPrompt((prev) => !prev);
   };
   return (
@@ -77,15 +82,32 @@ export const ShowBlogPostModal = () => {
             <Header
               copyContent={blogPost.content}
               title={textsConfig.MODAL.BLOG_POST.ARTICLE}
-            />
-            <CustomReactMarkdown markdown={blogPost.content} />
+            >
+              <Button className="pr-2" onClick={handleShowContent}>
+                {isShowContent ? (
+                  <Icons.ChevronUp className="stroke-2" />
+                ) : (
+                  <Icons.ChevronDown className="stroke-2" />
+                )}
+              </Button>
+            </Header>
+            <div
+              className={cn(
+                "grid duration-500",
+                isShowContent ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+              )}
+            >
+              <div className="overflow-hidden">
+                <CustomReactMarkdown markdown={blogPost.content} />
+              </div>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <Header
               copyContent={blogPost.prompt}
               title={textsConfig.MODAL.BLOG_POST.PROMPT}
             >
-              <Button className="pr-2" onClick={handleOpen}>
+              <Button className="pr-2" onClick={handleShowPrompt}>
                 {isShowPrompt ? (
                   <Icons.ChevronUp className="stroke-2" />
                 ) : (
