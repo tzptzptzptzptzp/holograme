@@ -33,8 +33,11 @@ const Form = ({
 
 const Div = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={WrapperClassName}>
-      <div className={InnerClassName}>{children}</div>
+    <div className="flex flex-col gap-4">
+      <div className={WrapperClassName}>
+        <div className={InnerClassName}>{children}</div>
+      </div>
+      <Buttons submit={false} />
     </div>
   );
 };
@@ -42,9 +45,11 @@ const Div = ({ children }: { children: React.ReactNode }) => {
 const Buttons = ({
   disabled = false,
   buttonText,
+  submit = true,
 }: {
   disabled?: boolean;
-  buttonText: string;
+  buttonText?: string;
+  submit?: boolean;
 }) => {
   const { handleClose } = useModal();
   return (
@@ -57,14 +62,16 @@ const Buttons = ({
       >
         {textsConfig.BUTTON.CANCEL}
       </Button>
-      <Button
-        className="!w-1/3"
-        disabled={disabled}
-        type="submit"
-        variant={disabled ? "disable" : "primary"}
-      >
-        {buttonText}
-      </Button>
+      {submit && (
+        <Button
+          className="!w-1/3"
+          disabled={disabled}
+          type="submit"
+          variant={disabled ? "disable" : "primary"}
+        >
+          {buttonText}
+        </Button>
+      )}
     </div>
   );
 };
