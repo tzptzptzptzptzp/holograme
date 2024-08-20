@@ -103,7 +103,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
       revenueArticleSummary: data.revenueArticleSummary || noData,
       referenceUrls: data.referenceUrls || noData,
     });
-    handleOpen("showBlogPost");
+    handleOpen("showBlogPost", true);
     mutate(
       { title: data.title, id: writer.id, prompt },
       {

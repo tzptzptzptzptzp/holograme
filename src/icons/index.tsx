@@ -7,6 +7,8 @@ import { Beaker } from "./Beaker/Beaker.icon";
 import { Book } from "./Book/Book.icon";
 import { BuildingLibrary } from "./BuildingLibrary/BuildingLibrary.icon";
 import { Chat } from "./Chat/Chat.icon";
+import { ChevronDown } from "./ChevronDown/ChevronDown.icon";
+import { ChevronUp } from "./ChevronUp/ChevronUp.icon";
 import { ClipBoard } from "./Clipboard/Clipboard.icon";
 import { CommandLine } from "./CommandLine/CommandLine.icon";
 import { Config } from "./Config/Config.icon";
@@ -38,6 +40,8 @@ export const Icons = {
   Book,
   BuildingLibrary,
   Chat,
+  ChevronDown,
+  ChevronUp,
   ClipBoard,
   CommandLine,
   Config,
