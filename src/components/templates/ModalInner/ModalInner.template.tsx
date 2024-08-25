@@ -10,12 +10,14 @@ const Form = ({
   buttonDisabled = false,
   buttonText,
   children,
+  closeButton,
   enableButton = true,
   onSubmit,
 }: {
   buttonDisabled?: boolean;
   buttonText: string;
   children: React.ReactNode;
+  closeButton: boolean;
   enableButton?: boolean;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
@@ -25,28 +27,40 @@ const Form = ({
         <div className={InnerClassName}>{children}</div>
       </div>
       {enableButton && (
-        <Buttons disabled={buttonDisabled} buttonText={buttonText} />
+        <Buttons
+          closeButton={closeButton}
+          disabled={buttonDisabled}
+          buttonText={buttonText}
+        />
       )}
     </form>
   );
 };
 
-const Div = ({ children }: { children: React.ReactNode }) => {
+const Div = ({
+  children,
+  closeButton,
+}: {
+  children: React.ReactNode;
+  closeButton: boolean;
+}) => {
   return (
     <div className="flex flex-col gap-4">
       <div className={WrapperClassName}>
         <div className={InnerClassName}>{children}</div>
       </div>
-      <Buttons submit={false} />
+      <Buttons closeButton={closeButton} submit={false} />
     </div>
   );
 };
 
 const Buttons = ({
+  closeButton,
   disabled = false,
   buttonText,
   submit = true,
 }: {
+  closeButton: boolean;
   disabled?: boolean;
   buttonText?: string;
   submit?: boolean;
@@ -54,14 +68,16 @@ const Buttons = ({
   const { handleClose } = useModal();
   return (
     <div className="flex justify-center gap-8">
-      <Button
-        className="!w-1/3"
-        onClick={handleClose}
-        type="reset"
-        variant="cancel"
-      >
-        {textsConfig.BUTTON.CANCEL}
-      </Button>
+      {closeButton && (
+        <Button
+          className="!w-1/3"
+          onClick={handleClose}
+          type="reset"
+          variant="cancel"
+        >
+          {textsConfig.BUTTON.CANCEL}
+        </Button>
+      )}
       {submit && (
         <Button
           className="!w-1/3"
@@ -81,6 +97,7 @@ type Props = {
   buttonText?: string;
   children: React.ReactNode;
   className?: string;
+  closeButton?: boolean;
   enableButton?: boolean;
   form?: boolean;
   title?: string;
@@ -92,6 +109,7 @@ export const ModalInner = ({
   buttonText = textsConfig.BUTTON.CREATE,
   children,
   className,
+  closeButton = true,
   enableButton = true,
   form = false,
   title,
@@ -109,13 +127,14 @@ export const ModalInner = ({
         <Form
           buttonDisabled={buttonDisabled}
           buttonText={buttonText}
+          closeButton={closeButton}
           enableButton={enableButton}
           onSubmit={onSubmit}
         >
           {children}
         </Form>
       ) : (
-        <Div>{children}</Div>
+        <Div closeButton={closeButton}>{children}</Div>
       )}
     </div>
   );
