@@ -8,6 +8,7 @@ import { useModal } from "@/hooks/useModal.hook";
 import { CurrentBlogPostState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
 import { Icons } from "@/icons";
+import { textsConfig } from "@/config/texts.config";
 
 export const BlogPostListModal = () => {
   const setCurrentBlogPost = useSetRecoilState(CurrentBlogPostState);
@@ -24,7 +25,10 @@ export const BlogPostListModal = () => {
     });
   };
   return (
-    <ModalInner className="max-w-5xl" title={"a"}>
+    <ModalInner
+      className="max-w-5xl"
+      title={writer.name + textsConfig.MODAL.BLOG_POST_LIST.TITLE}
+    >
       <ul className="flex flex-col overflow-y-scroll w-full">
         {data.map((blogPost, i) => (
           <li

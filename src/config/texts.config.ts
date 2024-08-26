@@ -128,6 +128,9 @@ export const textsConfig = {
       DESCRIPTION: "記事の概要",
       PROMPT: "プロンプト",
     },
+    BLOG_POST_LIST: {
+      TITLE: "の記事一覧",
+    },
     MODELS_LIST: {
       TITLE: "OpenAIモデル一覧",
     },
