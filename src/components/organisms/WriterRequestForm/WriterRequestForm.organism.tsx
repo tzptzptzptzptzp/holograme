@@ -98,6 +98,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
       ...data,
       productInfo: data.productInfo || noData,
       productUrl: data.productUrl || noData,
+      articleRole: data.articleRole,
       revenueArticleTitle: data.revenueArticleTitle || noData,
       revenueArticleUrl: data.revenueArticleUrl || noData,
       revenueArticleSummary: data.revenueArticleSummary || noData,

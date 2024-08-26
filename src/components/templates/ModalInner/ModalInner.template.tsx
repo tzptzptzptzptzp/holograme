@@ -10,14 +10,12 @@ const Form = ({
   buttonDisabled = false,
   buttonText,
   children,
-  closeButton,
   enableButton = true,
   onSubmit,
 }: {
   buttonDisabled?: boolean;
   buttonText: string;
   children: React.ReactNode;
-  closeButton: boolean;
   enableButton?: boolean;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
@@ -27,11 +25,7 @@ const Form = ({
         <div className={InnerClassName}>{children}</div>
       </div>
       {enableButton && (
-        <Buttons
-          closeButton={closeButton}
-          disabled={buttonDisabled}
-          buttonText={buttonText}
-        />
+        <Buttons disabled={buttonDisabled} buttonText={buttonText} />
       )}
     </form>
   );
@@ -39,28 +33,26 @@ const Form = ({
 
 const Div = ({
   children,
-  closeButton,
+  enableButton = true,
 }: {
   children: React.ReactNode;
-  closeButton: boolean;
+  enableButton?: boolean;
 }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className={WrapperClassName}>
         <div className={InnerClassName}>{children}</div>
       </div>
-      <Buttons closeButton={closeButton} submit={false} />
+      {enableButton && <Buttons submit={false} />}
     </div>
   );
 };
 
 const Buttons = ({
-  closeButton,
   disabled = false,
   buttonText,
   submit = true,
 }: {
-  closeButton: boolean;
   disabled?: boolean;
   buttonText?: string;
   submit?: boolean;
@@ -68,16 +60,14 @@ const Buttons = ({
   const { handleClose } = useModal();
   return (
     <div className="flex justify-center gap-8">
-      {closeButton && (
-        <Button
-          className="!w-1/3"
-          onClick={handleClose}
-          type="reset"
-          variant="cancel"
-        >
-          {textsConfig.BUTTON.CANCEL}
-        </Button>
-      )}
+      <Button
+        className="!w-1/3"
+        onClick={handleClose}
+        type="reset"
+        variant="cancel"
+      >
+        {textsConfig.BUTTON.CANCEL}
+      </Button>
       {submit && (
         <Button
           className="!w-1/3"
@@ -127,14 +117,13 @@ export const ModalInner = ({
         <Form
           buttonDisabled={buttonDisabled}
           buttonText={buttonText}
-          closeButton={closeButton}
           enableButton={enableButton}
           onSubmit={onSubmit}
         >
           {children}
         </Form>
       ) : (
-        <Div closeButton={closeButton}>{children}</Div>
+        <Div enableButton={enableButton}>{children}</Div>
       )}
     </div>
   );

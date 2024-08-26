@@ -2,8 +2,8 @@ import { forwardRef } from "react";
 import { cn } from "@/utils/Cn.util";
 
 type Option = {
-  id: number;
-  name: string;
+  id: number | string;
+  name: number | string;
 };
 
 type Props = {

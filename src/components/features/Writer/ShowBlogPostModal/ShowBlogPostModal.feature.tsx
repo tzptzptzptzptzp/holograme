@@ -70,7 +70,7 @@ export const ShowBlogPostModal = () => {
   return (
     <ModalInner
       className="max-w-5xl"
-      closeButton={false}
+      enableButton={blogPost.id !== 0}
       title={
         blogPost.title !== ""
           ? blogPost.title

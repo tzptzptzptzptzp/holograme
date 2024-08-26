@@ -109,9 +109,9 @@ export const textsConfig = {
       },
       SELECT_OPTIONS: {
         ARTICLE_ROLE: [
-          { id: 1, name: "収益記事" },
-          { id: 2, name: "集客記事" },
-          { id: 3, name: "その他" },
+          { id: "収益記事", name: "収益記事" },
+          { id: "集客記事", name: "集客記事" },
+          { id: "その他", name: "その他" },
         ],
       },
     },
@@ -127,6 +127,9 @@ export const textsConfig = {
       AWAITING: "記事を作成中…",
       DESCRIPTION: "記事の概要",
       PROMPT: "プロンプト",
+    },
+    BLOG_POST_LIST: {
+      TITLE: "の記事一覧",
     },
     MODELS_LIST: {
       TITLE: "OpenAIモデル一覧",
