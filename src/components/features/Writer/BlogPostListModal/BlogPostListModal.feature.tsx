@@ -30,27 +30,28 @@ export const BlogPostListModal = () => {
       title={writer.name + textsConfig.MODAL.BLOG_POST_LIST.TITLE}
     >
       <ul className="flex flex-col overflow-y-scroll w-full">
-        {data.map((blogPost, i) => (
-          <li
-            key={i}
-            className={cn(
-              "flex justify-between gap-2 w-full p-1 border-t border-disableBackground",
-              data.length - 1 === i && "border-b"
-            )}
-          >
-            <Button
-              className="flex items-center justify-between w-full text-left truncate hover:opacity-70"
-              hover={false}
-              onClick={() => {
-                handleClick(blogPost);
-                handleOpen("showBlogPost");
-              }}
+        {data[0].id !== 0 &&
+          data.map((blogPost, i) => (
+            <li
+              key={i}
+              className={cn(
+                "flex justify-between gap-2 w-full p-1 border-t border-disableBackground",
+                data.length - 1 === i && "border-b"
+              )}
             >
-              {blogPost.title}
-              <Icons.ArrowRightCircle width={22} height={22} />
-            </Button>
-          </li>
-        ))}
+              <Button
+                className="flex items-center justify-between w-full text-left truncate hover:opacity-70"
+                hover={false}
+                onClick={() => {
+                  handleClick(blogPost);
+                  handleOpen("showBlogPost");
+                }}
+              >
+                {blogPost.title}
+                <Icons.ArrowRightCircle width={22} height={22} />
+              </Button>
+            </li>
+          ))}
       </ul>
     </ModalInner>
   );
