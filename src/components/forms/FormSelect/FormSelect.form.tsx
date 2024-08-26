@@ -5,8 +5,8 @@ import { cn } from "@/utils/Cn.util";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 
 type Option = {
-  id: number;
-  name: string;
+  id: number | string;
+  name: number | string;
 };
 
 type Props = {
