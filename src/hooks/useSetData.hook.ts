@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useGetChatMessage } from "./api/useGetChatMessage.hook";
+import { useGetUser } from "./api/useGetUser.hook";
 import {
   ChatMessagesState,
   ChatRoomOptionsState,
@@ -13,11 +14,11 @@ import {
 import { GlobalDataType } from "@/types";
 
 export const useSetData = (globalData: GlobalDataType) => {
-  const setUser = useSetRecoilState(UserState);
-  const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
   const setChatMessages = useSetRecoilState(ChatMessagesState);
+  const setChatRoomOptions = useSetRecoilState(ChatRoomOptionsState);
   const setClipboards = useSetRecoilState(ClipboardsState);
   const setFavorites = useSetRecoilState(FavoritesState);
+  const setUser = useSetRecoilState(UserState);
   const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
     FavoriteChatRoomIdState
@@ -26,10 +27,16 @@ export const useSetData = (globalData: GlobalDataType) => {
   const { data: chatMessagesData } = useGetChatMessage(
     favoriteChatRoomId || chatRoom?.id || 0
   );
+  const { data: userData } = useGetUser();
 
-  setUser(globalData.userData);
   setClipboards(globalData.clipboardData);
   setFavorites(globalData.favoriteData);
+
+  useEffect(() => {
+    if (chatMessagesData) {
+      setChatMessages(chatMessagesData.messages);
+    }
+  }, [chatMessagesData, setChatMessages]);
 
   useEffect(() => {
     const favoriteChatRoom = localStorage.getItem("favoriteChatRoom");
@@ -74,8 +81,8 @@ export const useSetData = (globalData: GlobalDataType) => {
   ]);
 
   useEffect(() => {
-    if (chatMessagesData) {
-      setChatMessages(chatMessagesData.messages);
+    if (userData) {
+      setUser(userData);
     }
-  }, [chatMessagesData, setChatMessages]);
+  }, [setUser, userData]);
 };
