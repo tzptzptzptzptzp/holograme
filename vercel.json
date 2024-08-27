@@ -1,9 +1,6 @@
 {
   "functions": {
     "src/app/api/**/*.ts": {
-      "maxDuration": 30
-    },
-    "src/app/api/writer/[id]/blog-post.ts": {
       "maxDuration": 60
     }
   },
