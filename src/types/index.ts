@@ -8,7 +8,6 @@ export type GlobalDataType = {
   chatData: ChatRoom[];
   clipboardData: Clipboard[];
   favoriteData: Favorite[];
-  userData: User;
 };
 
 export type ModalContentType =
