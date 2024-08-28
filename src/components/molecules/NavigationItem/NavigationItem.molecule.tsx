@@ -34,10 +34,9 @@ export const NavigationItem = ({ name, sp = true }: Props) => {
   const handleClick = (selectedContent: SelectedContentStateType) => {
     setSelectedContent(selectedContent);
   };
-  if (!sp) return;
 
   return (
-    <li>
+    <li className={cn({ hidden: !sp }) || undefined}>
       <Button
         className={cn(
           "hover:opacity-100 transition-all duration-150",
