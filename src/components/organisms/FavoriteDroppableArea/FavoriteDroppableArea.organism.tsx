@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   closestCenter,
   DndContext,
@@ -30,11 +30,28 @@ export const FavoriteDroppableArea = ({
   favorites,
   setFavorites,
 }: Props) => {
+  const listRef = useRef<HTMLUListElement | null>(null);
   const mutateTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [gap, setGap] = useState<number>(0);
+  const [maxItemCount, setMaxItemCount] = useState<number>(0);
+
+  const listWidth = listRef.current?.clientWidth;
 
   const { refetch } = useGetFavorite();
 
   const mutate = usePutFavoriteOrder();
+
+  useEffect(() => {
+    if (listRef.current && listWidth) {
+      setMaxItemCount(Math.floor(listWidth / 55));
+    }
+  }, [listRef, listWidth, setMaxItemCount]);
+
+  useEffect(() => {
+    if (listRef.current && listWidth) {
+      setGap((listWidth - 45 * maxItemCount) / maxItemCount - 1);
+    }
+  }, [listRef, listWidth, maxItemCount, setGap]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -100,7 +117,16 @@ export const FavoriteDroppableArea = ({
         items={favorites}
         strategy={horizontalListSortingStrategy}
       >
-        <ul className="flex gap-2 s:overflow-x-scroll">{children}</ul>
+        <ul
+          className="grid s:flex gap-y-2 s:!gap-2 s:overflow-x-scroll"
+          ref={listRef}
+          style={{
+            columnGap: `${gap}px`,
+            gridTemplateColumns: `repeat(${maxItemCount}, 1fr)`,
+          }}
+        >
+          {children}
+        </ul>
       </SortableContext>
     </DndContext>
   );
