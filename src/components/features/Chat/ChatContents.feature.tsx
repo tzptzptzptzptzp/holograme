@@ -92,7 +92,7 @@ export const ChatContents = () => {
           </div>
         </ContentHead>
       </div>
-      {!chatRoom ? <Loader /> : <ChatRoom roomId={chatRoom!.id ?? 0} />}
+      <ChatRoom roomId={chatRoom!.id ?? 0} />
       <MessageForm roomId={chatRoom ? chatRoom!.id : 0} />
     </ContentWrapper>
   );

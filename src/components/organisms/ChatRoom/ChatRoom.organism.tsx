@@ -31,14 +31,17 @@ export const ChatRoom = ({ roomId }: Props) => {
       className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 s:mt-2 pb-3 s:pb-2"
       ref={chatContainerRef}
     >
-      {chatMessages[0].id !== 0 &&
+      {chatMessages[0].id !== 0 ? (
         chatMessages.map((message) => (
           <ChatBalloon
             key={message.id}
             message={message.content}
             role={message.role}
           />
-        ))}
+        ))
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
