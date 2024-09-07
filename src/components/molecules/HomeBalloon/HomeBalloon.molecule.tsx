@@ -14,10 +14,19 @@ export const HomeBalloon = ({ message }: Props) => {
   useEffect(() => {
     if (ref.current) {
       if (isShow) {
+        ref.current.style.overflow = "visible";
+        ref.current.style.textOverflow = "clip";
+        ref.current.style.whiteSpace = "normal";
         const height = ref.current.scrollHeight;
         ref.current.style.height = height + "px";
       } else {
         ref.current.style.height = "26px";
+        setTimeout(() => {
+          if (!ref.current) return;
+          ref.current.style.overflow = "hidden";
+          ref.current.style.textOverflow = "ellipsis";
+          ref.current.style.whiteSpace = "nowrap";
+        }, 250);
       }
     }
   }, [isShow]);
@@ -29,10 +38,9 @@ export const HomeBalloon = ({ message }: Props) => {
     <Button className={cn(styles.balloon)} hover={false} onClick={handleClick}>
       <div className={cn(styles.inner)}>
         <div className="flex overflow-hidden">
-          <p className={cn("duration-300")} ref={ref}>
+          <p className={cn("duration-300 truncate")} ref={ref}>
             {message}
           </p>
-          {!isShow && <p>…</p>}
         </div>
       </div>
     </Button>
