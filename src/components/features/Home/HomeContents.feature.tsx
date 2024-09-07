@@ -13,15 +13,25 @@ import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableA
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
-import { ClipboardsState, FavoritesState } from "@/recoil/atoms.recoil";
+import {
+  ClipboardsState,
+  FavoritesState,
+  UserState,
+} from "@/recoil/atoms.recoil";
+import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
+import { textsConfig } from "@/config/texts.config";
 
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const [models, setModels] = useState<OpenAiModel[]>([]);
-  const [tweet, setTweet] = useState<string>("");
 
   const [clipboards] = useRecoilState(ClipboardsState);
+  const [user] = useRecoilState(UserState);
   const [favorites, setFavorites] = useRecoilState(FavoritesState);
+
+  const [tweet, setTweet] = useState<string>(
+    user.nickname + textsConfig.TWEET.DEFAULT
+  );
 
   const { data: modelsData } = useGetModels();
 
@@ -33,8 +43,9 @@ export const HomeContents = () => {
 
   useEffect(() => {
     if (!executedOnce) {
+      const prompt = GenerateTweetPrompt({ user });
       mutate(
-        { prompt: "こんにちは！" },
+        { prompt },
         {
           onSuccess: ({ data }) => {
             setTweet(data.answer);
@@ -46,7 +57,7 @@ export const HomeContents = () => {
       );
       setExecutedOnce(true);
     }
-  }, [executedOnce, mutate]);
+  }, [executedOnce, mutate, user]);
 
   useEffect(() => {
     if (modelsData) {
