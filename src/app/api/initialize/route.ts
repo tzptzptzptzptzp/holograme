@@ -10,6 +10,12 @@ export async function GET(req: Request) {
     }
     const userId = await getUserIdFromToken(token);
 
+    const userData = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
     const chatData = await prisma.chatRoom.findMany({
       where: {
         userId: userId,
@@ -38,6 +44,7 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json({
+      userData,
       chatData,
       clipboardData,
       favoriteData,
