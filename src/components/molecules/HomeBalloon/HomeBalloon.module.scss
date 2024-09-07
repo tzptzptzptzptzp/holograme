@@ -1,0 +1,56 @@
+.balloon {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+  text-align: left;
+  transition: all 0.3s;
+}
+
+.inner {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  line-height: 1.625;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 25px;
+    height: 25px;
+    clip-path: polygon(
+      17% 67%,
+      12% 81%,
+      7% 90%,
+      0 100%,
+      20% 97%,
+      38% 91%,
+      53% 81%,
+      71% 65%,
+      52% 46%,
+      23% 23%,
+      20% 34%,
+      20% 50%
+    );
+  }
+  position: relative;
+  background-color: var(--app-secondary);
+  color: white;
+
+  &::after {
+    bottom: -3px;
+    left: -3px;
+    transform: rotate(12deg);
+    background-color: var(--app-secondary);
+  }
+}
+
+@media (max-width: 767px) {
+  .inner {
+    font-size: 15px;
+  }
+}

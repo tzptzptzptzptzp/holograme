@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { useGetChatMessage } from "./api/useGetChatMessage.hook";
-import { useGetUser } from "./api/useGetUser.hook";
 import {
   ChatMessagesState,
   ChatRoomOptionsState,
@@ -27,10 +26,10 @@ export const useSetData = (globalData: GlobalDataType) => {
   const { data: chatMessagesData } = useGetChatMessage(
     favoriteChatRoomId || chatRoom?.id || 0
   );
-  const { data: userData } = useGetUser();
 
   setClipboards(globalData.clipboardData);
   setFavorites(globalData.favoriteData);
+  setUser(globalData.userData);
 
   useEffect(() => {
     if (chatMessagesData) {
@@ -79,10 +78,4 @@ export const useSetData = (globalData: GlobalDataType) => {
     setChatRoom,
     setChatRoomOptions,
   ]);
-
-  useEffect(() => {
-    if (userData) {
-      setUser(userData);
-    }
-  }, [setUser, userData]);
 };

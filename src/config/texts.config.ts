@@ -135,6 +135,9 @@ export const textsConfig = {
       TITLE: "OpenAIモデル一覧",
     },
   },
+  TWEET: {
+    DEFAULT: "〜！今日は何をしようかな✨！",
+  },
   TOAST: {
     BLOG_POST_CREATE: {
       SUCCESS: "🦄 記事の執筆に成功しました！",

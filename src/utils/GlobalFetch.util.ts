@@ -2,7 +2,18 @@ import { cookies } from "next/headers";
 import { ServerSideFetch } from "./ServerSideFetch.util";
 import { GlobalDataType } from "@/types";
 
+const userData = {
+  id: "",
+  username: "",
+  nickname: "",
+  email: "",
+  location: "",
+  createdDate: new Date(),
+  updatedDate: new Date(),
+};
+
 const fallbackData: GlobalDataType = {
+  userData: userData,
   chatData: [],
   clipboardData: [],
   favoriteData: [],
