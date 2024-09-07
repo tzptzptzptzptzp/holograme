@@ -38,7 +38,10 @@ export const HomeBalloon = ({ message }: Props) => {
     <Button className={cn(styles.balloon)} hover={false} onClick={handleClick}>
       <div className={cn(styles.inner)}>
         <div className="flex overflow-hidden">
-          <p className={cn("duration-300 truncate")} ref={ref}>
+          <p
+            className={cn("min-h-[29px] pt-[1.3px] duration-300 truncate")}
+            ref={ref}
+          >
             {message}
           </p>
         </div>

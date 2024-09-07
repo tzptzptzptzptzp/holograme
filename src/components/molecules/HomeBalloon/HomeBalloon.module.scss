@@ -1,8 +1,8 @@
 .balloon {
   display: flex;
+  justify-content: flex-start;
   position: relative;
   width: 100%;
-  justify-content: flex-start;
   text-align: left;
   transition: all 0.3s;
 }
