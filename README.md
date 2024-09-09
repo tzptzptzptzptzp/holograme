@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🦄 HolograMe（ホログラム）
 
-## Getting Started
+### 最適化されたスタートページを提供するアプリケーション
 
-First, run the development server:
+→ 最終ゴールは全てをこのアプリケーション上で完了できることを目標にしています。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 今後追加したい機能
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- タスク管理機能
+- Google カレンダー連携機能
+- 翻訳機能
+- その他 ……
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## プロダクトに関する注意事項
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- ※このレポジトリは通常時は Private で運用しています。
+- ※設計等は行わずひたすらリリースを繰り返しているため、
+  - Issue、PR、ブランチ、ディレクトリ構成の運用等は別レポジトリをご参照ください 🙇  
+    　 → [GitHub：linkloom](https://github.com/tzptzptzptzptzp/linkloom)
+- ※継続的に開発を続けているので、アクセスするタイミングによっては  
+  バグが発生している可能性もあります。予めご了承願います。
 
-## Learn More
+## ホーム
 
-To learn more about Next.js, take a look at the following resources:
+- ひとこと機能
+- 検索機能
+- お気に入り登録機能
+- OpenAI API のモデル一覧機能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![a](./readme/ss-01.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## チャット
 
-## Deploy on Vercel
+- チャット機能
+- チャットルーム機能
+  - ルーム設定
+  - お気に入りルーム設定機能（ブラウザ単位）
+  - デフォルトメッセージ設定機能
+- 定型文呼び出し機能
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![a](./readme/ss-02.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## クリップボード共有機能
+
+- 文章共有機能（アカウント単位）
+
+![a](./readme/ss-03.png)
+
+## ライター機能
+
+- ライター登録機能
+- 記事ライティング機能
+
+![a](./readme/ss-04.png)
+![a](./readme/ss-05.png)
+
+## メモ機能
+
+- メモ機能
+- メモアーカイブ機能
+
+![a](./readme/ss-06.png)
+
+## 検索履歴保存機能
+
+- 検索履歴保存機能（ブラウザ単位）
+
+![a](./readme/ss-07.png)
+
+## ユーザー情報保存機能
+
+- ユーザー情報保存機能（アカウント単位）
+
+![a](./readme/ss-08.png)
+
+## ゲストログイン情報
+
+※ レポジトリが Public の時のみログイン可能です
+
+ユーザー ID：`guest@tzp.pink`  
+パスワード：`oK27#^yWZjYoPz`
+
+ログインページ：[holograme.vercel.app/auth](https://holograme.vercel.app/auth)
