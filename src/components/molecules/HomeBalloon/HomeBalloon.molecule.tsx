@@ -38,12 +38,16 @@ export const HomeBalloon = ({ message }: Props) => {
     <Button className={cn(styles.balloon)} hover={false} onClick={handleClick}>
       <div className={cn(styles.inner)}>
         <div className="flex overflow-hidden">
-          <p
-            className={cn("min-h-[29px] pt-[1.3px] duration-300 truncate")}
-            ref={ref}
-          >
-            {message}
-          </p>
+          <div className="contents s:block s:overflow-y-scroll s:max-h-[5.5rem]">
+            <p
+              className={cn(
+                "min-h-[29px] pt-[1.3px] s:pt-[4px] duration-300 truncate"
+              )}
+              ref={ref}
+            >
+              {message}
+            </p>
+          </div>
         </div>
       </div>
     </Button>
