@@ -35,14 +35,14 @@ export const GlobalFrame = ({
           )}
           <main
             className={cn(
-              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:overflow-x-hidden w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4",
+              "flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:z-10 w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4",
               shadow && "u-shadow-sm"
             )}
           >
             {children}
           </main>
           {contents && type === "SP" && currentContent === "home" && (
-            <div className="flex flex-none items-end justify-center relative top-0 h-full max-h-[62svh] pl-4 s:px-2">
+            <div className="flex flex-none items-end justify-center relative top-0 z-0 h-full max-h-[62svh] pl-4 s:px-2">
               <Avatar />
             </div>
           )}

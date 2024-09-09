@@ -51,6 +51,12 @@
 
 @media (max-width: 767px) {
   .inner {
-    font-size: 15px;
+    font-size: 14px;
+    &::after {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      clip-path: polygon(50% 20%, 0% 100%, 100% 100%);
+    }
   }
 }
