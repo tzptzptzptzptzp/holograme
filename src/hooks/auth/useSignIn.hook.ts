@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { textsConfig } from "@/config/texts.config";
 import { createClient } from "@/libs/supabase/client.lib";
 
 export const useSignIn = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const supabase = createClient();
@@ -25,7 +23,7 @@ export const useSignIn = () => {
       });
       if (error) throw error;
       toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
       toast.error(textsConfig.TOAST.SIGN_IN.ERROR);
     } finally {
