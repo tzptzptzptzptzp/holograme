@@ -34,6 +34,9 @@ export const useChat = () => {
       const favoriteChatRoom = chatRoomData.find(
         (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
       );
+      if (!favoriteChatRoom) {
+        localStorage.removeItem("favoriteChatRoom");
+      }
       setChatRoom({
         id: favoriteChatRoom ? favoriteChatRoom.id : chatRoomData[0].id,
         name: favoriteChatRoom ? favoriteChatRoom.name : chatRoomData[0].name,
