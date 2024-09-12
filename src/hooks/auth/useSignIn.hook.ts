@@ -1,12 +1,28 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useSetRecoilState } from "recoil";
 import { textsConfig } from "@/config/texts.config";
+import { useGetInitializeData } from "@/hooks/api/useGetInitializeData.hook";
 import { createClient } from "@/libs/supabase/client.lib";
+import {
+  ClipboardsState,
+  FavoritesState,
+  UserState,
+} from "@/recoil/atoms.recoil";
 
 export const useSignIn = () => {
+  const supabase = createClient();
+
+  const { refetch } = useGetInitializeData();
+
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const supabase = createClient();
+  const setClipboards = useSetRecoilState(ClipboardsState);
+  const setFavorites = useSetRecoilState(FavoritesState);
+  const setUser = useSetRecoilState(UserState);
 
   const signIn = async ({
     email,
@@ -22,8 +38,18 @@ export const useSignIn = () => {
         password,
       });
       if (error) throw error;
+      try {
+        await refetch().then(({ data }) => {
+          if (!data) return;
+          setClipboards(data.clipboardData);
+          setFavorites(data.favoriteData);
+          setUser(data.userData);
+        });
+      } catch (error) {
+        throw error;
+      }
       toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
-      window.location.href = "/";
+      router.push("/");
     } catch (error) {
       toast.error(textsConfig.TOAST.SIGN_IN.ERROR);
     } finally {
