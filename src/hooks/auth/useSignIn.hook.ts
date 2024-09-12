@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 import { textsConfig } from "@/config/texts.config";
 import { useGetInitializeData } from "@/hooks/api/useGetInitializeData.hook";
+import { useChat } from "@/hooks/useChat.hook";
 import { createClient } from "@/libs/supabase/client.lib";
 import {
   ClipboardsState,
@@ -24,6 +25,8 @@ export const useSignIn = () => {
   const setFavorites = useSetRecoilState(FavoritesState);
   const setUser = useSetRecoilState(UserState);
 
+  const { setData: setChatData } = useChat();
+
   const signIn = async ({
     email,
     password,
@@ -41,6 +44,7 @@ export const useSignIn = () => {
       try {
         await refetch().then(({ data }) => {
           if (!data) return;
+          setChatData(data.chatData);
           setClipboards(data.clipboardData);
           setFavorites(data.favoriteData);
           setUser(data.userData);
