@@ -3,7 +3,6 @@ import { M_PLUS_Rounded_1c } from "next/font/google";
 import { Provider } from "@/components/templates/Provider/Provider.template";
 import { textsConfig } from "@/config/texts.config";
 import { cn } from "@/utils/Cn.util";
-import { GlobalFetch } from "@/utils/GlobalFetch.util";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.scss";
@@ -20,9 +19,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const globalData = await GlobalFetch();
   return (
-    <Provider globalData={globalData}>
+    <Provider>
       <html lang="ja">
         <head>
           <link rel="manifest" href="/manifest.json" />
