@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { User } from "@supabase/supabase-js";
 import { textsConfig } from "@/config/texts.config";
 import { createClient } from "@/libs/supabase/client.lib";
+import { usePostUser } from "../api/usePostUser.hook";
 
 export const useSignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+
+  const mutate = usePostUser();
 
   const supabase = createClient();
 
@@ -28,7 +29,11 @@ export const useSignUp = () => {
         password,
       });
       if (error) throw error;
-      setUser(user);
+      if (user) {
+        const id = user.id;
+        const email = user.email ?? "";
+        mutate({ id, email });
+      }
       toast(textsConfig.TOAST.SIGN_UP.SUCCESS);
       setIsEmailSent(true);
     } catch (error) {
@@ -39,5 +44,5 @@ export const useSignUp = () => {
     return isLoading;
   };
 
-  return { user, signUp, isEmailSent, isLoading };
+  return { signUp, isEmailSent, isLoading };
 };
