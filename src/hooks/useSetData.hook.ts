@@ -18,18 +18,11 @@ export const useSetData = (globalData: GlobalDataType) => {
   const { setData: setChatData } = useChat();
 
   useEffect(() => {
-    if (isComplete) return;
-    setChatData(globalData.chatData);
-    setClipboards(() => globalData.clipboardData);
-    setFavorites(() => globalData.favoriteData);
-    setUser(() => globalData.userData);
-    setIsComplete(true);
-  }, [
-    globalData,
-    isComplete,
-    setChatData,
-    setClipboards,
-    setFavorites,
-    setUser,
-  ]);
+    if (globalData && !isComplete) {
+      setClipboards(globalData.clipboardData);
+      setFavorites(globalData.favoriteData);
+      setUser(globalData.userData);
+      setIsComplete(true);
+    }
+  }, [globalData, isComplete, setClipboards, setFavorites, setUser]);
 };
