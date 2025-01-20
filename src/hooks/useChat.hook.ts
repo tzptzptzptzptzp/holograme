@@ -21,22 +21,36 @@ export const useChat = () => {
     favoriteChatRoomId || chatRoom?.id || 0
   );
 
-  const setData = (chatRoomData: ChatRoom[]) => {
-    const favoriteChatRoomId = localStorage.getItem("favoriteChatRoom");
-    setFavoriteChatRoomId(Number(favoriteChatRoomId));
-    setChatRoomOptions(
-      chatRoomData.map((chatRoom) => ({
+  const getFavoriteChatRoomId = () => {
+    localStorage.getItem("favoriteChatRoom");
+  };
+
+  const updateChatRoomOptionsIfChanged = (chatRoomData: ChatRoom[]) => {
+    setChatRoomOptions((prevOptions) => {
+      const newOptions = chatRoomData.map((chatRoom) => ({
         id: chatRoom.id,
         name: chatRoom.name,
-      }))
-    );
+      }));
+      if (JSON.stringify(prevOptions) !== JSON.stringify(newOptions)) {
+        return newOptions;
+      }
+      return prevOptions;
+    });
+  };
+
+  const updateFavoriteChatRoom = (
+    chatRoomData: ChatRoom[],
+    favoriteChatRoomId: number
+  ) => {
     if (chatRoomData.length) {
       const favoriteChatRoom = chatRoomData.find(
-        (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
+        (chatRoom) => chatRoom.id === favoriteChatRoomId
       );
+
       if (!favoriteChatRoom) {
         localStorage.removeItem("favoriteChatRoom");
       }
+
       setChatRoom({
         id: favoriteChatRoom ? favoriteChatRoom.id : chatRoomData[0].id,
         name: favoriteChatRoom ? favoriteChatRoom.name : chatRoomData[0].name,
@@ -48,6 +62,13 @@ export const useChat = () => {
           : chatRoomData[0].defaultMessage,
       });
     }
+  };
+
+  const setData = (chatRoomData: ChatRoom[]) => {
+    const favoriteChatRoomId = getFavoriteChatRoomId();
+    setFavoriteChatRoomId(Number(favoriteChatRoomId));
+    updateChatRoomOptionsIfChanged(chatRoomData);
+    updateFavoriteChatRoom(chatRoomData, Number(favoriteChatRoomId));
     chatMessagesRefetch().then(({ data }) => {
       setChatMessages(data?.messages || []);
     });
