@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
@@ -10,8 +9,8 @@ import { ModalInner } from "@/components/templates/ModalInner/ModalInner.templat
 import { textsConfig } from "@/config/texts.config";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { usePutChatStandardPhrase } from "@/hooks/api/usePutChatStandardPhrase.hook";
+import { useEditChatStandardPhrase } from "@/hooks/useEditChatStandardPhrase.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { EditChatStandardPhraseState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -22,7 +21,7 @@ type Inputs = {
 export const EditChatStandardPhraseModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const editChatStandardPhrase = useRecoilValue(EditChatStandardPhraseState);
+  const { editChatStandardPhrase } = useEditChatStandardPhrase();
 
   const mutate = usePutChatStandardPhrase();
   const { refetch } = useGetChatStandardPhrase();
