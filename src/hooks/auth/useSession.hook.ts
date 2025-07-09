@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { Session } from "@supabase/supabase-js";
 import { createClient } from "@/libs/supabase/client.lib";
-
-type AuthStatus = "authenticated" | "unauthenticated" | "loading";
+import { useSessionStore } from "@/stores/session.store";
 
 export const useSession = () => {
-  const [authStatus, setAuthStatus] = useState<AuthStatus>("loading");
-  const [session, setSession] = useState<Session | null>(null);
+  const { session, authStatus, setSession, setAuthStatus } = useSessionStore();
 
   const supabase = createClient();
 
   useEffect(() => {
     const handleSession = async (event: string, session: Session | null) => {
       if (session) {
-        setAuthStatus("authenticated");
         setSession(session);
         axios.defaults.headers.post["Content-Type"] = "application/json";
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${session.access_token}`;
       } else {
-        setAuthStatus("unauthenticated");
         setSession(null);
       }
     };
@@ -44,7 +40,7 @@ export const useSession = () => {
     return () => {
       authListener?.subscription.unsubscribe();
     };
-  }, [supabase.auth]);
+  }, [supabase.auth, setSession]);
 
   return { authStatus, session };
 };
