@@ -10,11 +10,12 @@ import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
+import { useChatMessages } from "@/hooks/useChatMessages.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { Icons } from "@/icons";
-import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
+import { ChatRoomState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
@@ -30,7 +31,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
 
   const { user } = useUser();
   const chatRoom = useRecoilValue(ChatRoomState);
-  const chatMessages = useRecoilValue(ChatMessagesState);
+  const { messages: chatMessages } = useChatMessages();
 
   const { isPc } = useDevice();
 

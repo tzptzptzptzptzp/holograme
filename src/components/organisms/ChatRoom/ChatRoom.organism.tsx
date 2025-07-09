@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { ChatBalloon } from "@/components/molecules/ChatBalloon/ChatBalloon.molecule";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
-import { ChatMessagesState } from "@/recoil/atoms.recoil";
+import { useChatMessages } from "@/hooks/useChatMessages.hook";
 
 type Props = {
   roomId: number;
@@ -11,7 +10,8 @@ type Props = {
 
 export const ChatRoom = ({ roomId }: Props) => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const [chatMessages, setChatMessages] = useRecoilState(ChatMessagesState);
+  const { messages: chatMessages, setMessages: setChatMessages } =
+    useChatMessages();
 
   const { data, isLoading } = useGetChatMessage(roomId);
 
