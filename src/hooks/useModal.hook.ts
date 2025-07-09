@@ -1,30 +1,28 @@
-import { useRecoilState } from "recoil";
-import { ModalState } from "@/recoil/atoms.recoil";
+import { useModalStore } from "@/stores/modal.store";
 import { ModalContentType } from "@/types";
+import { useCallback } from "react";
 
 export const useModal = () => {
-  const [modalState, setModalState] = useRecoilState(ModalState);
+  const { modal, setModal, openModal, closeModal } = useModalStore();
 
-  const handleClose = () => {
-    setModalState({ ...modalState, content: "", isOpen: false });
-  };
+  const handleClose = useCallback(() => {
+    closeModal();
+  }, [closeModal]);
 
-  const handleOpen = (content: ModalContentType, isCloseDisabled = false) => {
-    setModalState({
-      ...modalState,
-      content: content,
-      isCloseDisabled,
-      isOpen: true,
-    });
-  };
+  const handleOpen = useCallback(
+    (content: ModalContentType, isCloseDisabled = false) => {
+      openModal(content, isCloseDisabled);
+    },
+    [openModal]
+  );
 
   return {
-    content: modalState.content,
-    isCloseDisabled: modalState.isCloseDisabled,
-    isOpen: modalState.isOpen,
-    modalState,
+    content: modal.content,
+    isCloseDisabled: modal.isCloseDisabled,
+    isOpen: modal.isOpen,
+    modalState: modal,
     handleClose,
     handleOpen,
-    setModalState,
+    setModalState: setModal,
   };
 };
