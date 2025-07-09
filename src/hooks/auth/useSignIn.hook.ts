@@ -25,10 +25,12 @@ export const useSignIn = () => {
       });
       if (error) throw error;
       toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
+
       setTimeout(() => {
-        router.push("/");
-        router.refresh();
-      }, 300);
+        supabase.auth.refreshSession().then(() => {
+          window.location.href = "/";
+        });
+      }, 1000);
       return true;
     } catch (error) {
       toast.error(textsConfig.TOAST.SIGN_IN.ERROR);
