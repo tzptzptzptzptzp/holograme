@@ -25,13 +25,17 @@ export const useSignIn = () => {
       });
       if (error) throw error;
       toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+        router.refresh();
+      }, 300);
+      return true;
     } catch (error) {
       toast.error(textsConfig.TOAST.SIGN_IN.ERROR);
+      return false;
     } finally {
       setIsLoading(false);
     }
-    return isLoading;
   };
 
   return { signIn, isLoading };
