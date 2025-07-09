@@ -1,13 +1,11 @@
-import { GlobalFrame } from "@/components/templates/GlobalFrame/GlobalFrame.template";
-
 export default function AuthTemplate({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <GlobalFrame contents={false} shadow={false}>
+    <div className="flex flex-col items-center justify-center relative w-full min-w-[600px] s:min-w-0 h-full s:p-4">
       {children}
-    </GlobalFrame>
+    </div>
   );
 }
