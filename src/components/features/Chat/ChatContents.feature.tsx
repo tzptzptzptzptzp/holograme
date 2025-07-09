@@ -1,4 +1,3 @@
-import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
@@ -11,16 +10,12 @@ import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useModal } from "@/hooks/useModal.hook";
+import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 import { Icons } from "@/icons";
-import {
-  FavoriteChatRoomIdState,
-} from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
   const { chatRoom, setChatRoom } = useChatRoom();
-  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
-    FavoriteChatRoomIdState
-  );
+  const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
   const { options: chatRoomOptions } = useChatRoomOptions();
 
   const { type } = useDevice();

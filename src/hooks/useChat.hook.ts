@@ -1,20 +1,17 @@
 import { ChatRoom } from "@prisma/client";
-import { useRecoilState } from "recoil";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
-import {
-  FavoriteChatRoomIdState,
-} from "@/recoil/atoms.recoil";
+import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 
 export const useChat = () => {
-  const { messages: chatMessages, setMessages: setChatMessages } = useChatMessages();
+  const { messages: chatMessages, setMessages: setChatMessages } =
+    useChatMessages();
   const { chatRoom, setChatRoom } = useChatRoom();
-  const { options: chatRoomOptions, setOptions: setChatRoomOptions } = useChatRoomOptions();
-  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
-    FavoriteChatRoomIdState
-  );
+  const { options: chatRoomOptions, setOptions: setChatRoomOptions } =
+    useChatRoomOptions();
+  const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
 
   const { refetch: chatMessagesRefetch } = useGetChatMessage(
     favoriteChatRoomId || chatRoom?.id || 0
@@ -29,7 +26,7 @@ export const useChat = () => {
       id: chatRoom.id,
       name: chatRoom.name,
     }));
-    
+
     // 現在のオプションと新しいオプションを比較
     if (JSON.stringify(chatRoomOptions) !== JSON.stringify(newOptions)) {
       setChatRoomOptions(newOptions);
