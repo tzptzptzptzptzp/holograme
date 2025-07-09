@@ -20,14 +20,14 @@ export const SearchForm = () => {
 
   const setCreateFavorite = useSetRecoilState(CreateFavoriteState);
 
-  const { type } = useDevice();
+  const { isPc } = useDevice();
   const { handleOpen } = useModal();
 
   useEffect(() => {
-    if (type === "PC" || type === "Tablet") {
+    if (isPc) {
       setFocus("search");
     }
-  }, [setFocus, type]);
+  }, [isPc, setFocus]);
 
   useEffect(() => {
     if (searchType === "newTab") {
