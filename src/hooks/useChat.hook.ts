@@ -3,16 +3,15 @@ import { useRecoilState } from "recoil";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
 import {
-  ChatRoomOptionsState,
   FavoriteChatRoomIdState,
 } from "@/recoil/atoms.recoil";
 
 export const useChat = () => {
   const { messages: chatMessages, setMessages: setChatMessages } = useChatMessages();
   const { chatRoom, setChatRoom } = useChatRoom();
-  const [chatRoomOptions, setChatRoomOptions] =
-    useRecoilState(ChatRoomOptionsState);
+  const { options: chatRoomOptions, setOptions: setChatRoomOptions } = useChatRoomOptions();
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
     FavoriteChatRoomIdState
   );
@@ -26,16 +25,15 @@ export const useChat = () => {
   };
 
   const updateChatRoomOptionsIfChanged = (chatRoomData: ChatRoom[]) => {
-    setChatRoomOptions((prevOptions) => {
-      const newOptions = chatRoomData.map((chatRoom) => ({
-        id: chatRoom.id,
-        name: chatRoom.name,
-      }));
-      if (JSON.stringify(prevOptions) !== JSON.stringify(newOptions)) {
-        return newOptions;
-      }
-      return prevOptions;
-    });
+    const newOptions = chatRoomData.map((chatRoom) => ({
+      id: chatRoom.id,
+      name: chatRoom.name,
+    }));
+    
+    // 現在のオプションと新しいオプションを比較
+    if (JSON.stringify(chatRoomOptions) !== JSON.stringify(newOptions)) {
+      setChatRoomOptions(newOptions);
+    }
   };
 
   const updateFavoriteChatRoom = (
