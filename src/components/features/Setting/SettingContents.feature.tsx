@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
@@ -9,8 +8,8 @@ import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWra
 import { textsConfig } from "@/config/texts.config";
 import { useGetUser } from "@/hooks/api/useGetUser.hook";
 import { usePutUser } from "@/hooks/api/usePutUser.hook";
+import { useUser } from "@/hooks/useUser.hook";
 import { Icons } from "@/icons";
-import { UserState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -23,7 +22,7 @@ type Inputs = {
 export const SettingContents = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const user = useRecoilValue(UserState);
+  const { user } = useUser();
 
   const {
     register,

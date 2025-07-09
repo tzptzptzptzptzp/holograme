@@ -1,8 +1,9 @@
-import { ChatMessageStateType, UserStateType } from "@/recoil/types.recoil";
+import { ChatMessageStateType } from "@/recoil/types.recoil";
+import { User } from "@prisma/client";
 import { RemoveMarkdown } from "./RemoveMarkdown.util";
 
 type GeneratePromptType = {
-  user: UserStateType;
+  user: User;
   message: string;
   chatRoomName?: string;
   description?: string;

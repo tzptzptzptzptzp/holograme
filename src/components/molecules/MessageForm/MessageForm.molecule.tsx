@@ -12,12 +12,9 @@ import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
+import { useUser } from "@/hooks/useUser.hook";
 import { Icons } from "@/icons";
-import {
-  ChatMessagesState,
-  ChatRoomState,
-  UserState,
-} from "@/recoil/atoms.recoil";
+import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
@@ -31,11 +28,11 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const [isModified, setIsModified] = useState(false);
   const [isStandardPhraseOpen, setIsStandardPhraseOpen] = useState(false);
 
-  const user = useRecoilValue(UserState);
+  const { user } = useUser();
   const chatRoom = useRecoilValue(ChatRoomState);
   const chatMessages = useRecoilValue(ChatMessagesState);
 
-  const { type } = useDevice();
+  const { isPc } = useDevice();
 
   const { sendMessage } = useSendMessage();
 
@@ -46,14 +43,14 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     useForm<Inputs>();
 
   useEffect(() => {
-    if (type === "PC" || type === "Tablet") {
+    if (isPc) {
       setFocus("message");
       textareaRef.current?.focus();
     }
     if (!isModified) {
       setValue("message", chatRoom?.defaultMessage || "");
     }
-  }, [chatRoom, isModified, setFocus, setValue, type]);
+  }, [chatRoom, isModified, isPc, setFocus, setValue]);
 
   const adjustHeight = () => {
     if (textareaRef.current) {

@@ -13,11 +13,8 @@ import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableA
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
-import {
-  ClipboardsState,
-  FavoritesState,
-  UserState,
-} from "@/recoil/atoms.recoil";
+import { useUser } from "@/hooks/useUser.hook";
+import { ClipboardsState, FavoritesState } from "@/recoil/atoms.recoil";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 import { textsConfig } from "@/config/texts.config";
 
@@ -26,7 +23,7 @@ export const HomeContents = () => {
   const [models, setModels] = useState<OpenAiModel[]>([]);
 
   const [clipboards] = useRecoilState(ClipboardsState);
-  const [user] = useRecoilState(UserState);
+  const { user } = useUser();
   const [favorites, setFavorites] = useRecoilState(FavoritesState);
 
   const [tweet, setTweet] = useState<string>(
