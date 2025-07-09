@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { CreateFavoriteState, SearchTypeState } from "@/recoil/atoms.recoil";
+import { SearchTypeState } from "@/recoil/atoms.recoil";
 
 type Inputs = {
   search: string;
@@ -18,7 +19,7 @@ export const SearchForm = () => {
   const searchType = useRecoilValue(SearchTypeState);
   const { register, setFocus, handleSubmit, watch } = useForm<Inputs>();
 
-  const setCreateFavorite = useSetRecoilState(CreateFavoriteState);
+  const { updateCreateFavorite } = useCreateFavorite();
 
   const { isPc } = useDevice();
   const { handleOpen } = useModal();
@@ -39,10 +40,9 @@ export const SearchForm = () => {
 
   const handleCreateFavoriteOpen = () => {
     if (watch("search").startsWith("http")) {
-      setCreateFavorite((prev) => ({
-        ...prev,
+      updateCreateFavorite({
         url: watch("search"),
-      }));
+      });
     }
     handleOpen("createFavorite");
   };

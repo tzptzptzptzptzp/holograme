@@ -2,9 +2,9 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
+import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import {
-  CreateFavoriteState,
   EditFavoriteState,
   FavoriteModeState,
 } from "@/recoil/atoms.recoil";
@@ -17,19 +17,18 @@ type EmojiType = {
 
 export const EmojiSelectModal = () => {
   const favoriteMode = useRecoilValue(FavoriteModeState);
-  const setCreateFavorite = useSetRecoilState(CreateFavoriteState);
+  const { updateCreateFavorite } = useCreateFavorite();
   const setEditFavorite = useSetRecoilState(EditFavoriteState);
 
   const { handleOpen } = useModal();
 
   const handleSelect = (emoji: EmojiType) => {
     if (favoriteMode === "create") {
-      setCreateFavorite((prev) => ({
-        ...prev,
+      updateCreateFavorite({
         emojiId: emoji.id,
         emojiNative: emoji.native,
         emojiUnified: emoji.unified,
-      }));
+      });
       handleOpen("createFavorite");
     } else {
       setEditFavorite((prev) => ({

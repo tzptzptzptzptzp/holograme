@@ -8,9 +8,9 @@ import { ModalInner } from "@/components/templates/ModalInner/ModalInner.templat
 import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
+import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import {
-  CreateFavoriteState,
   FavoriteModeState,
   FavoritesState,
 } from "@/recoil/atoms.recoil";
@@ -27,8 +27,7 @@ export const CreateFavoriteModal = () => {
   const [urlError, setUrlError] = useState("");
 
   const [favorite, setFavorites] = useRecoilState(FavoritesState);
-  const [createFavorite, setCreateFavorite] =
-    useRecoilState(CreateFavoriteState);
+  const { createFavorite, setCreateFavorite, updateCreateFavorite } = useCreateFavorite();
   const setFavoriteMode = useSetRecoilState(FavoriteModeState);
 
   const {
@@ -65,11 +64,10 @@ export const CreateFavoriteModal = () => {
 
   const handleOpen = () => {
     setFavoriteMode("create");
-    setCreateFavorite((prev) => ({
-      ...prev,
+    updateCreateFavorite({
       title: title,
       url: url,
-    }));
+    });
     onOpen("emojiSelect", true);
   };
 
