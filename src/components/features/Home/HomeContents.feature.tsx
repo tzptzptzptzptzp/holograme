@@ -14,7 +14,8 @@ import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useUser } from "@/hooks/useUser.hook";
-import { ClipboardsState, FavoritesState } from "@/recoil/atoms.recoil";
+import { useClipboards } from "@/hooks/useClipboards.hook";
+import { FavoritesState } from "@/recoil/atoms.recoil";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 import { textsConfig } from "@/config/texts.config";
 
@@ -22,7 +23,7 @@ export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const [models, setModels] = useState<OpenAiModel[]>([]);
 
-  const [clipboards] = useRecoilState(ClipboardsState);
+  const { clipboards } = useClipboards();
   const { user } = useUser();
   const [favorites, setFavorites] = useRecoilState(FavoritesState);
 
