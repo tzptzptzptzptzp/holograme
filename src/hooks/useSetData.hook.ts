@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import { useChat } from "@/hooks/useChat.hook";
-import { FavoritesState } from "@/recoil/atoms.recoil";
+import { useClipboards } from "@/hooks/useClipboards.hook";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { GlobalDataType } from "@/types";
 import { useUserStore } from "@/stores/user.store";
-import { useClipboards } from "@/hooks/useClipboards.hook";
 
 export const useSetData = (globalData: GlobalDataType) => {
   const [isComplete, setIsComplete] = useState(false);
 
   const { setClipboards } = useClipboards();
-  const setFavorites = useSetRecoilState(FavoritesState);
+  const { setFavorites } = useFavorites();
   const { setUser } = useUserStore();
 
   const { setData: setChatData } = useChat();

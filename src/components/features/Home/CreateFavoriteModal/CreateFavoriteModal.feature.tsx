@@ -9,11 +9,9 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
 import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import {
-  FavoriteModeState,
-  FavoritesState,
-} from "@/recoil/atoms.recoil";
+import { FavoriteModeState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -26,7 +24,7 @@ export const CreateFavoriteModal = () => {
   const [apiPending, setApiPending] = useState(false);
   const [urlError, setUrlError] = useState("");
 
-  const [favorite, setFavorites] = useRecoilState(FavoritesState);
+  const { favorites, setFavorites } = useFavorites();
   const { createFavorite, setCreateFavorite, updateCreateFavorite } = useCreateFavorite();
   const setFavoriteMode = useSetRecoilState(FavoriteModeState);
 
@@ -86,7 +84,7 @@ export const CreateFavoriteModal = () => {
         onSuccess: async () => {
           toast(textsConfig.TOAST.FAVORITE_CREATE.SUCCESS);
           const { data } = await refetch();
-          setFavorites(data ?? favorite);
+          setFavorites(data ?? favorites);
           handleClose();
         },
         onError: () => {

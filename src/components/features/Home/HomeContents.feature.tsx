@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import { OpenAiModel } from "@/app/api/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
@@ -15,9 +14,9 @@ import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
-import { FavoritesState } from "@/recoil/atoms.recoil";
-import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/config/texts.config";
+import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
@@ -25,7 +24,7 @@ export const HomeContents = () => {
 
   const { clipboards } = useClipboards();
   const { user } = useUser();
-  const [favorites, setFavorites] = useRecoilState(FavoritesState);
+  const { favorites, setFavorites } = useFavorites();
 
   const [tweet, setTweet] = useState<string>(
     user.nickname + textsConfig.TWEET.DEFAULT
