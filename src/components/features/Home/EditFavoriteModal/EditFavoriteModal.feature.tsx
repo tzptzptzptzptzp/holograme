@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
@@ -10,8 +9,8 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePutFavorite } from "@/hooks/api/usePutFavorite.hook";
 import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
+import { useFavoriteMode } from "@/hooks/useFavoriteMode.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { FavoriteModeState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -25,7 +24,7 @@ export const EditFavoriteModal = () => {
   const [urlError, setUrlError] = useState("");
 
   const { editFavorite, updateEditFavorite } = useEditFavorite();
-  const setFavoriteMode = useSetRecoilState(FavoriteModeState);
+  const { setMode } = useFavoriteMode();
 
   const {
     register,
@@ -60,7 +59,7 @@ export const EditFavoriteModal = () => {
   }, [url]);
 
   const handleOpen = () => {
-    setFavoriteMode("edit");
+    setMode("edit");
     updateEditFavorite({
       title: title,
       url: url,
