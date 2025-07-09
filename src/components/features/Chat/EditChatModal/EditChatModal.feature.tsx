@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
@@ -11,8 +10,8 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePutChat } from "@/hooks/api/usePutChat.hook";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatRoomState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -24,7 +23,7 @@ type Inputs = {
 export const EditChatModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
+  const { chatRoom, setChatRoom, updateChatRoom } = useChatRoom();
   const { messages: chatMessages } = useChatMessages();
 
   const mutate = usePutChat();

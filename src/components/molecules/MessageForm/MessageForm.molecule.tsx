@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Textarea } from "@/components/atoms/Textarea/Textarea.atom";
 import { StandardPhraseList } from "@/components/organisms/StandardPhraseList/StandardPhraseList.organism";
@@ -11,11 +10,11 @@ import { textsConfig } from "@/config/texts.config";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { usePostChatMessage } from "@/hooks/api/usePostChatMessage.hook";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { Icons } from "@/icons";
-import { ChatRoomState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
 import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
@@ -30,7 +29,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const [isStandardPhraseOpen, setIsStandardPhraseOpen] = useState(false);
 
   const { user } = useUser();
-  const chatRoom = useRecoilValue(ChatRoomState);
+  const { chatRoom } = useChatRoom();
   const { messages: chatMessages } = useChatMessages();
 
   const { isPc } = useDevice();

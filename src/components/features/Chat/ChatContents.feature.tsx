@@ -7,17 +7,17 @@ import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.mole
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
 import {
   ChatRoomOptionsState,
-  ChatRoomState,
   FavoriteChatRoomIdState,
 } from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
-  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
+  const { chatRoom, setChatRoom } = useChatRoom();
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
     FavoriteChatRoomIdState
   );

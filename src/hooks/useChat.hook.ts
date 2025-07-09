@@ -2,15 +2,15 @@ import { ChatRoom } from "@prisma/client";
 import { useRecoilState } from "recoil";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import {
   ChatRoomOptionsState,
-  ChatRoomState,
   FavoriteChatRoomIdState,
 } from "@/recoil/atoms.recoil";
 
 export const useChat = () => {
   const { messages: chatMessages, setMessages: setChatMessages } = useChatMessages();
-  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
+  const { chatRoom, setChatRoom } = useChatRoom();
   const [chatRoomOptions, setChatRoomOptions] =
     useRecoilState(ChatRoomOptionsState);
   const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
