@@ -1,17 +1,16 @@
 import { BlogPost } from "@prisma/client";
-import { useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { useGetBlogPost } from "@/hooks/api/useGetBlogPost.hook";
+import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
 import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { CurrentBlogPostState } from "@/recoil/atoms.recoil";
 import { cn } from "@/utils/Cn.util";
 import { Icons } from "@/icons";
 import { textsConfig } from "@/config/texts.config";
 
 export const BlogPostListModal = () => {
-  const setCurrentBlogPost = useSetRecoilState(CurrentBlogPostState);
+  const { setCurrentBlogPost } = useBlogPost();
   const { writer } = useWriter();
   const { data } = useGetBlogPost(writer.id);
   const { handleOpen } = useModal();

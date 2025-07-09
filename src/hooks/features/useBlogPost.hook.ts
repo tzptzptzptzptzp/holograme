@@ -1,9 +1,8 @@
-import { useRecoilState, useResetRecoilState } from "recoil";
-import { CurrentBlogPostState } from "@/recoil/atoms.recoil";
+import { useCurrentBlogPostStore } from "@/stores/currentBlogPost.store";
 
 export const useBlogPost = () => {
-  const [currentBlogPost, setCurrentBlogPost] =
-    useRecoilState(CurrentBlogPostState);
-  const resetBlogPost = useResetRecoilState(CurrentBlogPostState);
+  const { currentBlogPost, setCurrentBlogPost, resetBlogPost } =
+    useCurrentBlogPostStore();
+
   return { currentBlogPost, resetBlogPost, setCurrentBlogPost };
 };
