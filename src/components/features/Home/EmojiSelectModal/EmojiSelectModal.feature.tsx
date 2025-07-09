@@ -1,13 +1,11 @@
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
+import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import {
-  EditFavoriteState,
-  FavoriteModeState,
-} from "@/recoil/atoms.recoil";
+import { FavoriteModeState } from "@/recoil/atoms.recoil";
 
 type EmojiType = {
   id: string;
@@ -18,7 +16,7 @@ type EmojiType = {
 export const EmojiSelectModal = () => {
   const favoriteMode = useRecoilValue(FavoriteModeState);
   const { updateCreateFavorite } = useCreateFavorite();
-  const setEditFavorite = useSetRecoilState(EditFavoriteState);
+  const { updateEditFavorite } = useEditFavorite();
 
   const { handleOpen } = useModal();
 
@@ -31,12 +29,11 @@ export const EmojiSelectModal = () => {
       });
       handleOpen("createFavorite");
     } else {
-      setEditFavorite((prev) => ({
-        ...prev,
+      updateEditFavorite({
         emojiId: emoji.id,
         emojiNative: emoji.native,
         emojiUnified: emoji.unified,
-      }));
+      });
       handleOpen("editFavorite");
     }
   };

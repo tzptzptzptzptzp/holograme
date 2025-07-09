@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
@@ -9,8 +9,9 @@ import { ModalInner } from "@/components/templates/ModalInner/ModalInner.templat
 import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePutFavorite } from "@/hooks/api/usePutFavorite.hook";
+import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { EditFavoriteState, FavoriteModeState } from "@/recoil/atoms.recoil";
+import { FavoriteModeState } from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -23,7 +24,7 @@ export const EditFavoriteModal = () => {
   const [apiPending, setApiPending] = useState(false);
   const [urlError, setUrlError] = useState("");
 
-  const [editFavorite, setEditFavorite] = useRecoilState(EditFavoriteState);
+  const { editFavorite, updateEditFavorite } = useEditFavorite();
   const setFavoriteMode = useSetRecoilState(FavoriteModeState);
 
   const {
@@ -60,11 +61,10 @@ export const EditFavoriteModal = () => {
 
   const handleOpen = () => {
     setFavoriteMode("edit");
-    setEditFavorite((prev) => ({
-      ...prev,
+    updateEditFavorite({
       title: title,
       url: url,
-    }));
+    });
     onOpen("emojiSelect");
   };
 
@@ -84,7 +84,7 @@ export const EditFavoriteModal = () => {
         onSuccess: () => {
           toast(textsConfig.TOAST.FAVORITE_UPDATE.SUCCESS);
           refetch();
-          setEditFavorite({
+          updateEditFavorite({
             id: 0,
             title: "",
             url: "",

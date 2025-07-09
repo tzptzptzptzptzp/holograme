@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useDeleteFavorite } from "@/hooks/api/useDeleteFavorite.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { EditFavoriteState } from "@/recoil/atoms.recoil";
 
 export const DeleteFavoriteModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const [editFavorite, setEditFavorite] = useRecoilState(EditFavoriteState);
+  const { editFavorite, resetEditFavorite } = useEditFavorite();
 
   const mutate = useDeleteFavorite();
   const { refetch } = useGetFavorite();
@@ -28,18 +27,11 @@ export const DeleteFavoriteModal = () => {
         onSuccess: () => {
           toast(textsConfig.TOAST.FAVORITE_DELETE.SUCCESS);
           refetch();
-          setEditFavorite({
-            id: 0,
-            title: "",
-            url: "",
-            emojiId: "star",
-            emojiNative: "⭐",
-            emojiUnified: "2b50",
-          });
+          resetEditFavorite();
           handleClose();
         },
         onError: () => {
-          toast.error(textsConfig.TOAST.CHAT_STANDARD_PHRASE_UPDATE.ERROR);
+          toast.error(textsConfig.TOAST.FAVORITE_DELETE.ERROR);
         },
         onSettled: () => {
           setApiPending(false);
