@@ -1,19 +1,14 @@
-import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { colorConfig } from "@/config/color.config";
 import { Icons } from "@/icons";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
+import { useSearchType } from "@/hooks/useSearchType.hook";
 import { cn } from "@/utils/Cn.util";
 
 export const SearchTypeSwitcher = () => {
-  const [searchType, setSearchType] = useRecoilState(SearchTypeState);
+  const { searchType, toggleSearchType } = useSearchType();
 
   const handleClick = () => {
-    localStorage.setItem(
-      "searchType",
-      searchType === "newTab" ? "currentTab" : "newTab"
-    );
-    setSearchType((prev) => (prev === "newTab" ? "currentTab" : "newTab"));
+    toggleSearchType();
   };
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">

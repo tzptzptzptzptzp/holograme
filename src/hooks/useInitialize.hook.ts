@@ -1,15 +1,16 @@
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
-import { SearchTypeStateType } from "@/recoil/types.recoil";
+import { useSearchTypeStore, SearchType } from "@/stores/searchType.store";
 
 export const useInitialize = () => {
-  const setSearchType = useSetRecoilState(SearchTypeState);
+  const setSearchType = useSearchTypeStore((state) => state.setSearchType);
 
   useEffect(() => {
     const storedSearchType = localStorage.getItem("searchType");
-    if (storedSearchType) {
-      setSearchType(storedSearchType as SearchTypeStateType);
+    if (
+      storedSearchType &&
+      (storedSearchType === "newTab" || storedSearchType === "currentTab")
+    ) {
+      setSearchType(storedSearchType as SearchType);
     }
   }, [setSearchType]);
 };

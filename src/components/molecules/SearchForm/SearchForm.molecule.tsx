@@ -1,14 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
+import { useSearchTypeStore } from "@/stores/searchType.store";
 
 type Inputs = {
   search: string;
@@ -16,7 +15,7 @@ type Inputs = {
 
 export const SearchForm = () => {
   const [placeholder, setPlaceholder] = useState("Google で 検索");
-  const searchType = useRecoilValue(SearchTypeState);
+  const searchType = useSearchTypeStore((state) => state.searchType);
   const { register, setFocus, handleSubmit, watch } = useForm<Inputs>();
 
   const { updateCreateFavorite } = useCreateFavorite();

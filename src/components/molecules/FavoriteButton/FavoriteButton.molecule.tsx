@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { SearchTypeState } from "@/recoil/atoms.recoil";
+import { useSearchTypeStore } from "@/stores/searchType.store";
 
 type Props = {
   favorite: {
@@ -21,7 +20,7 @@ type Props = {
 export const FavoriteButton = ({ favorite }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const searchType = useRecoilValue(SearchTypeState);
+  const searchType = useSearchTypeStore((state) => state.searchType);
   const { setEditFavorite } = useEditFavorite();
 
   const { handleOpen } = useModal();
