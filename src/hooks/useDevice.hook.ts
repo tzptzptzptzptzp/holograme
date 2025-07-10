@@ -10,6 +10,7 @@ const getDeviceTypeByWidth = (width: number): DeviceType => {
 };
 
 export const useDevice = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [device, setDevice] = useState<{
     width: number;
     height: number;
@@ -38,6 +39,8 @@ export const useDevice = () => {
           isPc: type === "PC",
           isSp: type === "SP",
         });
+
+        setIsLoading(false);
       };
 
       handleResize();
@@ -47,5 +50,5 @@ export const useDevice = () => {
     }
   }, []);
 
-  return device;
+  return { ...device, isLoading };
 };
