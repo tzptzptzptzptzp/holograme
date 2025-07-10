@@ -10,7 +10,7 @@ export default function VerifiedTemplate({
 }: {
   children: React.ReactNode;
 }) {
-  const { isPc, isSp } = useDevice();
+  const { isLoading, isPc, isSp } = useDevice();
   const { session, setAuthToken } = useSession();
 
   // コンポーネントがマウントされた時に認証トークンをセット
@@ -31,7 +31,7 @@ export default function VerifiedTemplate({
         )
       }
       <div className="flex flex-col items-center justify-center flex-1 s:flex-auto relative top-0 s:z-10 w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4 u-shadow-sm">
-        {children}
+        {!isLoading && children}
       </div>
       {
         /* SP表示のアバター */
@@ -41,7 +41,7 @@ export default function VerifiedTemplate({
           </div>
         )
       }
-      <Navigation />
+      {!isLoading && <Navigation />}
     </div>
   );
 }
