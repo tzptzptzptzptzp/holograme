@@ -1,7 +1,9 @@
 "use client";
+import { useEffect } from "react";
 import { Avatar } from "@/components/atoms/Avatar/Avatar.atom";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { useSession } from "@/hooks/auth/useSession.hook";
 
 export default function VerifiedTemplate({
   children,
@@ -9,6 +11,15 @@ export default function VerifiedTemplate({
   children: React.ReactNode;
 }) {
   const { isPc, isSp } = useDevice();
+  const { session, setAuthToken } = useSession();
+
+  // コンポーネントがマウントされた時に認証トークンをセット
+  useEffect(() => {
+    if (session) {
+      setAuthToken(session);
+    }
+  }, [session, setAuthToken]);
+
   return (
     <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-[46px]">
       {
