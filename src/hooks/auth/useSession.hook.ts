@@ -9,14 +9,22 @@ export const useSession = () => {
 
   const supabase = createClient();
 
+  const setAuthToken = (currentSession: Session | null) => {
+    if (currentSession?.access_token) {
+      axios.defaults.headers.post["Content-Type"] = "application/json";
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${currentSession.access_token}`;
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     const handleSession = async (event: string, session: Session | null) => {
       if (session) {
         setSession(session);
-        axios.defaults.headers.post["Content-Type"] = "application/json";
-        axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${session.access_token}`;
+        setAuthToken(session);
       } else {
         setSession(null);
       }
@@ -42,5 +50,5 @@ export const useSession = () => {
     };
   }, [supabase.auth, setSession]);
 
-  return { authStatus, session };
+  return { authStatus, session, setAuthToken };
 };

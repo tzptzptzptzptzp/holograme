@@ -12,6 +12,39 @@
   }
 }
 
+.a-navigation-slide-in {
+  opacity: 0;
+  animation: navigationSlideInPC 0.45s 0.05s ease-in-out forwards;
+}
+
+@media (max-width: 767px) {
+  .a-navigation-slide-in {
+    animation: navigationSlideInSP 0.45s 0.05s ease-in-out forwards;
+  }
+}
+
+@keyframes navigationSlideInPC {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes navigationSlideInSP {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .a-flash {
   animation: flash 1s infinite;
 }
