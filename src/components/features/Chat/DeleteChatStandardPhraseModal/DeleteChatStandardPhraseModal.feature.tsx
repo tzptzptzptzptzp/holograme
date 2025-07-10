@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilValue } from "recoil";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { useDeleteChatStandardPhrase } from "@/hooks/api/useDeleteChatStandardPhrase.hook";
+import { useEditChatStandardPhrase } from "@/hooks/useEditChatStandardPhrase.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { EditChatStandardPhraseState } from "@/recoil/atoms.recoil";
 
 export const DeleteChatStandardPhraseModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const chatStandardPhrase = useRecoilValue(EditChatStandardPhraseState);
+  const { editChatStandardPhrase: chatStandardPhrase } =
+    useEditChatStandardPhrase();
 
   const mutate = useDeleteChatStandardPhrase();
   const { refetch } = useGetChatStandardPhrase();

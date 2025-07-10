@@ -1,18 +1,17 @@
-import { useRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { useSelectedContent } from "@/hooks/useSelectedContent.hook";
 import { Icons } from "@/icons";
 import { IconType } from "@/icons/icon.type";
-import { SelectedContentState } from "@/recoil/atoms.recoil";
-import { SelectedContentStateType } from "@/recoil/types.recoil";
+import { SelectedContentType } from "@/stores/selectedContent.store";
 import { cn } from "@/utils/Cn.util";
 
 type Props = {
-  name: SelectedContentStateType;
+  name: SelectedContentType;
   sp?: boolean;
 };
 
-const IconComponents: Record<SelectedContentStateType, React.FC<IconType>> = {
+const IconComponents: Record<SelectedContentType, React.FC<IconType>> = {
   home: Icons.Home,
   chat: Icons.Chat,
   clipboard: Icons.ClipBoard,
@@ -23,16 +22,15 @@ const IconComponents: Record<SelectedContentStateType, React.FC<IconType>> = {
 };
 
 export const NavigationItem = ({ name, sp = true }: Props) => {
-  const [selectedContent, setSelectedContent] =
-    useRecoilState(SelectedContentState);
+  const { selectedContent, setSelectedContent } = useSelectedContent();
 
   const IconComponent = IconComponents[name] || Icons.Home;
 
   const { type } = useDevice();
   const IconSize = type !== "SP" ? 32 : 30;
 
-  const handleClick = (selectedContent: SelectedContentStateType) => {
-    setSelectedContent(selectedContent);
+  const handleClick = (content: SelectedContentType) => {
+    setSelectedContent(content);
   };
 
   return (

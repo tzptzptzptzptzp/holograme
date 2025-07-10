@@ -1,42 +1,51 @@
 import { ChatRoom } from "@prisma/client";
-import { useRecoilState } from "recoil";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
-import {
-  ChatMessagesState,
-  ChatRoomOptionsState,
-  ChatRoomState,
-  FavoriteChatRoomIdState,
-} from "@/recoil/atoms.recoil";
+import { useChatMessages } from "@/hooks/useChatMessages.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
+import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 
 export const useChat = () => {
-  const [chatMessages, setChatMessages] = useRecoilState(ChatMessagesState);
-  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
-  const [chatRoomOptions, setChatRoomOptions] =
-    useRecoilState(ChatRoomOptionsState);
-  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
-    FavoriteChatRoomIdState
-  );
+  const { messages: chatMessages, setMessages: setChatMessages } =
+    useChatMessages();
+  const { chatRoom, setChatRoom } = useChatRoom();
+  const { options: chatRoomOptions, setOptions: setChatRoomOptions } =
+    useChatRoomOptions();
+  const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
 
   const { refetch: chatMessagesRefetch } = useGetChatMessage(
     favoriteChatRoomId || chatRoom?.id || 0
   );
 
-  const setData = (chatRoomData: ChatRoom[]) => {
-    const favoriteChatRoomId = localStorage.getItem("favoriteChatRoom");
-    setFavoriteChatRoomId(Number(favoriteChatRoomId));
-    setChatRoomOptions(
-      chatRoomData.map((chatRoom) => ({
-        id: chatRoom.id,
-        name: chatRoom.name,
-      }))
-    );
+  const getFavoriteChatRoomId = () => {
+    localStorage.getItem("favoriteChatRoom");
+  };
+
+  const updateChatRoomOptionsIfChanged = (chatRoomData: ChatRoom[]) => {
+    const newOptions = chatRoomData.map((chatRoom) => ({
+      id: chatRoom.id,
+      name: chatRoom.name,
+    }));
+
+    // 現在のオプションと新しいオプションを比較
+    if (JSON.stringify(chatRoomOptions) !== JSON.stringify(newOptions)) {
+      setChatRoomOptions(newOptions);
+    }
+  };
+
+  const updateFavoriteChatRoom = (
+    chatRoomData: ChatRoom[],
+    favoriteChatRoomId: number
+  ) => {
     if (chatRoomData.length) {
       const favoriteChatRoom = chatRoomData.find(
-        (chatRoom) => chatRoom.id === Number(favoriteChatRoomId)
+        (chatRoom) => chatRoom.id === favoriteChatRoomId
       );
+
       if (!favoriteChatRoom) {
         localStorage.removeItem("favoriteChatRoom");
       }
+
       setChatRoom({
         id: favoriteChatRoom ? favoriteChatRoom.id : chatRoomData[0].id,
         name: favoriteChatRoom ? favoriteChatRoom.name : chatRoomData[0].name,
@@ -48,6 +57,13 @@ export const useChat = () => {
           : chatRoomData[0].defaultMessage,
       });
     }
+  };
+
+  const setData = (chatRoomData: ChatRoom[]) => {
+    const favoriteChatRoomId = getFavoriteChatRoomId();
+    setFavoriteChatRoomId(Number(favoriteChatRoomId));
+    updateChatRoomOptionsIfChanged(chatRoomData);
+    updateFavoriteChatRoom(chatRoomData, Number(favoriteChatRoomId));
     chatMessagesRefetch().then(({ data }) => {
       setChatMessages(data?.messages || []);
     });

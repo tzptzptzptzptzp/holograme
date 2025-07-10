@@ -1,15 +1,18 @@
-import { ChatMessageStateType, UserStateType } from "@/recoil/types.recoil";
+import { User } from "@prisma/client";
+import { ChatMessageWithCustomRole } from "@/stores/chatMessages.store";
 import { RemoveMarkdown } from "./RemoveMarkdown.util";
 
 type GeneratePromptType = {
-  user: UserStateType;
+  user: User;
   message: string;
   chatRoomName?: string;
   description?: string;
-  chatMessage?: ChatMessageStateType[];
+  chatMessage?: ChatMessageWithCustomRole[];
 };
 
-const createChatHistory = (chatMessage: ChatMessageStateType[]): string => {
+const createChatHistory = (
+  chatMessage: ChatMessageWithCustomRole[]
+): string => {
   const relevantChatMessages = chatMessage.slice(0, 8).reverse();
   return relevantChatMessages
     .map(

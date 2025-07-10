@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useDeleteAllChatMessages } from "@/hooks/api/useDeleteAllChatMessages.hook";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";
+import { useChatMessages } from "@/hooks/useChatMessages.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import { ChatMessagesState, ChatRoomState } from "@/recoil/atoms.recoil";
 
 export const DeleteChatMessagesModal = () => {
   const [apiPending, setApiPending] = useState(false);
 
-  const chatRoom = useRecoilValue(ChatRoomState);
-  const setChatMessages = useSetRecoilState(ChatMessagesState);
+  const { chatRoom } = useChatRoom();
+  const { setMessages: setChatMessages } = useChatMessages();
 
   const mutate = useDeleteAllChatMessages();
   const { refetch: chatMessageRefetch } = useGetChatMessage(chatRoom?.id || 0);

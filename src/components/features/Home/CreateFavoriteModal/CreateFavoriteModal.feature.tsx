@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
+import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
+import { useFavoriteMode } from "@/hooks/useFavoriteMode.hook";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { useModal } from "@/hooks/useModal.hook";
-import {
-  CreateFavoriteState,
-  FavoriteModeState,
-  FavoritesState,
-} from "@/recoil/atoms.recoil";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
 type Inputs = {
@@ -26,10 +23,10 @@ export const CreateFavoriteModal = () => {
   const [apiPending, setApiPending] = useState(false);
   const [urlError, setUrlError] = useState("");
 
-  const [favorite, setFavorites] = useRecoilState(FavoritesState);
-  const [createFavorite, setCreateFavorite] =
-    useRecoilState(CreateFavoriteState);
-  const setFavoriteMode = useSetRecoilState(FavoriteModeState);
+  const { favorites, setFavorites } = useFavorites();
+  const { createFavorite, setCreateFavorite, updateCreateFavorite } =
+    useCreateFavorite();
+  const { setMode } = useFavoriteMode();
 
   const {
     register,
@@ -64,12 +61,11 @@ export const CreateFavoriteModal = () => {
   }, [url]);
 
   const handleOpen = () => {
-    setFavoriteMode("create");
-    setCreateFavorite((prev) => ({
-      ...prev,
+    setMode("create");
+    updateCreateFavorite({
       title: title,
       url: url,
-    }));
+    });
     onOpen("emojiSelect", true);
   };
 
@@ -88,7 +84,7 @@ export const CreateFavoriteModal = () => {
         onSuccess: async () => {
           toast(textsConfig.TOAST.FAVORITE_CREATE.SUCCESS);
           const { data } = await refetch();
-          setFavorites(data ?? favorite);
+          setFavorites(data ?? favorites);
           handleClose();
         },
         onError: () => {

@@ -1,4 +1,3 @@
-import { useRecoilState, useRecoilValue } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
@@ -7,21 +6,17 @@ import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.mole
 import { ChatRoom } from "@/components/organisms/ChatRoom/ChatRoom.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useModal } from "@/hooks/useModal.hook";
+import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 import { Icons } from "@/icons";
-import {
-  ChatRoomOptionsState,
-  ChatRoomState,
-  FavoriteChatRoomIdState,
-} from "@/recoil/atoms.recoil";
 
 export const ChatContents = () => {
-  const [chatRoom, setChatRoom] = useRecoilState(ChatRoomState);
-  const [favoriteChatRoomId, setFavoriteChatRoomId] = useRecoilState(
-    FavoriteChatRoomIdState
-  );
-  const chatRoomOptions = useRecoilValue(ChatRoomOptionsState);
+  const { chatRoom, setChatRoom } = useChatRoom();
+  const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
+  const { options: chatRoomOptions } = useChatRoomOptions();
 
   const { type } = useDevice();
   const { handleOpen } = useModal();

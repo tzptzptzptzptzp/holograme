@@ -22,7 +22,7 @@ import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
 type Props = {
   children: React.ReactNode;
   favorites: Favorite[];
-  setFavorites: React.Dispatch<React.SetStateAction<Favorite[] | []>>;
+  setFavorites: (favorites: Favorite[]) => void;
 };
 
 export const FavoriteDroppableArea = ({
@@ -70,41 +70,40 @@ export const FavoriteDroppableArea = ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
-      setFavorites((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id);
-        const newIndex = items.findIndex((item) => item.id === over.id);
+      const currentFavorites = [...favorites];
+      const oldIndex = currentFavorites.findIndex((item) => item.id === active.id);
+      const newIndex = currentFavorites.findIndex((item) => item.id === over.id);
 
-        let newItems = [...items];
-        if (oldIndex !== -1 && newIndex !== -1) {
-          newItems = arrayMove(newItems, oldIndex, newIndex);
+      let newItems = [...currentFavorites];
+      if (oldIndex !== -1 && newIndex !== -1) {
+        newItems = arrayMove(newItems, oldIndex, newIndex);
 
-          newItems = newItems.map((item, index) => ({
-            ...item,
-            order: index + 1,
-          }));
-        }
+        newItems = newItems.map((item, index) => ({
+          ...item,
+          order: index + 1,
+        }));
+      }
 
-        if (mutateTimeout.current) {
-          clearTimeout(mutateTimeout.current);
-        }
+      if (mutateTimeout.current) {
+        clearTimeout(mutateTimeout.current);
+      }
 
-        mutateTimeout.current = setTimeout(() => {
-          mutate(
-            { favorites: newItems },
-            {
-              onSuccess: () => {
-                toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
-                refetch();
-              },
-              onError: () => {
-                toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
-              },
-            }
-          );
-        }, 2500);
+      setFavorites(newItems);
 
-        return newItems;
-      });
+      mutateTimeout.current = setTimeout(() => {
+        mutate(
+          { favorites: newItems },
+          {
+            onSuccess: () => {
+              toast(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.SUCCESS);
+              refetch();
+            },
+            onError: () => {
+              toast.error(textsConfig.TOAST.FAVORITE_ORDER_UPDATE.ERROR);
+            },
+          }
+        );
+      }, 2500);
     }
   };
   return (

@@ -1,8 +1,7 @@
-import { useRecoilState } from "recoil";
-import { ChatMessagesState } from "@/recoil/atoms.recoil";
+import { useChatMessages } from './useChatMessages.hook';
 
 export const useSendMessage = () => {
-  const [chatMessages, setChatMessages] = useRecoilState(ChatMessagesState);
+  const { messages: chatMessages, setMessages: setChatMessages } = useChatMessages();
 
   const generateMessage = (message: string) => {
     const userMessage = {

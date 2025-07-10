@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import { OpenAiModel } from "@/app/api/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
@@ -13,21 +12,19 @@ import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableA
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
-import {
-  ClipboardsState,
-  FavoritesState,
-  UserState,
-} from "@/recoil/atoms.recoil";
-import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
+import { useUser } from "@/hooks/useUser.hook";
+import { useClipboards } from "@/hooks/useClipboards.hook";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/config/texts.config";
+import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const [models, setModels] = useState<OpenAiModel[]>([]);
 
-  const [clipboards] = useRecoilState(ClipboardsState);
-  const [user] = useRecoilState(UserState);
-  const [favorites, setFavorites] = useRecoilState(FavoritesState);
+  const { clipboards } = useClipboards();
+  const { user } = useUser();
+  const { favorites, setFavorites } = useFavorites();
 
   const [tweet, setTweet] = useState<string>(
     user.nickname + textsConfig.TWEET.DEFAULT

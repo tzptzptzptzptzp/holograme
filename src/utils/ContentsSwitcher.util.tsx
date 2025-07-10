@@ -5,9 +5,9 @@ import { WriterContents } from "@/components/features/Writer/WriterContents.feat
 import { HistoryContents } from "@/components/features/History/HistoryContents.feature";
 import { MemoContents } from "@/components/features/Memo/MemoContents.feature";
 import { SettingContents } from "@/components/features/Setting/SettingContents.feature";
-import { SelectedContentStateType } from "@/recoil/types.recoil";
+import { SelectedContentType } from "@/stores/selectedContent.store";
 
-export const ContentsSwitcher = (selectedContent: SelectedContentStateType) => {
+export const ContentsSwitcher = (selectedContent: SelectedContentType) => {
   switch (selectedContent) {
     case "chat":
       return <ChatContents />;

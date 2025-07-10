@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { OpenAiModel } from "@/app/api/openai/route";
 import { queryKeysConfig } from "@/config/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
+import { useModels } from "@/hooks/useModels.hook";
+import { useEffect } from "react";
 
 const defaultValue = {
   id: "",
@@ -20,6 +22,8 @@ const getModels = async () => {
 };
 
 export const useGetModels = () => {
+  const { setModels } = useModels();
+  
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MODELS],
     queryFn: getModels,
@@ -27,6 +31,13 @@ export const useGetModels = () => {
     staleTime: GetMinutesToMilliseconds(60),
     placeholderData: [defaultValue],
   });
+
+  // React Queryから取得したデータをZustandストアに同期
+  useEffect(() => {
+    if (queryResult.data) {
+      setModels(queryResult.data);
+    }
+  }, [queryResult.data, setModels]);
 
   return {
     ...queryResult,

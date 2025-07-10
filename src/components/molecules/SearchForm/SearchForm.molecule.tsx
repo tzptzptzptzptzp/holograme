@@ -1,13 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Input } from "@/components/atoms/Input/Input.atom";
 import { useDevice } from "@/hooks/useDevice.hook";
+import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { CreateFavoriteState, SearchTypeState } from "@/recoil/atoms.recoil";
+import { useSearchTypeStore } from "@/stores/searchType.store";
 
 type Inputs = {
   search: string;
@@ -15,19 +15,19 @@ type Inputs = {
 
 export const SearchForm = () => {
   const [placeholder, setPlaceholder] = useState("Google で 検索");
-  const searchType = useRecoilValue(SearchTypeState);
+  const searchType = useSearchTypeStore((state) => state.searchType);
   const { register, setFocus, handleSubmit, watch } = useForm<Inputs>();
 
-  const setCreateFavorite = useSetRecoilState(CreateFavoriteState);
+  const { updateCreateFavorite } = useCreateFavorite();
 
-  const { type } = useDevice();
+  const { isPc } = useDevice();
   const { handleOpen } = useModal();
 
   useEffect(() => {
-    if (type === "PC" || type === "Tablet") {
+    if (isPc) {
       setFocus("search");
     }
-  }, [setFocus, type]);
+  }, [isPc, setFocus]);
 
   useEffect(() => {
     if (searchType === "newTab") {
@@ -39,10 +39,9 @@ export const SearchForm = () => {
 
   const handleCreateFavoriteOpen = () => {
     if (watch("search").startsWith("http")) {
-      setCreateFavorite((prev) => ({
-        ...prev,
+      updateCreateFavorite({
         url: watch("search"),
-      }));
+      });
     }
     handleOpen("createFavorite");
   };

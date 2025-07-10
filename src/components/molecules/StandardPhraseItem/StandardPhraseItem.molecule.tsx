@@ -1,8 +1,7 @@
-import { useSetRecoilState } from "recoil";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { useEditChatStandardPhrase } from "@/hooks/useEditChatStandardPhrase.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
-import { EditChatStandardPhraseState } from "@/recoil/atoms.recoil";
 
 type Props = {
   id: number;
@@ -17,9 +16,7 @@ export const StandardPhraseItem = ({
   content,
   setStandardPhrase,
 }: Props) => {
-  const setEditChatStandardPhrase = useSetRecoilState(
-    EditChatStandardPhraseState
-  );
+  const { setEditChatStandardPhrase } = useEditChatStandardPhrase();
 
   const { handleOpen } = useModal();
 

@@ -1,10 +1,10 @@
 import { GetRandomItem } from "./GetRandomItem.util";
-import { UserStateType } from "@/recoil/types.recoil";
+import { User } from "@prisma/client";
 
 const topicList = ["挨拶", "豆知識", "今日の運勢", "今日は何の日"];
 
 type GenerateTweetPromptType = {
-  user: UserStateType;
+  user: User;
 };
 
 export const GenerateTweetPrompt = ({
