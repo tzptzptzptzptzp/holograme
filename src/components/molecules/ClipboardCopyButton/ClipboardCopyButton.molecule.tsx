@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
+import { FixedTooltip } from "@/components/atoms/FixedTooltip/FixedTooltip.atom";
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
@@ -40,7 +41,10 @@ export const ClipboardCopyButton = () => {
 
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
-      <div className="relative group">
+      <FixedTooltip
+        text={textsConfig.CLIPBOARD.COPY_TOOLTIP}
+        position="top-right"
+      >
         <Button
           className={cn(
             "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 duration-150"
@@ -54,10 +58,7 @@ export const ClipboardCopyButton = () => {
             height={20}
           />
         </Button>
-        <div className="fixed top-4 right-4 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 whitespace-nowrap z-[9999]">
-          {textsConfig.CLIPBOARD.COPY_TOOLTIP}
-        </div>
-      </div>
+      </FixedTooltip>
     </div>
   );
 };
