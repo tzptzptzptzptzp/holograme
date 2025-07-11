@@ -40,19 +40,24 @@ export const ClipboardCopyButton = () => {
 
   return (
     <div className="flex items-center p-[3px] border-[3px] border-white rounded-full bg-white bg-opacity-60">
-      <Button
-        className={cn(
-          "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 duration-150"
-        )}
-        onClick={handleClick}
-      >
-        <Icons.Copy
-          className="stroke-[2.5px] stroke-disableText hover:stroke-primary duration-150"
-          color={colorConfig.disableText}
-          width={20}
-          height={20}
-        />
-      </Button>
+      <div className="relative group">
+        <Button
+          className={cn(
+            "flex items-center justify-center w-[33px] h-[33px] rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 duration-150"
+          )}
+          onClick={handleClick}
+        >
+          <Icons.Copy
+            className="stroke-[2.5px] stroke-disableText hover:stroke-primary duration-150"
+            color={colorConfig.disableText}
+            width={20}
+            height={20}
+          />
+        </Button>
+        <div className="fixed top-4 right-4 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 whitespace-nowrap z-[9999]">
+          {textsConfig.CLIPBOARD.COPY_TOOLTIP}
+        </div>
+      </div>
     </div>
   );
 };
