@@ -36,7 +36,7 @@ export const FavoriteDroppableArea = ({
   const [gap, setGap] = useState<number>(0);
   const [maxItemCount, setMaxItemCount] = useState<number>(0);
 
-  const { isPc } = useDevice();
+  const { isPc, isSp } = useDevice();
 
   const listWidth = listRef.current?.clientWidth;
 
@@ -51,10 +51,11 @@ export const FavoriteDroppableArea = ({
   }, [listRef, listWidth, setMaxItemCount]);
 
   useEffect(() => {
+    if (isSp) return;
     if (listRef.current && listWidth) {
       setGap((listWidth - 45 * maxItemCount) / maxItemCount - 1);
     }
-  }, [listRef, listWidth, maxItemCount, setGap]);
+  }, [isSp, listRef, listWidth, maxItemCount, setGap]);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
