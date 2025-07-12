@@ -23,7 +23,7 @@ export const FixedTooltip = ({
     <div className="relative group w-full min-w-0">
       {children}
       <div
-        className={`${positionClasses[position]} px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 whitespace-nowrap z-[9999]`}
+        className={`${positionClasses[position]} px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 whitespace-nowrap z-[9999] pointer-events-none select-none`}
       >
         {text}
       </div>
