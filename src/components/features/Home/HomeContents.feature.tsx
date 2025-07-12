@@ -18,6 +18,11 @@ import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/config/texts.config";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
+interface SavedTweet {
+  content: string;
+  timestamp: number;
+}
+
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const [localModel] = useState<OpenAiModel | null>(() => {
@@ -48,19 +53,43 @@ export const HomeContents = () => {
 
   useEffect(() => {
     if (!executedOnce) {
-      const prompt = GenerateTweetPrompt({ user });
-      mutate(
-        { prompt },
-        {
-          onSuccess: ({ data }) => {
-            setTweet(data.answer);
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        }
-      );
-      setExecutedOnce(true);
+      // ローカルストレージからtweetを取得
+      const savedTweetString = localStorage.getItem("savedTweet");
+      const savedTweet: SavedTweet | null = savedTweetString
+        ? JSON.parse(savedTweetString)
+        : null;
+
+      const currentTime = Date.now();
+      const SIX_HOURS = 6 * 60 * 60 * 1000; // 6時間をミリ秒で表現
+
+      // 保存されたtweetがあり、かつ6時間以内のものであれば使用
+      if (savedTweet && currentTime - savedTweet.timestamp < SIX_HOURS) {
+        setTweet(savedTweet.content);
+        setExecutedOnce(true);
+      } else {
+        // 保存されたtweetがないか、6時間以上経過していれば新しく取得
+        const prompt = GenerateTweetPrompt({ user });
+        mutate(
+          { prompt },
+          {
+            onSuccess: ({ data }) => {
+              // 新しいtweetを設定
+              setTweet(data.answer);
+
+              // ローカルストレージに保存（現在のタイムスタンプ付きで）
+              const newSavedTweet: SavedTweet = {
+                content: data.answer,
+                timestamp: currentTime,
+              };
+              localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
+            },
+            onError: (error) => {
+              console.error(error);
+            },
+          }
+        );
+        setExecutedOnce(true);
+      }
     }
   }, [executedOnce, mutate, user]);
 
