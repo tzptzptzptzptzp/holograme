@@ -20,7 +20,15 @@ import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
-  const [models, setModels] = useState<OpenAiModel[]>([]);
+  const [localModel] = useState<OpenAiModel | null>(() => {
+    if (typeof window !== "undefined") {
+      const savedModel = localStorage.getItem("latestModel");
+      return savedModel ? JSON.parse(savedModel) : null;
+    }
+    return null;
+  });
+
+  const [model, setModel] = useState<OpenAiModel | null>(localModel);
 
   const { clipboards } = useClipboards();
   const { user } = useUser();
@@ -57,9 +65,14 @@ export const HomeContents = () => {
   }, [executedOnce, mutate, user]);
 
   useEffect(() => {
-    if (modelsData) {
-      const trimmedModels = modelsData.slice(0, 1);
-      setModels(trimmedModels);
+    if (model) {
+      localStorage.setItem("latestModel", JSON.stringify(model));
+    }
+  }, [model]);
+
+  useEffect(() => {
+    if (modelsData && modelsData.length > 0) {
+      setModel(modelsData[0]);
     }
   }, [modelsData]);
 
@@ -88,11 +101,15 @@ export const HomeContents = () => {
         ))}
       </ul>
       {isPc && (
-        <ul className="flex s:hidden gap-2 w-full">
-          {models.map((model, i) => (
-            <ModelItem key={i} id={model.id} created={model.created} />
-          ))}
-        </ul>
+        <div className="s:hidden w-full">
+          {localModel ? (
+            <ModelItem id={localModel.id} created={localModel.created} />
+          ) : model ? (
+            <ModelItem id={model.id} created={model.created} />
+          ) : (
+            <ModelItem id="" created={0} />
+          )}
+        </div>
       )}
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
         {favorites?.map((favorite, i) => (

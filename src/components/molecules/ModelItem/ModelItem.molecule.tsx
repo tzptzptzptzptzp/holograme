@@ -28,7 +28,7 @@ export const ModelItem = ({ id, created }: Props) => {
     }
   }, [created]);
   return (
-    <ItemBase>
+    <ItemBase as="div">
       <Icons.Beaker
         className="min-w-[22px] min-h-[22px] stroke-2"
         color={colorConfig.primary}
