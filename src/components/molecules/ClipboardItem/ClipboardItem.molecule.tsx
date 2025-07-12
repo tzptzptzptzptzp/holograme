@@ -10,6 +10,7 @@ import { Icons } from "@/icons";
 import { GenerateRandomID } from "@/utils/GenerateRandomID.util";
 import { GetMaskedText } from "@/utils/GetMaskedText.util";
 import { getTrimmedText } from "@/utils/GetTrimmedText.util";
+import { FixedTooltip } from "@/components/atoms/FixedTooltip/FixedTooltip.atom";
 
 const IconSize = 22;
 const TEXT_LENGTH_LIMIT = 15;
@@ -76,59 +77,64 @@ export const ClipboardItem = ({
     }
   };
   return (
-    <ItemBase onClick={handleClick}>
-      <Icons.ClipBoard
-        className="min-w-[22px] min-h-[22px] stroke-2"
-        color={colorConfig.primary}
-        width={IconSize}
-        height={IconSize}
-      />
-      <p className="w-full text-gray text-left truncate">
-        {content === ""
-          ? "まだ何も受け取っていません…"
-          : isShow
-          ? content
-          : GetMaskedText(content)}
-      </p>
-      <div className="flex items-center gap-3">
-        {showIcon && (
-          <Button id={`exclude${GenerateRandomID()}`} onClick={handleShow}>
-            {isShow ? (
-              <Icons.EyeSlash
+    <FixedTooltip
+      text={textsConfig.CLIPBOARD.COPY_TOOLTIP}
+      position="top-right"
+    >
+      <ItemBase onClick={handleClick}>
+        <Icons.ClipBoard
+          className="min-w-[22px] min-h-[22px] stroke-2"
+          color={colorConfig.primary}
+          width={IconSize}
+          height={IconSize}
+        />
+        <p className="w-full text-gray text-left truncate">
+          {content === ""
+            ? "まだ何も受け取っていません…"
+            : isShow
+            ? content
+            : GetMaskedText(content)}
+        </p>
+        <div className="flex items-center gap-3">
+          {showIcon && (
+            <Button id={`exclude${GenerateRandomID()}`} onClick={handleShow}>
+              {isShow ? (
+                <Icons.EyeSlash
+                  className="min-w-[22px] min-h-[22px]"
+                  color={colorConfig.error}
+                  width={IconSize}
+                  height={IconSize}
+                />
+              ) : (
+                <Icons.Eye
+                  className="min-w-[22px] min-h-[22px]"
+                  color={colorConfig.text}
+                  width={IconSize}
+                  height={IconSize}
+                />
+              )}
+            </Button>
+          )}
+          {copyIcon && (
+            <Icons.Copy
+              className="min-w-[22px] min-h-[22px]"
+              color={colorConfig.success}
+              width={IconSize}
+              height={IconSize}
+            />
+          )}
+          {deleteIcon && (
+            <Button id={`exclude${GenerateRandomID()}`} onClick={handleDelete}>
+              <Icons.Trash
                 className="min-w-[22px] min-h-[22px]"
                 color={colorConfig.error}
                 width={IconSize}
                 height={IconSize}
               />
-            ) : (
-              <Icons.Eye
-                className="min-w-[22px] min-h-[22px]"
-                color={colorConfig.text}
-                width={IconSize}
-                height={IconSize}
-              />
-            )}
-          </Button>
-        )}
-        {copyIcon && (
-          <Icons.Copy
-            className="min-w-[22px] min-h-[22px]"
-            color={colorConfig.success}
-            width={IconSize}
-            height={IconSize}
-          />
-        )}
-        {deleteIcon && (
-          <Button id={`exclude${GenerateRandomID()}`} onClick={handleDelete}>
-            <Icons.Trash
-              className="min-w-[22px] min-h-[22px]"
-              color={colorConfig.error}
-              width={IconSize}
-              height={IconSize}
-            />
-          </Button>
-        )}
-      </div>
-    </ItemBase>
+            </Button>
+          )}
+        </div>
+      </ItemBase>
+    </FixedTooltip>
   );
 };
