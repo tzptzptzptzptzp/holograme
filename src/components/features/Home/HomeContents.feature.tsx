@@ -32,11 +32,11 @@ export const HomeContents = () => {
 
   const { data: modelsData } = useGetModels();
 
-  const { type } = useDevice();
+  const { isPc, isSp } = useDevice();
 
   const mutate = usePostTweet();
 
-  const trimmedClipboards = clipboards.slice(0, type === "SP" ? 2 : 3);
+  const trimmedClipboards = clipboards.slice(0, isSp ? 2 : 3);
 
   useEffect(() => {
     if (!executedOnce) {
@@ -87,7 +87,7 @@ export const HomeContents = () => {
           />
         ))}
       </ul>
-      {type !== "SP" && (
+      {isPc && (
         <ul className="flex s:hidden gap-2 w-full">
           {models.map((model, i) => (
             <ModelItem key={i} id={model.id} created={model.created} />

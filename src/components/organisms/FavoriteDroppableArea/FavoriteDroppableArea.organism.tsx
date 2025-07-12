@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { textsConfig } from "@/config/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
+import { useDevice } from "@/hooks/useDevice.hook";
 
 type Props = {
   children: React.ReactNode;
@@ -34,6 +35,8 @@ export const FavoriteDroppableArea = ({
   const mutateTimeout = useRef<NodeJS.Timeout | null>(null);
   const [gap, setGap] = useState<number>(0);
   const [maxItemCount, setMaxItemCount] = useState<number>(0);
+
+  const { isPc } = useDevice();
 
   const listWidth = listRef.current?.clientWidth;
 
@@ -71,8 +74,12 @@ export const FavoriteDroppableArea = ({
     const { active, over } = event;
     if (over && active.id !== over.id) {
       const currentFavorites = [...favorites];
-      const oldIndex = currentFavorites.findIndex((item) => item.id === active.id);
-      const newIndex = currentFavorites.findIndex((item) => item.id === over.id);
+      const oldIndex = currentFavorites.findIndex(
+        (item) => item.id === active.id
+      );
+      const newIndex = currentFavorites.findIndex(
+        (item) => item.id === over.id
+      );
 
       let newItems = [...currentFavorites];
       if (oldIndex !== -1 && newIndex !== -1) {
@@ -117,11 +124,11 @@ export const FavoriteDroppableArea = ({
         strategy={horizontalListSortingStrategy}
       >
         <ul
-          className="grid s:flex gap-y-2 s:!gap-2 s:overflow-x-scroll"
+          className="grid gap-y-2 s:!gap-2 s:overflow-y-scroll s:max-h-[100px]"
           ref={listRef}
           style={{
             columnGap: `${gap}px`,
-            gridTemplateColumns: `repeat(${maxItemCount}, 1fr)`,
+            gridTemplateColumns: `repeat(${isPc ? maxItemCount : 6}, 1fr)`,
           }}
         >
           {children}
