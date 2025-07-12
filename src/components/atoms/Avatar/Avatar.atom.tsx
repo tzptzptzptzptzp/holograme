@@ -10,6 +10,7 @@ const ANIMATION_DURATION_LIMIT = 6;
 export const Avatar = () => {
   const [animationIndex, setAnimationIndex] = useState("");
   const [animationDurationIndex, setAnimationDurationIndex] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const randomAnimationIndex = `animate-avatar-${GetRandomInt(
@@ -23,6 +24,11 @@ export const Avatar = () => {
     setAnimationIndex(randomAnimationIndex);
     setAnimationDurationIndex(randomDurationIndex);
   }, []);
+
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
+
   return (
     <div
       className={cn(
@@ -34,10 +40,14 @@ export const Avatar = () => {
     >
       <Image
         alt="Avatar"
-        className="a-fade-in u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full"
+        className={cn(
+          "u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full opacity-0",
+          isLoaded && "a-fade-in"
+        )}
         src="/bisyojo_chan.png"
         width={800}
         height={800}
+        onLoad={handleImageLoad}
       />
     </div>
   );

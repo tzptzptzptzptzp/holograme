@@ -17,8 +17,8 @@ export const useChat = () => {
     favoriteChatRoomId || chatRoom?.id || 0
   );
 
-  const getFavoriteChatRoomId = () => {
-    localStorage.getItem("favoriteChatRoom");
+  const getFavoriteChatRoomId = (): string | null => {
+    return localStorage.getItem("favoriteChatRoom");
   };
 
   const updateChatRoomOptionsIfChanged = (chatRoomData: ChatRoom[]) => {
@@ -42,10 +42,19 @@ export const useChat = () => {
         (chatRoom) => chatRoom.id === favoriteChatRoomId
       );
 
-      if (!favoriteChatRoom) {
+      // お気に入りのチャットルームが見つからない場合かつfavoriteChatRoomIdが有効な値の場合のみ削除
+      if (
+        !favoriteChatRoom &&
+        !isNaN(favoriteChatRoomId) &&
+        favoriteChatRoomId > 0
+      ) {
+        console.log(
+          `Favorite chat room with ID ${favoriteChatRoomId} not found in available chat rooms. Removing from localStorage.`
+        );
         localStorage.removeItem("favoriteChatRoom");
       }
 
+      // お気に入りが見つかった場合はそれを使用、見つからなかった場合は最初のチャットルームを使用
       setChatRoom({
         id: favoriteChatRoom ? favoriteChatRoom.id : chatRoomData[0].id,
         name: favoriteChatRoom ? favoriteChatRoom.name : chatRoomData[0].name,
@@ -56,14 +65,38 @@ export const useChat = () => {
           ? favoriteChatRoom.defaultMessage
           : chatRoomData[0].defaultMessage,
       });
+
+      // お気に入りが見つかった場合、favoriteChatRoomIdを更新して保存
+      if (favoriteChatRoom) {
+        setFavoriteChatRoomId(favoriteChatRoom.id);
+        localStorage.setItem(
+          "favoriteChatRoom",
+          favoriteChatRoom.id.toString()
+        );
+      }
     }
   };
 
   const setData = (chatRoomData: ChatRoom[]) => {
-    const favoriteChatRoomId = getFavoriteChatRoomId();
-    setFavoriteChatRoomId(Number(favoriteChatRoomId));
+    const storedFavoriteChatRoomId = getFavoriteChatRoomId();
+    const parsedFavoriteChatRoomId = storedFavoriteChatRoomId
+      ? Number(storedFavoriteChatRoomId)
+      : 0;
+
+    console.log(
+      `Initializing with favorite chat room ID: ${parsedFavoriteChatRoomId} (from localStorage: ${storedFavoriteChatRoomId})`
+    );
+
+    // チャットルームのオプションを更新
     updateChatRoomOptionsIfChanged(chatRoomData);
-    updateFavoriteChatRoom(chatRoomData, Number(favoriteChatRoomId));
+
+    // お気に入りのチャットルームIDを設定
+    setFavoriteChatRoomId(parsedFavoriteChatRoomId);
+
+    // お気に入りのチャットルームを更新
+    updateFavoriteChatRoom(chatRoomData, parsedFavoriteChatRoomId);
+
+    // チャットメッセージを取得
     chatMessagesRefetch().then(({ data }) => {
       setChatMessages(data?.messages || []);
     });

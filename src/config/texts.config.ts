@@ -2,6 +2,10 @@ export const textsConfig = {
   AUTH: {
     EMAIL_SENT: "確認メールを送信しました",
   },
+  CLIPBOARD: {
+    PASTE_TOOLTIP: "クリップボードから貼り付け",
+    COPY_TOOLTIP: "クリップボードにコピー",
+  },
   BUTTON: {
     CANCEL: "閉じる",
     CREATE: "作成",
