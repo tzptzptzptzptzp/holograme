@@ -28,7 +28,7 @@ export const ChatRoom = ({ roomId }: Props) => {
 
   return (
     <div
-      className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 s:mt-2 pb-3 s:pb-2"
+      className="flex flex-col-reverse gap-3 z-0 overflow-x-hidden overflow-y-scroll h-full max-h-full mt-3 s:mt-0 pb-3 s:pb-0"
       ref={chatContainerRef}
     >
       {chatMessages.length > 0 ? (

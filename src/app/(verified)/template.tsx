@@ -28,7 +28,7 @@ export default function VerifiedTemplate({
   }, [session, setAuthToken]);
 
   return (
-    <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-[46px]">
+    <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-[4.5rem]">
       {
         /* PC表示のアバター */
         isPc && (
@@ -37,7 +37,7 @@ export default function VerifiedTemplate({
           </div>
         )
       }
-      <div className="flex flex-col items-center justify-center s:justify-start flex-1 s:flex-auto relative top-0 s:z-10 w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4 u-shadow-sm">
+      <div className="flex flex-col items-center justify-center s:justify-start flex-1 s:flex-auto relative top-0 s:z-10 w-[50%] s:w-full min-w-[600px] s:min-w-0 h-full pr-10 pl-4 s:p-4 s:pb-2 u-shadow-sm">
         {!isLoading && children}
       </div>
       {

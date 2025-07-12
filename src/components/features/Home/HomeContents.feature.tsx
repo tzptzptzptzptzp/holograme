@@ -18,9 +18,22 @@ import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/config/texts.config";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
+interface SavedTweet {
+  content: string;
+  timestamp: number;
+}
+
 export const HomeContents = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
-  const [models, setModels] = useState<OpenAiModel[]>([]);
+  const [localModel] = useState<OpenAiModel | null>(() => {
+    if (typeof window !== "undefined") {
+      const savedModel = localStorage.getItem("latestModel");
+      return savedModel ? JSON.parse(savedModel) : null;
+    }
+    return null;
+  });
+
+  const [model, setModel] = useState<OpenAiModel | null>(localModel);
 
   const { clipboards } = useClipboards();
   const { user } = useUser();
@@ -40,32 +53,61 @@ export const HomeContents = () => {
 
   useEffect(() => {
     if (!executedOnce) {
-      const prompt = GenerateTweetPrompt({ user });
-      mutate(
-        { prompt },
-        {
-          onSuccess: ({ data }) => {
-            setTweet(data.answer);
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        }
-      );
-      setExecutedOnce(true);
+      // ローカルストレージからtweetを取得
+      const savedTweetString = localStorage.getItem("savedTweet");
+      const savedTweet: SavedTweet | null = savedTweetString
+        ? JSON.parse(savedTweetString)
+        : null;
+
+      const currentTime = Date.now();
+      const SIX_HOURS = 6 * 60 * 60 * 1000; // 6時間をミリ秒で表現
+
+      // 保存されたtweetがあり、かつ6時間以内のものであれば使用
+      if (savedTweet && currentTime - savedTweet.timestamp < SIX_HOURS) {
+        setTweet(savedTweet.content);
+        setExecutedOnce(true);
+      } else {
+        // 保存されたtweetがないか、6時間以上経過していれば新しく取得
+        const prompt = GenerateTweetPrompt({ user });
+        mutate(
+          { prompt },
+          {
+            onSuccess: ({ data }) => {
+              // 新しいtweetを設定
+              setTweet(data.answer);
+
+              // ローカルストレージに保存（現在のタイムスタンプ付きで）
+              const newSavedTweet: SavedTweet = {
+                content: data.answer,
+                timestamp: currentTime,
+              };
+              localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
+            },
+            onError: (error) => {
+              console.error(error);
+            },
+          }
+        );
+        setExecutedOnce(true);
+      }
     }
   }, [executedOnce, mutate, user]);
 
   useEffect(() => {
-    if (modelsData) {
-      const trimmedModels = modelsData.slice(0, 1);
-      setModels(trimmedModels);
+    if (model) {
+      localStorage.setItem("latestModel", JSON.stringify(model));
+    }
+  }, [model]);
+
+  useEffect(() => {
+    if (modelsData && modelsData.length > 0) {
+      setModel(modelsData[0]);
     }
   }, [modelsData]);
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
-      <div className="s:absolute -bottom-[57.5vh] z-50 inset-x-0 w-full s:px-4">
+      <div className="s:absolute -bottom-[61vh] z-50 inset-x-0 w-full s:px-4">
         <HomeBalloon message={tweet} />
       </div>
       <div className="flex gap-3 s:gap-2 w-full">
@@ -88,11 +130,15 @@ export const HomeContents = () => {
         ))}
       </ul>
       {isPc && (
-        <ul className="flex s:hidden gap-2 w-full">
-          {models.map((model, i) => (
-            <ModelItem key={i} id={model.id} created={model.created} />
-          ))}
-        </ul>
+        <div className="s:hidden w-full">
+          {localModel ? (
+            <ModelItem id={localModel.id} created={localModel.created} />
+          ) : model ? (
+            <ModelItem id={model.id} created={model.created} />
+          ) : (
+            <ModelItem id="" created={0} />
+          )}
+        </div>
       )}
       <FavoriteDroppableArea favorites={favorites} setFavorites={setFavorites}>
         {favorites?.map((favorite, i) => (
