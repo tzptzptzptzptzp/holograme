@@ -2,10 +2,6 @@ export const textsConfig = {
   AUTH: {
     EMAIL_SENT: "確認メールを送信しました",
   },
-  CLIPBOARD: {
-    PASTE_TOOLTIP: "クリップボードから貼り付け",
-    COPY_TOOLTIP: "クリップボードにコピー",
-  },
   BUTTON: {
     CANCEL: "閉じる",
     CREATE: "作成",
@@ -14,6 +10,13 @@ export const textsConfig = {
     LOGOUT: "ログアウト",
     SIGNUP: "新規登録",
     UPDATE: "更新",
+  },
+  CLIPBOARD: {
+    PASTE_TOOLTIP: "クリップボードから貼り付け",
+    COPY_TOOLTIP: "クリップボードにコピー",
+  },
+  FAVORITE: {
+    OPEN_LINK_TOOLTIP: "を開く",
   },
   FORM: {
     CHAT: {
