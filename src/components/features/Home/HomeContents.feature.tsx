@@ -107,7 +107,7 @@ export const HomeContents = () => {
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
-      <div className="s:absolute -bottom-[61vh] z-50 inset-x-0 w-full s:px-4">
+      <div className="s:absolute -bottom-[58dvh] z-50 inset-x-0 w-full s:px-4">
         <HomeBalloon message={tweet} />
       </div>
       <div className="flex gap-3 s:gap-2 w-full">
