@@ -6,10 +6,10 @@ import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form"
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
 import { textsConfig } from "@/config/texts.config";
-import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePutFavorite } from "@/hooks/api/usePutFavorite.hook";
 import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useFavoriteMode } from "@/hooks/useFavoriteMode.hook";
+import { useFavorites } from "@/hooks/useFavorites.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { GetRequiredMessage } from "@/utils/GetRequiredMessage.util";
 
@@ -36,7 +36,7 @@ export const EditFavoriteModal = () => {
 
   const { handleClose, handleOpen: onOpen } = useModal();
 
-  const { refetch } = useGetFavorite();
+  const { refreshFavorites } = useFavorites();
 
   const mutate = usePutFavorite();
 
@@ -82,7 +82,7 @@ export const EditFavoriteModal = () => {
       {
         onSuccess: () => {
           toast(textsConfig.TOAST.FAVORITE_UPDATE.SUCCESS);
-          refetch();
+          refreshFavorites();
           updateEditFavorite({
             id: 0,
             title: "",

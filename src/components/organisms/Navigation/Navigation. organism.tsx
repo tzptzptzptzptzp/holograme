@@ -18,7 +18,7 @@ export const Navigation = () => {
   };
   return (
     <nav
-      className="a-navigation-slide-in u-shadow flex-auto absolute top-0 s:top-auto right-0 bottom-0 s:left-0 z-30 w-20 max-w-20 min-w-20 s:w-full s:max-w-full h-full s:h-[4.5rem] s:p-2 s:pb-[1.3rem] bg-primary"
+      className="a-navigation-slide-in u-shadow flex-auto absolute top-0 s:top-auto right-0 bottom-0 s:left-0 z-30 w-20 max-w-20 min-w-20 s:w-full s:max-w-full h-full s:h-20 s:p-2 s:standalone:pb-[2rem] bg-primary"
       style={{ transform: "translateZ(0px)" }}
     >
       <ul className="flex flex-col s:flex-row gap-8 s:gap-4 items-center justify-center h-full">
