@@ -4,14 +4,14 @@ import { FixedTooltip } from "@/components/atoms/FixedTooltip/FixedTooltip.atom"
 import { colorConfig } from "@/config/color.config";
 import { textsConfig } from "@/config/texts.config";
 import { usePostClipboard } from "@/hooks/api/usePostClipboard.hook";
-import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useClipboards } from "@/hooks/useClipboards.hook";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 
 const TEXT_LENGTH_LIMIT = 15;
 
 export const ClipboardPasteButton = () => {
-  const { refetch } = useGetClipboard();
+  const { refreshClipboards } = useClipboards();
   const mutate = usePostClipboard();
 
   const handleClick = async () => {
@@ -25,7 +25,7 @@ export const ClipboardPasteButton = () => {
               : text
           }`
         );
-        refetch();
+        refreshClipboards();
       },
       onError: (err) => {
         toast.error(textsConfig.TOAST.CLIPBOARD_PASTE.ERROR);

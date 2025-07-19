@@ -13,7 +13,7 @@ import { useGetModels } from "@/hooks/api/useGetModels.hook";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useUser } from "@/hooks/useUser.hook";
-import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/config/texts.config";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
@@ -35,9 +35,9 @@ export const HomeContents = () => {
 
   const [model, setModel] = useState<OpenAiModel | null>(localModel);
 
-  const { data: clipboards } = useGetClipboard();
-  const { user } = useUser();
+  const { clipboards } = useClipboards();
   const { favorites, setFavorites } = useFavorites();
+  const { user } = useUser();
 
   const [tweet, setTweet] = useState<string>(
     user.nickname + textsConfig.TWEET.DEFAULT
