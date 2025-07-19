@@ -28,7 +28,7 @@ export default function VerifiedTemplate({
   }, [session, setAuthToken]);
 
   return (
-    <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-[4.5rem]">
+    <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-20">
       {
         /* PC表示のアバター */
         isPc && (
