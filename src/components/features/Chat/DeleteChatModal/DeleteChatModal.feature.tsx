@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useDeleteChat } from "@/hooks/api/useDeleteChat.hook";
 import { useGetChat } from "@/hooks/api/useGetChat.hook";
 import { useGetChatMessage } from "@/hooks/api/useGetChatMessage.hook";

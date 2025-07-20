@@ -7,7 +7,7 @@ import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { cn } from "@/utils/Cn.util";
 import { Icons } from "@/icons";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 
 export const BlogPostListModal = () => {
   const { setCurrentBlogPost } = useBlogPost();

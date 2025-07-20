@@ -15,7 +15,7 @@ import {
 } from "@dnd-kit/sortable";
 import { Favorite } from "@prisma/client";
 import { toast } from "react-toastify";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePutFavoriteOrder } from "@/hooks/api/usePutFavoriteOrder.hook";
 import { useDevice } from "@/hooks/useDevice.hook";

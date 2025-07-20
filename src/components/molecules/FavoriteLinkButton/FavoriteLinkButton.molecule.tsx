@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { colorConfig } from "@/config/color.config";
+import { colorConfig } from "@/configs/color.config";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 

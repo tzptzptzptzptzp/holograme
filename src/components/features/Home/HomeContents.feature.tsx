@@ -15,7 +15,7 @@ import { useDevice } from "@/hooks/useDevice.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
 interface SavedTweet {

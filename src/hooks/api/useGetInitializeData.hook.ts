@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { queryKeysConfig } from "@/config/queryKeys.config";
+import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GlobalDataType } from "@/types";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 

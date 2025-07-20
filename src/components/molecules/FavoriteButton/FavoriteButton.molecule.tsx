@@ -6,7 +6,7 @@ import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { useSearchTypeStore } from "@/stores/searchType.store";
 import { FixedTooltip } from "@/components/atoms/FixedTooltip/FixedTooltip.atom";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 
 type Props = {
   favorite: {

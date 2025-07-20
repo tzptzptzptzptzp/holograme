@@ -1,5 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { colorConfig } from "@/config/color.config";
+import { colorConfig } from "@/configs/color.config";
 import { Icons } from "@/icons";
 import { useSearchType } from "@/hooks/useSearchType.hook";
 import { cn } from "@/utils/Cn.util";

@@ -5,7 +5,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";

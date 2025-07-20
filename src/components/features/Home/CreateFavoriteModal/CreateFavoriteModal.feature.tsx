@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { usePostFavorite } from "@/hooks/api/usePostFavorite.hook";
 import { useCreateFavorite } from "@/hooks/useCreateFavorite.hook";

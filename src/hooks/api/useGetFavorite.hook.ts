@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Favorite } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { queryKeysConfig } from "@/config/queryKeys.config";
+import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 
 const defaultValue = {

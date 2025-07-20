@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { M_PLUS_Rounded_1c } from "next/font/google";
 import { Provider } from "@/components/templates/Provider/Provider.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { cn } from "@/utils/Cn.util";
 
 import "react-toastify/dist/ReactToastify.css";

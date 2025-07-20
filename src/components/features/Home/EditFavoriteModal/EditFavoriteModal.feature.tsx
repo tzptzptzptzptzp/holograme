@@ -5,7 +5,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { usePutFavorite } from "@/hooks/api/usePutFavorite.hook";
 import { useEditFavorite } from "@/hooks/useEditFavorite.hook";
 import { useFavoriteMode } from "@/hooks/useFavoriteMode.hook";

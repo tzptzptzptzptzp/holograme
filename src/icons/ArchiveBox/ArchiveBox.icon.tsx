@@ -1,4 +1,4 @@
-import { colorConfig } from "@/config/color.config";
+import { colorConfig } from "@/configs/color.config";
 import { IconType } from "../icon.type";
 
 export const ArchiveBox = ({

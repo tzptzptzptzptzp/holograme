@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { createClient } from "@/libs/supabase/client.lib";
 import { useRouter } from "next/navigation";
 

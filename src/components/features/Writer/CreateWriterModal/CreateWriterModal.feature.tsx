@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { usePostWriter } from "@/hooks/api/usePostWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";

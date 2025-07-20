@@ -6,7 +6,7 @@ import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form"
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { usePutChatStandardPhrase } from "@/hooks/api/usePutChatStandardPhrase.hook";
 import { useEditChatStandardPhrase } from "@/hooks/useEditChatStandardPhrase.hook";
