@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
+import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 
 export type OpenAiModel = {
   id: string;

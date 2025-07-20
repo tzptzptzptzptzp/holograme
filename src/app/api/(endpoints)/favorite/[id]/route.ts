@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
+import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { prisma } from "@/libs/Prisma.lib";
 
 export async function PUT(

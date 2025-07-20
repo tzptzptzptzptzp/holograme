@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../../../apiHelpers/getUserIdFromToken.helper";
+import { getUserIdFromToken } from "../../../helpers/getUserIdFromToken.helper";
 import { prisma } from "../../../../../libs/Prisma.lib";
 
 export async function POST(req: Request) {

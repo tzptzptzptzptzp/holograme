@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { generateGPTResponse } from "@/app/apiHelpers/generateGPTResponse.helper";
-import { getUserIdFromToken } from "@/app/apiHelpers/getUserIdFromToken.helper";
+import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
+import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { gptConfig } from "@/config/gpt.config";
 import { prisma } from "@/libs/Prisma.lib";
 

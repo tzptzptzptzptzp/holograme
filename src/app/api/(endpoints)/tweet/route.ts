@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { generateGPTResponse } from "@/app/apiHelpers/generateGPTResponse.helper";
+import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
 import { gptConfig } from "@/config/gpt.config";
 
 export async function POST(req: Request) {
