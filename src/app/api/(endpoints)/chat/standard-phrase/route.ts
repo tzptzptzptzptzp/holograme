@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../apiHelpers/getUserIdFromToken.helper";
-import { prisma } from "../../../libs/Prisma.lib";
+import { getUserIdFromToken } from "../../../../apiHelpers/getUserIdFromToken.helper";
+import { prisma } from "../../../../../libs/Prisma.lib";
 
 export async function POST(req: Request) {
   try {
@@ -9,24 +9,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const {
-      name,
-      expertise,
-      targetAudience,
-      sitePurpose,
-      siteGenre,
-      toneAndStyle,
-    } = await req.json();
+    const { title, content } = await req.json();
 
-    const data = await prisma.writer.create({
+    const data = await prisma.chatStandardPhrase.create({
       data: {
+        title,
+        content,
         userId,
-        name,
-        expertise,
-        targetAudience,
-        sitePurpose,
-        siteGenre,
-        toneAndStyle,
       },
     });
 
@@ -47,12 +36,9 @@ export async function GET(req: Request) {
     }
     const userId = await getUserIdFromToken(token);
 
-    const data = await prisma.writer.findMany({
+    const data = await prisma.chatStandardPhrase.findMany({
       where: {
         userId: userId,
-      },
-      orderBy: {
-        updatedDate: "desc",
       },
     });
 

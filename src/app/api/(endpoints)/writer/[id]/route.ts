@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../../apiHelpers/getUserIdFromToken.helper";
-import { prisma } from "../../../../libs/Prisma.lib";
+import { getUserIdFromToken } from "../../../../apiHelpers/getUserIdFromToken.helper";
+import { prisma } from "../../../../../libs/Prisma.lib";
 
 export async function PUT(
   req: Request,

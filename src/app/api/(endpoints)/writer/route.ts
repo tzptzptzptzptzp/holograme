@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../apiHelpers/getUserIdFromToken.helper";
-import { prisma } from "../../../libs/Prisma.lib";
+import { getUserIdFromToken } from "../../../apiHelpers/getUserIdFromToken.helper";
+import { prisma } from "../../../../libs/Prisma.lib";
 
 export async function POST(req: Request) {
   try {
@@ -9,14 +9,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = await getUserIdFromToken(token);
-    const { name, description, defaultMessage } = await req.json();
+    const {
+      name,
+      expertise,
+      targetAudience,
+      sitePurpose,
+      siteGenre,
+      toneAndStyle,
+    } = await req.json();
 
-    const data = await prisma.chatRoom.create({
+    const data = await prisma.writer.create({
       data: {
-        name: name,
-        description: description,
-        defaultMessage: defaultMessage,
-        userId: userId,
+        userId,
+        name,
+        expertise,
+        targetAudience,
+        sitePurpose,
+        siteGenre,
+        toneAndStyle,
       },
     });
 
@@ -37,7 +47,7 @@ export async function GET(req: Request) {
     }
     const userId = await getUserIdFromToken(token);
 
-    const data = await prisma.chatRoom.findMany({
+    const data = await prisma.writer.findMany({
       where: {
         userId: userId,
       },

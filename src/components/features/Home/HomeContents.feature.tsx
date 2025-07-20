@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { OpenAiModel } from "@/app/api/openai/route";
+import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";

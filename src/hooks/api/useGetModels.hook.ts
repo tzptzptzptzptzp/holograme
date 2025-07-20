@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { OpenAiModel } from "@/app/api/openai/route";
+import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { queryKeysConfig } from "@/config/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useModels } from "@/hooks/useModels.hook";
@@ -23,7 +23,7 @@ const getModels = async () => {
 
 export const useGetModels = () => {
   const { setModels } = useModels();
-  
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MODELS],
     queryFn: getModels,

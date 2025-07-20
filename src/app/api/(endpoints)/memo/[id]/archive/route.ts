@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { getUserIdFromToken } from "../../../../../apiHelpers/getUserIdFromToken.helper";
 import { prisma } from "../../../../../../libs/Prisma.lib";
 
-export async function DELETE(
+export async function PUT(
   req: Request,
-  { params }: { params: { postId: string } }
+  { params }: { params: { id: string } }
 ) {
-  const postId = parseInt(params.postId, 10);
+  const id = parseInt(params.id, 10);
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
     if (!token) {
@@ -14,8 +14,8 @@ export async function DELETE(
     }
     const userId = await getUserIdFromToken(token);
 
-    const item = await prisma.blogPost.findUnique({
-      where: { id: postId, userId: userId },
+    const item = await prisma.memo.findUnique({
+      where: { id: id },
     });
 
     if (!item || item.userId !== userId) {
@@ -25,8 +25,13 @@ export async function DELETE(
       );
     }
 
-    const data = await prisma.blogPost.delete({
-      where: { id: postId, userId: userId },
+    const { archive } = await req.json();
+
+    const data = await prisma.memo.update({
+      where: { id: id },
+      data: {
+        archived: archive,
+      },
     });
 
     return NextResponse.json(data);
