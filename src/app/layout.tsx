@@ -5,7 +5,7 @@ import { textsConfig } from "@/config/texts.config";
 import { cn } from "@/utils/Cn.util";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.scss";
+import "../styles/globals.scss";
 
 const font = M_PLUS_Rounded_1c({ weight: ["500", "700"], subsets: ["latin"] });
 
