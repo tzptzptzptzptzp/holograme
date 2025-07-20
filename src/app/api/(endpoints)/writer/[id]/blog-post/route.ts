@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
 import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
-import { gptConfig } from "@/config/gpt.config";
+import { gptConfig } from "@/app/api/configs/gpt.config";
 import { prisma } from "@/libs/Prisma.lib";
 
 export async function POST(

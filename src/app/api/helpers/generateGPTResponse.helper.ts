@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { gptConfig } from "@/config/gpt.config";
+import { gptConfig } from "@/app/api/configs/gpt.config";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
