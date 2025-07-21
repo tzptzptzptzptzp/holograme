@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { FixedTooltip } from "@/components/atoms/FixedTooltip/FixedTooltip.atom";
-import { colorConfig } from "@/config/color.config";
-import { textsConfig } from "@/config/texts.config";
+import { colorConfig } from "@/configs/color.config";
+import { textsConfig } from "@/configs/texts.config";
 import { usePostClipboard } from "@/hooks/api/usePostClipboard.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { Icons } from "@/icons";

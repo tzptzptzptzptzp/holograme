@@ -1,5 +1,5 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useModal } from "@/hooks/useModal.hook";
 import { cn } from "@/utils/Cn.util";
 

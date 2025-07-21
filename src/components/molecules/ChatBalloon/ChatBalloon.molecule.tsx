@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./ChatBalloon.module.scss";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { CustomReactMarkdown } from "@/components/organisms/CustomReactMarkdown/CustomReactMarkdown.organism";
-import { colorConfig } from "@/config/color.config";
+import { colorConfig } from "@/configs/color.config";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 

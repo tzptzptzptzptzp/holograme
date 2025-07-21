@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { OpenAiModel } from '@/app/api/openai/route';
+import { create } from "zustand";
+import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 
 // デフォルト値
 const defaultModel: OpenAiModel = {
@@ -13,7 +13,7 @@ const defaultModel: OpenAiModel = {
 interface ModelsStore {
   // 状態
   models: OpenAiModel[];
-  
+
   // アクション
   setModels: (models: OpenAiModel[]) => void;
   addModel: (model: OpenAiModel) => void;
@@ -24,15 +24,14 @@ interface ModelsStore {
 export const useModelsStore = create<ModelsStore>()((set) => ({
   // 初期状態
   models: [defaultModel],
-  
+
   // アクション
   setModels: (models) => set({ models }),
-  
-  addModel: (model) => 
+
+  addModel: (model) =>
     set((state) => ({
-      models: [...state.models, model]
+      models: [...state.models, model],
     })),
-    
-  clearModels: () => 
-    set({ models: [defaultModel] }),
+
+  clearModels: () => set({ models: [defaultModel] }),
 }));

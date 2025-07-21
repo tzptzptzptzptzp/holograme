@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { HistoryItem } from "@/components/molecules/HistoryItem/HistoryItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { Icons } from "@/icons";
 
 export const HistoryContents = () => {

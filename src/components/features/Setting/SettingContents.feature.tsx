@@ -5,7 +5,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetUser } from "@/hooks/api/useGetUser.hook";
 import { usePutUser } from "@/hooks/api/usePutUser.hook";
 import { useUser } from "@/hooks/useUser.hook";

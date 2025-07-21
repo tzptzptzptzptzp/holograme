@@ -3,7 +3,7 @@ import Highlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import { srcery } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 

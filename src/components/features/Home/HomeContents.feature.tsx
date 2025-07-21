@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { OpenAiModel } from "@/app/api/openai/route";
+import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -15,8 +15,7 @@ import { useDevice } from "@/hooks/useDevice.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
-import { textsConfig } from "@/config/texts.config";
-import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
+import { textsConfig } from "@/configs/texts.config";
 
 interface SavedTweet {
   content: string;
@@ -68,17 +67,18 @@ export const HomeContents = () => {
         setExecutedOnce(true);
       } else {
         // 保存されたtweetがないか、6時間以上経過していれば新しく取得
-        const prompt = GenerateTweetPrompt({ user });
         mutate(
-          { prompt },
+          {
+            userData: user,
+          },
           {
             onSuccess: ({ data }) => {
               // 新しいtweetを設定
-              setTweet(data.answer);
+              setTweet(data.tweet);
 
               // ローカルストレージに保存（現在のタイムスタンプ付きで）
               const newSavedTweet: SavedTweet = {
-                content: data.answer,
+                content: data.tweet,
                 timestamp: currentTime,
               };
               localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));

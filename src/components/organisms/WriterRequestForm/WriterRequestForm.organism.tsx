@@ -7,7 +7,7 @@ import { Button } from "@/components/atoms/Button/Button.atom";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { FormSelect } from "@/components/forms/FormSelect/FormSelect.form";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetBlogPost } from "@/hooks/api/useGetBlogPost.hook";
 import { usePostBlogPost } from "@/hooks/api/usePostBlogPost.hook";
 import { useBlogPost } from "@/hooks/features/useBlogPost.hook";

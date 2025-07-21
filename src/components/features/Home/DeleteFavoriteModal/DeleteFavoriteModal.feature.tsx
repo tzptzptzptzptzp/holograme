@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { ErrorMessage } from "@/components/forms/ErrorMessage/ErrorMessage.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useDeleteFavorite } from "@/hooks/api/useDeleteFavorite.hook";
 import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { useEditFavorite } from "@/hooks/useEditFavorite.hook";

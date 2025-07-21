@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { FormInput } from "@/components/forms/FormInput/FormInput.form";
 import { FormTextarea } from "@/components/forms/FormTextarea/FormTextarea.form";
 import { ModalInner } from "@/components/templates/ModalInner/ModalInner.template";
-import { textsConfig } from "@/config/texts.config";
+import { textsConfig } from "@/configs/texts.config";
 import { useGetChatStandardPhrase } from "@/hooks/api/useGetChatStandardPhrase.hook";
 import { usePostChatStandardPhrase } from "@/hooks/api/usePostChatStandardPhrase.hook";
 import { useModal } from "@/hooks/useModal.hook";

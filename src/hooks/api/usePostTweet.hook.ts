@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
+import { PostTweetRequest } from "@/app/api/(endpoints)/tweet/route";
 
-const postTweet = async ({ prompt }: { prompt: string }) => {
-  return await axios.post<{ answer: string }>(`/api/tweet`, {
-    prompt,
+const postTweet = async ({ userData }: PostTweetRequest) => {
+  return await axios.post<{ tweet: string }>(`/api/tweet`, {
+    userData,
   });
 };
 

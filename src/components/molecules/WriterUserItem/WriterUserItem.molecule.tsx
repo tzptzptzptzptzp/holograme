@@ -1,6 +1,6 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { ItemBase } from "@/components/atoms/ItemBase/ItemBase.atom";
-import { colorConfig } from "@/config/color.config";
+import { colorConfig } from "@/configs/color.config";
 import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
