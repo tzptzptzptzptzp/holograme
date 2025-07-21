@@ -4,11 +4,10 @@ import { gptConfig } from "@/app/api/configs/gpt.config";
 import { createSystemPrompt } from "../../helpers/prompt/createSystemPrompt.helper";
 import { GetRandomObject } from "@/utils/GetRandomObject.util";
 import { topicList } from "../../configs/prompt/topic.config";
+import { User } from "@prisma/client";
 
 export type PostTweetRequest = {
-  personalityId?: string;
-  customInstructions?: string[];
-  systemPromptFormat?: "json" | "markdown";
+  userData: User;
 };
 
 export async function POST(req: Request) {
@@ -18,8 +17,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { personalityId, customInstructions, systemPromptFormat } =
-      (await req.json()) as PostTweetRequest;
+    const { userData } = (await req.json()) as PostTweetRequest;
 
     const selectedTopic = GetRandomObject(topicList);
 
@@ -33,12 +31,7 @@ export async function POST(req: Request) {
     // システムプロンプトを作成
     let systemPromptContent: string;
     try {
-      const format = systemPromptFormat || "markdown";
-      systemPromptContent = createSystemPrompt({
-        personalityId: personalityId || "cheerful_clumsy",
-        customInstructions: customInstructions || [],
-        format: format,
-      });
+      systemPromptContent = createSystemPrompt({ userData });
     } catch (error) {
       console.error("Failed to create system prompt:", error);
       return NextResponse.json(

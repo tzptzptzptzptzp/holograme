@@ -67,22 +67,27 @@ export const HomeContents = () => {
         setExecutedOnce(true);
       } else {
         // 保存されたtweetがないか、6時間以上経過していれば新しく取得
-        mutate(undefined, {
-          onSuccess: ({ data }) => {
-            // 新しいtweetを設定
-            setTweet(data.tweet);
+        mutate(
+          {
+            userData: user,
+          },
+          {
+            onSuccess: ({ data }) => {
+              // 新しいtweetを設定
+              setTweet(data.tweet);
 
-            // ローカルストレージに保存（現在のタイムスタンプ付きで）
-            const newSavedTweet: SavedTweet = {
-              content: data.tweet,
-              timestamp: currentTime,
-            };
-            localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        });
+              // ローカルストレージに保存（現在のタイムスタンプ付きで）
+              const newSavedTweet: SavedTweet = {
+                content: data.tweet,
+                timestamp: currentTime,
+              };
+              localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
+            },
+            onError: (error) => {
+              console.error(error);
+            },
+          }
+        );
         setExecutedOnce(true);
       }
     }
