@@ -16,7 +16,6 @@ import { useUser } from "@/hooks/useUser.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
 import { textsConfig } from "@/configs/texts.config";
-import { GenerateTweetPrompt } from "@/utils/GenerateTweetPrompt.util";
 
 interface SavedTweet {
   content: string;
@@ -68,26 +67,22 @@ export const HomeContents = () => {
         setExecutedOnce(true);
       } else {
         // 保存されたtweetがないか、6時間以上経過していれば新しく取得
-        const prompt = GenerateTweetPrompt({ user });
-        mutate(
-          { prompt },
-          {
-            onSuccess: ({ data }) => {
-              // 新しいtweetを設定
-              setTweet(data.answer);
+        mutate(undefined, {
+          onSuccess: ({ data }) => {
+            // 新しいtweetを設定
+            setTweet(data.tweet);
 
-              // ローカルストレージに保存（現在のタイムスタンプ付きで）
-              const newSavedTweet: SavedTweet = {
-                content: data.answer,
-                timestamp: currentTime,
-              };
-              localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
-            },
-            onError: (error) => {
-              console.error(error);
-            },
-          }
-        );
+            // ローカルストレージに保存（現在のタイムスタンプ付きで）
+            const newSavedTweet: SavedTweet = {
+              content: data.tweet,
+              timestamp: currentTime,
+            };
+            localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
+          },
+          onError: (error) => {
+            console.error(error);
+          },
+        });
         setExecutedOnce(true);
       }
     }
