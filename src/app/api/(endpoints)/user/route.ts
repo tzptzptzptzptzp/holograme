@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { prisma } from "@/libs/Prisma.lib";
+import { withAuth } from "@/app/api/helpers/auth.helper";
 
 export async function POST(req: Request) {
   try {
@@ -25,55 +25,29 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PUT(req: Request) {
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const PUT = withAuth(async (req: Request, userId: string) => {
+  const { username, nickname, location } = await req.json();
 
-    const { username, nickname, location } = await req.json();
+  const data = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      username,
+      nickname,
+      location,
+    },
+  });
 
-    const data = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        username,
-        nickname,
-        location,
-      },
-    });
+  return NextResponse.json(data);
+});
 
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+export const GET = withAuth(async (req: Request, userId: string) => {
+  const data = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
 
-export async function GET(req: Request) {
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
-
-    const data = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+  return NextResponse.json(data);
+});

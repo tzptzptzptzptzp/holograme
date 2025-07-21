@@ -1,97 +1,59 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "../../helpers/getUserIdFromToken.helper";
 import { prisma } from "../../../../libs/Prisma.lib";
+import { withAuth } from "../../helpers/auth.helper";
 
-export async function POST(req: Request) {
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
-    const { title, url, emojiId, emojiNative, emojiUnified } = await req.json();
+export const POST = withAuth(async (req: Request, userId: string) => {
+  const { title, url, emojiId, emojiNative, emojiUnified } = await req.json();
 
-    const item = await prisma.favorite.findFirst({
-      where: {
-        userId,
-      },
-      orderBy: {
-        order: "desc",
-      },
-    });
+  const item = await prisma.favorite.findFirst({
+    where: {
+      userId,
+    },
+    orderBy: {
+      order: "desc",
+    },
+  });
 
-    const data = await prisma.favorite.create({
-      data: {
-        userId,
-        title,
-        url,
-        order: item ? item.order + 1 : 1,
-        emojiId,
-        emojiNative,
-        emojiUnified,
-      },
-    });
+  const data = await prisma.favorite.create({
+    data: {
+      userId,
+      title,
+      url,
+      order: item ? item.order + 1 : 1,
+      emojiId,
+      emojiNative,
+      emojiUnified,
+    },
+  });
 
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+  return NextResponse.json(data);
+});
 
-export async function PUT(req: Request) {
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+export const PUT = withAuth(async (req: Request, userId: string) => {
+  const { favorites }: { favorites: { id: number; order: number }[] } =
+    await req.json();
 
-    const userId = await getUserIdFromToken(token);
-    const { favorites }: { favorites: { id: number; order: number }[] } =
-      await req.json();
+  const updates = favorites.map((favorite) =>
+    prisma.favorite.update({
+      where: { id: favorite.id, userId },
+      data: { order: favorite.order },
+    })
+  );
 
-    const updates = favorites.map((favorite) =>
-      prisma.favorite.update({
-        where: { id: favorite.id, userId },
-        data: { order: favorite.order },
-      })
-    );
+  const results = await prisma.$transaction(updates);
 
-    const results = await prisma.$transaction(updates);
+  return NextResponse.json(results);
+});
 
-    return NextResponse.json(results);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+export const GET = withAuth(async (req: Request, userId: string) => {
+  const data = await prisma.favorite.findMany({
+    where: {
+      userId: userId,
+    },
+    orderBy: {
+      order: "asc",
+    },
+  });
 
-export async function GET(req: Request) {
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
-
-    const data = await prisma.favorite.findMany({
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        order: "asc",
-      },
-    });
-
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
+  return NextResponse.json(data);
+});
