@@ -1,6 +1,15 @@
 import { NextResponse } from "next/server";
 import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
 import { gptConfig } from "@/app/api/configs/gpt.config";
+import { createSystemPrompt } from "../../helpers/prompt/createSystemPrompt.helper";
+import { GetRandomObject } from "@/utils/GetRandomObject.util";
+import { topicList } from "../../configs/prompt/topic.config";
+
+export type PostTweetRequest = {
+  personalityId?: string;
+  customInstructions?: string[];
+  systemPromptFormat?: "json" | "markdown";
+};
 
 export async function POST(req: Request) {
   try {
@@ -9,9 +18,45 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { prompt } = await req.json();
+    const { personalityId, customInstructions, systemPromptFormat } =
+      (await req.json()) as PostTweetRequest;
 
-    const gptResponse = await generateGPTResponse(prompt, gptConfig.MODEL.LITE);
+    const selectedTopic = GetRandomObject(topicList);
+
+    if (!selectedTopic) {
+      return NextResponse.json(
+        { error: "No topics available" },
+        { status: 500 }
+      );
+    }
+
+    // システムプロンプトを作成
+    let systemPromptContent: string;
+    try {
+      const format = systemPromptFormat || "markdown";
+      systemPromptContent = createSystemPrompt({
+        personalityId: personalityId || "cheerful_clumsy",
+        customInstructions: customInstructions || [],
+        format: format,
+      });
+    } catch (error) {
+      console.error("Failed to create system prompt:", error);
+      return NextResponse.json(
+        { error: "Failed to create system prompt" },
+        { status: 500 }
+      );
+    }
+
+    const systemPrompt = {
+      role: "system" as const,
+      content: systemPromptContent,
+    };
+
+    const gptResponse = await generateGPTResponse(
+      gptConfig.MODEL.LITE,
+      [systemPrompt, { role: "user", content: JSON.stringify(selectedTopic) }],
+      gptConfig.MAX_TOKENS.DEFAULT
+    );
 
     if (gptResponse === null) {
       return NextResponse.json(
@@ -20,7 +65,9 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ answer: gptResponse });
+    return NextResponse.json({
+      tweet: gptResponse,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
