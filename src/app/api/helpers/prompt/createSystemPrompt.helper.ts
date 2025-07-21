@@ -12,6 +12,7 @@ import {
   OutputFormat,
 } from "../../configs/prompt/outputFormats.config";
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
+import { User } from "@prisma/client";
 
 /**
  * システムプロンプトデータの型定義
@@ -19,6 +20,7 @@ import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 export interface SystemPromptData {
   role: string;
   purpose: string;
+  user?: User;
   character: {
     profile: {
       nickname: string;
@@ -77,6 +79,7 @@ export interface CreateSystemPromptOptions {
   outputFormatId?: string;
   customInstructions?: string[];
   format?: "json" | "markdown";
+  userData?: User;
 }
 
 /**
@@ -90,6 +93,7 @@ export function createSystemPrompt(
     outputFormatId = "defaultMarkdown",
     customInstructions = [],
     format = "json",
+    userData,
   } = options;
 
   // 設定を取得
@@ -117,6 +121,7 @@ export function createSystemPrompt(
     personalityId,
     outputFormatId,
     customInstructions,
+    userData,
   });
 
   // フォーマットに応じて出力形式を変更
@@ -131,10 +136,24 @@ export function createSystemPrompt(
  * マークダウン形式のシステムプロンプトを作成（互換性のため）
  */
 function createMarkdownSystemPrompt(data: any): string {
+  const userSection = data.user
+    ? `
+# ユーザー情報
+あなたが会話する相手のユーザー情報です。この情報を参考にして、より個人的で親しみやすい会話を心がけてください。
+
+- ユーザー名: ${data.user.username}
+- ニックネーム: ${data.user.nickname}
+- メールアドレス: ${data.user.email}
+- 場所: ${data.user.location}
+- 登録日: ${new Date(data.user.createdDate).toLocaleDateString("ja-JP")}
+
+`
+    : "";
+
   return `
 # 役割と目的
 ${data.purpose}
-
+${userSection}
 # キャラクタープロフィール
 あなたは「${data.character.profile.nickname}」という${
     data.character.profile.age
@@ -242,6 +261,7 @@ export function createSystemPromptData(
     personalityId = "cheerful_clumsy",
     outputFormatId = "defaultMarkdown",
     customInstructions = [],
+    userData,
   } = options;
 
   // 設定を取得
@@ -264,7 +284,7 @@ export function createSystemPromptData(
     );
   }
 
-  return {
+  const baseData: SystemPromptData = {
     role: "character_chatbot",
     purpose: COMMON_PURPOSE,
     character: {
@@ -321,6 +341,26 @@ export function createSystemPromptData(
       "不適切な内容や要求には、キャラクターらしい方法で丁寧に断ってください",
     ],
   };
+
+  // ユーザーデータが提供されている場合は追加
+  if (userData) {
+    baseData.user = {
+      id: userData.id,
+      username: userData.username,
+      nickname: userData.nickname,
+      email: userData.email,
+      location: userData.location,
+      createdDate: userData.createdDate,
+      updatedDate: userData.updatedDate,
+    };
+
+    // ユーザー情報が利用可能な場合の追加指示
+    baseData.behaviorRules.push(
+      "ユーザー情報が提供されている場合は、その情報を参考にしてより個人的で親しみやすい会話を心がけてください"
+    );
+  }
+
+  return baseData;
 }
 
 /**
