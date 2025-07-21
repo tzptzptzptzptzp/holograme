@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
-import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { prisma } from "@/libs/Prisma.lib";
+import { withAuth } from "@/app/api/helpers/auth.helper";
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const PUT = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
 
     const item = await prisma.chatRoom.findUnique({
       where: { id: id },
@@ -45,25 +41,16 @@ export async function PUT(
     });
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const GET = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
 
     const data = await prisma.chatRoom.findUnique({
       where: { id: id, userId: userId },
@@ -76,33 +63,24 @@ export async function GET(
       },
     });
 
-    if (!data || data.userId !== userId) {
+    if (!data) {
       return NextResponse.json(
-        { error: "Item not found or unauthorized" },
+        { error: "Chat room not found" },
         { status: 404 }
       );
     }
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const DELETE = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
 
     const item = await prisma.chatRoom.findUnique({
       where: { id: id },
@@ -123,10 +101,5 @@ export async function DELETE(
     });
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);

@@ -1,20 +1,17 @@
 import { NextResponse } from "next/server";
 import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
-import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { gptConfig } from "@/app/api/configs/gpt.config";
 import { prisma } from "@/libs/Prisma.lib";
+import { withAuth } from "@/app/api/helpers/auth.helper";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const POST = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
+
     const { title, prompt } = await req.json();
 
     const gptResponse = await generateGPTResponse(
@@ -29,6 +26,7 @@ export async function POST(
         { status: 500 }
       );
     }
+
     const data = await prisma.blogPost.create({
       data: {
         userId,
@@ -40,25 +38,16 @@ export async function POST(
     });
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const GET = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
 
     const data = await prisma.blogPost.findMany({
       where: { userId, writerId: id },
@@ -68,10 +57,5 @@ export async function GET(
     });
 
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);

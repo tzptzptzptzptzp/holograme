@@ -1,19 +1,15 @@
 import { NextResponse } from "next/server";
 import { generateGPTResponse } from "@/app/api/helpers/generateGPTResponse.helper";
-import { getUserIdFromToken } from "@/app/api/helpers/getUserIdFromToken.helper";
 import { prisma } from "@/libs/Prisma.lib";
+import { withAuth } from "@/app/api/helpers/auth.helper";
 
-export async function POST(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = parseInt(params.id, 10);
-  try {
-    const token = req.headers.get("Authorization")?.replace("Bearer ", "");
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-    const userId = await getUserIdFromToken(token);
+export const POST = withAuth(
+  async (
+    req: Request,
+    userId: string,
+    { params }: { params: { id: string } }
+  ) => {
+    const id = parseInt(params.id, 10);
 
     const { content, prompt } = await req.json();
 
@@ -63,10 +59,5 @@ export async function POST(
     });
 
     return NextResponse.json({ userMessage, gptMessage });
-  } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
   }
-}
+);
