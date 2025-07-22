@@ -67,6 +67,10 @@ export interface SystemPromptData {
     content: string;
     style: string[];
   };
+  responseFormat?: {
+    type: "json" | "string" | "markdown";
+    instructions: string[];
+  };
   customInstructions: string[];
   behaviorRules: string[];
 }
@@ -80,6 +84,7 @@ export interface CreateSystemPromptOptions {
   customInstructions?: string[];
   format?: "json" | "markdown";
   userData?: User;
+  responseFormat?: "json" | "string" | "markdown";
 }
 
 /**
@@ -94,6 +99,7 @@ export function createSystemPrompt(
     customInstructions = [],
     format = "json",
     userData,
+    responseFormat,
   } = options;
 
   // 設定を取得
@@ -122,6 +128,7 @@ export function createSystemPrompt(
     outputFormatId,
     customInstructions,
     userData,
+    responseFormat,
   });
 
   // フォーマットに応じて出力形式を変更
@@ -237,6 +244,27 @@ ${data.outputFormat.content}
 ## スタイル
 ${data.outputFormat.style.map((style: string) => `- ${style}`).join("\n")}
 
+${
+  data.responseFormat
+    ? `
+# 応答形式
+## 形式
+${
+  data.responseFormat.type === "string"
+    ? "プレーンテキスト（文字列）"
+    : data.responseFormat.type === "json"
+    ? "JSON形式"
+    : "マークダウン形式"
+}
+
+## 応答指示
+${data.responseFormat.instructions
+  .map((instruction: string) => `- ${instruction}`)
+  .join("\n")}
+`
+    : ""
+}
+
 # 追加指示
 ${
   data.customInstructions.length > 0
@@ -262,6 +290,7 @@ export function createSystemPromptData(
     outputFormatId = "defaultMarkdown",
     customInstructions = [],
     userData,
+    responseFormat,
   } = options;
 
   // 設定を取得
@@ -342,6 +371,19 @@ export function createSystemPromptData(
     ],
   };
 
+  // 応答形式が指定されている場合は追加
+  if (responseFormat) {
+    const responseFormatData = createResponseFormatData(responseFormat);
+    baseData.responseFormat = responseFormatData;
+
+    // 応答形式に応じた追加の行動規則を設定
+    baseData.behaviorRules.push(
+      ...responseFormatData.instructions.map(
+        (instruction) => `応答形式: ${instruction}`
+      )
+    );
+  }
+
   // ユーザーデータが提供されている場合は追加
   if (userData) {
     baseData.user = {
@@ -361,6 +403,39 @@ export function createSystemPromptData(
   }
 
   return baseData;
+}
+
+/**
+ * 応答形式データを作成
+ */
+function createResponseFormatData(
+  responseFormat: "json" | "string" | "markdown"
+): {
+  type: "json" | "string" | "markdown";
+  instructions: string[];
+} {
+  const formatInstructions: Record<"json" | "string" | "markdown", string[]> = {
+    json: [
+      "応答は必ずJSON形式で返してください",
+      "JSONの構造は適切で有効な形式にしてください",
+      "文字列値は適切にエスケープしてください",
+    ],
+    string: [
+      "応答は必ずプレーンテキスト（文字列）で返してください",
+      "JSONやマークダウンの形式ではなく、そのまま読める文字列として応答してください",
+      "特殊な記号や装飾文字は使用せず、自然な文章で応答してください",
+    ],
+    markdown: [
+      "応答は必ずマークダウン形式で返してください",
+      "適切な見出し、リスト、強調などのマークダウン記法を使用してください",
+      "コードブロックが必要な場合は適切な言語指定をしてください",
+    ],
+  };
+
+  return {
+    type: responseFormat,
+    instructions: formatInstructions[responseFormat],
+  };
 }
 
 /**
@@ -398,4 +473,40 @@ export function getSpeakingStyle(
  */
 export function getOutputFormat(outputFormatId: string): OutputFormat | null {
   return outputFormats[outputFormatId] || null;
+}
+
+/**
+ * 文字列形式の応答を指定したシステムプロンプトを作成（便利関数）
+ */
+export function createStringResponseSystemPrompt(
+  options: Omit<CreateSystemPromptOptions, "responseFormat"> = {}
+): string {
+  return createSystemPrompt({
+    ...options,
+    responseFormat: "string",
+  });
+}
+
+/**
+ * JSON形式の応答を指定したシステムプロンプトを作成（便利関数）
+ */
+export function createJsonResponseSystemPrompt(
+  options: Omit<CreateSystemPromptOptions, "responseFormat"> = {}
+): string {
+  return createSystemPrompt({
+    ...options,
+    responseFormat: "json",
+  });
+}
+
+/**
+ * マークダウン形式の応答を指定したシステムプロンプトを作成（便利関数）
+ */
+export function createMarkdownResponseSystemPrompt(
+  options: Omit<CreateSystemPromptOptions, "responseFormat"> = {}
+): string {
+  return createSystemPrompt({
+    ...options,
+    responseFormat: "markdown",
+  });
 }
