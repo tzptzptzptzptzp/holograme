@@ -21,23 +21,12 @@ export const POST = withAuth(async (req: Request, userId: string) => {
   }
 
   // システムプロンプトを作成
-  let systemPromptContent: string;
-  try {
-    systemPromptContent = createSystemPrompt({
-      userData,
-      responseFormat: "string",
-    });
-  } catch (error) {
-    console.error("Failed to create system prompt:", error);
-    return NextResponse.json(
-      { error: "Failed to create system prompt" },
-      { status: 500 }
-    );
-  }
-
   const systemPrompt = {
     role: "system" as const,
-    content: systemPromptContent,
+    content: createSystemPrompt({
+      userData,
+      responseFormat: "string",
+    }),
   };
 
   const gptResponse = await generateGPTResponse(
