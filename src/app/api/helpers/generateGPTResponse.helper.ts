@@ -14,7 +14,7 @@ export const generateGPTResponse = async (
   const response = await openai.chat.completions.create({
     model,
     messages,
-    max_tokens: maxToken,
+    max_completion_tokens: maxToken,
   });
 
   return response.choices[0].message.content;

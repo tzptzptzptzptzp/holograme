@@ -4,7 +4,7 @@
 export interface Personality {
   name: string;
   description: string;
-  traits: string[];
+  traits: readonly string[];
   speakingStyleId: string;
 }
 
@@ -12,7 +12,7 @@ export interface Personality {
  * 事前に定義された性格
  * それぞれがどの `speakingStyle` を使用するかを指定します。
  */
-export const personalities: { [key: string]: Personality } = {
+export const personalities = {
   cheerful_clumsy: {
     name: "朗らかドジっ子",
     description:
@@ -72,4 +72,10 @@ export const personalities: { [key: string]: Personality } = {
     ],
     speakingStyleId: "cool",
   },
-};
+} as const;
+
+/**
+ * personalitiesオブジェクトのキーのみを許可する型
+ * 'cheerful_clumsy' | 'big_sister' | 'bookworm' | 'cool' と同等になる
+ */
+export type PersonalityId = keyof typeof personalities;

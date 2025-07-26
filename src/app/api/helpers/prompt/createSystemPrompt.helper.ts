@@ -1,15 +1,12 @@
 import { characterProfile } from "../../configs/character/profile.config";
 import {
   personalities,
-  Personality,
+  PersonalityId,
 } from "../../configs/character/personalities.config";
-import {
-  speakingStyles,
-  SpeakingStyle,
-} from "../../configs/prompt/speakingStyles.config";
+import { speakingStyles } from "../../configs/prompt/speakingStyles.config";
 import {
   outputFormats,
-  OutputFormat,
+  OutputFormatId,
 } from "../../configs/prompt/outputFormats.config";
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 import { User } from "@prisma/client";
@@ -17,7 +14,7 @@ import { User } from "@prisma/client";
 /**
  * システムプロンプトデータの型定義
  */
-export interface SystemPromptData {
+export type SystemPromptData = {
   role: string;
   purpose: string;
   user?: User;
@@ -51,13 +48,13 @@ export interface SystemPromptData {
     personality: {
       type: string;
       description: string;
-      traits: string[];
+      traits: readonly string[];
     };
     communication: {
       speakingStyle: {
         id: string;
-        rules: string[];
-        examples: string[];
+        rules: readonly string[];
+        examples: readonly string[];
         wordReplacements: { [key: string]: string };
       };
     };
@@ -65,56 +62,42 @@ export interface SystemPromptData {
   outputFormat: {
     format: string;
     content: string;
-    style: string[];
+    style: readonly string[];
+  };
+  responseFormat?: {
+    type: "json" | "string" | "markdown";
+    instructions: string[];
   };
   customInstructions: string[];
   behaviorRules: string[];
-}
+};
 
 /**
  * システムプロンプト作成オプション
  */
-export interface CreateSystemPromptOptions {
-  personalityId?: string;
-  outputFormatId?: string;
+export type CreateSystemPromptOptions = {
+  personalityId?: PersonalityId;
+  outputFormatId?: OutputFormatId;
   customInstructions?: string[];
   format?: "json" | "markdown";
   userData?: User;
-}
+  responseFormat?: "json" | "string" | "markdown";
+};
 
 /**
  * システムプロンプトを作成するヘルパー関数
  */
-export function createSystemPrompt(
+export const createSystemPrompt = (
   options: CreateSystemPromptOptions = {}
-): string {
+): string => {
   const {
     personalityId = "cheerful_clumsy",
     outputFormatId = "defaultMarkdown",
     customInstructions = [],
     format = "json",
     userData,
+    responseFormat,
   } = options;
-
-  // 設定を取得
-  const personality = personalities[personalityId];
-  const outputFormat = outputFormats[outputFormatId];
-
-  if (!personality) {
-    throw new Error(`Personality with ID '${personalityId}' not found`);
-  }
-
-  if (!outputFormat) {
-    throw new Error(`Output format with ID '${outputFormatId}' not found`);
-  }
-
-  const speakingStyle = speakingStyles[personality.speakingStyleId];
-
-  if (!speakingStyle) {
-    throw new Error(
-      `Speaking style with ID '${personality.speakingStyleId}' not found`
-    );
-  }
 
   // システムプロンプトデータを作成
   const systemPromptData = createSystemPromptData({
@@ -122,6 +105,7 @@ export function createSystemPrompt(
     outputFormatId,
     customInstructions,
     userData,
+    responseFormat,
   });
 
   // フォーマットに応じて出力形式を変更
@@ -130,12 +114,12 @@ export function createSystemPrompt(
   }
 
   return JSON.stringify(systemPromptData, null, 2);
-}
+};
 
 /**
  * マークダウン形式のシステムプロンプトを作成（互換性のため）
  */
-function createMarkdownSystemPrompt(data: any): string {
+const createMarkdownSystemPrompt = (data: any): string => {
   const userSection = data.user
     ? `
 # ユーザー情報
@@ -237,6 +221,27 @@ ${data.outputFormat.content}
 ## スタイル
 ${data.outputFormat.style.map((style: string) => `- ${style}`).join("\n")}
 
+${
+  data.responseFormat
+    ? `
+# 応答形式
+## 形式
+${
+  data.responseFormat.type === "string"
+    ? "プレーンテキスト（文字列）"
+    : data.responseFormat.type === "json"
+    ? "JSON形式"
+    : "マークダウン形式"
+}
+
+## 応答指示
+${data.responseFormat.instructions
+  .map((instruction: string) => `- ${instruction}`)
+  .join("\n")}
+`
+    : ""
+}
+
 # 追加指示
 ${
   data.customInstructions.length > 0
@@ -249,32 +254,25 @@ ${
 # 重要な注意事項
 ${data.behaviorRules.map((rule: string) => `- ${rule}`).join("\n")}
 `.trim();
-}
+};
 
 /**
  * 構造化されたシステムプロンプトデータを作成
  */
-export function createSystemPromptData(
+export const createSystemPromptData = (
   options: CreateSystemPromptOptions = {}
-): SystemPromptData {
+): SystemPromptData => {
   const {
     personalityId = "cheerful_clumsy",
     outputFormatId = "defaultMarkdown",
     customInstructions = [],
     userData,
+    responseFormat,
   } = options;
 
   // 設定を取得
   const personality = personalities[personalityId];
   const outputFormat = outputFormats[outputFormatId];
-
-  if (!personality) {
-    throw new Error(`Personality with ID '${personalityId}' not found`);
-  }
-
-  if (!outputFormat) {
-    throw new Error(`Output format with ID '${outputFormatId}' not found`);
-  }
 
   const speakingStyle = speakingStyles[personality.speakingStyleId];
 
@@ -342,6 +340,19 @@ export function createSystemPromptData(
     ],
   };
 
+  // 応答形式が指定されている場合は追加
+  if (responseFormat) {
+    const responseFormatData = createResponseFormatData(responseFormat);
+    baseData.responseFormat = responseFormatData;
+
+    // 応答形式に応じた追加の行動規則を設定
+    baseData.behaviorRules.push(
+      ...responseFormatData.instructions.map(
+        (instruction) => `応答形式: ${instruction}`
+      )
+    );
+  }
+
   // ユーザーデータが提供されている場合は追加
   if (userData) {
     baseData.user = {
@@ -361,41 +372,37 @@ export function createSystemPromptData(
   }
 
   return baseData;
-}
+};
 
 /**
- * 利用可能な性格IDを取得
+ * 応答形式データを作成
  */
-export function getAvailablePersonalityIds(): string[] {
-  return Object.keys(personalities);
-}
+const createResponseFormatData = (
+  responseFormat: "json" | "string" | "markdown"
+): {
+  type: "json" | "string" | "markdown";
+  instructions: string[];
+} => {
+  const formatInstructions: Record<"json" | "string" | "markdown", string[]> = {
+    json: [
+      "応答は必ずJSON形式で返してください",
+      "JSONの構造は適切で有効な形式にしてください",
+      "文字列値は適切にエスケープしてください",
+    ],
+    string: [
+      "応答は必ずプレーンテキスト（文字列）で返してください",
+      "JSONやマークダウンの形式ではなく、そのまま読める文字列として応答してください",
+      "特殊な記号や装飾文字は使用せず、自然な文章で応答してください",
+    ],
+    markdown: [
+      "応答は必ずマークダウン形式で返してください",
+      "適切な見出し、リスト、強調などのマークダウン記法を使用してください",
+      "コードブロックが必要な場合は適切な言語指定をしてください",
+    ],
+  };
 
-/**
- * 利用可能な出力フォーマットIDを取得
- */
-export function getAvailableOutputFormatIds(): string[] {
-  return Object.keys(outputFormats);
-}
-
-/**
- * 性格設定を取得
- */
-export function getPersonality(personalityId: string): Personality | null {
-  return personalities[personalityId] || null;
-}
-
-/**
- * 話し方スタイルを取得
- */
-export function getSpeakingStyle(
-  speakingStyleId: string
-): SpeakingStyle | null {
-  return speakingStyles[speakingStyleId] || null;
-}
-
-/**
- * 出力フォーマットを取得
- */
-export function getOutputFormat(outputFormatId: string): OutputFormat | null {
-  return outputFormats[outputFormatId] || null;
-}
+  return {
+    type: responseFormat,
+    instructions: formatInstructions[responseFormat],
+  };
+};
