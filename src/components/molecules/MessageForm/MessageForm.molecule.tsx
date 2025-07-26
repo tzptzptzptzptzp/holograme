@@ -16,11 +16,13 @@ import { useSendMessage } from "@/hooks/useSendMessage.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
-import { GeneratePrompt } from "@/utils/GeneratePrompt.util";
 
 type Inputs = {
   message: string;
 };
+
+// 過去のチャットをいくつまで含めるか
+const HISTORY_MESSAGE_COUNT = 8;
 
 export const MessageForm = ({ roomId }: { roomId: number }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -80,18 +82,20 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!user || !chatRoom || apiPending || !watch("message").length) return;
     setApiPending(true);
-    const { message } = data;
     reset();
     setValue("message", chatRoom.defaultMessage);
-    sendMessage(message);
-    const prompt = GeneratePrompt({
-      user,
-      message,
-      description: chatRoom.description,
-      chatMessage: chatMessages,
-    });
+    sendMessage(data.message);
+
+    const chatHistory = chatMessages
+      .map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+      }))
+      .slice(0, HISTORY_MESSAGE_COUNT)
+      .reverse();
+
     mutate(
-      { content: message, id: roomId, prompt },
+      { id: roomId, chatHistory, userData: user, userMessage: data.message },
       {
         onError: () => {
           toast.error(textsConfig.TOAST.CHAT_MESSAGE.ERROR);
