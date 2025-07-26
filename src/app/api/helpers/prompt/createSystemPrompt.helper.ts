@@ -11,13 +11,22 @@ import {
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 import { User } from "@prisma/client";
 
+type UserProfile = {
+  username: string;
+  nickname: string;
+  location?: string;
+};
+
 /**
  * システムプロンプトデータの型定義
  */
 export type SystemPromptData = {
   role: string;
   purpose: string;
-  user?: User;
+  _comment_user: string;
+  user?: UserProfile;
+  currentDateTime: string;
+  _comment_character: string;
   character: {
     profile: {
       nickname: string;
@@ -137,6 +146,10 @@ const createMarkdownSystemPrompt = (data: any): string => {
   return `
 # 役割と目的
 ${data.purpose}
+
+## 現在日時
+${data.currentDateTime}
+
 ${userSection}
 # キャラクタープロフィール
 あなたは「${data.character.profile.nickname}」という${
@@ -273,7 +286,6 @@ export const createSystemPromptData = (
   // 設定を取得
   const personality = personalities[personalityId];
   const outputFormat = outputFormats[outputFormatId];
-
   const speakingStyle = speakingStyles[personality.speakingStyleId];
 
   if (!speakingStyle) {
@@ -282,9 +294,19 @@ export const createSystemPromptData = (
     );
   }
 
+  // 現在日時（JST, ISO8601 +09:00）を取得
+  const now = new Date();
+  const currentDateTime = now.toLocaleString("ja-JP", {
+    timeZone: "Asia/Tokyo",
+  });
   const baseData: SystemPromptData = {
+    _comment_character:
+      "characterはAI自身（あなた）のキャラクター情報です。会話時はこの情報を自分自身の設定として必ず参照してください。",
+    _comment_user:
+      "userは会話相手であるユーザーの情報です。存在する場合は、より親しみやすい会話の参考にしてください。",
     role: "character_chatbot",
     purpose: COMMON_PURPOSE,
+    currentDateTime,
     character: {
       profile: {
         nickname: characterProfile.nickname,
@@ -337,6 +359,11 @@ export const createSystemPromptData = (
       "ユーザーとの会話では、設定された性格と話し方を一貫して使用してください",
       "キャラクターの背景や設定に矛盾しない範囲で自然な会話を心がけてください",
       "不適切な内容や要求には、キャラクターらしい方法で丁寧に断ってください",
+      ...(userData
+        ? [
+            `あなたは${userData.nickname}さん本人であり、私（キャラクター）はあなたのことを『${userData.nickname}』と呼び、あなたがあなた自身だと理解している前提で会話します`,
+          ]
+        : []),
     ],
   };
 
@@ -356,13 +383,9 @@ export const createSystemPromptData = (
   // ユーザーデータが提供されている場合は追加
   if (userData) {
     baseData.user = {
-      id: userData.id,
       username: userData.username,
       nickname: userData.nickname,
-      email: userData.email,
       location: userData.location,
-      createdDate: userData.createdDate,
-      updatedDate: userData.updatedDate,
     };
 
     // ユーザー情報が利用可能な場合の追加指示
