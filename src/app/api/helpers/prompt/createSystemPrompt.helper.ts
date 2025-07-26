@@ -17,8 +17,10 @@ import { User } from "@prisma/client";
 export type SystemPromptData = {
   role: string;
   purpose: string;
+  _comment_user: string;
   user?: User;
   currentDateTime: string;
+  _comment_character: string;
   character: {
     profile: {
       nickname: string;
@@ -292,6 +294,10 @@ export const createSystemPromptData = (
     timeZone: "Asia/Tokyo",
   });
   const baseData: SystemPromptData = {
+    _comment_character:
+      "characterはAI自身（あなた）のキャラクター情報です。会話時はこの情報を自分自身の設定として必ず参照してください。",
+    _comment_user:
+      "userは会話相手であるユーザーの情報です。存在する場合は、より親しみやすい会話の参考にしてください。",
     role: "character_chatbot",
     purpose: COMMON_PURPOSE,
     currentDateTime,
