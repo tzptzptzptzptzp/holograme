@@ -7,6 +7,7 @@ import {
 import {
   speakingStyles,
   SpeakingStyle,
+  SpeakingStyleId,
 } from "../../configs/prompt/speakingStyles.config";
 import {
   outputFormats,
@@ -58,8 +59,8 @@ export interface SystemPromptData {
     communication: {
       speakingStyle: {
         id: string;
-        rules: string[];
-        examples: string[];
+        rules: readonly string[];
+        examples: readonly string[];
         wordReplacements: { [key: string]: string };
       };
     };
@@ -106,14 +107,6 @@ export function createSystemPrompt(
 
   // 設定を取得
   const personality = personalities[personalityId];
-
-  const speakingStyle = speakingStyles[personality.speakingStyleId];
-
-  if (!speakingStyle) {
-    throw new Error(
-      `Speaking style with ID '${personality.speakingStyleId}' not found`
-    );
-  }
 
   // システムプロンプトデータを作成
   const systemPromptData = createSystemPromptData({
@@ -450,9 +443,18 @@ export function getPersonality(
  * 話し方スタイルを取得
  */
 export function getSpeakingStyle(
-  speakingStyleId: string
-): SpeakingStyle | null {
-  return speakingStyles[speakingStyleId] || null;
+  speakingStyleId: SpeakingStyleId
+): SpeakingStyle {
+  const style = speakingStyles[speakingStyleId];
+  return {
+    ...style,
+    style: Array.from(style.style),
+    examples: {
+      ...style.examples,
+      examples: Array.from(style.examples.examples),
+      wordReplacements: { ...style.examples.wordReplacements },
+    },
+  };
 }
 
 /**
