@@ -1,17 +1,11 @@
 import { characterProfile } from "../../configs/character/profile.config";
 import {
   personalities,
-  Personality,
   PersonalityId,
 } from "../../configs/character/personalities.config";
-import {
-  speakingStyles,
-  SpeakingStyle,
-  SpeakingStyleId,
-} from "../../configs/prompt/speakingStyles.config";
+import { speakingStyles } from "../../configs/prompt/speakingStyles.config";
 import {
   outputFormats,
-  OutputFormat,
   OutputFormatId,
 } from "../../configs/prompt/outputFormats.config";
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
@@ -413,46 +407,5 @@ function createResponseFormatData(
   return {
     type: responseFormat,
     instructions: formatInstructions[responseFormat],
-  };
-}
-
-/**
- * 利用可能な性格IDを取得
- */
-export function getAvailablePersonalityIds(): string[] {
-  return Object.keys(personalities);
-}
-
-/**
- * 利用可能な出力フォーマットIDを取得
- */
-export function getAvailableOutputFormatIds(): string[] {
-  return Object.keys(outputFormats);
-}
-
-/**
- * 性格設定を取得
- */
-export function getPersonality(
-  personalityId: PersonalityId
-): Personality | null {
-  return personalities[personalityId] || null;
-}
-
-/**
- * 話し方スタイルを取得
- */
-export function getSpeakingStyle(
-  speakingStyleId: SpeakingStyleId
-): SpeakingStyle {
-  const style = speakingStyles[speakingStyleId];
-  return {
-    ...style,
-    style: Array.from(style.style),
-    examples: {
-      ...style.examples,
-      examples: Array.from(style.examples.examples),
-      wordReplacements: { ...style.examples.wordReplacements },
-    },
   };
 }
