@@ -2,6 +2,7 @@ import { characterProfile } from "../../configs/character/profile.config";
 import {
   personalities,
   Personality,
+  PersonalityId,
 } from "../../configs/character/personalities.config";
 import {
   speakingStyles,
@@ -10,6 +11,7 @@ import {
 import {
   outputFormats,
   OutputFormat,
+  OutputFormatId,
 } from "../../configs/prompt/outputFormats.config";
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 import { User } from "@prisma/client";
@@ -51,7 +53,7 @@ export interface SystemPromptData {
     personality: {
       type: string;
       description: string;
-      traits: string[];
+      traits: readonly string[];
     };
     communication: {
       speakingStyle: {
@@ -65,7 +67,7 @@ export interface SystemPromptData {
   outputFormat: {
     format: string;
     content: string;
-    style: string[];
+    style: readonly string[];
   };
   responseFormat?: {
     type: "json" | "string" | "markdown";
@@ -79,8 +81,8 @@ export interface SystemPromptData {
  * システムプロンプト作成オプション
  */
 export interface CreateSystemPromptOptions {
-  personalityId?: string;
-  outputFormatId?: string;
+  personalityId?: PersonalityId;
+  outputFormatId?: OutputFormatId;
   customInstructions?: string[];
   format?: "json" | "markdown";
   userData?: User;
@@ -104,15 +106,6 @@ export function createSystemPrompt(
 
   // 設定を取得
   const personality = personalities[personalityId];
-  const outputFormat = outputFormats[outputFormatId];
-
-  if (!personality) {
-    throw new Error(`Personality with ID '${personalityId}' not found`);
-  }
-
-  if (!outputFormat) {
-    throw new Error(`Output format with ID '${outputFormatId}' not found`);
-  }
 
   const speakingStyle = speakingStyles[personality.speakingStyleId];
 
@@ -297,14 +290,6 @@ export function createSystemPromptData(
   const personality = personalities[personalityId];
   const outputFormat = outputFormats[outputFormatId];
 
-  if (!personality) {
-    throw new Error(`Personality with ID '${personalityId}' not found`);
-  }
-
-  if (!outputFormat) {
-    throw new Error(`Output format with ID '${outputFormatId}' not found`);
-  }
-
   const speakingStyle = speakingStyles[personality.speakingStyleId];
 
   if (!speakingStyle) {
@@ -455,7 +440,9 @@ export function getAvailableOutputFormatIds(): string[] {
 /**
  * 性格設定を取得
  */
-export function getPersonality(personalityId: string): Personality | null {
+export function getPersonality(
+  personalityId: PersonalityId
+): Personality | null {
   return personalities[personalityId] || null;
 }
 
@@ -471,7 +458,9 @@ export function getSpeakingStyle(
 /**
  * 出力フォーマットを取得
  */
-export function getOutputFormat(outputFormatId: string): OutputFormat | null {
+export function getOutputFormat(
+  outputFormatId: OutputFormatId
+): OutputFormat | null {
   return outputFormats[outputFormatId] || null;
 }
 
