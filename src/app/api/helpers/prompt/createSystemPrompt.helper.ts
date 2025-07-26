@@ -11,6 +11,12 @@ import {
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 import { User } from "@prisma/client";
 
+type UserProfile = {
+  username: string;
+  nickname: string;
+  location?: string;
+};
+
 /**
  * システムプロンプトデータの型定義
  */
@@ -18,7 +24,7 @@ export type SystemPromptData = {
   role: string;
   purpose: string;
   _comment_user: string;
-  user?: User;
+  user?: UserProfile;
   currentDateTime: string;
   _comment_character: string;
   character: {
@@ -377,13 +383,9 @@ export const createSystemPromptData = (
   // ユーザーデータが提供されている場合は追加
   if (userData) {
     baseData.user = {
-      id: userData.id,
       username: userData.username,
       nickname: userData.nickname,
-      email: userData.email,
       location: userData.location,
-      createdDate: userData.createdDate,
-      updatedDate: userData.updatedDate,
     };
 
     // ユーザー情報が利用可能な場合の追加指示
