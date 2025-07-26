@@ -18,6 +18,7 @@ export type SystemPromptData = {
   role: string;
   purpose: string;
   user?: User;
+  currentDateTime: string;
   character: {
     profile: {
       nickname: string;
@@ -137,6 +138,10 @@ const createMarkdownSystemPrompt = (data: any): string => {
   return `
 # 役割と目的
 ${data.purpose}
+
+## 現在日時
+${data.currentDateTime}
+
 ${userSection}
 # キャラクタープロフィール
 あなたは「${data.character.profile.nickname}」という${
@@ -273,7 +278,6 @@ export const createSystemPromptData = (
   // 設定を取得
   const personality = personalities[personalityId];
   const outputFormat = outputFormats[outputFormatId];
-
   const speakingStyle = speakingStyles[personality.speakingStyleId];
 
   if (!speakingStyle) {
@@ -282,9 +286,15 @@ export const createSystemPromptData = (
     );
   }
 
+  // 現在日時（JST, ISO8601 +09:00）を取得
+  const now = new Date();
+  const currentDateTime = now.toLocaleString("ja-JP", {
+    timeZone: "Asia/Tokyo",
+  });
   const baseData: SystemPromptData = {
     role: "character_chatbot",
     purpose: COMMON_PURPOSE,
+    currentDateTime,
     character: {
       profile: {
         nickname: characterProfile.nickname,
