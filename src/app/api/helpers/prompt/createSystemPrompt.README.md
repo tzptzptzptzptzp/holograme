@@ -139,7 +139,3 @@ console.log(promptData.character.personality.type); // "クール"
 ### `getSpeakingStyle(speakingStyleId)`
 
 指定された話し方スタイル ID の設定を返します。
-
-### `getOutputFormat(outputFormatId)`
-
-指定された出力フォーマット ID の設定を返します。
