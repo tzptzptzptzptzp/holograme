@@ -14,7 +14,7 @@ import { User } from "@prisma/client";
 /**
  * システムプロンプトデータの型定義
  */
-export interface SystemPromptData {
+export type SystemPromptData = {
   role: string;
   purpose: string;
   user?: User;
@@ -70,26 +70,26 @@ export interface SystemPromptData {
   };
   customInstructions: string[];
   behaviorRules: string[];
-}
+};
 
 /**
  * システムプロンプト作成オプション
  */
-export interface CreateSystemPromptOptions {
+export type CreateSystemPromptOptions = {
   personalityId?: PersonalityId;
   outputFormatId?: OutputFormatId;
   customInstructions?: string[];
   format?: "json" | "markdown";
   userData?: User;
   responseFormat?: "json" | "string" | "markdown";
-}
+};
 
 /**
  * システムプロンプトを作成するヘルパー関数
  */
-export function createSystemPrompt(
+export const createSystemPrompt = (
   options: CreateSystemPromptOptions = {}
-): string {
+): string => {
   const {
     personalityId = "cheerful_clumsy",
     outputFormatId = "defaultMarkdown",
@@ -98,9 +98,6 @@ export function createSystemPrompt(
     userData,
     responseFormat,
   } = options;
-
-  // 設定を取得
-  const personality = personalities[personalityId];
 
   // システムプロンプトデータを作成
   const systemPromptData = createSystemPromptData({
@@ -117,12 +114,12 @@ export function createSystemPrompt(
   }
 
   return JSON.stringify(systemPromptData, null, 2);
-}
+};
 
 /**
  * マークダウン形式のシステムプロンプトを作成（互換性のため）
  */
-function createMarkdownSystemPrompt(data: any): string {
+const createMarkdownSystemPrompt = (data: any): string => {
   const userSection = data.user
     ? `
 # ユーザー情報
@@ -257,14 +254,14 @@ ${
 # 重要な注意事項
 ${data.behaviorRules.map((rule: string) => `- ${rule}`).join("\n")}
 `.trim();
-}
+};
 
 /**
  * 構造化されたシステムプロンプトデータを作成
  */
-export function createSystemPromptData(
+export const createSystemPromptData = (
   options: CreateSystemPromptOptions = {}
-): SystemPromptData {
+): SystemPromptData => {
   const {
     personalityId = "cheerful_clumsy",
     outputFormatId = "defaultMarkdown",
@@ -375,17 +372,17 @@ export function createSystemPromptData(
   }
 
   return baseData;
-}
+};
 
 /**
  * 応答形式データを作成
  */
-function createResponseFormatData(
+const createResponseFormatData = (
   responseFormat: "json" | "string" | "markdown"
 ): {
   type: "json" | "string" | "markdown";
   instructions: string[];
-} {
+} => {
   const formatInstructions: Record<"json" | "string" | "markdown", string[]> = {
     json: [
       "応答は必ずJSON形式で返してください",
@@ -408,4 +405,4 @@ function createResponseFormatData(
     type: responseFormat,
     instructions: formatInstructions[responseFormat],
   };
-}
+};
