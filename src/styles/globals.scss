@@ -18,7 +18,7 @@ html,
 body {
   overflow: hidden;
   height: 100dvh;
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
 }
 
 ::selection {

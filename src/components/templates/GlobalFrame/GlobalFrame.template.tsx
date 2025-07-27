@@ -13,7 +13,7 @@ export const GlobalFrame = ({ children }: Props) => {
   const { isSp } = useDevice();
 
   return (
-    <div className="flex items-center justify-center relative z-0 w-screen h-screen s:h-dvh p-12 s:p-0">
+    <div className="flex items-center justify-center relative z-0 w-screen h-full p-12 s:p-0">
       <div className="relative z-0 overflow-hidden w-full h-full rounded-3xl s:rounded-none isolate">
         <Background />
         <main className="w-full h-full">{children}</main>
