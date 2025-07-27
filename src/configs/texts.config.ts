@@ -10,6 +10,7 @@ export const textsConfig = {
     LOGOUT: "ログアウト",
     SIGNUP: "新規登録",
     UPDATE: "更新",
+    RESTART: "再起動",
   },
   CLIPBOARD: {
     PASTE_TOOLTIP: "クリップボードから貼り付け",

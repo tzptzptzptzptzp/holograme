@@ -10,6 +10,9 @@ type Props = {
 export const UserMenu = ({ isActive }: Props) => {
   const { signOut } = useSignOut();
 
+  const handleRestart = () => {
+    window.location.reload();
+  };
   const handleSignOut = async () => {
     await signOut();
   };
@@ -22,7 +25,10 @@ export const UserMenu = ({ isActive }: Props) => {
           : "top-full s:-right-24 opacity-0 pointer-events-none"
       )}
     >
-      <ul className="min-w-[200px] px-3 py-2 rounded-lg bg-white shadow-sm">
+      <ul className="flex flex-col gap-2 min-w-[200px] px-3 py-2 rounded-lg bg-white shadow-sm">
+        <li className="hidden s:standalone:block leading-normal">
+          <Button onClick={handleRestart}>{textsConfig.BUTTON.RESTART}</Button>
+        </li>
         <li className="leading-normal">
           <Button onClick={handleSignOut}>{textsConfig.BUTTON.LOGOUT}</Button>
         </li>
