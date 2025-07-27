@@ -158,7 +158,9 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
             }}
             onInput={adjustHeight}
             onKeyDown={handleKeyPress}
-            placeholder={"🎉 聞きたいことを入力してね！何を聞く？"}
+            placeholder={`🎉 聞きたいことを入力してね！${
+              isPc ? "何を聞く？" : ""
+            }`}
             ref={textareaRef}
             rows={1}
             value={value}
