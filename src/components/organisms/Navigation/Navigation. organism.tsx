@@ -7,14 +7,14 @@ import { UserMenu } from "@/components/organisms/UserMenu/UserMenu.organism";
 import { useDevice } from "@/hooks/useDevice.hook";
 
 export const Navigation = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const { type } = useDevice();
 
   const UserIconSize = type !== "SP" ? 39 : 30;
 
   const handleClick = () => {
-    setIsHovered((prev) => !prev);
+    setIsActive((prev) => !prev);
   };
   return (
     <nav
@@ -39,15 +39,15 @@ export const Navigation = () => {
                 height={UserIconSize}
               />
             </Button>
-            <UserMenu isHovered={isHovered} />
+            <UserMenu isActive={isActive} />
           </li>
         )}
       </ul>
       {type !== "SP" && (
         <div
           className="u-centering-x s:hidden absolute bottom-4 leading-[0]"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => setIsActive(true)}
+          onMouseLeave={() => setIsActive(false)}
         >
           <Button>
             <Image
@@ -57,7 +57,7 @@ export const Navigation = () => {
               height={UserIconSize}
             />
           </Button>
-          <UserMenu isHovered={isHovered} />
+          <UserMenu isActive={isActive} />
         </div>
       )}
     </nav>

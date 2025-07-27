@@ -4,10 +4,10 @@ import { useSignOut } from "@/hooks/auth/useSignOut.hook";
 import { cn } from "@/utils/Cn.util";
 
 type Props = {
-  isHovered: boolean;
+  isActive: boolean;
 };
 
-export const UserMenu = ({ isHovered }: Props) => {
+export const UserMenu = ({ isActive }: Props) => {
   const { signOut } = useSignOut();
 
   const handleSignOut = async () => {
@@ -17,7 +17,7 @@ export const UserMenu = ({ isHovered }: Props) => {
     <div
       className={cn(
         "absolute right-full s:-top-14 s:-translate-y-1/2 pr-10 s:pr-0 duration-300",
-        isHovered
+        isActive
           ? "top-1/2 -translate-y-1/2 s:-right-6 opacity-1 pointer-events-auto"
           : "top-full s:-right-24 opacity-0 pointer-events-none"
       )}
