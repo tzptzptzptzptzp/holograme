@@ -7,7 +7,13 @@ import { GetRandomInt } from "@/utils/GetRandomInt.util";
 const ANIMATION_INDEX_LIMIT = 32;
 const ANIMATION_DURATION_LIMIT = 6;
 
-export const Avatar = () => {
+type DeviceType = "pc" | "sp";
+
+interface AvatarProps {
+  deviceType?: DeviceType;
+}
+
+export const Avatar = ({ deviceType = "pc" }: AvatarProps) => {
   const [animationIndex, setAnimationIndex] = useState("");
   const [animationDurationIndex, setAnimationDurationIndex] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,6 +35,11 @@ export const Avatar = () => {
     setIsLoaded(true);
   };
 
+  // デバイスタイプに応じた幅設定
+  const getImageSize = () => {
+    return deviceType === "pc" ? 1000 : 500;
+  };
+
   return (
     <div
       className={cn(
@@ -45,8 +56,8 @@ export const Avatar = () => {
           isLoaded && "a-fade-in"
         )}
         src="/bisyojo_chan.png"
-        width={800}
-        height={800}
+        width={getImageSize()}
+        height={getImageSize()}
         onLoad={handleImageLoad}
       />
     </div>
