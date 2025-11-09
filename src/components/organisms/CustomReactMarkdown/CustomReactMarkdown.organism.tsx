@@ -38,6 +38,9 @@ export const CustomReactMarkdown = ({
         p: ({ children }) => (
           <div className="max-w-full break-words">{children}</div>
         ),
+        strong: ({ children }) => (
+          <strong className="font-bold">{children}</strong>
+        ),
         table: ({ children }) => (
           <div className="overflow-x-auto w-full">
             <table className="border-collapse table-fixed w-max min-w-full">

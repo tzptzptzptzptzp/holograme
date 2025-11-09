@@ -7,7 +7,7 @@ import { cn } from "@/utils/Cn.util";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.scss";
 
-const font = M_PLUS_Rounded_1c({ weight: ["500", "700"], subsets: ["latin"] });
+const font = M_PLUS_Rounded_1c({ weight: ["500", "900"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: textsConfig.META.TITLE,
