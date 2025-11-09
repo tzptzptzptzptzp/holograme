@@ -29,12 +29,18 @@ export const CustomReactMarkdown = ({
           <h4 className="text-[1.1em] font-semibold">{children}</h4>
         ),
         ul: ({ children }) => (
-          <ul className="flex flex-col gap-4">{children}</ul>
+          <ul className="flex flex-col gap-1 list-disc list-outside ml-2">
+            {children}
+          </ul>
         ),
         ol: ({ children }) => (
-          <ol className="flex flex-col gap-4">{children}</ol>
+          <ol className="flex flex-col gap-1 list-decimal list-outside ml-2">
+            {children}
+          </ol>
         ),
-        li: ({ children }) => <li className="pl-2">{children}</li>,
+        li: ({ children }) => (
+          <li className="ml-4 marker:text-current">{children}</li>
+        ),
         p: ({ children }) => (
           <div className="max-w-full break-words">{children}</div>
         ),
