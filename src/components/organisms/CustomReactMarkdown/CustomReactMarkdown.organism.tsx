@@ -47,6 +47,11 @@ export const CustomReactMarkdown = ({
         strong: ({ children }) => (
           <strong className="font-bold">{children}</strong>
         ),
+        blockquote: ({ children }) => (
+          <blockquote className="border-l-4 border-white dark:border-gray-600 mx-2 px-4 py-1 bg-white/25 italic rounded-r-md">
+            {children}
+          </blockquote>
+        ),
         table: ({ children }) => (
           <div className="overflow-x-auto w-full">
             <table className="border-collapse table-fixed w-max min-w-full">
