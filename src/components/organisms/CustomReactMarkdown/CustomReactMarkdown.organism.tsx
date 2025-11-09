@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { CodeBlock } from "@/components/molecules/CodeBlock/CodeBlock.molecule";
 import { cn } from "@/utils/Cn.util";
 
@@ -12,6 +13,7 @@ export const CustomReactMarkdown = ({
   return (
     <ReactMarkdown
       className={cn("flex flex-col gap-2 leading-[1.8]", className)}
+      remarkPlugins={[remarkGfm]}
       components={{
         code: CodeBlock,
         h1: ({ children }) => (
@@ -36,6 +38,18 @@ export const CustomReactMarkdown = ({
         p: ({ children }) => (
           <div className="max-w-full break-words">{children}</div>
         ),
+        table: ({ children }) => (
+          <div className="overflow-x-auto w-full">
+            <table className="border-collapse table-fixed w-max min-w-full">
+              {children}
+            </table>
+          </div>
+        ),
+        thead: ({ children }) => <thead className="border-2">{children}</thead>,
+        tbody: ({ children }) => <tbody className="border-2">{children}</tbody>,
+        tr: ({ children }) => <tr>{children}</tr>,
+        th: ({ children }) => <th className="px-2 py-1 border">{children}</th>,
+        td: ({ children }) => <td className="px-2 py-1 border">{children}</td>,
       }}
     >
       {markdown}
