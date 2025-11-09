@@ -33,7 +33,7 @@ export default function VerifiedTemplate({
         /* PC表示のアバター */
         isPc && (
           <div className="flex items-end relative top-0 w-[50%] h-full pl-4">
-            <Avatar />
+            <Avatar deviceType="pc" />
           </div>
         )
       }
@@ -44,7 +44,7 @@ export default function VerifiedTemplate({
         /* SP表示のアバター - 選択中のコンテンツがホームの場合のみ表示 */
         isSp && isHomeContent && (
           <div className="hidden s:flex flex-none items-end justify-center relative top-0 z-0 h-full max-h-[62svh] pl-4 s:px-2">
-            <Avatar />
+            <Avatar deviceType="sp" />
           </div>
         )
       }
