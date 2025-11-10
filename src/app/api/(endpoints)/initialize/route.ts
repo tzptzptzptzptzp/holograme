@@ -3,38 +3,37 @@ import { prisma } from "../../../../libs/Prisma.lib";
 import { withAuth } from "../../helpers/auth.helper";
 
 export const GET = withAuth(async (req: Request, userId: string) => {
-  const userData = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  const chatData = await prisma.chatRoom.findMany({
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      updatedDate: "desc",
-    },
-  });
-
-  const clipboardData = await prisma.clipboard.findMany({
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
-
-  const favoriteData = await prisma.favorite.findMany({
-    where: {
-      userId: userId,
-    },
-    orderBy: {
-      order: "asc",
-    },
-  });
+  const [userData, chatData, clipboardData, favoriteData] = await Promise.all([
+    prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    }),
+    prisma.chatRoom.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        updatedDate: "desc",
+      },
+    }),
+    prisma.clipboard.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        date: "desc",
+      },
+    }),
+    prisma.favorite.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        order: "asc",
+      },
+    }),
+  ]);
 
   return NextResponse.json({
     userData,
