@@ -83,10 +83,6 @@ export const useChat = () => {
       ? Number(storedFavoriteChatRoomId)
       : 0;
 
-    console.log(
-      `Initializing with favorite chat room ID: ${parsedFavoriteChatRoomId} (from localStorage: ${storedFavoriteChatRoomId})`
-    );
-
     // チャットルームのオプションを更新
     updateChatRoomOptionsIfChanged(chatRoomData);
 
