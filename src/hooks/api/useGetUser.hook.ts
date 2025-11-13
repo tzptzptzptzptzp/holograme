@@ -4,16 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 
-const defaultValue = {
-  id: "",
-  username: "",
-  nickname: "",
-  email: "",
-  location: "",
-  createdDate: new Date(),
-  updatedDate: new Date(),
-};
-
 const getUser = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
     throw new Error("Authorization token is missing");
@@ -28,11 +18,10 @@ export const useGetUser = () => {
     queryFn: getUser,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
-    placeholderData: defaultValue,
   });
 
   return {
     ...queryResult,
-    data: queryResult.data ?? defaultValue,
+    data: queryResult.data,
   };
 };
