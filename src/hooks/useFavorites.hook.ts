@@ -1,5 +1,6 @@
 import { useFavoritesStore } from "@/stores/favorites.store";
-import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeysConfig } from "@/configs/queryKeys.config";
 
 export const useFavorites = () => {
   const {
@@ -10,15 +11,14 @@ export const useFavorites = () => {
     removeFavorite,
   } = useFavoritesStore();
 
-  const { refetch } = useGetFavorite();
+  const queryClient = useQueryClient();
 
-  // APIからデータを取得してストアを更新する関数
+  // React Queryのキャッシュを無効化してデータを再取得する関数
   const refreshFavorites = async () => {
     try {
-      const result = await refetch();
-      if (result.data) {
-        setFavorites(result.data);
-      }
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeysConfig.GET_FAVORITE],
+      });
     } catch (error) {
       console.error("Failed to refresh favorites:", error);
     }

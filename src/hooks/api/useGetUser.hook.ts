@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
-import { useUserStore } from "@/stores/user.store";
+import { useUser } from "../useUser.hook";
 
 const getUser = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -15,7 +15,7 @@ const getUser = async () => {
 };
 
 export const useGetUser = () => {
-  const { setUser } = useUserStore();
+  const { setUser } = useUser();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_USER],
