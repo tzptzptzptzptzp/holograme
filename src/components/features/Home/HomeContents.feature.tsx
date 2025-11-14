@@ -10,20 +10,13 @@ import { SearchForm } from "@/components/molecules/SearchForm/SearchForm.molecul
 import { SearchTypeSwitcher } from "@/components/molecules/SearchTypeSwitcher/SearchTypeSwitcher.molecule";
 import { FavoriteDroppableArea } from "@/components/organisms/FavoriteDroppableArea/FavoriteDroppableArea.organism";
 import { useGetModels } from "@/hooks/api/useGetModels.hook";
-import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
-import { useUser } from "@/hooks/useUser.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
-import { textsConfig } from "@/configs/texts.config";
-
-interface SavedTweet {
-  content: string;
-  timestamp: number;
-}
+import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useTweet } from "@/hooks/useTweet.hook";
 
 export const HomeContents = () => {
-  const [executedOnce, setExecutedOnce] = useState(false);
   const [localModel] = useState<OpenAiModel | null>(() => {
     if (typeof window !== "undefined") {
       const savedModel = localStorage.getItem("latestModel");
@@ -31,67 +24,20 @@ export const HomeContents = () => {
     }
     return null;
   });
-
   const [model, setModel] = useState<OpenAiModel | null>(localModel);
 
   const { clipboards } = useClipboards();
   const { favorites, setFavorites } = useFavorites();
-  const { user } = useUser();
 
-  const [tweet, setTweet] = useState<string>(
-    user.nickname + textsConfig.TWEET.DEFAULT
-  );
+  // つぶやき関連フック
+  const { tweet } = useTweet();
 
   const { data: modelsData } = useGetModels();
 
   const { isPc, isSp } = useDevice();
 
-  const mutate = usePostTweet();
-
+  // デバイスによって表示するクリップボードの数を変更
   const trimmedClipboards = clipboards.slice(0, isSp ? 2 : 3);
-
-  useEffect(() => {
-    if (!executedOnce) {
-      // ローカルストレージからtweetを取得
-      const savedTweetString = localStorage.getItem("savedTweet");
-      const savedTweet: SavedTweet | null = savedTweetString
-        ? JSON.parse(savedTweetString)
-        : null;
-
-      const currentTime = Date.now();
-      const SIX_HOURS = 6 * 60 * 60 * 1000; // 6時間をミリ秒で表現
-
-      // 保存されたtweetがあり、かつ6時間以内のものであれば使用
-      if (savedTweet && currentTime - savedTweet.timestamp < SIX_HOURS) {
-        setTweet(savedTweet.content);
-        setExecutedOnce(true);
-      } else {
-        // 保存されたtweetがないか、6時間以上経過していれば新しく取得
-        mutate(
-          {
-            userData: user,
-          },
-          {
-            onSuccess: ({ data }) => {
-              // 新しいtweetを設定
-              setTweet(data.tweet);
-
-              // ローカルストレージに保存（現在のタイムスタンプ付きで）
-              const newSavedTweet: SavedTweet = {
-                content: data.tweet,
-                timestamp: currentTime,
-              };
-              localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
-            },
-            onError: (error) => {
-              console.error(error);
-            },
-          }
-        );
-        setExecutedOnce(true);
-      }
-    }
-  }, [executedOnce, mutate, user]);
 
   useEffect(() => {
     if (model) {
