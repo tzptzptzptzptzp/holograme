@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { ClipboardCopyButton } from "@/components/molecules/ClipboardCopyButton/ClipboardCopyButton.molecule";
 import { ClipboardItem } from "@/components/molecules/ClipboardItem/ClipboardItem.molecule";
 import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButton/ClipboardPasteButton.molecule";
@@ -14,42 +12,30 @@ import { useDevice } from "@/hooks/useDevice.hook";
 import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useFavorites } from "@/hooks/useFavorites.hook";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useGetFavorite } from "@/hooks/api/useGetFavorite.hook";
 import { useTweet } from "@/hooks/useTweet.hook";
+import { useModels } from "@/hooks/useModels.hook";
 
 export const HomeContents = () => {
-  const [localModel] = useState<OpenAiModel | null>(() => {
-    if (typeof window !== "undefined") {
-      const savedModel = localStorage.getItem("latestModel");
-      return savedModel ? JSON.parse(savedModel) : null;
-    }
-    return null;
-  });
-  const [model, setModel] = useState<OpenAiModel | null>(localModel);
-
   const { clipboards } = useClipboards();
   const { favorites, setFavorites } = useFavorites();
+  const { models, getSortedModels } = useModels();
 
   // つぶやき関連フック
   const { tweet } = useTweet();
 
-  const { data: modelsData } = useGetModels();
+  // データの取得とストア同期（内部で自動実行）
+  useGetModels();
+  useGetClipboard();
+  useGetFavorite();
 
   const { isPc, isSp } = useDevice();
 
   // デバイスによって表示するクリップボードの数を変更
   const trimmedClipboards = clipboards.slice(0, isSp ? 2 : 3);
 
-  useEffect(() => {
-    if (model) {
-      localStorage.setItem("latestModel", JSON.stringify(model));
-    }
-  }, [model]);
-
-  useEffect(() => {
-    if (modelsData && modelsData.length > 0) {
-      setModel(modelsData[0]);
-    }
-  }, [modelsData]);
+  // Zustandストアから最新のモデルを取得
+  const latestModel = models.length > 0 ? getSortedModels()[0] : null;
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
@@ -77,10 +63,8 @@ export const HomeContents = () => {
       </ul>
       {isPc && (
         <div className="s:hidden w-full">
-          {localModel ? (
-            <ModelItem id={localModel.id} created={localModel.created} />
-          ) : model ? (
-            <ModelItem id={model.id} created={model.created} />
+          {latestModel ? (
+            <ModelItem id={latestModel.id} created={latestModel.created} />
           ) : (
             <ModelItem id="" created={0} />
           )}
