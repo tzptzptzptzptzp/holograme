@@ -1,6 +1,6 @@
 import { useModelsStore } from "@/stores/models.store";
 import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 // ModelsStoreを簡単に使うためのカスタムフック
 export const useModels = () => {
@@ -17,6 +17,12 @@ export const useModels = () => {
   // モデルを日付順に並べ替える
   const getSortedModels = useCallback(() => {
     return [...models].sort((a, b) => b.created - a.created);
+  }, [models]);
+
+  // 最新のモデルを計算してメモ化
+  const latestModel = useMemo(() => {
+    if (models.length === 0) return null;
+    return [...models].sort((a, b) => b.created - a.created)[0];
   }, [models]);
 
   // モデルを追加し、IDが存在しない場合のみ追加する
@@ -36,6 +42,7 @@ export const useModels = () => {
     clearModels,
     findModelById,
     getSortedModels,
+    latestModel,
     addModelIfNotExists,
   };
 };

@@ -19,7 +19,7 @@ import { useModels } from "@/hooks/useModels.hook";
 export const HomeContents = () => {
   const { clipboards } = useClipboards();
   const { favorites, setFavorites } = useFavorites();
-  const { models, getSortedModels } = useModels();
+  const { latestModel } = useModels();
 
   // つぶやき関連フック
   const { tweet } = useTweet();
@@ -33,9 +33,6 @@ export const HomeContents = () => {
 
   // デバイスによって表示するクリップボードの数を変更
   const trimmedClipboards = clipboards.slice(0, isSp ? 2 : 3);
-
-  // Zustandストアから最新のモデルを取得
-  const latestModel = models.length > 0 ? getSortedModels()[0] : null;
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
