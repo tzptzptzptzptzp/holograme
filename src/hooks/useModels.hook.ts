@@ -6,37 +6,48 @@ import { useCallback, useMemo } from "react";
 export const useModels = () => {
   const { models, setModels, addModel, clearModels } = useModelsStore();
 
+  // 有効なモデル（IDが空でないもの）のみをフィルタリング
+  const validModels = useMemo(() => {
+    return models.filter((model) => model.id !== "");
+  }, [models]);
+
+  // モデルを日付順（新しい順）に並び替え
+  const sortedModels = useMemo(() => {
+    return [...validModels].sort((a, b) => b.created - a.created);
+  }, [validModels]);
+
+  // 最新のモデルはソート済み配列の最初の要素
+  const latestModel = useMemo(() => {
+    return sortedModels.length > 0 ? sortedModels[0] : null;
+  }, [sortedModels]);
+
   // 特定のIDでモデルを検索するヘルパー関数
   const findModelById = useCallback(
     (id: string) => {
-      return models.find((model) => model.id === id);
+      return sortedModels.find((model) => model.id === id);
     },
-    [models]
+    [sortedModels]
   );
 
-  // モデルを日付順に並べ替える
+  // ソート済みモデルを返す
   const getSortedModels = useCallback(() => {
-    return [...models].sort((a, b) => b.created - a.created);
-  }, [models]);
-
-  // 最新のモデルを計算してメモ化
-  const latestModel = useMemo(() => {
-    if (models.length === 0) return null;
-    return [...models].sort((a, b) => b.created - a.created)[0];
-  }, [models]);
+    return sortedModels;
+  }, [sortedModels]);
 
   // モデルを追加し、IDが存在しない場合のみ追加する
   const addModelIfNotExists = useCallback(
     (model: OpenAiModel) => {
-      if (!models.some((m) => m.id === model.id)) {
+      if (!sortedModels.some((m) => m.id === model.id)) {
         addModel(model);
       }
     },
-    [models, addModel]
+    [sortedModels, addModel]
   );
 
   return {
-    models,
+    models: sortedModels, // ソート済みの有効なモデル
+    validModels, // フィルタリング済みだがソート前のモデル
+    allModels: models, // すべてのモデル（デフォルト値含む）
     setModels,
     addModel,
     clearModels,
