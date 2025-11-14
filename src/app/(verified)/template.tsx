@@ -5,6 +5,7 @@ import { Navigation } from "@/components/organisms/Navigation/Navigation. organi
 import { useDevice } from "@/hooks/useDevice.hook";
 import { useSession } from "@/hooks/auth/useSession.hook";
 import { useSelectedContentStore } from "@/stores/selectedContent.store";
+import { useGetUser } from "@/hooks/api/useGetUser.hook";
 
 export default function VerifiedTemplate({
   children,
@@ -13,6 +14,9 @@ export default function VerifiedTemplate({
 }) {
   const { isLoading, isPc, isSp } = useDevice();
   const { session, setAuthToken } = useSession();
+
+  // ユーザーデータの取得とストア同期（内部で自動実行）
+  useGetUser();
 
   const selectedContent = useSelectedContentStore(
     (state) => state.selectedContent
