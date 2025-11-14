@@ -17,7 +17,7 @@ import { useTweet } from "@/hooks/useTweet.hook";
 import { useModels } from "@/hooks/useModels.hook";
 
 export const HomeContents = () => {
-  const { clipboards } = useClipboards();
+  const { trimmedClipboards } = useClipboards();
   const { favorites, setFavorites } = useFavorites();
   const { latestModel } = useModels();
 
@@ -29,10 +29,7 @@ export const HomeContents = () => {
   useGetClipboard();
   useGetFavorite();
 
-  const { isPc, isSp } = useDevice();
-
-  // デバイスによって表示するクリップボードの数を変更
-  const trimmedClipboards = clipboards.slice(0, isSp ? 2 : 3);
+  const { isPc } = useDevice();
 
   return (
     <div className="a-fade-in flex flex-col gap-3 w-full">
