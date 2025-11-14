@@ -11,15 +11,20 @@ type SavedTweet = {
 export const useTweet = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const { user } = useUser();
-  const [tweet, setTweet] = useState<string>(
-    user.nickname + textsConfig.TWEET.DEFAULT
-  );
+  const [tweet, setTweet] = useState<string>("");
 
   const mutate = usePostTweet();
 
+  // userが更新された時にデフォルトのtweetを設定
+  useEffect(() => {
+    if (user?.nickname && !executedOnce) {
+      setTweet(user.nickname + textsConfig.TWEET.DEFAULT);
+    }
+  }, [user?.nickname, executedOnce]);
+
   // ツイート取得・保存処理
   useEffect(() => {
-    if (!executedOnce) {
+    if (!executedOnce && user?.nickname) {
       // ローカルストレージからtweetを取得
       const savedTweetString = localStorage.getItem("savedTweet");
       const savedTweet: SavedTweet | null = savedTweetString
