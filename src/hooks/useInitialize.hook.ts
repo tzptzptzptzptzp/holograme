@@ -1,18 +1,10 @@
 import { useEffect } from "react";
 import { useSearchTypeStore, SearchType } from "@/stores/searchType.store";
 import { useGetUser } from "./api/useGetUser.hook";
-import { useUserStore } from "@/stores/user.store";
 
 export const useInitialize = () => {
-  // ユーザーデータの初期化
-  const { data: userData } = useGetUser();
-  const { setUser } = useUserStore();
-
-  useEffect(() => {
-    if (userData) {
-      setUser(userData);
-    }
-  }, [userData, setUser]);
+  // ユーザーデータの取得とストア同期（内部で自動実行）
+  useGetUser();
 
   // 検索タイプの初期化
   const setSearchType = useSearchTypeStore((state) => state.setSearchType);
