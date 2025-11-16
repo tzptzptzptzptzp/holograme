@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { ChatRoom } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
+import { useChatRoom } from "@/hooks/useChatRoom.hook";
 
 const getChat = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -13,12 +15,28 @@ const getChat = async () => {
 };
 
 export const useGetChat = () => {
+  const { setChatRoom } = useChatRoom();
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT],
     queryFn: getChat,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
   });
+
+  // React Queryから取得したデータをZustandストアに同期
+  useEffect(() => {
+    if (queryResult.data && queryResult.data.length > 0) {
+      // 配列の最初のチャットルームを現在のチャットルームとして設定
+      const firstChatRoom = queryResult.data[0];
+      setChatRoom({
+        id: firstChatRoom.id,
+        name: firstChatRoom.name || "",
+        description: firstChatRoom.description || "",
+        defaultMessage: firstChatRoom.defaultMessage || "",
+      });
+    }
+  }, [queryResult.data, setChatRoom]);
 
   return {
     ...queryResult,
