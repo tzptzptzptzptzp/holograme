@@ -4,15 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 
-const defaultValue = {
-  id: 0,
-  userId: "",
-  title: "",
-  content: "",
-  createdDate: new Date(),
-  updatedDate: new Date(),
-};
-
 const getChatStandardPhrase = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
     throw new Error("Authorization token is missing");
@@ -29,11 +20,10 @@ export const useGetChatStandardPhrase = () => {
     queryFn: getChatStandardPhrase,
     enabled: !!axios.defaults.headers.common["Authorization"],
     staleTime: GetMinutesToMilliseconds(60),
-    placeholderData: [defaultValue],
   });
 
   return {
     ...queryResult,
-    data: queryResult.data ?? [defaultValue],
+    data: queryResult.data,
   };
 };
