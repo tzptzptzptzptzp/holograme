@@ -1,6 +1,7 @@
 import { Session } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 export type AuthStatus = "authenticated" | "unauthenticated" | "loading";
 
@@ -40,7 +41,7 @@ export const useSessionStore = create<SessionStore>()(
         }),
     }),
     {
-      name: "session-storage",
+      name: STORAGE_KEYS.SESSION,
       partialize: (state) => ({ session: state.session }),
     }
   )

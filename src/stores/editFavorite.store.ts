@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Favorite } from "@prisma/client";
+import { STORAGE_KEYS } from "../configs/storage.config";
 
 // EditFavoriteStateTypeと同等の型定義
 export type EditFavoriteState = Omit<
@@ -39,7 +40,7 @@ export const useEditFavoriteStore = create<EditFavoriteStore>()(
       resetEditFavorite: () => set({ editFavorite: defaultValue }),
     }),
     {
-      name: "edit-favorite-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.EDIT_FAVORITE,
     }
   )
 );

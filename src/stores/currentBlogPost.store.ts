@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // CurrentBlogPostStateTypeと同等の型定義
 export interface CurrentBlogPostState {
@@ -33,7 +34,7 @@ export const useCurrentBlogPostStore = create<CurrentBlogPostStore>()(
       resetBlogPost: () => set({ currentBlogPost: defaultValue }),
     }),
     {
-      name: "current-blog-post-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.CURRENT_BLOG_POST,
     }
   )
 );

@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { Clipboard } from '@prisma/client';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { Clipboard } from "@prisma/client";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // 既存のClipboardStateTypeと同じ型を使用
 export type ClipboardState = Clipboard;
@@ -20,18 +21,18 @@ export const useClipboardsStore = create<ClipboardsStore>()(
     (set) => ({
       clipboards: [],
       setClipboards: (clipboards) => set({ clipboards }),
-      addClipboard: (clipboard) => 
-        set((state) => ({ 
-          clipboards: [...state.clipboards, clipboard] 
+      addClipboard: (clipboard) =>
+        set((state) => ({
+          clipboards: [...state.clipboards, clipboard],
         })),
-      removeClipboard: (id) => 
-        set((state) => ({ 
-          clipboards: state.clipboards.filter((clip) => clip.id !== id) 
+      removeClipboard: (id) =>
+        set((state) => ({
+          clipboards: state.clipboards.filter((clip) => clip.id !== id),
         })),
       clearClipboards: () => set({ clipboards: [] }),
     }),
     {
-      name: 'clipboards-storage', // localStorage用のキー名
+      name: STORAGE_KEYS.CLIPBOARDS,
     }
   )
 );

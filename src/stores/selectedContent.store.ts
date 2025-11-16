@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // 選択可能なコンテンツのタイプ定義
 export type SelectedContentType =
@@ -34,7 +35,7 @@ export const useSelectedContentStore = create<SelectedContentStore>()(
       resetSelectedContent: () => set({ selectedContent: "home" }),
     }),
     {
-      name: "selected-content-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.SELECTED_CONTENT,
     }
   )
 );

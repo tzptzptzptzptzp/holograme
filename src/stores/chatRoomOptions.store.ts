@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // ChatRoomOptionの型定義
 export type ChatRoomOptionType = {
@@ -11,11 +12,14 @@ export type ChatRoomOptionType = {
 type ChatRoomOptionsStoreType = {
   // チャットルームオプションリスト
   options: ChatRoomOptionType[];
-  
+
   // アクション
   setOptions: (options: ChatRoomOptionType[]) => void;
   addOption: (option: ChatRoomOptionType) => void;
-  updateOption: (id: number, updatedOption: Partial<ChatRoomOptionType>) => void;
+  updateOption: (
+    id: number,
+    updatedOption: Partial<ChatRoomOptionType>
+  ) => void;
   removeOption: (id: number) => void;
   resetOptions: () => void;
 };
@@ -38,26 +42,29 @@ export const useChatRoomOptionsStore = create<ChatRoomOptionsStoreType>()(
 
       // アクション
       setOptions: (options) => set({ options }),
-      
-      addOption: (option) => set((state) => ({
-        options: [...state.options, option]
-      })),
-      
-      updateOption: (id, updatedOption) => set((state) => ({
-        options: state.options.map((opt) => 
-          opt.id === id ? { ...opt, ...updatedOption } : opt
-        )
-      })),
-      
-      removeOption: (id) => set((state) => ({
-        options: state.options.filter((opt) => opt.id !== id)
-      })),
-      
+
+      addOption: (option) =>
+        set((state) => ({
+          options: [...state.options, option],
+        })),
+
+      updateOption: (id, updatedOption) =>
+        set((state) => ({
+          options: state.options.map((opt) =>
+            opt.id === id ? { ...opt, ...updatedOption } : opt
+          ),
+        })),
+
+      removeOption: (id) =>
+        set((state) => ({
+          options: state.options.filter((opt) => opt.id !== id),
+        })),
+
       resetOptions: () => set({ options: defaultOptions }),
     }),
     {
       // ストレージの設定
-      name: 'chat-room-options-storage',
+      name: STORAGE_KEYS.CHAT_ROOM_OPTIONS,
       // ストレージに保存する項目を選択
       partialize: (state) => ({ options: state.options }),
     }

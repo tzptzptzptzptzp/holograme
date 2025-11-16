@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // ChatRoomのタイプ定義
 export type ChatRoomType = {
@@ -13,7 +14,7 @@ export type ChatRoomType = {
 type ChatRoomStoreType = {
   // チャットルーム情報
   chatRoom: ChatRoomType;
-  
+
   // アクション
   setChatRoom: (chatRoom: ChatRoomType) => void;
   updateChatRoom: (updatedChatRoom: Partial<ChatRoomType>) => void;
@@ -38,16 +39,17 @@ export const useChatRoomStore = create<ChatRoomStoreType>()(
 
       // アクション
       setChatRoom: (chatRoom) => set({ chatRoom }),
-      
-      updateChatRoom: (updatedChatRoom) => set((state) => ({
-        chatRoom: { ...state.chatRoom, ...updatedChatRoom }
-      })),
-      
+
+      updateChatRoom: (updatedChatRoom) =>
+        set((state) => ({
+          chatRoom: { ...state.chatRoom, ...updatedChatRoom },
+        })),
+
       resetChatRoom: () => set({ chatRoom: defaultChatRoom }),
     }),
     {
       // ストレージの設定
-      name: 'chat-room-storage',
+      name: STORAGE_KEYS.CHAT_ROOM,
       // ストレージに保存する項目を選択
       partialize: (state) => ({ chatRoom: state.chatRoom }),
     }

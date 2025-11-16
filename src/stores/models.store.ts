@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // デフォルト値
 const defaultModel: OpenAiModel = {
@@ -39,7 +40,7 @@ export const useModelsStore = create<ModelsStore>()(
       clearModels: () => set({ models: [defaultModel] }),
     }),
     {
-      name: "models-storage", // LocalStorageのキー名
+      name: STORAGE_KEYS.MODELS,
     }
   )
 );
