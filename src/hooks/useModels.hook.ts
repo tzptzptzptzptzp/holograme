@@ -8,6 +8,10 @@ export const useModels = () => {
 
   // 有効なモデル（IDが空でないもの）のみをフィルタリング
   const validModels = useMemo(() => {
+    // modelsが配列でない場合は空配列を返す
+    if (!Array.isArray(models)) {
+      return [];
+    }
     return models.filter((model) => model.id !== "");
   }, [models]);
 

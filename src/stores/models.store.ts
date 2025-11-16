@@ -41,6 +41,14 @@ export const useModelsStore = create<ModelsStore>()(
     }),
     {
       name: STORAGE_KEYS.MODELS,
+      // LocalStorageから読み込む際のバリデーション
+      partialize: (state) => ({ models: state.models }),
+      onRehydrateStorage: () => (state) => {
+        // 読み込まれたstateのmodelsが配列でない場合はデフォルト値で初期化
+        if (state && !Array.isArray(state.models)) {
+          state.models = [defaultModel];
+        }
+      },
     }
   )
 );
