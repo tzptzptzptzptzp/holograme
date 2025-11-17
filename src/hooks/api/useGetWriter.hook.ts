@@ -4,7 +4,7 @@ import { Writer } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
-import { useWriterStore } from "@/stores/writer.store";
+import { useWriter } from "@/hooks/features/useWriter.hook";
 
 const getWriter = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -15,7 +15,7 @@ const getWriter = async () => {
 };
 
 export const useGetWriter = () => {
-  const { setWriter } = useWriterStore();
+  const { setWriter, setWriters } = useWriter();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_WRITER],
@@ -27,10 +27,12 @@ export const useGetWriter = () => {
   // React Queryから取得したデータをZustandストアに同期
   useEffect(() => {
     if (queryResult.data && queryResult.data.length > 0) {
+      // 配列全体をwritersストアに保存
+      setWriters(queryResult.data);
       // 配列の最初のWriterを現在のWriterとして設定
       setWriter(queryResult.data[0]);
     }
-  }, [queryResult.data, setWriter]);
+  }, [queryResult.data, setWriter, setWriters]);
 
   return {
     ...queryResult,
