@@ -23,13 +23,17 @@ const defaultValue: WriterState = {
 // Writerストアの作成
 export const useWriterStore = create<{
   writer: WriterState;
+  writers: WriterState[];
   setWriter: (writer: WriterState) => void;
+  setWriters: (writers: WriterState[]) => void;
   resetWriter: () => void;
 }>()(
   persist(
     (set) => ({
       writer: defaultValue,
+      writers: [],
       setWriter: (writer) => set({ writer }),
+      setWriters: (writers) => set({ writers }),
       resetWriter: () => set({ writer: defaultValue }),
     }),
     {
