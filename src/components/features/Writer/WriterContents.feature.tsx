@@ -47,14 +47,15 @@ export const WriterContents = () => {
         <WriterRequestForm writer={writer} />
       ) : (
         <ul className="flex flex-col gap-3 overflow-y-scroll">
-          {writerData.map((writer, i) => (
-            <WriterUserItem
-              key={i}
-              id={writer.id}
-              onClick={handleSelectWriter}
-              username={writer.name}
-            />
-          ))}
+          {writerData &&
+            writerData.map((writer, i) => (
+              <WriterUserItem
+                key={i}
+                id={writer.id}
+                onClick={handleSelectWriter}
+                username={writer.name}
+              />
+            ))}
         </ul>
       )}
     </ContentWrapper>

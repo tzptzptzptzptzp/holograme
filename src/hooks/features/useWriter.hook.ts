@@ -18,7 +18,8 @@ export const useWriter = () => {
   };
 
   const setFindWriter = (id: number) => {
-    const selectedWriter = writerData.find((writer) => writer.id === id);
+    const selectedWriter =
+      writerData && writerData.find((writer) => writer.id === id);
     if (selectedWriter) {
       setWriter(selectedWriter);
     }
