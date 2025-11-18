@@ -18,7 +18,7 @@ export const ChatContents = () => {
   const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
   const { options: chatRoomOptions } = useChatRoomOptions();
 
-  const { type } = useDevice();
+  const { isPc } = useDevice();
   const { handleOpen } = useModal();
 
   const { data } = useGetChat();
@@ -54,7 +54,7 @@ export const ChatContents = () => {
         <ContentHead className="justify-between">
           <div className="flex items-center gap-[6px] flex-none">
             <Icons.Chat color="white" />
-            <p>{type !== "SP" ? "Chat Room" : "Chat"}</p>
+            <p>{isPc ? "Chat Room" : "Chat"}</p>
           </div>
           <div className="flex items-center gap-1.5 w-full">
             <div className="flex justify-end flex-1">
