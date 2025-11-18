@@ -1,63 +1,21 @@
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { Button } from "@/components/atoms/Button/Button.atom";
 import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { MemoItem } from "@/components/molecules/MemoItem/MemoItem.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
-import { textsConfig } from "@/configs/texts.config";
-import { useGetMemo } from "@/hooks/api/useGetMemo.hook";
-import { usePostMemo } from "@/hooks/api/usePostMemo.hook";
+import { useMemo } from "@/hooks/useMemo.hook";
 import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 
-type MemoType = {
-  id: number;
-  userId: string;
-  title: string;
-  content: string;
-  archived: boolean;
-  createdDate: Date;
-  updatedDate: Date;
-};
-
 export const MemoContents = () => {
-  const [isArchive, setIsArchive] = useState(false);
-  const [apiPending, setApiPending] = useState(false);
-  const [memo, setMemo] = useState<MemoType[] | []>([]);
-
-  const { data, isLoading, refetch } = useGetMemo();
-
-  const mutate = usePostMemo();
-
-  useEffect(() => {
-    if (data) {
-      setMemo(data?.filter((item) => item.archived === isArchive));
-    }
-  }, [data, isArchive, setMemo]);
-
-  const handleArchive = () => {
-    setIsArchive((prev) => !prev);
-  };
-
-  const handleCreate = () => {
-    setApiPending(true);
-    mutate(
-      { content: "", title: `メモ - ${data ? data.length + 1 : 1}` },
-      {
-        onSuccess: () => {
-          toast(textsConfig.TOAST.MEMO_CREATE.SUCCESS);
-          refetch();
-        },
-        onError: () => {
-          toast.error(textsConfig.TOAST.MEMO_CREATE.ERROR);
-        },
-        onSettled: () => {
-          setApiPending(false);
-        },
-      }
-    );
-  };
+  const {
+    isArchive,
+    isLoading,
+    filteredMemo,
+    isCreating,
+    handleArchive,
+    handleCreate,
+  } = useMemo();
 
   return (
     <ContentWrapper>
@@ -73,14 +31,14 @@ export const MemoContents = () => {
                 "flex-shrink-0",
                 isArchive ? "opacity-100" : "opacity-50"
               )}
-              disabled={apiPending}
+              disabled={isCreating}
               onClick={handleArchive}
             >
               <Icons.ArchiveBox color="white" />
             </Button>
             <Button
               className="flex-shrink-0"
-              disabled={apiPending}
+              disabled={isCreating}
               onClick={handleCreate}
             >
               <Icons.PlusCircle color="white" />
@@ -88,11 +46,11 @@ export const MemoContents = () => {
           </div>
         </ContentHead>
       </div>
-      {isLoading && !data ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <ul className="flex flex-col gap-3 overflow-y-scroll">
-          {memo?.map((item) => (
+          {filteredMemo?.map((item) => (
             <MemoItem
               key={item.id}
               content={item.content}
