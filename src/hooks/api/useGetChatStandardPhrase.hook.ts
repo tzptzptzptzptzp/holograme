@@ -3,6 +3,7 @@ import { ChatStandardPhrase } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
+import { useSessionStore } from "@/stores/session.store";
 
 const getChatStandardPhrase = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -15,10 +16,12 @@ const getChatStandardPhrase = async () => {
 };
 
 export const useGetChatStandardPhrase = () => {
+  const { session } = useSessionStore();
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT_STANDARD_PHRASE],
     queryFn: getChatStandardPhrase,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
   });
 

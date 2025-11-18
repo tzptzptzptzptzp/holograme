@@ -6,6 +6,7 @@ import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useChatMessages } from "@/hooks/useChatMessages.hook";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 type CustomChatMessage = Omit<ChatMessage, "role"> & {
   role: "user" | "assistant";
@@ -26,11 +27,12 @@ const getChatMessage = async (id: number) => {
 export const useGetChatMessage = (id: number) => {
   const { setMessages } = useChatMessages();
   const { setChatRoom } = useChatRoom();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT_MESSAGE, id],
     queryFn: () => getChatMessage(id),
-    enabled: !!axios.defaults.headers.common["Authorization"] && id !== 0,
+    enabled: !!session && id !== 0,
     staleTime: GetMinutesToMilliseconds(5),
   });
   console.log(queryResult.data);

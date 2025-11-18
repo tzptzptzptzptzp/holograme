@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getChat = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -16,11 +17,12 @@ const getChat = async () => {
 
 export const useGetChat = () => {
   const { setChatRoom } = useChatRoom();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT],
     queryFn: getChat,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
   });
 

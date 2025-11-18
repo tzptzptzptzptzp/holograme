@@ -3,6 +3,7 @@ import { Memo } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
+import { useSessionStore } from "@/stores/session.store";
 
 const getMemo = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -13,10 +14,12 @@ const getMemo = async () => {
 };
 
 export const useGetMemo = () => {
+  const { session } = useSessionStore();
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MEMO],
     queryFn: getMemo,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
   });
 

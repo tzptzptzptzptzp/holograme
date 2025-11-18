@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useUser } from "../useUser.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getUser = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -16,11 +17,12 @@ const getUser = async () => {
 
 export const useGetUser = () => {
   const { setUser } = useUser();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_USER],
     queryFn: getUser,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
   });
 

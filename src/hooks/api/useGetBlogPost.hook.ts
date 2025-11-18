@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getBlogPost = async (id: number) => {
   if (!axios.defaults.headers.common["Authorization"] || id === 0) {
@@ -16,11 +17,12 @@ const getBlogPost = async (id: number) => {
 
 export const useGetBlogPost = (id: number) => {
   const { setCurrentBlogPost } = useBlogPost();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_BLOG_POST, id],
     queryFn: () => getBlogPost(id),
-    enabled: !!axios.defaults.headers.common["Authorization"] && id !== 0,
+    enabled: !!session && id !== 0,
     staleTime: GetMinutesToMilliseconds(5),
   });
 

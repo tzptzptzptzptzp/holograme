@@ -5,6 +5,7 @@ import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useModels } from "@/hooks/useModels.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getModels = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -16,11 +17,12 @@ const getModels = async () => {
 
 export const useGetModels = () => {
   const { setModels } = useModels();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MODELS],
     queryFn: getModels,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
   });
 
