@@ -1,5 +1,4 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.molecule";
@@ -21,11 +20,12 @@ export const ChatContents = () => {
   const { isPc } = useDevice();
   const { handleOpen } = useModal();
 
-  const { data } = useGetChat();
+  // データの取得とストア同期（内部で自動実行）
+  useGetChat();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!data) return;
-    const chatRoom = data.find(
+    if (!chatRoomOptions) return;
+    const chatRoom = chatRoomOptions.find(
       (chatRoom) => chatRoom.id === Number(e.target.value)
     );
     setChatRoom({
