@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
+import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getChat = async () => {
@@ -17,6 +18,7 @@ const getChat = async () => {
 
 export const useGetChat = () => {
   const { setChatRoom } = useChatRoom();
+  const { setOptions } = useChatRoomOptions();
   const { session } = useSessionStore();
 
   const queryResult = useQuery({
@@ -29,6 +31,13 @@ export const useGetChat = () => {
   // React Queryから取得したデータをZustandストアに同期
   useEffect(() => {
     if (queryResult.data && queryResult.data.length > 0) {
+      // API結果からchatRoomOptions用のデータを生成
+      const chatRoomOptions = queryResult.data.map((room) => ({
+        id: room.id,
+        name: room.name || "",
+      }));
+      setOptions(chatRoomOptions);
+
       // 配列の最初のチャットルームを現在のチャットルームとして設定
       const firstChatRoom = queryResult.data[0];
       setChatRoom({
@@ -38,7 +47,7 @@ export const useGetChat = () => {
         defaultMessage: firstChatRoom.defaultMessage || "",
       });
     }
-  }, [queryResult.data, setChatRoom]);
+  }, [queryResult.data, setChatRoom, setOptions]);
 
   return {
     ...queryResult,
