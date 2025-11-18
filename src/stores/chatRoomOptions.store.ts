@@ -6,6 +6,8 @@ import { STORAGE_KEYS } from "@/configs/storage.config";
 export type ChatRoomOptionType = {
   id: number;
   name: string;
+  description: string;
+  defaultMessage: string;
 };
 
 // ChatRoomOptionsストアの型定義
@@ -29,6 +31,8 @@ const defaultOptions: ChatRoomOptionType[] = [
   {
     id: 0,
     name: "",
+    description: "",
+    defaultMessage: "",
   },
 ];
 

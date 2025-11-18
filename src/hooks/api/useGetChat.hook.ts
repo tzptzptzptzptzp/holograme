@@ -35,6 +35,8 @@ export const useGetChat = () => {
       const chatRoomOptions = queryResult.data.map((room) => ({
         id: room.id,
         name: room.name || "",
+        description: room.description || "",
+        defaultMessage: room.defaultMessage || "",
       }));
       setOptions(chatRoomOptions);
 
