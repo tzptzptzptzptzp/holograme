@@ -25,6 +25,8 @@ export const useChat = () => {
     const newOptions = chatRoomData.map((chatRoom) => ({
       id: chatRoom.id,
       name: chatRoom.name,
+      description: chatRoom.description,
+      defaultMessage: chatRoom.defaultMessage,
     }));
 
     // 現在のオプションと新しいオプションを比較
