@@ -1,6 +1,7 @@
 import { Writer } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // Recoilの型定義をベースにZustand用のストア型を定義
 export type WriterState = Writer;
@@ -22,17 +23,21 @@ const defaultValue: WriterState = {
 // Writerストアの作成
 export const useWriterStore = create<{
   writer: WriterState;
+  writers: WriterState[];
   setWriter: (writer: WriterState) => void;
+  setWriters: (writers: WriterState[]) => void;
   resetWriter: () => void;
 }>()(
   persist(
     (set) => ({
       writer: defaultValue,
+      writers: [],
       setWriter: (writer) => set({ writer }),
+      setWriters: (writers) => set({ writers }),
       resetWriter: () => set({ writer: defaultValue }),
     }),
     {
-      name: "writer-storage", // localStorageのキー名
+      name: STORAGE_KEYS.WRITER,
     }
   )
 );

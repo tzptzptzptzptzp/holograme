@@ -138,7 +138,7 @@ export const WriterRequestForm = ({ writer }: Props) => {
           <h2 className="text-[18px]">
             {textsConfig.FORM.WRITER_REQUEST.TITLE}
           </h2>
-          {data.length > 0 && data[0].id !== 0 && (
+          {data && data.length > 0 && data[0].id !== 0 && (
             <div className="flex items-center">
               <Button
                 className="flex items-center gap-1 h-fit pr-[3px] pl-[2px] text-[12px] border-b leading-tight"

@@ -1,17 +1,11 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useModels } from "@/hooks/useModels.hook";
-import { useEffect } from "react";
-
-const defaultValue = {
-  id: "",
-  object: "",
-  created: 0,
-  owned_by: "",
-};
+import { useSessionStore } from "@/stores/session.store";
 
 const getModels = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -23,13 +17,13 @@ const getModels = async () => {
 
 export const useGetModels = () => {
   const { setModels } = useModels();
+  const { session } = useSessionStore();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_MODELS],
     queryFn: getModels,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
-    placeholderData: [defaultValue],
   });
 
   // React Queryから取得したデータをZustandストアに同期
@@ -41,6 +35,6 @@ export const useGetModels = () => {
 
   return {
     ...queryResult,
-    data: queryResult.data ?? [defaultValue],
+    data: queryResult.data,
   };
 };

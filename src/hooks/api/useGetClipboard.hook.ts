@@ -1,15 +1,11 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { Clipboard } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
-
-const defaultValue = {
-  id: 0,
-  userId: "",
-  content: "",
-  date: new Date(),
-};
+import { useClipboards } from "@/hooks/useClipboards.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getClipboard = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -20,16 +16,25 @@ const getClipboard = async () => {
 };
 
 export const useGetClipboard = () => {
+  const { setClipboards } = useClipboards();
+  const { session } = useSessionStore();
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CLIPBOARD],
     queryFn: getClipboard,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
-    placeholderData: [defaultValue],
   });
+
+  // React Queryから取得したデータをZustandストアに同期
+  useEffect(() => {
+    if (queryResult.data) {
+      setClipboards(queryResult.data);
+    }
+  }, [queryResult.data, setClipboards]);
 
   return {
     ...queryResult,
-    data: queryResult.data ?? [defaultValue],
+    data: queryResult.data,
   };
 };

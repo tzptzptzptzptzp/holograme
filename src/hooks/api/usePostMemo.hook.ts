@@ -15,6 +15,5 @@ const postMemo = async ({
 };
 
 export const usePostMemo = () => {
-  const { mutate } = useMutation({ mutationFn: postMemo });
-  return mutate;
+  return useMutation({ mutationFn: postMemo });
 };

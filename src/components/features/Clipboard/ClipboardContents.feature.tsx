@@ -5,14 +5,16 @@ import { ClipboardPasteButton } from "@/components/molecules/ClipboardPasteButto
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
 import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useDevice } from "@/hooks/useDevice.hook";
 import { Icons } from "@/icons";
 import { Clipboard } from "@prisma/client";
 
 export const ClipboardContents = () => {
   const { type } = useDevice();
+  const { clipboards } = useClipboards();
 
-  const { data, isLoading } = useGetClipboard();
+  const { isLoading } = useGetClipboard();
 
   return (
     <ContentWrapper>
@@ -26,11 +28,11 @@ export const ClipboardContents = () => {
         <ClipboardPasteButton />
         <ClipboardCopyButton />
       </div>
-      {isLoading && !data ? (
+      {isLoading && !clipboards.length ? (
         <Loader />
       ) : (
         <ul className="flex flex-col gap-3 overflow-y-scroll">
-          {data?.map((item: Clipboard) => (
+          {clipboards?.map((item: Clipboard) => (
             <ClipboardItem key={item.id} content={item.content} id={item.id} />
           )) ?? (
             <ClipboardItem

@@ -3,6 +3,7 @@ import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.mole
 import { WriterUserItem } from "@/components/molecules/WriterUserItem/WriterUserItem.molecule";
 import { WriterRequestForm } from "@/components/organisms/WriterRequestForm/WriterRequestForm.organism";
 import { ContentWrapper } from "@/components/templates/ContentWrapper/ContentWrapper.template";
+import { useGetWriter } from "@/hooks/api/useGetWriter.hook";
 import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useModal } from "@/hooks/useModal.hook";
 import { Icons } from "@/icons";
@@ -11,10 +12,13 @@ export const WriterContents = () => {
   const {
     isRequestView,
     writer,
-    writerData,
+    writers,
     handleSelectWriter,
     setIsRequestView,
   } = useWriter();
+
+  useGetWriter();
+
   const { handleOpen } = useModal();
   return (
     <ContentWrapper>
@@ -47,7 +51,7 @@ export const WriterContents = () => {
         <WriterRequestForm writer={writer} />
       ) : (
         <ul className="flex flex-col gap-3 overflow-y-scroll">
-          {writerData.map((writer, i) => (
+          {writers.map((writer, i) => (
             <WriterUserItem
               key={i}
               id={writer.id}

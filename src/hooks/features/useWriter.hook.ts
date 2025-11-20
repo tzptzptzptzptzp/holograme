@@ -1,14 +1,10 @@
 import { MouseEvent, useState } from "react";
-import { useGetWriter } from "../api/useGetWriter.hook";
 import { useWriterStore } from "@/stores/writer.store";
 
 export const useWriter = () => {
   const [isRequestView, setIsRequestView] = useState<boolean>(false);
-  const writer = useWriterStore((state) => state.writer);
-  const setWriter = useWriterStore((state) => state.setWriter);
-  const resetWriter = useWriterStore((state) => state.resetWriter);
-
-  const { data: writerData } = useGetWriter();
+  const { writer, writers, setWriter, setWriters, resetWriter } =
+    useWriterStore();
 
   const handleSelectWriter = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     const closestButton = (e.target as HTMLElement).closest("button");
@@ -18,7 +14,7 @@ export const useWriter = () => {
   };
 
   const setFindWriter = (id: number) => {
-    const selectedWriter = writerData.find((writer) => writer.id === id);
+    const selectedWriter = writers.find((writer) => writer.id === id);
     if (selectedWriter) {
       setWriter(selectedWriter);
     }
@@ -26,11 +22,12 @@ export const useWriter = () => {
   return {
     isRequestView,
     writer,
-    writerData,
+    writers,
     handleSelectWriter,
     resetWriter,
     setFindWriter,
     setIsRequestView,
     setWriter,
+    setWriters,
   };
 };

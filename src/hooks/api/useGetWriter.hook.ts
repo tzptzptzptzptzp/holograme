@@ -1,21 +1,11 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { Writer } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
-
-const defaultValue = {
-  id: 0,
-  userId: "",
-  name: "",
-  expertise: "",
-  targetAudience: "",
-  sitePurpose: "",
-  siteGenre: "",
-  toneAndStyle: "",
-  createdDate: new Date(),
-  updatedDate: new Date(),
-};
+import { useWriter } from "@/hooks/features/useWriter.hook";
+import { useSessionStore } from "@/stores/session.store";
 
 const getWriter = async () => {
   if (!axios.defaults.headers.common["Authorization"]) {
@@ -26,16 +16,28 @@ const getWriter = async () => {
 };
 
 export const useGetWriter = () => {
+  const { setWriter, setWriters } = useWriter();
+  const { session } = useSessionStore();
+
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_WRITER],
     queryFn: getWriter,
-    enabled: !!axios.defaults.headers.common["Authorization"],
+    enabled: !!session,
     staleTime: GetMinutesToMilliseconds(60),
-    placeholderData: [defaultValue],
   });
+
+  // React Queryから取得したデータをZustandストアに同期
+  useEffect(() => {
+    if (queryResult.data && queryResult.data.length > 0) {
+      // 配列全体をwritersストアに保存
+      setWriters(queryResult.data);
+      // 配列の最初のWriterを現在のWriterとして設定
+      setWriter(queryResult.data[0]);
+    }
+  }, [queryResult.data, setWriter, setWriters]);
 
   return {
     ...queryResult,
-    data: queryResult.data ?? [defaultValue],
+    data: queryResult.data,
   };
 };

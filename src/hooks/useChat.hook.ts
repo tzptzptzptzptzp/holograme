@@ -25,6 +25,8 @@ export const useChat = () => {
     const newOptions = chatRoomData.map((chatRoom) => ({
       id: chatRoom.id,
       name: chatRoom.name,
+      description: chatRoom.description,
+      defaultMessage: chatRoom.defaultMessage,
     }));
 
     // 現在のオプションと新しいオプションを比較
@@ -82,10 +84,6 @@ export const useChat = () => {
     const parsedFavoriteChatRoomId = storedFavoriteChatRoomId
       ? Number(storedFavoriteChatRoomId)
       : 0;
-
-    console.log(
-      `Initializing with favorite chat room ID: ${parsedFavoriteChatRoomId} (from localStorage: ${storedFavoriteChatRoomId})`
-    );
 
     // チャットルームのオプションを更新
     updateChatRoomOptionsIfChanged(chatRoomData);

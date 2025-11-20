@@ -1,5 +1,8 @@
 import { useClipboardsStore } from "@/stores/clipboards.store";
-import { useGetClipboard } from "@/hooks/api/useGetClipboard.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeysConfig } from "@/configs/queryKeys.config";
+import { useDevice } from "@/hooks/useDevice.hook";
+import { useMemo } from "react";
 
 export const useClipboards = () => {
   const {
@@ -10,15 +13,20 @@ export const useClipboards = () => {
     clearClipboards,
   } = useClipboardsStore();
 
-  const { refetch } = useGetClipboard();
+  const queryClient = useQueryClient();
+  const { isSp } = useDevice();
 
-  // APIからデータを取得してストアを更新する関数
+  // デバイスによって表示するクリップボードの数を変更
+  const trimmedClipboards = useMemo(() => {
+    return clipboards.slice(0, isSp ? 2 : 3);
+  }, [clipboards, isSp]);
+
+  // React Queryのキャッシュを無効化してデータを再取得する関数
   const refreshClipboards = async () => {
     try {
-      const result = await refetch();
-      if (result.data) {
-        setClipboards(result.data);
-      }
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeysConfig.GET_CLIPBOARD],
+      });
     } catch (error) {
       console.error("Failed to refresh clipboards:", error);
     }
@@ -26,6 +34,7 @@ export const useClipboards = () => {
 
   return {
     clipboards,
+    trimmedClipboards,
     setClipboards,
     addClipboard,
     removeClipboard,

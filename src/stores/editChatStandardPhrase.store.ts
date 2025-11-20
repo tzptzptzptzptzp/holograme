@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "../configs/storage.config";
 
 // EditChatStandardPhraseStateTypeと同等の型定義
 export interface EditChatStandardPhraseState {
@@ -34,7 +35,7 @@ export const useEditChatStandardPhraseStore =
           set({ editChatStandardPhrase: defaultValue }),
       }),
       {
-        name: "edit-chat-standard-phrase-storage", // localStorage用のキー名
+        name: STORAGE_KEYS.EDIT_CHAT_STANDARD_PHRASE,
       }
     )
   );

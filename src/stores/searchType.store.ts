@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // 検索タイプの定義
 export type SearchType = "newTab" | "currentTab";
@@ -30,7 +31,7 @@ export const useSearchTypeStore = create<SearchTypeStore>()(
         })),
     }),
     {
-      name: "search-type-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.SEARCH_TYPE,
     }
   )
 );

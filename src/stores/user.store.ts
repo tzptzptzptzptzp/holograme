@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // ユーザーストアの型定義
 type UserStoreType = {
@@ -37,7 +38,7 @@ export const useUserStore = create<UserStoreType>()(
     }),
     {
       // ストレージの設定
-      name: "user-storage",
+      name: STORAGE_KEYS.USER,
       // ストレージに保存する項目を選択
       partialize: (state) => ({ user: state.user }),
     }

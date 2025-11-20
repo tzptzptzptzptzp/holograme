@@ -1,5 +1,4 @@
 import { Button } from "@/components/atoms/Button/Button.atom";
-import { Loader } from "@/components/atoms/Loader/Loader.atom";
 import { Select } from "@/components/atoms/Select/Select.atom";
 import { ContentHead } from "@/components/molecules/ContentHead/ContentHead.molecule";
 import { MessageForm } from "@/components/molecules/MessageForm/MessageForm.molecule";
@@ -18,14 +17,15 @@ export const ChatContents = () => {
   const { favoriteChatRoomId, setFavoriteChatRoomId } = useFavoriteChatRoomId();
   const { options: chatRoomOptions } = useChatRoomOptions();
 
-  const { type } = useDevice();
+  const { isPc } = useDevice();
   const { handleOpen } = useModal();
 
-  const { data } = useGetChat();
+  // データの取得とストア同期（内部で自動実行）
+  useGetChat();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (!data) return;
-    const chatRoom = data.find(
+    if (!chatRoomOptions) return;
+    const chatRoom = chatRoomOptions.find(
       (chatRoom) => chatRoom.id === Number(e.target.value)
     );
     setChatRoom({
@@ -54,7 +54,7 @@ export const ChatContents = () => {
         <ContentHead className="justify-between">
           <div className="flex items-center gap-[6px] flex-none">
             <Icons.Chat color="white" />
-            <p>{type !== "SP" ? "Chat Room" : "Chat"}</p>
+            <p>{isPc ? "Chat Room" : "Chat"}</p>
           </div>
           <div className="flex items-center gap-1.5 w-full">
             <div className="flex justify-end flex-1">

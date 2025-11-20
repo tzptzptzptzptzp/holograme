@@ -29,7 +29,7 @@ export const BlogPostListModal = () => {
       title={writer.name + textsConfig.MODAL.BLOG_POST_LIST.TITLE}
     >
       <ul className="flex flex-col overflow-y-scroll w-full">
-        {data[0].id !== 0 &&
+        {data &&
           data.map((blogPost, i) => (
             <li
               key={i}

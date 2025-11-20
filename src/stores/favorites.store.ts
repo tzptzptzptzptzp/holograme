@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { Favorite } from '@prisma/client';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { Favorite } from "@prisma/client";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // FavoriteStateTypeと同等の型定義
 export type FavoriteState = Favorite;
@@ -36,23 +37,23 @@ export const useFavoritesStore = create<FavoritesStore>()(
     (set) => ({
       favorites: [],
       setFavorites: (favorites) => set({ favorites }),
-      addFavorite: (favorite) => 
+      addFavorite: (favorite) =>
         set((state) => ({
-          favorites: [...state.favorites, favorite]
+          favorites: [...state.favorites, favorite],
         })),
-      updateFavorite: (id, favorite) => 
+      updateFavorite: (id, favorite) =>
         set((state) => ({
-          favorites: state.favorites.map(item => 
+          favorites: state.favorites.map((item) =>
             item.id === id ? { ...item, ...favorite } : item
-          )
+          ),
         })),
-      removeFavorite: (id) => 
+      removeFavorite: (id) =>
         set((state) => ({
-          favorites: state.favorites.filter(favorite => favorite.id !== id)
+          favorites: state.favorites.filter((favorite) => favorite.id !== id),
         })),
     }),
     {
-      name: 'favorites-storage', // localStorage用のキー名
+      name: STORAGE_KEYS.FAVORITES,
     }
   )
 );

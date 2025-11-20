@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // FavoriteModeStateType型の定義
 export type FavoriteModeType = "create" | "edit";
@@ -21,7 +22,7 @@ export const useFavoriteModeStore = create<FavoriteModeStore>()(
       setMode: (mode) => set({ mode }),
     }),
     {
-      name: "favorite-mode-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.FAVORITE_MODE,
     }
   )
 );

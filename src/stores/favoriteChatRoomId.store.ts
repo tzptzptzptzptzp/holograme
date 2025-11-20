@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { STORAGE_KEYS } from "@/configs/storage.config";
 
 // FavoriteChatRoomIdState型の定義
 export type FavoriteChatRoomIdType = number | null;
@@ -21,7 +22,7 @@ export const useFavoriteChatRoomIdStore = create<FavoriteChatRoomIdStore>()(
       setFavoriteChatRoomId: (id) => set({ favoriteChatRoomId: id }),
     }),
     {
-      name: "favorite-chat-room-id-storage", // localStorage用のキー名
+      name: STORAGE_KEYS.FAVORITE_CHAT_ROOM_ID,
     }
   )
 );
