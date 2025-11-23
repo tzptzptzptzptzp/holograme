@@ -35,9 +35,21 @@ export const Avatar = ({ deviceType = "pc" }: AvatarProps) => {
     setIsLoaded(true);
   };
 
-  // デバイスタイプに応じた幅設定
+  // デバイスタイプに応じたソースを取得
+  const getImageSrc = () => {
+    return deviceType === "pc"
+      ? "/images/bisyojo_chan.png"
+      : "/images/sp/bisyojo_chan.png";
+  };
+
+  // デバイスタイプに応じた幅を取得
   const getImageSize = () => {
     return deviceType === "pc" ? 1000 : 500;
+  };
+
+  // デバイスタイプに応じたクオリティを取得
+  const getImageQuality = () => {
+    return deviceType === "pc" ? 90 : 80;
   };
 
   return (
@@ -52,12 +64,13 @@ export const Avatar = ({ deviceType = "pc" }: AvatarProps) => {
       <Image
         alt="Avatar"
         className={cn(
-          "u-centering-x absolute w-auto max-w-max h-[86vh] s:h-auto s:max-h-full opacity-0",
+          "u-centering-x absolute w-auto max-w-max h-[86vh] s:h-full s:max-h-full opacity-0",
           isLoaded && "a-fade-in"
         )}
-        src="/bisyojo_chan.png"
+        src={getImageSrc()}
         width={getImageSize()}
         height={getImageSize()}
+        quality={getImageQuality()}
         onLoad={handleImageLoad}
       />
     </div>
