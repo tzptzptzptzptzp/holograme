@@ -24,7 +24,7 @@ export const useTweet = () => {
 
   // ツイート取得・保存処理
   useEffect(() => {
-    if (!executedOnce && user?.nickname) {
+    if (!executedOnce) {
       // ローカルストレージからtweetを取得
       const savedTweetString = localStorage.getItem("savedTweet");
       const savedTweet: SavedTweet | null = savedTweetString
@@ -41,9 +41,7 @@ export const useTweet = () => {
       } else {
         // 保存されたtweetがないか、6時間以上経過していれば新しく取得
         mutate(
-          {
-            userData: user,
-          },
+          undefined, // パラメータ不要
           {
             onSuccess: ({ data }) => {
               // 新しいtweetを設定
@@ -55,16 +53,18 @@ export const useTweet = () => {
                 timestamp: currentTime,
               };
               localStorage.setItem("savedTweet", JSON.stringify(newSavedTweet));
+              setExecutedOnce(true);
             },
             onError: (error) => {
-              console.error(error);
+              console.error("Tweet取得エラー:", error);
+              // エラーが発生した場合は実行済みフラグをリセット
+              setExecutedOnce(false);
             },
           }
         );
-        setExecutedOnce(true);
       }
     }
-  }, [executedOnce, mutate, user]);
+  }, [executedOnce, mutate]);
 
   // ツイートを手動で更新する関数
   const refreshTweet = () => {
