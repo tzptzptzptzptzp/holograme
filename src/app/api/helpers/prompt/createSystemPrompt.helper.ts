@@ -131,14 +131,15 @@ export const createSystemPrompt = (
 const createMarkdownSystemPrompt = (data: any): string => {
   const userSection = data.user
     ? `
-# ユーザー情報
-あなたが会話する相手のユーザー情報です。この情報を参考にして、より個人的で親しみやすい会話を心がけてください。
+# ユーザー情報（会話相手の情報）
+以下はあなたが会話する相手の人間の情報です。この情報はあなた自身の情報ではありません。
+この人に対して、より個人的で親しみやすい会話を心がけてください。
 
 - ユーザー名: ${data.user.username}
 - ニックネーム: ${data.user.nickname}
-- メールアドレス: ${data.user.email}
 - 場所: ${data.user.location}
-- 登録日: ${new Date(data.user.createdDate).toLocaleDateString("ja-JP")}
+
+**重要**: この情報はあなた（AIキャラクター）の情報ではなく、会話している相手の人間の情報です。
 
 `
     : "";
@@ -266,6 +267,15 @@ ${
 
 # 重要な注意事項
 ${data.behaviorRules.map((rule: string) => `- ${rule}`).join("\n")}
+
+## 役割の明確化
+- **あなた**: 上記のキャラクタープロフィールで定義された${
+    data.character.profile.nickname
+  }というキャラクターです
+- **会話相手**: ${
+    data.user ? `${data.user.nickname}という人間` : "ユーザー"
+  }です
+- **絶対に混同しないでください**: ユーザー情報はあなたの情報ではなく、会話相手の情報です
 `.trim();
 };
 
@@ -303,7 +313,7 @@ export const createSystemPromptData = (
     _comment_character:
       "characterはAI自身（あなた）のキャラクター情報です。会話時はこの情報を自分自身の設定として必ず参照してください。",
     _comment_user:
-      "userは会話相手であるユーザーの情報です。存在する場合は、より親しみやすい会話の参考にしてください。",
+      "userは会話相手であるユーザーの情報です。これはあなた（AIキャラクター）ではなく、会話している相手の人間の情報です。この情報を参考にして、その人に合わせた親しみやすい会話をしてください。",
     role: "character_chatbot",
     purpose: COMMON_PURPOSE,
     currentDateTime,
@@ -359,9 +369,12 @@ export const createSystemPromptData = (
       "ユーザーとの会話では、設定された性格と話し方を一貫して使用してください",
       "キャラクターの背景や設定に矛盾しない範囲で自然な会話を心がけてください",
       "不適切な内容や要求には、キャラクターらしい方法で丁寧に断ってください",
+      "あなたは上記のcharacterプロフィールに記載されているキャラクターです。userセクションの情報は会話相手の人間の情報であり、あなた自身の情報ではありません。",
       ...(userData
         ? [
-            `あなたは${userData.nickname}さん本人であり、私（キャラクター）はあなたのことを『${userData.nickname}』と呼び、あなたがあなた自身だと理解している前提で会話します`,
+            `会話相手は${
+              userData.nickname || userData.username
+            }という人です。この人に対して、あなた（キャラクター）として親しみやすく会話してください。`,
           ]
         : []),
     ],
@@ -390,7 +403,7 @@ export const createSystemPromptData = (
 
     // ユーザー情報が利用可能な場合の追加指示
     baseData.behaviorRules.push(
-      "ユーザー情報が提供されている場合は、その情報を参考にしてより個人的で親しみやすい会話を心がけてください"
+      "ユーザー情報が提供されている場合は、その人の情報を参考にしてより個人的で親しみやすい会話を心がけてください。ただし、その情報はあなた自身の情報ではありません。"
     );
   }
 
