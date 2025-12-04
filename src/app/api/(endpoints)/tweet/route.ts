@@ -4,15 +4,22 @@ import { gptConfig } from "@/app/api/configs/gpt.config";
 import { createSystemPrompt } from "../../helpers/prompt/createSystemPrompt.helper";
 import { GetRandomObject } from "@/utils/GetRandomObject.util";
 import { topicList } from "../../configs/prompt/topic.config";
-import { User } from "@prisma/client";
 import { withAuth } from "@/app/api/helpers/auth.helper";
+import { prisma } from "@/libs/Prisma.lib";
 
-export type PostTweetRequest = {
-  userData: User;
-};
+export type PostTweetRequest = {};
 
 export const POST = withAuth(async (req: Request, userId: string) => {
-  const { userData } = (await req.json()) as PostTweetRequest;
+  // ユーザー情報を取得
+  const userData = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!userData) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
 
   const selectedTopic = GetRandomObject(topicList);
 
