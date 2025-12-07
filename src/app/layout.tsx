@@ -12,6 +12,11 @@ const font = M_PLUS_Rounded_1c({ weight: ["500", "900"], subsets: ["latin"] });
 export const metadata: Metadata = {
   title: textsConfig.META.TITLE,
   description: textsConfig.META.DESCRIPTION,
+  robots: {
+    index: false,
+    follow: false,
+    noimageindex: true,
+  },
 };
 
 export default async function RootLayout({
