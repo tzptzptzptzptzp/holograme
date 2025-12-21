@@ -52,11 +52,14 @@ export const SearchForm = () => {
     const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(
       query
     )}`;
-    const searchHistory = JSON.parse(
-      localStorage.getItem("searchHistory") || "[]"
-    );
-    searchHistory.unshift(query);
-    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    // 履歴を取得し、同一クエリの過去分を削除してから先頭へ移動
+    const raw = localStorage.getItem("searchHistory") || "[]";
+    const history: string[] = Array.isArray(JSON.parse(raw))
+      ? JSON.parse(raw)
+      : [];
+    const filtered = history.filter((item) => item !== query);
+    filtered.unshift(query);
+    localStorage.setItem("searchHistory", JSON.stringify(filtered));
     if (searchType === "newTab") {
       window.open(googleSearchUrl, "_blank");
     } else {
