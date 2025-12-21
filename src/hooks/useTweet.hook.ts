@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { usePostTweet } from "@/hooks/api/usePostTweet.hook";
 import { useUser } from "@/hooks/useUser.hook";
 import { textsConfig } from "@/configs/texts.config";
+import { useTweetStore } from "@/stores/tweet.store";
 
 type SavedTweet = {
   content: string;
@@ -11,7 +12,8 @@ type SavedTweet = {
 export const useTweet = () => {
   const [executedOnce, setExecutedOnce] = useState(false);
   const { user } = useUser();
-  const [tweet, setTweet] = useState<string>("");
+  const tweet = useTweetStore((state) => state.tweet);
+  const setTweet = useTweetStore((state) => state.setTweet);
 
   const mutate = usePostTweet();
 
