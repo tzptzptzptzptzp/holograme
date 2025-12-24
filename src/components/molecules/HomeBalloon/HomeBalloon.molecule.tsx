@@ -17,9 +17,12 @@ export const HomeBalloon = ({ message }: Props) => {
         ref.current.style.overflow = "visible";
         ref.current.style.textOverflow = "clip";
         ref.current.style.whiteSpace = "normal";
+        // コンテンツ変更に応じて高さを再計算
+        ref.current.style.height = "auto";
         const height = ref.current.scrollHeight;
         ref.current.style.height = height + "px";
       } else {
+        // 閉じている時は常にトランケート高さへ
         ref.current.style.height = "26px";
         setTimeout(() => {
           if (!ref.current) return;
@@ -29,7 +32,7 @@ export const HomeBalloon = ({ message }: Props) => {
         }, 250);
       }
     }
-  }, [isShow]);
+  }, [isShow, message]);
 
   const handleClick = () => {
     setIsShow((prev) => !prev);

@@ -84,7 +84,7 @@ export const MessageForm = ({ roomId }: { roomId: number }) => {
     setApiPending(true);
     reset();
     setValue("message", chatRoom.defaultMessage);
-    sendMessage(data.message);
+    sendMessage(data.message, roomId, user.id);
 
     const chatHistory = chatMessages
       .map((msg) => ({

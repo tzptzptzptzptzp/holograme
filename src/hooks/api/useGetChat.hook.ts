@@ -6,6 +6,7 @@ import { queryKeysConfig } from "@/configs/queryKeys.config";
 import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util";
 import { useChatRoom } from "@/hooks/useChatRoom.hook";
 import { useChatRoomOptions } from "@/hooks/useChatRoomOptions.hook";
+import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getChat = async () => {
@@ -20,6 +21,7 @@ export const useGetChat = () => {
   const { setChatRoom } = useChatRoom();
   const { setOptions } = useChatRoomOptions();
   const { session } = useSessionStore();
+  const { favoriteChatRoomId } = useFavoriteChatRoomId();
 
   const queryResult = useQuery({
     queryKey: [queryKeysConfig.GET_CHAT],
@@ -40,16 +42,22 @@ export const useGetChat = () => {
       }));
       setOptions(chatRoomOptions);
 
-      // 配列の最初のチャットルームを現在のチャットルームとして設定
-      const firstChatRoom = queryResult.data[0];
+      // 初期表示：お気に入りがあればそれを、なければ最新（配列末尾）
+      const favorite = favoriteChatRoomId
+        ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
+        : null;
+
+      const initialRoom =
+        favorite ?? queryResult.data[queryResult.data.length - 1];
+
       setChatRoom({
-        id: firstChatRoom.id,
-        name: firstChatRoom.name || "",
-        description: firstChatRoom.description || "",
-        defaultMessage: firstChatRoom.defaultMessage || "",
+        id: initialRoom.id,
+        name: initialRoom.name || "",
+        description: initialRoom.description || "",
+        defaultMessage: initialRoom.defaultMessage || "",
       });
     }
-  }, [queryResult.data, setChatRoom, setOptions]);
+  }, [queryResult.data, favoriteChatRoomId, setChatRoom, setOptions]);
 
   return {
     ...queryResult,

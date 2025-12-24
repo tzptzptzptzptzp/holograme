@@ -10,21 +10,46 @@ type Props = {
 
 export const ChatRoom = ({ roomId }: Props) => {
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const hasInitialScrolled = useRef(false);
   const { currentRoomMessages } = useChatMessages(roomId);
 
   // データの取得とストア同期（内部で自動実行）
   const { isLoading } = useGetChatMessage(roomId);
 
+  // 初回レンダリング時のみボトムにスクロール（競合防止）
   useEffect(() => {
     if (
+      !hasInitialScrolled.current &&
       currentRoomMessages &&
       currentRoomMessages.length > 0 &&
       chatContainerRef.current
     ) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
+      hasInitialScrolled.current = true;
     }
   }, [currentRoomMessages]);
+
+  // AI応答取得後（isLoadingがfalse）に、最後の自分メッセージへスクロール
+  useEffect(() => {
+    if (!isLoading && chatContainerRef.current && currentRoomMessages?.length) {
+      // 新しい順の配列なので、最初に見つかったuserが直近の自分メッセージ
+      const lastUserMessage = currentRoomMessages.find(
+        (m) => m.role === "user"
+      );
+      if (lastUserMessage) {
+        // レイアウト確定後にスクロールしてズレを防止
+        requestAnimationFrame(() => {
+          const target = document.getElementById(
+            `message-${lastUserMessage.id}`
+          );
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        });
+      }
+    }
+  }, [isLoading, currentRoomMessages]);
 
   // ローダー表示条件：データ取得中 かつ 現在のルームにメッセージがない場合
   const shouldShowLoader =
@@ -42,6 +67,7 @@ export const ChatRoom = ({ roomId }: Props) => {
           currentRoomMessages.map((message) => (
             <ChatBalloon
               key={message.id}
+              id={message.id}
               message={message.content}
               role={message.role}
             />

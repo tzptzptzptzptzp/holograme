@@ -7,11 +7,12 @@ import { Icons } from "@/icons";
 import { cn } from "@/utils/Cn.util";
 
 type Props = {
+  id: number;
   message: string;
   role: "user" | "assistant";
 };
 
-export const ChatBalloon = ({ message, role }: Props) => {
+export const ChatBalloon = ({ id, message, role }: Props) => {
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleClose = () => {
@@ -32,6 +33,7 @@ export const ChatBalloon = ({ message, role }: Props) => {
   return (
     <div
       className={cn(styles.balloon, styles[role])}
+      id={`message-${id}`}
       onContextMenu={(e) => handleContextMenu(e)}
     >
       <div className={cn(styles.inner, styles[role])}>
