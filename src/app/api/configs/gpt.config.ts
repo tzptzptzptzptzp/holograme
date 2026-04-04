@@ -2,7 +2,7 @@ const LITE = "gpt-5.4-nano";
 
 export const gptConfig = {
   MODEL: {
-    DEFAULT: process.env.NODE_ENV === "production" ? "gpt-4.1" : LITE,
+    DEFAULT: process.env.NODE_ENV === "production" ? "gpt-5.4" : LITE,
     REASONING: "o4-mini",
     LITE,
   },
