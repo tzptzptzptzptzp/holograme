@@ -1,15 +1,45 @@
 {
   "name": "HolograMe",
   "short_name": "holograme",
+  "description": "AI搭載チャットアプリ",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#FCA5A5",
+  "scope": "/",
+  "lang": "ja",
+  "dir": "ltr",
+  "categories": ["productivity", "utilities"],
   "icons": [
     {
       "src": "/icons/square.png",
       "sizes": "1024x1024",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/square.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/square.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "shortcuts": [
+    {
+      "name": "チャット",
+      "short_name": "チャット",
+      "description": "AI チャットを開く",
+      "url": "/?content=chat",
+      "icons": []
     }
   ]
 }
