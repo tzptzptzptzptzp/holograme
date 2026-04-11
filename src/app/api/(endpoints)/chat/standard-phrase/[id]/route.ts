@@ -4,9 +4,10 @@ import { prisma } from "@/libs/Prisma.lib";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const id = parseInt(params.id, 10);
+  const { id: idParam } = await context.params;
+  const id = parseInt(idParam, 10);
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
     if (!token) {
@@ -45,9 +46,10 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const id = parseInt(params.id, 10);
+  const { id: idParam } = await context.params;
+  const id = parseInt(idParam, 10);
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
     if (!token) {

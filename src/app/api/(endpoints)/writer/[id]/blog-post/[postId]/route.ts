@@ -4,9 +4,10 @@ import { prisma } from "../../../../../../../libs/Prisma.lib";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { postId: string } }
+  context: { params: Promise<{ id: string; postId: string }> }
 ) {
-  const postId = parseInt(params.postId, 10);
+  const { postId: postIdParam } = await context.params;
+  const postId = parseInt(postIdParam, 10);
   try {
     const token = req.headers.get("Authorization")?.replace("Bearer ", "");
     if (!token) {
