@@ -42,13 +42,12 @@ export const useGetChat = () => {
       }));
       setOptions(chatRoomOptions);
 
-      // 初期表示：お気に入りがあればそれを、なければ最新（配列末尾）
+      // 初期表示：お気に入りがあればそれを、なければ最新（APIはupdatedDate desc）
       const favorite = favoriteChatRoomId
         ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
         : null;
 
-      const initialRoom =
-        favorite ?? queryResult.data[queryResult.data.length - 1];
+      const initialRoom = favorite ?? queryResult.data[0];
 
       setChatRoom({
         id: initialRoom.id,
