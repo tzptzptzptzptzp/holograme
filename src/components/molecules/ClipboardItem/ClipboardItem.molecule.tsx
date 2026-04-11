@@ -56,7 +56,7 @@ export const ClipboardItem = ({
   };
 
   const handleClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     const closestButton = (e.target as HTMLElement).closest("button");
     if (closestButton && closestButton.id.startsWith("exclude")) return;

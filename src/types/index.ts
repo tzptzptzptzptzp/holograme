@@ -1,8 +1,8 @@
 import { ChatRoom, Clipboard, Favorite, User } from "@prisma/client";
 
-export type ClickHandlerType =
-  | (() => void)
-  | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
+export type ClickHandlerType = (
+  event: React.MouseEvent<any, MouseEvent>
+) => void | Promise<void>;
 
 export type GlobalDataType = {
   userData: User;
