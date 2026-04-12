@@ -3,6 +3,7 @@ import { getImageProps } from "next/image";
 export const Background = () => {
   const common = {
     alt: "background",
+    loading: "eager" as const,
     className:
       "absolute top-0 right-0 bottom-0 left-0 w-full h-full object-cover select-none pointer-events-none blur-[2px]",
   };
