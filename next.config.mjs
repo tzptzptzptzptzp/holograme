@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 import { createRequire } from "module";
+import path from "path";
 
 // next-pwa@2 は CJS の単一関数 export。ESM では createRequire が確実。
 const require = createRequire(import.meta.url);
@@ -91,6 +92,7 @@ const nextConfig = {
 
   // 静的生成の最適化
   output: "standalone",
+  outputFileTracingRoot: path.resolve(process.cwd()),
 
   // リダイレクトとリライト
   async redirects() {
