@@ -61,7 +61,12 @@ const nextConfig = {
 
   // 画像最適化
   images: {
-    domains: ["www.google.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.google.com",
+      },
+    ],
     formats: ["image/webp", "image/avif"],
   },
 
