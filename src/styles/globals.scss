@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "animation";
+@use "animation";
 
 :root {
   --app-primary: #fca5a5;
