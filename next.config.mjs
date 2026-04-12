@@ -66,6 +66,7 @@ const nextConfig = {
         hostname: "www.google.com",
       },
     ],
+    qualities: [75, 80, 90],
     formats: ["image/webp", "image/avif"],
   },
 
