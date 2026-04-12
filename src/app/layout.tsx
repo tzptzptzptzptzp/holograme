@@ -31,7 +31,7 @@ export default async function RootLayout({
 }>) {
   return (
     <Provider>
-      <html lang="ja">
+      <html lang="ja" suppressHydrationWarning>
         <head>
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#FCA5A5" />
