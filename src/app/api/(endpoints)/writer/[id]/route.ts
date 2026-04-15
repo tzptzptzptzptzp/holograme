@@ -6,9 +6,10 @@ export const PUT = withAuth(
   async (
     req: Request,
     userId: string,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
   ) => {
-    const id = parseInt(params.id, 10);
+    const { id: idParam } = await context.params;
+    const id = parseInt(idParam, 10);
 
     const item = await prisma.writer.findUnique({
       where: { id: id },
@@ -51,9 +52,10 @@ export const DELETE = withAuth(
   async (
     req: Request,
     userId: string,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
   ) => {
-    const id = parseInt(params.id, 10);
+    const { id: idParam } = await context.params;
+    const id = parseInt(idParam, 10);
 
     const item = await prisma.writer.findUnique({
       where: { id: id, userId: userId },

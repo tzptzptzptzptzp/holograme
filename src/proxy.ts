@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateSession } from "./libs/supabase/middleware.lib";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const url = request.nextUrl;
 
   let response = NextResponse.next();
 
-  let updatedResponse = await updateSession(request);
+  const updatedResponse = await updateSession(request);
 
   response = new NextResponse(updatedResponse.body, {
     status: updatedResponse.status,
@@ -25,6 +25,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next|api/auth|api/user|static|favicon.ico|manifest.json|.*\\.jpg|.*\\.jpeg|.*\\.png|.*\\.gif|.*\\.webp|.*\\.svg).*)",
+    "/((?!api|_next|static|favicon.ico|manifest.json|.*\\.jpg|.*\\.jpeg|.*\\.png|.*\\.gif|.*\\.webp|.*\\.svg).*)",
   ],
 };

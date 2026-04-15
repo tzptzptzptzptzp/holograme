@@ -12,8 +12,13 @@ export type PostChatMessageRequest = {
 };
 
 export const POST = withAuth(
-  async (req: Request, _, { params }: { params: { id: string } }) => {
-    const id = parseInt(params.id, 10);
+  async (
+    req: Request,
+    _userId: string,
+    context: { params: Promise<{ id: string }> }
+  ) => {
+    const { id: idParam } = await context.params;
+    const id = parseInt(idParam, 10);
 
     const { userData, userMessage, chatHistory } =
       (await req.json()) as PostChatMessageRequest;

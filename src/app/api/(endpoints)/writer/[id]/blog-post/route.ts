@@ -8,9 +8,10 @@ export const POST = withAuth(
   async (
     req: Request,
     userId: string,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
   ) => {
-    const id = parseInt(params.id, 10);
+    const { id: idParam } = await context.params;
+    const id = parseInt(idParam, 10);
 
     const { title, prompt } = await req.json();
 
@@ -45,9 +46,10 @@ export const GET = withAuth(
   async (
     req: Request,
     userId: string,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
   ) => {
-    const id = parseInt(params.id, 10);
+    const { id: idParam } = await context.params;
+    const id = parseInt(idParam, 10);
 
     const data = await prisma.blogPost.findMany({
       where: { userId, writerId: id },
