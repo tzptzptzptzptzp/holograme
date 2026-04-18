@@ -5,6 +5,9 @@ import { withAuth } from "@/app/api/helpers/auth.helper";
 import { User } from "@prisma/client";
 import { createSystemPrompt } from "@/app/api/helpers/prompt/createSystemPrompt.helper";
 
+/** OpenAI 応答が重いリクエストでも Vercel 関数が先に打ち切られないよう上限を明示（vercel.json と揃える） */
+export const maxDuration = 60;
+
 export type PostChatMessageRequest = {
   userData: User;
   userMessage: string;
