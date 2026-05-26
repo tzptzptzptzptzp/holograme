@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { OpenAiModel } from "@/app/api/(endpoints)/openai/route";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -8,9 +8,6 @@ import { useModels } from "@/hooks/useModels.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getModels = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<OpenAiModel[]>("/api/openai");
   return res.data;
 };

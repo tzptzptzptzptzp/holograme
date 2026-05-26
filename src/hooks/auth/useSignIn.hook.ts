@@ -1,16 +1,13 @@
+"use client";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import { textsConfig } from "@/configs/texts.config";
-import { createClient } from "@/libs/supabase/client.lib";
-import { useRouter } from "next/navigation";
 
 export const useSignIn = () => {
-  const supabase = createClient();
-  const router = useRouter();
-
   const [isLoading, setIsLoading] = useState(false);
 
-  const signIn = async ({
+  const signInWithCredentials = async ({
     email,
     password,
   }: {
@@ -19,17 +16,17 @@ export const useSignIn = () => {
   }): Promise<boolean> => {
     try {
       setIsLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({
+      const result = await signIn("credentials", {
         email,
         password,
+        redirect: false,
       });
-      if (error) throw error;
-      toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
 
+      if (result?.error) throw new Error(result.error);
+
+      toast(textsConfig.TOAST.SIGN_IN.SUCCESS);
       setTimeout(() => {
-        supabase.auth.refreshSession().then(() => {
-          window.location.href = "/";
-        });
+        window.location.href = "/";
       }, 1000);
       return true;
     } catch (error) {
@@ -40,5 +37,5 @@ export const useSignIn = () => {
     }
   };
 
-  return { signIn, isLoading };
+  return { signIn: signInWithCredentials, isLoading };
 };

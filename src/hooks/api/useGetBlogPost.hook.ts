@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { BlogPost } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";

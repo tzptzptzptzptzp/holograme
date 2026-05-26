@@ -1,10 +1,9 @@
-import { createClient } from "@/libs/supabase/server.lib";
+import { auth } from "@/auth";
 
-export async function getUserIdFromToken(token: string) {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data.user) {
+export async function getUserIdFromToken(_token: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
     throw new Error("Invalid token");
   }
-  return data.user.id;
+  return session.user.id;
 }

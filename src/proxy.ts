@@ -1,22 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateSession } from "./libs/supabase/middleware.lib";
+import { getToken } from "next-auth/jwt";
 
 export async function proxy(request: NextRequest) {
-  const url = request.nextUrl;
-
-  let response = NextResponse.next();
-
-  const updatedResponse = await updateSession(request);
-
-  response = new NextResponse(updatedResponse.body, {
-    status: updatedResponse.status,
-    headers: updatedResponse.headers,
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET,
   });
 
-  if (url.pathname === "/") {
-    response.cookies.set("url", url.toString());
+  const { pathname } = request.nextUrl;
+  const isAuthenticated = !!token;
+
+  if (!isAuthenticated && !pathname.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/auth", request.nextUrl.origin));
   }
-  if (url.pathname === "/auth") {
+
+  const response = NextResponse.next();
+
+  if (pathname === "/") {
+    response.cookies.set("url", request.nextUrl.toString());
+  }
+  if (pathname === "/auth") {
     response.cookies.delete("url");
   }
 

@@ -6,9 +6,6 @@ import { GetMinutesToMilliseconds } from "@/utils/GetMinutesToMilliseconds.util"
 import { useSessionStore } from "@/stores/session.store";
 
 const getChatStandardPhrase = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<ChatStandardPhrase[]>(
     "/api/chat/standard-phrase"
   );

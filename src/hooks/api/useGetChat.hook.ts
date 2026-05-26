@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { ChatRoom } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -10,9 +10,6 @@ import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getChat = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<ChatRoom[]>("/api/chat");
   return res.data;
 };
@@ -32,30 +29,33 @@ export const useGetChat = () => {
 
   // React Queryから取得したデータをZustandストアに同期
   useEffect(() => {
-    if (queryResult.data && queryResult.data.length > 0) {
-      // API結果からchatRoomOptions用のデータを生成
-      const chatRoomOptions = queryResult.data.map((room) => ({
-        id: room.id,
-        name: room.name || "",
-        description: room.description || "",
-        defaultMessage: room.defaultMessage || "",
-      }));
-      setOptions(chatRoomOptions);
+    if (queryResult.data === undefined) return;
 
-      // 初期表示：お気に入りがあればそれを、なければ最新（APIはupdatedDate desc）
-      const favorite = favoriteChatRoomId
-        ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
-        : null;
-
-      const initialRoom = favorite ?? queryResult.data[0];
-
-      setChatRoom({
-        id: initialRoom.id,
-        name: initialRoom.name || "",
-        description: initialRoom.description || "",
-        defaultMessage: initialRoom.defaultMessage || "",
-      });
+    if (queryResult.data.length === 0) {
+      setOptions([]);
+      return;
     }
+
+    const chatRoomOptions = queryResult.data.map((room) => ({
+      id: room.id,
+      name: room.name || "",
+      description: room.description || "",
+      defaultMessage: room.defaultMessage || "",
+    }));
+    setOptions(chatRoomOptions);
+
+    const favorite = favoriteChatRoomId
+      ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
+      : null;
+
+    const initialRoom = favorite ?? queryResult.data[0];
+
+    setChatRoom({
+      id: initialRoom.id,
+      name: initialRoom.name || "",
+      description: initialRoom.description || "",
+      defaultMessage: initialRoom.defaultMessage || "",
+    });
   }, [queryResult.data, favoriteChatRoomId, setChatRoom, setOptions]);
 
   return {

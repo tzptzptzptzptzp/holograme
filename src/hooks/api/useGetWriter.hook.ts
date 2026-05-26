@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { Writer } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -8,9 +8,6 @@ import { useWriter } from "@/hooks/features/useWriter.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getWriter = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<Writer[]>("/api/writer");
   return res.data;
 };

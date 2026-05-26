@@ -9,6 +9,7 @@ type Props = {
   hover?: boolean;
   id?: string;
   onClick?: ClickHandlerType;
+  size?: "sm" | "md" | "lg";
   type?: "button" | "submit" | "reset";
   variant?: "primary" | "secondary" | "cancel" | "disable" | "none";
 };
@@ -20,6 +21,7 @@ export const Button = ({
   hover = true,
   id,
   onClick,
+  size = "sm",
   type = "button",
   variant = "none",
 }: Props) => {
@@ -28,6 +30,7 @@ export const Button = ({
       className={cn(
         styles.button,
         styles[variant],
+        variant !== "none" && styles[size],
         hover && styles.hover,
         className
       )}
