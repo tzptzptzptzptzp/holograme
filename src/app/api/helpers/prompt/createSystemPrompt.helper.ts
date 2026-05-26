@@ -11,6 +11,8 @@ import {
 import { COMMON_PURPOSE } from "../../configs/prompt/common.config";
 import { User } from "@prisma/client";
 
+type SafeUser = Omit<User, "password">;
+
 type UserProfile = {
   username: string;
   nickname: string;
@@ -89,7 +91,7 @@ export type CreateSystemPromptOptions = {
   outputFormatId?: OutputFormatId;
   customInstructions?: string[];
   format?: "json" | "markdown";
-  userData?: User;
+  userData?: SafeUser;
   responseFormat?: "json" | "string" | "markdown";
 };
 
