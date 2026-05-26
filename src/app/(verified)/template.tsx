@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { Avatar } from "@/components/atoms/Avatar/Avatar.atom";
 import { Navigation } from "@/components/organisms/Navigation/Navigation. organism";
 import { useDevice } from "@/hooks/useDevice.hook";
@@ -13,9 +12,7 @@ export default function VerifiedTemplate({
   children: React.ReactNode;
 }) {
   const { isLoading, isPc, isSp } = useDevice();
-  const { session, setAuthToken } = useSession();
-
-  // ユーザーデータの取得とストア同期（内部で自動実行）
+  useSession();
   useGetUser();
 
   const selectedContent = useSelectedContentStore(
@@ -23,13 +20,6 @@ export default function VerifiedTemplate({
   );
 
   const isHomeContent = selectedContent === "home";
-
-  // コンポーネントがマウントされた時に認証トークンをセット
-  useEffect(() => {
-    if (session) {
-      setAuthToken(session);
-    }
-  }, [session, setAuthToken]);
 
   return (
     <div className="flex s:flex-col z-10 w-full h-full pr-20 s:pr-0 s:pb-20">

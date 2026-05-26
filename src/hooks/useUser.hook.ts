@@ -1,5 +1,4 @@
-import { useUserStore } from "@/stores/user.store";
-import { User } from "@prisma/client";
+import { useUserStore, SafeUser } from "@/stores/user.store";
 import { useCallback } from "react";
 
 // UserStoreを簡単に使うためのカスタムフック
@@ -8,7 +7,7 @@ export const useUser = () => {
 
   // ユーザー情報を更新する関数
   const updateUser = useCallback(
-    (userData: Partial<User>) => {
+    (userData: Partial<SafeUser>) => {
       setUser({
         ...user,
         ...userData,
