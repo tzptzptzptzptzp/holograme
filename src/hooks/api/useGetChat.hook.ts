@@ -29,30 +29,33 @@ export const useGetChat = () => {
 
   // React Queryから取得したデータをZustandストアに同期
   useEffect(() => {
-    if (queryResult.data && queryResult.data.length > 0) {
-      // API結果からchatRoomOptions用のデータを生成
-      const chatRoomOptions = queryResult.data.map((room) => ({
-        id: room.id,
-        name: room.name || "",
-        description: room.description || "",
-        defaultMessage: room.defaultMessage || "",
-      }));
-      setOptions(chatRoomOptions);
+    if (queryResult.data === undefined) return;
 
-      // 初期表示：お気に入りがあればそれを、なければ最新（APIはupdatedDate desc）
-      const favorite = favoriteChatRoomId
-        ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
-        : null;
-
-      const initialRoom = favorite ?? queryResult.data[0];
-
-      setChatRoom({
-        id: initialRoom.id,
-        name: initialRoom.name || "",
-        description: initialRoom.description || "",
-        defaultMessage: initialRoom.defaultMessage || "",
-      });
+    if (queryResult.data.length === 0) {
+      setOptions([]);
+      return;
     }
+
+    const chatRoomOptions = queryResult.data.map((room) => ({
+      id: room.id,
+      name: room.name || "",
+      description: room.description || "",
+      defaultMessage: room.defaultMessage || "",
+    }));
+    setOptions(chatRoomOptions);
+
+    const favorite = favoriteChatRoomId
+      ? queryResult.data.find((room) => room.id === favoriteChatRoomId)
+      : null;
+
+    const initialRoom = favorite ?? queryResult.data[0];
+
+    setChatRoom({
+      id: initialRoom.id,
+      name: initialRoom.name || "",
+      description: initialRoom.description || "",
+      defaultMessage: initialRoom.defaultMessage || "",
+    });
   }, [queryResult.data, favoriteChatRoomId, setChatRoom, setOptions]);
 
   return {

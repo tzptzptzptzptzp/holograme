@@ -21,12 +21,17 @@ export const ChatContents = () => {
   const { handleOpen } = useModal();
 
   // データの取得とストア同期（内部で自動実行）
-  useGetChat();
+  const { isFetched } = useGetChat();
+
+  const realRooms = chatRoomOptions.filter(
+    (opt) => opt.id !== 0 || opt.name !== "",
+  );
+  const hasNoRooms = isFetched && realRooms.length === 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!chatRoomOptions) return;
     const chatRoom = chatRoomOptions.find(
-      (chatRoom) => chatRoom.id === Number(e.target.value)
+      (chatRoom) => chatRoom.id === Number(e.target.value),
     );
     setChatRoom({
       id: Number(e.target.value),
@@ -43,7 +48,7 @@ export const ChatContents = () => {
     } else {
       localStorage.setItem(
         "favoriteChatRoom",
-        chatRoom ? chatRoom?.id.toString() : "0"
+        chatRoom ? chatRoom?.id.toString() : "0",
       );
       setFavoriteChatRoomId(chatRoom?.id ?? 0);
     }
@@ -58,37 +63,62 @@ export const ChatContents = () => {
           </div>
           <div className="flex items-center gap-1.5 w-full">
             <div className="flex justify-end flex-1">
-              <Select
-                className="flex-grow pr-2 bg-transparent text-[16px] s:text-[15px] text-right"
-                id="chat"
-                onChange={handleChange}
-                options={chatRoomOptions}
-                value={chatRoom?.id ?? 0}
-              />
+              {hasNoRooms ? (
+                <p className="text-[14px] text-white/60 pr-2">
+                  まだルームがありません
+                </p>
+              ) : (
+                <Select
+                  className="flex-grow pr-2 bg-transparent text-[16px] s:text-[15px] text-right"
+                  id="chat"
+                  onChange={handleChange}
+                  options={realRooms}
+                  value={chatRoom?.id ?? 0}
+                />
+              )}
             </div>
-            <Button className="flex-shrink-0" onClick={handleFavorite}>
-              <Icons.Heart
-                color="white"
-                solid={chatRoom?.id === favoriteChatRoomId}
-              />
-            </Button>
+            {!hasNoRooms && (
+              <Button className="flex-shrink-0" onClick={handleFavorite}>
+                <Icons.Heart
+                  color="white"
+                  solid={chatRoom?.id === favoriteChatRoomId}
+                />
+              </Button>
+            )}
             <Button
               className="flex-shrink-0"
               onClick={() => handleOpen("createChat")}
             >
               <Icons.PlusCircle color="white" />
             </Button>
-            <Button
-              className="flex-shrink-0"
-              onClick={() => handleOpen("editChat")}
-            >
-              <Icons.Config color="white" />
-            </Button>
+            {!hasNoRooms && (
+              <Button
+                className="flex-shrink-0"
+                onClick={() => handleOpen("editChat")}
+              >
+                <Icons.Config color="white" />
+              </Button>
+            )}
           </div>
         </ContentHead>
       </div>
-      <ChatRoom roomId={chatRoom!.id ?? 0} />
-      <MessageForm roomId={chatRoom ? chatRoom!.id : 0} />
+      {hasNoRooms ? (
+        <div className="flex items-center justify-center h-full">
+          <Button
+            variant="secondary"
+            size="md"
+            className="!w-fit"
+            onClick={() => handleOpen("createChat")}
+          >
+            ルームを作成する
+          </Button>
+        </div>
+      ) : (
+        <>
+          <ChatRoom roomId={chatRoom?.id ?? 0} />
+          <MessageForm roomId={chatRoom?.id ?? 0} />
+        </>
+      )}
     </ContentWrapper>
   );
 };
