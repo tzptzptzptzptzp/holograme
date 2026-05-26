@@ -1,22 +1,18 @@
+"use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { signOut as nextAuthSignOut } from "next-auth/react";
 import { toast } from "react-toastify";
 import { textsConfig } from "@/configs/texts.config";
-import { createClient } from "@/libs/supabase/client.lib";
 
 export const useSignOut = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
-  const supabase = createClient();
 
   const signOut = async (): Promise<boolean> => {
     try {
       setIsLoading(true);
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      await nextAuthSignOut({ redirect: false });
       toast(textsConfig.TOAST.SIGN_OUT.SUCCESS);
-      router.push("/auth");
+      window.location.href = "/auth";
     } catch (error) {
       toast.error(textsConfig.TOAST.SIGN_OUT.ERROR);
     } finally {
