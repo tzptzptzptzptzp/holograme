@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { ChatRoom } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -10,9 +10,6 @@ import { useFavoriteChatRoomId } from "@/hooks/useFavoriteChatRoomId.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getChat = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<ChatRoom[]>("/api/chat");
   return res.data;
 };

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { Clipboard } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -8,9 +8,6 @@ import { useClipboards } from "@/hooks/useClipboards.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getClipboard = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<Clipboard[]>("/api/clipboard");
   return res.data;
 };

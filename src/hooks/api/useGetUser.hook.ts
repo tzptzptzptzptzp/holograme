@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeysConfig } from "@/configs/queryKeys.config";
@@ -8,9 +8,6 @@ import { useUser } from "../useUser.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getUser = async () => {
-  if (!axios.defaults.headers.common["Authorization"]) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<User>("/api/user");
   return res.data;
 };
