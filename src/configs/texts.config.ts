@@ -144,6 +144,7 @@ export const textsConfig = {
     },
   },
   TWEET: {
+    BASE: "今日は何をしようかな✨！",
     DEFAULT: "〜！今日は何をしようかな✨！",
   },
   TOAST: {

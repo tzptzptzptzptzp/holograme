@@ -8,9 +8,6 @@ import { useBlogPost } from "@/hooks/features/useBlogPost.hook";
 import { useSessionStore } from "@/stores/session.store";
 
 const getBlogPost = async (id: number) => {
-  if (!axios.defaults.headers.common["Authorization"] || id === 0) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<BlogPost[]>(`/api/writer/${id}/blog-post`);
   return res.data;
 };
