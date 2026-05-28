@@ -17,9 +17,6 @@ export type GetChatMessageResponse = {
 } & ChatRoom;
 
 const getChatMessage = async (id: number) => {
-  if (!axios.defaults.headers.common["Authorization"] || id === 0) {
-    throw new Error("Authorization token is missing");
-  }
   const res = await axios.get<GetChatMessageResponse>(`/api/chat/${id}`);
   return res.data;
 };
@@ -35,7 +32,6 @@ export const useGetChatMessage = (id: number) => {
     enabled: !!session && id !== 0,
     staleTime: GetMinutesToMilliseconds(5),
   });
-  console.log(queryResult.data);
   // React Queryから取得したデータをZustandストアに同期
   useEffect(() => {
     if (queryResult.data) {
