@@ -19,8 +19,12 @@ export const useTweet = () => {
 
   // userが更新された時にデフォルトのtweetを設定
   useEffect(() => {
-    if (user?.nickname && !executedOnce) {
-      setTweet(user.nickname + textsConfig.TWEET.DEFAULT);
+    if (!executedOnce) {
+      setTweet(
+        user?.nickname
+          ? user.nickname + textsConfig.TWEET.DEFAULT
+          : textsConfig.TWEET.BASE
+      );
     }
   }, [user?.nickname, executedOnce]);
 
